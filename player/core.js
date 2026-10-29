@@ -18738,6 +18738,17 @@ function generateMain(opt) {
     exMel.extra.sort(function (a, b) { return a.t - b.t; });
   }
   mel = exMel.notes; solo = exSolo.notes;
+  /* ディ・メオラ風：和音（2音以上）が14%（15曲の統計）。フレーズの終わりの長い音は、オクターヴ下・5度下を重ねる */
+  if (voiceOf(opt, sty) === "dimeola" && !opt.tight) {
+    var dmR = RNG((((opt.seed || 1) * 5113) + 17) % 2147483647), dmAdd = [];
+    solo.forEach(function (nn) {
+      if (nn.d >= 0.5 && !nn.sw && nn.p > 52 && dmR.chance(0.85)) {
+        dmAdd.push({ t: nn.t + 0.004, d: nn.d, p: nn.p - 12, v: Math.max(40, nn.v - 14) });
+        if (dmR.chance(0.5)) dmAdd.push({ t: nn.t + 0.008, d: nn.d, p: nn.p - 5, v: Math.max(40, nn.v - 18) });
+      }
+    });
+    solo = solo.concat(dmAdd).sort(function (a, b) { return a.t - b.t; });
+  }
 
   comp = clearUnderLead(comp, mel.concat(solo.filter(function (n) { return !n.cm; })), 45);
   comp = artiComp(comp, sty, rng);
@@ -19283,7 +19294,7 @@ function noteEvents(stem, song, marks) {
   }
   /* ドラムだけの区間の頭で、オルガン(GM 16〜20)の余韻を切る：CC120（オール・サウンド・オフ）。音源の余韻（リリース）が長いと、ドラムソロ中も鳴り続けるため。CC11 は触らない */
   if (song && song.drumOnly && song.drumOnly.length && stem.prog >= 16 && stem.prog <= 20 && chn !== 9) {
-    song.drumOnly.forEach(function (w) { ev.push({ tick: Math.max(0, Math.round(w.a * PPQ)), pri: 2, data: [0xb0 | chn, 120, 0] }); });
+    song.drumOnly.forEach(function (w) { ev.push({ tick: Math.max(0, Math.round(Math.min(w.a + 0.5, (w.a + w.b) / 2) * PPQ)), pri: 2, data: [0xb0 | chn, 120, 0] }); });   /* 区間の頭の0.5拍後：短い自然な余韻は残す */
   }
   for (i = 0; i < stem.notes.length; i++) {
     var n = stem.notes[i];
@@ -19608,9 +19619,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 375;
+var BUILD_NO = 376;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 153;
+var GEN_NO = 154;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
