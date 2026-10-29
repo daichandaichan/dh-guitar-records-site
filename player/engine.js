@@ -3525,6 +3525,19 @@ function renderSongAudio(song, opts, progress) {
         }, function (er) { reject(er); });
       };
       var finish = function () {
+        /* 仕上げのエフェクト（IVGI など。VST ヘルパー経由）。音量をそろえる前に通す。パートごとの書き出し(raw／gain)には通さない */
+        if (opts.master && !opts.raw && !opts.gain) {
+          var pk0 = 0, j0;
+          for (j0 = 0; j0 < N; j0 += 7) { var qa = Math.abs(L[j0]), qb = Math.abs(R[j0]); if (qa > pk0) pk0 = qa; if (qb > pk0) pk0 = qb; }
+          if (pk0 > 0.0005) {
+            var mf = opts.master; opts.master = null;
+            Promise.resolve().then(function () { return mf(L, R, SR); }).then(function (r) {
+              if (r && r.L && r.R && r.L.length >= N) { L = r.L; R = r.R; }
+              finish();
+            }, function (er) { if (opts.onMasterError) opts.onMasterError(er); finish(); });
+            return;
+          }
+        }
         var pk = 0, i;
         for (i = 0; i < N; i += 7) { var a2 = Math.abs(L[i]), b3 = Math.abs(R[i]); if (a2 > pk) pk = a2; if (b3 > pk) pk = b3; }
         if (!(pk > 0.0005)) { if (opts.gain) { resolve({ L: L, R: R, sr: SR, secs: secs, silent: true, gain: opts.gain }); return; } reject(new Error("無音でした")); return; }

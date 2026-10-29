@@ -1,0 +1,51 @@
+{
+  "id": "2026-10-30_guitartrio_gt_med",
+  "date": "2026-10-30",
+  "style": "guitartrio",
+  "styleShort": "スーパー・ギタートリオ",
+  "styleLabel": "スーパー・ギタートリオ（ギター3本：マクラフリン・パコ・ディ・メオラ）",
+  "form": "gt_med",
+  "formLabel": "スーパー・ギタートリオ：地中海（i-♭VI-V のフリジア・グルーヴ）",
+  "title": "Super Guitar Trio — 地中海 (Am) No.4",
+  "key": "Am",
+  "tempo": 132,
+  "tempoGenerated": 132,
+  "bars": 60,
+  "seed": 31031,
+  "gen": 155,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Guitar 1 (McLaughlin, steel)",
+      "prog": 25
+    },
+    {
+      "id": "solo",
+      "name": "Guitar 2 (Paco, nylon)",
+      "prog": 24
+    },
+    {
+      "id": "gt3",
+      "name": "Guitar 3 (Di Meola, steel)",
+      "prog": 25
+    }
+  ],
+  "chordsOneChorus": [
+    "Am",
+    "Am",
+    "Fmaj7",
+    "E7b9",
+    "Am",
+    "Dm",
+    "G",
+    "E7b9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 155). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-30_guitartrio_gt_med/2026-10-30_guitartrio_gt_med_midi-set.zip",
+    "midi": "demos/2026-10-30_guitartrio_gt_med/2026-10-30_guitartrio_gt_med_all.mid",
+    "info": "demos/2026-10-30_guitartrio_gt_med/info.md"
+  },
+  "audio": "demos/2026-10-30_guitartrio_gt_med/2026-10-30_guitartrio_gt_med.mp3"
+}
