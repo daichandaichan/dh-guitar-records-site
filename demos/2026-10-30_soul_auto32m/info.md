@@ -1,9 +1,9 @@
-# Tempo d'Automne (Abm)
+# Tempo d'Automne (G#m)
 
 - 日付: 2026-10-30
 - 曲種: ソウル・ジャズ／ハードバップ
 - 形式: AABA 32小節・短調（毎回ちがう）
-- 調: Abm
+- 調: G#m
 - テンポ: 138 BPM（自動作曲の生成テンポ）
 - 種(seed): 20261030／生成器: Hot Club Generator（第155版）
 
@@ -20,7 +20,7 @@
 ### 概要
 - 曲種: ソウル・ジャズ／ハードバップ
 - 形式: AABA 32小節・短調（毎回ちがう）（1コーラス 32小節）
-- 調: Abm／拍子: 4/4
+- 調: G#m／拍子: 4/4
 - 全体: 約172小節（約4分59秒）
 - スタイル設定: 跳ね方 60%／伴奏 organ／ベース walk4／ドラム swing
 
@@ -38,10 +38,10 @@
 聴きどころ: ソロは2コーラス、ソロの後に4小節ごとの掛け合い。
 
 ### コード進行（1コーラス）
-| Dbm7 Gb9 | Bmaj7 | Bbm7b5 Eb7b9 | Abm9 | Emaj7 Bb7b9 | Eb7alt | Emaj7 Eb7b9 | Abm9 |
-| Gb7 | Bmaj7 | Bbm7b5 Eb7alt | Abm9 | Emaj7 | Eb7alt | Emaj7 A9 | Abm6 |
-| Bmaj7 | E9 | Abm6 | Gb | Bbm7b5 Eb7b9 | Abm9 | Emaj7 Eb7b9 | Abm7 |
-| Gb7 | Bmaj7 | Bbm7b5 A9 | Abm9 | Emaj7 Bb9 | Eb7 | Emaj7 Eb7b9 | Abm9 |
+| C#m7 F#9 | Bmaj7 | A#m7b5 D#7b9 | G#m9 | Emaj7 A#7b9 | D#7alt | Emaj7 D#7b9 | G#m9 |
+| F#7 | Bmaj7 | A#m7b5 D#7alt | G#m9 | Emaj7 | D#7alt | Emaj7 A9 | G#m6 |
+| Bmaj7 | E9 | G#m6 | F# | A#m7b5 D#7b9 | G#m9 | Emaj7 D#7b9 | G#m7 |
+| F#7 | Bmaj7 | A#m7b5 A9 | G#m9 | Emaj7 A#9 | D#7 | Emaj7 D#7b9 | G#m9 |
 
 よく出る和音の種類: maj7×11、7b9×6、m9×6、9×5、m7b5×4、7alt×3
 

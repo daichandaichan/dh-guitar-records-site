@@ -37,7 +37,7 @@ var FL = ["C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"];
 var FLAT_KEYS = { 5: 1, 10: 1, 3: 1, 8: 1, 1: 1, 6: 1, 11: 0 };
 function pcName(pc, flats) { pc = ((pc % 12) + 12) % 12; return flats ? FL[pc] : SH[pc]; }
 function keyPrefersFlats(pc, minor) {
-  if (minor) return { 9: 0, 4: 0, 11: 0, 6: 0, 1: 0, 2: 1, 7: 1, 0: 1, 5: 1, 10: 1, 3: 1, 8: 1 }[pc] === 1;
+  if (minor) return { 9: 0, 4: 0, 11: 0, 6: 0, 1: 0, 8: 0, 2: 1, 7: 1, 0: 1, 5: 1, 10: 1, 3: 1 }[pc] === 1;      /* 短調の主音 G♯（A♭）は、調号が♯5つ（G♯m）なので♯で綴る（以前は♭で綴って調号と食い違った） */
   return FLAT_KEYS[pc] === 1;
 }
 
