@@ -157,6 +157,86 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-10-30_latin_montuno16",
+  "date": "2026-10-30",
+  "style": "latin",
+  "styleShort": "ラテン",
+  "styleLabel": "ラテン（モントゥーノ・サルサ・チャチャチャ）",
+  "form": "montuno16",
+  "formLabel": "ソン・モントゥーノ 16小節（ヴァンプ）",
+  "title": "Montuno y Candela (G#m)",
+  "key": "G#m",
+  "tempo": 190,
+  "tempoGenerated": 190,
+  "bars": 108,
+  "seed": 20261030,
+  "gen": 155,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 56
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 56
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 0
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Timbales",
+    "prog": 0
+   },
+   {
+    "id": "perc",
+    "name": "Percussion",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "G#m7",
+   "D#7",
+   "G#m7",
+   "D#7",
+   "C#m6",
+   "A7",
+   "G#m7",
+   "G#m7",
+   "G#m7",
+   "A#m7",
+   "D#7",
+   "G#m7",
+   "D#7",
+   "Emaj7",
+   "D#7b9",
+   "G#m7",
+   "G#m7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 155). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-30_latin_montuno16/2026-10-30_latin_montuno16_midi-set.zip",
+   "midi": "demos/2026-10-30_latin_montuno16/2026-10-30_latin_montuno16_all.mid",
+   "info": "demos/2026-10-30_latin_montuno16/info.md"
+  },
+  "audio": "demos/2026-10-30_latin_montuno16/2026-10-30_latin_montuno16.mp3",
+  "scorePages": [
+   "scores/2026-10-30_latin_montuno16-1.png"
+  ],
+  "cover": "covers/2026-10-30_latin_montuno16.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-10-29_mcl_fusion_modal16",
   "date": "2026-10-29",
   "style": "mcl_fusion",
