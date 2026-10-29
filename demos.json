@@ -56,6 +56,107 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-10-30_soul_auto32m",
+  "date": "2026-10-30",
+  "style": "soul",
+  "styleShort": "ソウル・ジャズ／ハードバップ",
+  "styleLabel": "ソウル・ジャズ／ハードバップ",
+  "form": "auto32m",
+  "formLabel": "AABA 32小節・短調（毎回ちがう）",
+  "title": "Tempo d'Automne (Abm)",
+  "key": "Abm",
+  "tempo": 138,
+  "tempoGenerated": 138,
+  "bars": 172,
+  "seed": 20261030,
+  "gen": 155,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 67
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 67
+   },
+   {
+    "id": "comp",
+    "name": "Organ",
+    "prog": 16
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 32
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "C#m7",
+   "F#9",
+   "Bmaj7",
+   "A#m7b5",
+   "D#7b9",
+   "G#m9",
+   "Emaj7",
+   "A#7b9",
+   "D#7alt",
+   "Emaj7",
+   "D#7b9",
+   "G#m9",
+   "F#7",
+   "Bmaj7",
+   "A#m7b5",
+   "D#7alt",
+   "G#m9",
+   "Emaj7",
+   "D#7alt",
+   "Emaj7",
+   "A9",
+   "G#m6",
+   "Bmaj7",
+   "E9",
+   "G#m6",
+   "F#",
+   "A#m7b5",
+   "D#7b9",
+   "G#m9",
+   "Emaj7",
+   "D#7b9",
+   "G#m7",
+   "F#7",
+   "Bmaj7",
+   "A#m7b5",
+   "A9",
+   "G#m9",
+   "Emaj7",
+   "A#9",
+   "D#7",
+   "Emaj7",
+   "D#7b9",
+   "G#m9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 155). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-30_soul_auto32m/2026-10-30_soul_auto32m_midi-set.zip",
+   "midi": "demos/2026-10-30_soul_auto32m/2026-10-30_soul_auto32m_all.mid",
+   "info": "demos/2026-10-30_soul_auto32m/info.md"
+  },
+  "audio": "demos/2026-10-30_soul_auto32m/2026-10-30_soul_auto32m.mp3",
+  "scorePages": [
+   "scores/2026-10-30_soul_auto32m-1.png"
+  ],
+  "cover": "covers/2026-10-30_soul_auto32m.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-10-29_mcl_fusion_modal16",
   "date": "2026-10-29",
   "style": "mcl_fusion",
