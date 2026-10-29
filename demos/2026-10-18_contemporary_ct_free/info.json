@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-18_contemporary_ct_free",
+  "date": "2026-10-18",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_free",
+  "formLabel": "現代音楽（自由な形式：起承転結・頂点は黄金比）",
+  "title": "Texture No.9 [8-013467910]",
+  "key": "Ab",
+  "tempo": 60,
+  "tempoGenerated": 60,
+  "bars": 15,
+  "seed": 20261018,
+  "gen": 143,
+  "stems": [
+    {
+      "id": "solo",
+      "name": "Piano",
+      "prog": 0
+    },
+    {
+      "id": "mel",
+      "name": "Violin",
+      "prog": 40
+    },
+    {
+      "id": "cello",
+      "name": "Cello",
+      "prog": 42
+    }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-18_contemporary_ct_free/2026-10-18_contemporary_ct_free_midi-set.zip",
+    "midi": "demos/2026-10-18_contemporary_ct_free/2026-10-18_contemporary_ct_free_all.mid",
+    "info": "demos/2026-10-18_contemporary_ct_free/info.md"
+  },
+  "audio": "demos/2026-10-18_contemporary_ct_free/2026-10-18_contemporary_ct_free.mp3"
+}

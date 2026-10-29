@@ -1,0 +1,69 @@
+{
+  "id": "2026-10-29_mcl_fusion_modal16",
+  "date": "2026-10-29",
+  "style": "mcl_fusion",
+  "styleShort": "マクラフリン風フュージョン",
+  "styleLabel": "マクラフリン風フュージョン（歪んだギターとエレピ・速い16分・ラテンの8分）",
+  "form": "modal16",
+  "formLabel": "モーダル 16小節（ドリアンの往復）",
+  "title": "J・M Fusion trio",
+  "key": "Em",
+  "tempo": 244,
+  "tempoGenerated": 244,
+  "bars": 124,
+  "seed": 31013,
+  "gen": 148,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 26
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 26
+    },
+    {
+      "id": "comp",
+      "name": "Rhodes",
+      "prog": 4
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "Em9",
+    "Em9",
+    "Em11",
+    "Em9",
+    "Am9",
+    "Am7",
+    "Em6",
+    "Em9",
+    "Dmaj7(#11)",
+    "Dmaj7(#11)",
+    "Em6",
+    "Em9",
+    "B7sus4",
+    "F7",
+    "Em6",
+    "Em9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 148). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-29_mcl_fusion_modal16/2026-10-29_mcl_fusion_modal16_midi-set.zip",
+    "midi": "demos/2026-10-29_mcl_fusion_modal16/2026-10-29_mcl_fusion_modal16_all.mid",
+    "info": "demos/2026-10-29_mcl_fusion_modal16/info.md"
+  },
+  "audio": "demos/2026-10-29_mcl_fusion_modal16/2026-10-29_mcl_fusion_modal16.mp3"
+}

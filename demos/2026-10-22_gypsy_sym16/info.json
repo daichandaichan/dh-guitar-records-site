@@ -1,0 +1,78 @@
+{
+  "id": "2026-10-22_gypsy_sym16",
+  "date": "2026-10-22",
+  "style": "gypsy",
+  "styleShort": "ジプシー・スウィング",
+  "styleLabel": "ジプシー・スウィング（マヌーシュ）",
+  "form": "sym16",
+  "formLabel": "短3度で回る 16小節（対称サイクル・短調）",
+  "title": "Étoile de Paris (Cm)",
+  "key": "Cm",
+  "tempo": 200,
+  "tempoGenerated": 200,
+  "bars": 108,
+  "seed": 20261022,
+  "gen": 143,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 25
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 25
+    },
+    {
+      "id": "comp",
+      "name": "Rhythm Gtr (la pompe)",
+      "prog": 26
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 32
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "Dm7b5",
+    "G13",
+    "Cm6",
+    "Fm7b5",
+    "A#7alt",
+    "D#m6",
+    "G#m7b5",
+    "C#7b9",
+    "F#m6",
+    "Bm7b5",
+    "E13",
+    "Am6",
+    "A7b9",
+    "Dm7b5",
+    "G7b9",
+    "Cm6",
+    "Fm7b5",
+    "A#7alt",
+    "D#m6",
+    "G#m7b5",
+    "C#7b9",
+    "F#m6",
+    "Dm7b5",
+    "G7alt",
+    "Cm6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-22_gypsy_sym16/2026-10-22_gypsy_sym16_midi-set.zip",
+    "midi": "demos/2026-10-22_gypsy_sym16/2026-10-22_gypsy_sym16_all.mid",
+    "info": "demos/2026-10-22_gypsy_sym16/info.md"
+  },
+  "audio": "demos/2026-10-22_gypsy_sym16/2026-10-22_gypsy_sym16.mp3"
+}

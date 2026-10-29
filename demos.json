@@ -1,0 +1,1893 @@
+[
+ {
+  "id": "2026-10-29_mcl_fusion_modal16",
+  "date": "2026-10-29",
+  "style": "mcl_fusion",
+  "styleShort": "マクラフリン風フュージョン",
+  "styleLabel": "マクラフリン風フュージョン（歪んだギターとエレピ・速い16分・ラテンの8分）",
+  "form": "modal16",
+  "formLabel": "モーダル 16小節（ドリアンの往復）",
+  "title": "J・M Fusion trio",
+  "key": "Em",
+  "tempo": 244,
+  "tempoGenerated": 244,
+  "bars": 124,
+  "seed": 31013,
+  "gen": 148,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 26
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 26
+   },
+   {
+    "id": "comp",
+    "name": "Rhodes",
+    "prog": 4
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Em9",
+   "Em9",
+   "Em11",
+   "Em9",
+   "Am9",
+   "Am7",
+   "Em6",
+   "Em9",
+   "Dmaj7(#11)",
+   "Dmaj7(#11)",
+   "Em6",
+   "Em9",
+   "B7sus4",
+   "F7",
+   "Em6",
+   "Em9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 148). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-29_mcl_fusion_modal16/2026-10-29_mcl_fusion_modal16_midi-set.zip",
+   "midi": "demos/2026-10-29_mcl_fusion_modal16/2026-10-29_mcl_fusion_modal16_all.mid",
+   "info": "demos/2026-10-29_mcl_fusion_modal16/info.md"
+  },
+  "audio": "demos/2026-10-29_mcl_fusion_modal16/2026-10-29_mcl_fusion_modal16.mp3",
+  "cover": "covers/2026-10-29_mcl_fusion_modal16.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-29_mcl_fusion_modal16-1.png"
+  ],
+  "youtube": "TFAy-50qztM"
+ },
+ {
+  "id": "2026-10-28_flamenco_bulerias12",
+  "date": "2026-10-28",
+  "style": "flamenco",
+  "styleShort": "フラメンコ",
+  "styleLabel": "フラメンコ（ソレア・ブレリア・タンゴス）",
+  "form": "bulerias12",
+  "formLabel": "ブレリア 12拍 × 8コンパス（速い）",
+  "title": "Bulería del Puerto (Am)",
+  "key": "Am",
+  "tempo": 235,
+  "tempoGenerated": 235,
+  "bars": 53,
+  "seed": 20261028,
+  "gen": 148,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 24
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 24
+   },
+   {
+    "id": "comp",
+    "name": "Flamenco Gtr (rasgueado)",
+    "prog": 24
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Cajon",
+    "prog": 0
+   },
+   {
+    "id": "perc",
+    "name": "Palmero 1 (accent)",
+    "prog": 0
+   },
+   {
+    "id": "perc2",
+    "name": "Palmero 2 (offbeat)",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Am",
+   "Am",
+   "G",
+   "Fmaj7(#11)",
+   "E(b9)",
+   "Am",
+   "G",
+   "F",
+   "Esus4(b9)",
+   "Fsus2",
+   "E7b9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 148). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-28_flamenco_bulerias12/2026-10-28_flamenco_bulerias12_midi-set.zip",
+   "midi": "demos/2026-10-28_flamenco_bulerias12/2026-10-28_flamenco_bulerias12_all.mid",
+   "info": "demos/2026-10-28_flamenco_bulerias12/info.md"
+  },
+  "audio": "demos/2026-10-28_flamenco_bulerias12/2026-10-28_flamenco_bulerias12.mp3",
+  "scorePages": [
+   "scores/2026-10-28_flamenco_bulerias12-1.png"
+  ],
+  "cover": "covers/2026-10-28_flamenco_bulerias12.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-10-27_mcl_mahav_odd7",
+  "date": "2026-10-27",
+  "style": "mcl_mahav",
+  "styleShort": "マクラフリン風マハヴィシュヌ",
+  "styleLabel": "マクラフリン風マハヴィシュヌ（モードのヴァンプ・変拍子・速いユニゾン）",
+  "form": "odd7",
+  "formLabel": "変拍子 7拍子 16小節（フリジアン）",
+  "title": "Nuit de Paris (Bm)",
+  "key": "Bm",
+  "tempo": 168,
+  "tempoGenerated": 168,
+  "bars": 92,
+  "seed": 20261027,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 27
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 27
+   },
+   {
+    "id": "comp",
+    "name": "Rhodes",
+    "prog": 4
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Bm9",
+   "Cmaj7",
+   "Bm9",
+   "Cmaj7",
+   "Bm9",
+   "A7(#11)",
+   "Bm9",
+   "Bm9",
+   "Bm9",
+   "Cmaj7",
+   "Em11",
+   "Cmaj7",
+   "Bm9",
+   "A7(#11)",
+   "F#7alt",
+   "Bm9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-27_mcl_mahav_odd7/2026-10-27_mcl_mahav_odd7_midi-set.zip",
+   "midi": "demos/2026-10-27_mcl_mahav_odd7/2026-10-27_mcl_mahav_odd7_all.mid",
+   "info": "demos/2026-10-27_mcl_mahav_odd7/info.md"
+  },
+  "audio": "demos/2026-10-27_mcl_mahav_odd7/2026-10-27_mcl_mahav_odd7.mp3",
+  "scorePages": [
+   "scores/2026-10-27_mcl_mahav_odd7-1.png"
+  ],
+  "cover": "covers/2026-10-27_mcl_mahav_odd7.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-10-26_bossa_minbossa32",
+  "date": "2026-10-26",
+  "style": "bossa",
+  "styleShort": "ボサノヴァ",
+  "styleLabel": "ボサノヴァ",
+  "form": "minbossa32",
+  "formLabel": "マイナー・ボサ AABA 32小節",
+  "title": "Étoile Sans Fin (Em)",
+  "key": "Em",
+  "tempo": 138,
+  "tempoGenerated": 138,
+  "bars": 172,
+  "seed": 20261026,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 24
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 24
+   },
+   {
+    "id": "comp",
+    "name": "Nylon Gtr",
+    "prog": 24
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Em9",
+   "Em9",
+   "F#m7b5",
+   "B7b9",
+   "Em6/9",
+   "Am9",
+   "D9",
+   "Gmaj7",
+   "B7b9",
+   "Em6",
+   "Em9",
+   "F#m7b5",
+   "B7alt",
+   "Em9",
+   "Am9",
+   "D9",
+   "Gmaj7",
+   "B7b9",
+   "Gmaj7",
+   "Gm7",
+   "C7",
+   "Fmaj7",
+   "C7b9",
+   "Fmaj7",
+   "Am9",
+   "G#13",
+   "Gmaj7",
+   "B7alt",
+   "Em9",
+   "Em9",
+   "F#m7b5",
+   "B7b9",
+   "Em9",
+   "Am7",
+   "Am7",
+   "D7b9",
+   "Gmaj7",
+   "F9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-26_bossa_minbossa32/2026-10-26_bossa_minbossa32_midi-set.zip",
+   "midi": "demos/2026-10-26_bossa_minbossa32/2026-10-26_bossa_minbossa32_all.mid",
+   "info": "demos/2026-10-26_bossa_minbossa32/info.md"
+  },
+  "audio": "demos/2026-10-26_bossa_minbossa32/2026-10-26_bossa_minbossa32.mp3",
+  "scorePages": [
+   "scores/2026-10-26_bossa_minbossa32-1.png"
+  ],
+  "cover": "covers/2026-10-26_bossa_minbossa32.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-10-26_mcl_organtrio_lune-mineur-c",
+  "date": "2026-10-26",
+  "style": "mcl_organtrio",
+  "styleShort": "マクラフリン風オルガン・トリオ",
+  "styleLabel": "マクラフリン風オルガン・トリオ（マクラフリン＝ギター、デフランチェスコ＝オルガンとベース、チェンバース＝ドラム）",
+  "form": "rhythm32",
+  "formLabel": "リズムチェンジ型 32小節",
+  "title": "Lune Mineur (C)",
+  "key": "C",
+  "tempo": 320,
+  "tempoGenerated": 320,
+  "bars": null,
+  "seed": 27663,
+  "status": "demo",
+  "audio": "demos/2026-10-26_mcl_organtrio_lune-mineur-c/lune-mineur-c_s27663.mp3",
+  "files": {
+   "info": "demos/2026-10-26_mcl_organtrio_lune-mineur-c/info.md",
+   "zip": "",
+   "midi": "demos/2026-10-26_mcl_organtrio_lune-mineur-c/Lune_Mineur_C_s27663_ALL.mid"
+  },
+  "scorePages": [
+   "scores/2026-10-26_mcl_organtrio_lune-mineur-c-1.png"
+  ],
+  "cover": "covers/2026-10-26_mcl_organtrio_lune-mineur-c.jpg",
+  "coverKind": "video",
+  "youtube": "eHiS8vEKDwk"
+ },
+ {
+  "id": "2026-10-25_ballad_coolstd32",
+  "date": "2026-10-25",
+  "style": "ballad",
+  "styleShort": "バラード",
+  "styleLabel": "バラード",
+  "form": "coolstd32",
+  "formLabel": "クール AABA 32小節（サブドミナント・マイナー）",
+  "title": "Valse de Paris (A)",
+  "key": "A",
+  "tempo": 66,
+  "tempoGenerated": 66,
+  "bars": 172,
+  "seed": 20261025,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 57
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 57
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 0
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 32
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Amaj7",
+   "A9",
+   "Dmaj7",
+   "Dm6",
+   "Amaj7",
+   "Bm7",
+   "F#7",
+   "Fmaj7",
+   "G#7",
+   "C#maj7",
+   "E7",
+   "Amaj7",
+   "F#m7",
+   "B7b9",
+   "Bm7",
+   "E7",
+   "Amaj7",
+   "Dmaj7",
+   "Dm6",
+   "Amaj7",
+   "Bm7",
+   "A#13",
+   "A6/9",
+   "F#m7",
+   "B13",
+   "Bm7",
+   "E13",
+   "Gmaj7",
+   "Am7",
+   "G#7",
+   "Gmaj7",
+   "G9",
+   "Cmaj7",
+   "Dm7",
+   "G7",
+   "Amaj7",
+   "Bm7b5",
+   "A#7",
+   "F#m7",
+   "Amaj7",
+   "Dmaj7",
+   "Dm6",
+   "E9",
+   "Amaj7",
+   "Bm7",
+   "E9",
+   "A6/9",
+   "F#m7",
+   "F9",
+   "Bm7",
+   "E7b9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-25_ballad_coolstd32/2026-10-25_ballad_coolstd32_midi-set.zip",
+   "midi": "demos/2026-10-25_ballad_coolstd32/2026-10-25_ballad_coolstd32_all.mid",
+   "info": "demos/2026-10-25_ballad_coolstd32/info.md"
+  },
+  "audio": "demos/2026-10-25_ballad_coolstd32/2026-10-25_ballad_coolstd32.mp3",
+  "scorePages": [
+   "scores/2026-10-25_ballad_coolstd32-1.png"
+  ],
+  "cover": "covers/2026-10-25_ballad_coolstd32.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-10-24_bebop_countdown16",
+  "date": "2026-10-24",
+  "style": "bebop",
+  "styleShort": "ビバップ",
+  "styleLabel": "ビバップ（速め・8分主体）",
+  "form": "countdown16",
+  "formLabel": "3つの調へ割る 16小節（カウントダウン型の置換）",
+  "title": "Manouche du Nord (D)",
+  "key": "D",
+  "tempo": 224,
+  "tempoGenerated": 224,
+  "bars": 108,
+  "seed": 20261024,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 65
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 65
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 0
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 32
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Em7",
+   "F7",
+   "A#maj7",
+   "C#7",
+   "F#maj7",
+   "A7",
+   "Dmaj7",
+   "Dm7",
+   "D#7",
+   "G#maj7",
+   "B7",
+   "Emaj7",
+   "G7",
+   "Cmaj7",
+   "Cm7",
+   "C#7",
+   "F#maj7",
+   "A13",
+   "Dmaj7",
+   "F7",
+   "A#maj7",
+   "Em7",
+   "A7",
+   "D6/9",
+   "Em7",
+   "A9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-24_bebop_countdown16/2026-10-24_bebop_countdown16_midi-set.zip",
+   "midi": "demos/2026-10-24_bebop_countdown16/2026-10-24_bebop_countdown16_all.mid",
+   "info": "demos/2026-10-24_bebop_countdown16/info.md"
+  },
+  "audio": "demos/2026-10-24_bebop_countdown16/2026-10-24_bebop_countdown16.mp3",
+  "scorePages": [
+   "scores/2026-10-24_bebop_countdown16-1.png"
+  ],
+  "cover": "covers/2026-10-24_bebop_countdown16_v2.jpg",
+  "coverKind": "generated",
+  "youtube": "6Pm3Aw_GAoA"
+ },
+ {
+  "id": "2026-10-23_swing_cycle32",
+  "date": "2026-10-23",
+  "style": "swing",
+  "styleShort": "スタンダード・スウィング",
+  "styleLabel": "スタンダード・スウィング",
+  "form": "cycle32",
+  "formLabel": "ii-V循環 32小節 (バップ)",
+  "title": "Swing à Django (G)",
+  "key": "G",
+  "tempo": 152,
+  "tempoGenerated": 152,
+  "bars": 204,
+  "seed": 20261023,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 66
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 66
+   },
+   {
+    "id": "comp",
+    "name": "Rhythm Gtr",
+    "prog": 26
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 32
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Am7",
+   "A#7",
+   "D#maj7",
+   "F#7",
+   "Bmaj7",
+   "D7",
+   "Gmaj7",
+   "Bm7",
+   "E7",
+   "Amaj7",
+   "B9",
+   "Em7",
+   "A7",
+   "Dmaj7",
+   "F#m7",
+   "G7",
+   "Cmaj7",
+   "D#7b9",
+   "G#maj7",
+   "B7",
+   "Emaj7",
+   "Dm7",
+   "G9",
+   "Cmaj7",
+   "B7b9",
+   "Em7",
+   "A7",
+   "Dmaj7",
+   "Am7",
+   "D9",
+   "Gmaj7",
+   "Bm7",
+   "E9",
+   "Amaj7",
+   "Am9",
+   "D9",
+   "G6/9",
+   "Bm7",
+   "A#13",
+   "A6/9",
+   "Em7",
+   "A9",
+   "D6/9",
+   "F#m9",
+   "F13",
+   "E6/9",
+   "Am7",
+   "A#7b9",
+   "D#maj7",
+   "F#13",
+   "Bmaj7",
+   "D7",
+   "Gmaj7",
+   "Bm9",
+   "E9",
+   "A6/9",
+   "Em9",
+   "A9",
+   "D6/9",
+   "F#m7",
+   "B7alt",
+   "E6/9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-23_swing_cycle32/2026-10-23_swing_cycle32_midi-set.zip",
+   "midi": "demos/2026-10-23_swing_cycle32/2026-10-23_swing_cycle32_all.mid",
+   "info": "demos/2026-10-23_swing_cycle32/info.md"
+  },
+  "audio": "demos/2026-10-23_swing_cycle32/2026-10-23_swing_cycle32.mp3",
+  "scorePages": [
+   "scores/2026-10-23_swing_cycle32-1.png"
+  ],
+  "cover": "covers/2026-10-23_swing_cycle32.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-10-22_gypsy_sym16",
+  "date": "2026-10-22",
+  "style": "gypsy",
+  "styleShort": "ジプシー・スウィング",
+  "styleLabel": "ジプシー・スウィング（マヌーシュ）",
+  "form": "sym16",
+  "formLabel": "短3度で回る 16小節（対称サイクル・短調）",
+  "title": "Étoile de Paris (Cm)",
+  "key": "Cm",
+  "tempo": 200,
+  "tempoGenerated": 200,
+  "bars": 108,
+  "seed": 20261022,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 25
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 25
+   },
+   {
+    "id": "comp",
+    "name": "Rhythm Gtr (la pompe)",
+    "prog": 26
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 32
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Dm7b5",
+   "G13",
+   "Cm6",
+   "Fm7b5",
+   "A#7alt",
+   "D#m6",
+   "G#m7b5",
+   "C#7b9",
+   "F#m6",
+   "Bm7b5",
+   "E13",
+   "Am6",
+   "A7b9",
+   "Dm7b5",
+   "G7b9",
+   "Cm6",
+   "Fm7b5",
+   "A#7alt",
+   "D#m6",
+   "G#m7b5",
+   "C#7b9",
+   "F#m6",
+   "Dm7b5",
+   "G7alt",
+   "Cm6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-22_gypsy_sym16/2026-10-22_gypsy_sym16_midi-set.zip",
+   "midi": "demos/2026-10-22_gypsy_sym16/2026-10-22_gypsy_sym16_all.mid",
+   "info": "demos/2026-10-22_gypsy_sym16/info.md"
+  },
+  "audio": "demos/2026-10-22_gypsy_sym16/2026-10-22_gypsy_sym16.mp3",
+  "scorePages": [
+   "scores/2026-10-22_gypsy_sym16-1.png"
+  ],
+  "cover": "covers/2026-10-22_gypsy_sym16.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-10-21_waltz_auto32m",
+  "date": "2026-10-21",
+  "style": "waltz",
+  "styleShort": "ジャズ・ワルツ",
+  "styleLabel": "ジャズ・ワルツ",
+  "form": "auto32m",
+  "formLabel": "AABA 32小節・短調（毎回ちがう）",
+  "title": "Swing à Django (Fm)",
+  "key": "Fm",
+  "tempo": 176,
+  "tempoGenerated": 176,
+  "bars": 204,
+  "seed": 20261021,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 25
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 25
+   },
+   {
+    "id": "comp",
+    "name": "Rhythm Gtr",
+    "prog": 26
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 32
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "FmMaj7",
+   "D#",
+   "Fm9",
+   "Fm6",
+   "G#maj7",
+   "C#9",
+   "C7alt",
+   "Fm6",
+   "Fm6",
+   "D#",
+   "Fm6",
+   "Fm6",
+   "D#7b9",
+   "G#maj7",
+   "C#9",
+   "C7alt",
+   "Fm6",
+   "G#maj7",
+   "G7",
+   "Gm7b5",
+   "F#7",
+   "Fm9",
+   "C#maj7",
+   "C7alt",
+   "Gm7b5",
+   "F#7",
+   "Fm6",
+   "Fm6",
+   "D#",
+   "Fm9",
+   "Fm6",
+   "G#maj7",
+   "G#9",
+   "C#7alt",
+   "C9",
+   "Fm6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-21_waltz_auto32m/2026-10-21_waltz_auto32m_midi-set.zip",
+   "midi": "demos/2026-10-21_waltz_auto32m/2026-10-21_waltz_auto32m_all.mid",
+   "info": "demos/2026-10-21_waltz_auto32m/info.md"
+  },
+  "audio": "demos/2026-10-21_waltz_auto32m/2026-10-21_waltz_auto32m.mp3",
+  "cover": "covers/2026-10-21_waltz_auto32m.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-21_waltz_auto32m-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-20_djent_djentf16",
+  "date": "2026-10-20",
+  "style": "djent",
+  "styleShort": "ジェント／テクニカル・メタル",
+  "styleLabel": "ジェント／テクニカル・メタル（メシュガー型：奇数長のリフ×4拍子）",
+  "form": "djentf16",
+  "formLabel": "ジェント・フュージョン 16小節（拡張和音とテクニカルなリードの短い形）",
+  "title": "Manouche Mineur (Bbm)",
+  "key": "Bbm",
+  "tempo": 136,
+  "tempoGenerated": 136,
+  "bars": 105,
+  "seed": 20261020,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 30
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 30
+   },
+   {
+    "id": "comp",
+    "name": "Rhythm Gtr (djent)",
+    "prog": 30
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "A#m9",
+   "G#13",
+   "F#maj7(#11)",
+   "D#m11",
+   "F9",
+   "C#maj7(#11)",
+   "E7(#11)",
+   "F7alt"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-20_djent_djentf16/2026-10-20_djent_djentf16_midi-set.zip",
+   "midi": "demos/2026-10-20_djent_djentf16/2026-10-20_djent_djentf16_all.mid",
+   "info": "demos/2026-10-20_djent_djentf16/info.md"
+  },
+  "audio": "demos/2026-10-20_djent_djentf16/2026-10-20_djent_djentf16.mp3",
+  "cover": "covers/2026-10-20_djent_djentf16.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-20_djent_djentf16-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-19_indian_in_ravi",
+  "date": "2026-10-19",
+  "style": "indian",
+  "styleShort": "インド古典",
+  "styleLabel": "インド古典（ラーガとターラ：ラヴィ・シャンカール型／シャクティ型）",
+  "form": "in_ravi",
+  "formLabel": "ラヴィ・シャンカール型（アーラープ→ジョール→ジャーラー→ガット）",
+  "title": "Nat Kedar ・ Jhoomra（ラヴィ型）",
+  "key": "Eb",
+  "tempo": 80,
+  "tempoGenerated": 80,
+  "bars": 32,
+  "seed": 20261019,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Sitar",
+    "prog": 104
+   },
+   {
+    "id": "harp",
+    "name": "Tanpura",
+    "prog": 46
+   },
+   {
+    "id": "perc",
+    "name": "Tabla",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-19_indian_in_ravi/2026-10-19_indian_in_ravi_midi-set.zip",
+   "midi": "demos/2026-10-19_indian_in_ravi/2026-10-19_indian_in_ravi_all.mid",
+   "info": "demos/2026-10-19_indian_in_ravi/info.md"
+  },
+  "audio": "demos/2026-10-19_indian_in_ravi/2026-10-19_indian_in_ravi.mp3",
+  "cover": "covers/2026-10-19_indian_in_ravi.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-19_indian_in_ravi-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-18_contemporary_ct_free",
+  "date": "2026-10-18",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_free",
+  "formLabel": "現代音楽（自由な形式：起承転結・頂点は黄金比）",
+  "title": "Texture No.9 [8-013467910]",
+  "key": "Ab",
+  "tempo": 60,
+  "tempoGenerated": 60,
+  "bars": 15,
+  "seed": 20261018,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "solo",
+    "name": "Piano",
+    "prog": 0
+   },
+   {
+    "id": "mel",
+    "name": "Violin",
+    "prog": 40
+   },
+   {
+    "id": "cello",
+    "name": "Cello",
+    "prog": 42
+   }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-18_contemporary_ct_free/2026-10-18_contemporary_ct_free_midi-set.zip",
+   "midi": "demos/2026-10-18_contemporary_ct_free/2026-10-18_contemporary_ct_free_all.mid",
+   "info": "demos/2026-10-18_contemporary_ct_free/info.md"
+  },
+  "audio": "demos/2026-10-18_contemporary_ct_free/2026-10-18_contemporary_ct_free.mp3",
+  "cover": "covers/2026-10-18_contemporary_ct_free.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-10-17_epic_epic_west",
+  "date": "2026-10-17",
+  "style": "epic",
+  "styleShort": "エピック",
+  "styleLabel": "エピック（映画音楽・マンシーニ路線：弦・独奏・ハープ・ホルン・ティンパニ）",
+  "form": "epic_west",
+  "formLabel": "西部劇（モリコーネ路線：独奏の広い跳躍・ドリア・ギターの分散和音・ギャロップ）",
+  "title": "Café à Django (C#m)",
+  "key": "C#m",
+  "tempo": 100,
+  "tempoGenerated": 100,
+  "bars": 159,
+  "seed": 20261017,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Strings (theme)",
+    "prog": 48
+   },
+   {
+    "id": "solo",
+    "name": "Solo trumpet",
+    "prog": 56
+   },
+   {
+    "id": "comp",
+    "name": "Guitar (twang)",
+    "prog": 27
+   },
+   {
+    "id": "bass",
+    "name": "Contrabass",
+    "prog": 43
+   },
+   {
+    "id": "drums",
+    "name": "Percussion (gallop)",
+    "prog": 0
+   },
+   {
+    "id": "horn",
+    "name": "French Horn",
+    "prog": 60
+   },
+   {
+    "id": "timp",
+    "name": "Timpani",
+    "prog": 47
+   },
+   {
+    "id": "fl",
+    "name": "Flutes",
+    "prog": 73
+   },
+   {
+    "id": "ob",
+    "name": "Oboes",
+    "prog": 68
+   },
+   {
+    "id": "cl",
+    "name": "Clarinets",
+    "prog": 71
+   },
+   {
+    "id": "bsn",
+    "name": "Bassoons",
+    "prog": 70
+   },
+   {
+    "id": "tpt",
+    "name": "Trumpets",
+    "prog": 56
+   },
+   {
+    "id": "trb",
+    "name": "Trombones",
+    "prog": 57
+   },
+   {
+    "id": "tuba",
+    "name": "Tuba",
+    "prog": 58
+   }
+  ],
+  "chordsOneChorus": [
+   "C#m7",
+   "F#7b9",
+   "C#m7",
+   "F#7",
+   "B",
+   "C#m",
+   "A",
+   "G#",
+   "C#m6",
+   "F#7",
+   "C#m7",
+   "F#7",
+   "B",
+   "C#m",
+   "G#",
+   "C#m",
+   "Amaj7",
+   "B9",
+   "Emaj7",
+   "B7",
+   "F#",
+   "Amaj7",
+   "Dmaj7",
+   "D#7b9",
+   "G#7sus4",
+   "D#m7",
+   "G#7b9",
+   "C#m",
+   "B",
+   "Amaj7",
+   "D#m7",
+   "G#7",
+   "C#m",
+   "F#m7",
+   "G#",
+   "C#m"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-17_epic_epic_west/2026-10-17_epic_epic_west_midi-set.zip",
+   "midi": "demos/2026-10-17_epic_epic_west/2026-10-17_epic_epic_west_all.mid",
+   "info": "demos/2026-10-17_epic_epic_west/info.md"
+  },
+  "audio": "demos/2026-10-17_epic_epic_west/2026-10-17_epic_epic_west.mp3",
+  "cover": "covers/2026-10-17_epic_epic_west.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-17_epic_epic_west-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-16_chip_gm_minuet",
+  "date": "2026-10-16",
+  "style": "chip",
+  "styleShort": "ゲーム音楽",
+  "styleLabel": "ゲーム音楽（ファミコン風・8ビット音源：矩形波2つ・三角波・ノイズ）",
+  "form": "gm_minuet",
+  "formLabel": "お城のメヌエット（ドラクエ風：チェンバロと弦・3拍子・終止のトリル）",
+  "title": "Lune de Paris (Gb)",
+  "key": "F#",
+  "tempo": 126,
+  "tempoGenerated": 126,
+  "bars": 139,
+  "seed": 20261016,
+  "gen": 143,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Pulse 1 (melody)",
+    "prog": 80
+   },
+   {
+    "id": "comp",
+    "name": "Pulse 2 (arpeggio)",
+    "prog": 80
+   },
+   {
+    "id": "bass",
+    "name": "Triangle (bass)",
+    "prog": 38
+   },
+   {
+    "id": "drums",
+    "name": "Noise (drums)",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "F#",
+   "D#m",
+   "G#m7",
+   "C#7",
+   "F#",
+   "Bmaj7",
+   "Bmaj7",
+   "C#7b9",
+   "F#",
+   "D#m",
+   "G#m7",
+   "C#7",
+   "F#",
+   "Bmaj7",
+   "C#7",
+   "F#",
+   "D#m",
+   "A#7",
+   "D#m",
+   "G#7",
+   "G#m7",
+   "G9",
+   "Bmaj7",
+   "C#7sus4",
+   "F#",
+   "A#7",
+   "D#m",
+   "G#7",
+   "G#m7",
+   "C#7",
+   "D",
+   "F#"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-16_chip_gm_minuet/2026-10-16_chip_gm_minuet_midi-set.zip",
+   "midi": "demos/2026-10-16_chip_gm_minuet/2026-10-16_chip_gm_minuet_all.mid",
+   "info": "demos/2026-10-16_chip_gm_minuet/info.md"
+  },
+  "audio": "demos/2026-10-16_chip_gm_minuet/2026-10-16_chip_gm_minuet.mp3",
+  "cover": "covers/2026-10-16_chip_gm_minuet.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-16_chip_gm_minuet-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-15_game_gm_boss",
+  "date": "2026-10-15",
+  "style": "game",
+  "styleShort": "ゲーム音楽",
+  "styleLabel": "ゲーム音楽（RPG風：ドラクエ風の序曲・お城・フィールド、FF風のプレリュード・バトル・感動）",
+  "form": "gm_boss",
+  "formLabel": "ボス戦（FF風：パイプオルガンと合唱・ロックのドラム・三全音で揺れる和声）",
+  "title": "Rue Mineur (Bm)",
+  "key": "Bm",
+  "tempo": 150,
+  "tempoGenerated": 150,
+  "bars": 137,
+  "seed": 20261015,
+  "gen": 122,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Strings (theme)",
+    "prog": 48
+   },
+   {
+    "id": "solo",
+    "name": "Solo trumpet",
+    "prog": 56
+   },
+   {
+    "id": "comp",
+    "name": "Church organ",
+    "prog": 19
+   },
+   {
+    "id": "bass",
+    "name": "Electric bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "horn",
+    "name": "Choir",
+    "prog": 52
+   }
+  ],
+  "chordsOneChorus": [
+   "Bm",
+   "Cmaj7",
+   "F#7b9",
+   "Bm",
+   "Cmaj7",
+   "Em7",
+   "Gmaj7",
+   "Em6",
+   "C7",
+   "Bm7",
+   "Cmaj7",
+   "Bm7",
+   "Cmaj7",
+   "Em7",
+   "Gmaj7",
+   "Em7",
+   "Bm",
+   "Gmaj7",
+   "B9",
+   "Em7",
+   "Cmaj7",
+   "E7b9",
+   "A7",
+   "Em7",
+   "Cmaj7",
+   "F#7sus4",
+   "F#7b9",
+   "Bm",
+   "C",
+   "Bm",
+   "F",
+   "Em",
+   "C",
+   "F#7b9",
+   "Bm"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 122). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-15_game_gm_boss/2026-10-15_game_gm_boss_midi-set.zip",
+   "midi": "demos/2026-10-15_game_gm_boss/2026-10-15_game_gm_boss_all.mid",
+   "info": "demos/2026-10-15_game_gm_boss/info.md"
+  },
+  "audio": "demos/2026-10-15_game_gm_boss/2026-10-15_game_gm_boss.mp3",
+  "cover": "covers/2026-10-15_game_gm_boss.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-15_game_gm_boss-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-15_mcl_organ_valse-rapide-em",
+  "date": "2026-10-15",
+  "style": "mcl_organ",
+  "styleShort": "マクラフリン風オルガンジャズ",
+  "styleLabel": "マクラフリン風オルガンジャズ（ライフタイム型：歪んだギターとオルガン・荒々しいブルース）",
+  "form": "auto32m",
+  "formLabel": "AABA 32小節・短調（毎回ちがう）",
+  "title": "Valse Rapide (Em)",
+  "key": "Em",
+  "tempo": 320,
+  "tempoGenerated": 320,
+  "bars": null,
+  "seed": 3064,
+  "status": "demo",
+  "audio": "demos/2026-10-15_mcl_organ_valse-rapide-em/valse-rapide-em_s3064.mp3",
+  "files": {
+   "info": "demos/2026-10-15_mcl_organ_valse-rapide-em/info.md",
+   "zip": "",
+   "midi": "demos/2026-10-15_mcl_organ_valse-rapide-em/Valse_Rapide_Em_s3064_ALL.mid"
+  },
+  "youtube": "zlis2GP9Gm0",
+  "cover": "covers/2026-10-15_mcl_organ_valse-rapide-em.jpg",
+  "coverKind": "video",
+  "scorePages": [
+   "scores/2026-10-15_mcl_organ_valse-rapide-em-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-15_gypsy_rue-de-paris-dm",
+  "date": "2026-10-15",
+  "style": "gypsy",
+  "styleShort": "ジプシー・スウィング",
+  "styleLabel": "ジプシー・スウィング（マヌーシュ）",
+  "form": "manouche32",
+  "formLabel": "マヌーシュ AABA 32小節",
+  "title": "Rue de Paris (Dm)",
+  "key": "Dm",
+  "tempo": 248,
+  "tempoGenerated": 248,
+  "bars": null,
+  "seed": 40021,
+  "status": "demo",
+  "audio": "demos/2026-10-15_gypsy_rue-de-paris-dm/rue-de-paris-dm_s40021.mp3",
+  "files": {
+   "info": "demos/2026-10-15_gypsy_rue-de-paris-dm/info.md",
+   "zip": "",
+   "midi": "demos/2026-10-15_gypsy_rue-de-paris-dm/Rue_de_Paris_Dm_s40021_ALL.mid"
+  },
+  "cover": "covers/2026-10-15_gypsy_rue-de-paris-dm.jpg",
+  "coverKind": "video",
+  "scorePages": [
+   "scores/2026-10-15_gypsy_rue-de-paris-dm-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-14_chaos_chaos24",
+  "date": "2026-10-14",
+  "style": "chaos",
+  "styleShort": "ぶっ飛び",
+  "styleLabel": "ぶっ飛び（様式にとらわれない実験：和声・拍・音色が次々に裏切る）",
+  "form": "chaos24",
+  "formLabel": "ぶっ飛び 24小節（3つの仕掛けを駆け抜ける）",
+  "title": "Manouche Bleue (E)",
+  "key": "E",
+  "tempo": 168,
+  "tempoGenerated": 168,
+  "bars": 132,
+  "seed": 20261014,
+  "gen": 121,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 26
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 26
+   },
+   {
+    "id": "comp",
+    "name": "Comp (chaos)",
+    "prog": 6
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Emaj7(#11)",
+   "Gm7",
+   "A#m9",
+   "C#maj7",
+   "B9",
+   "Em9",
+   "Gm9",
+   "A#mMaj7",
+   "C#maj7",
+   "Emaj7",
+   "G7",
+   "Cmaj7",
+   "D#7",
+   "G#maj7",
+   "Dm7",
+   "G7",
+   "Cmaj7",
+   "D#13",
+   "G#maj7",
+   "B7",
+   "Emaj7",
+   "A#m7",
+   "D#7",
+   "G#maj7",
+   "G#9",
+   "D7(#11)",
+   "C#7alt",
+   "G7(#11)",
+   "C7alt",
+   "F#7(#11)",
+   "F7alt",
+   "B7(#11)",
+   "A#7alt",
+   "E7(#11)",
+   "B7alt",
+   "Emaj7(#11)"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 121). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-14_chaos_chaos24/2026-10-14_chaos_chaos24_midi-set.zip",
+   "midi": "demos/2026-10-14_chaos_chaos24/2026-10-14_chaos_chaos24_all.mid",
+   "info": "demos/2026-10-14_chaos_chaos24/info.md"
+  },
+  "audio": "demos/2026-10-14_chaos_chaos24/2026-10-14_chaos_chaos24.mp3",
+  "cover": "covers/2026-10-14_chaos_chaos24.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-14_chaos_chaos24-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-13_epic_cafe-bleue-fm",
+  "date": "2026-10-13",
+  "style": "epic",
+  "styleShort": "エピック",
+  "styleLabel": "エピック（映画音楽・マンシーニ路線：弦・独奏・ハープ・ホルン・ティンパニ）",
+  "form": "epic32w",
+  "formLabel": "エピック・ワルツ AABA 32小節・短調（3拍子の映画音楽）",
+  "title": "Café Bleue (Fm)",
+  "key": "Fm",
+  "tempo": 118,
+  "tempoGenerated": 70,
+  "bars": null,
+  "seed": 87719,
+  "status": "demo",
+  "audio": "demos/2026-10-13_epic_cafe-bleue-fm/cafe-bleue-fm_s87719.mp3",
+  "files": {
+   "info": "demos/2026-10-13_epic_cafe-bleue-fm/info.md",
+   "zip": "",
+   "midi": "demos/2026-10-13_epic_cafe-bleue-fm/Caf_Bleue_Fm_s87719_ALL.mid"
+  },
+  "youtube": "60JfDR2QWM0",
+  "cover": "covers/2026-10-13_epic_cafe-bleue-fm.jpg",
+  "coverKind": "video",
+  "scorePages": [
+   "scores/2026-10-13_epic_cafe-bleue-fm-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-12_mathrock_auto16m",
+  "date": "2026-10-12",
+  "style": "mathrock",
+  "styleShort": "実験ロック",
+  "styleLabel": "実験ロック（ギター・ベース・ドラムの3点／変拍子とループ）",
+  "form": "auto16m",
+  "formLabel": "16小節・短調（毎回ちがう）",
+  "title": "Rue d'Automne (Dm)",
+  "key": "Dm",
+  "tempo": 182,
+  "tempoGenerated": 182,
+  "bars": 89,
+  "seed": 20261012,
+  "gen": 121,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 30
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 30
+   },
+   {
+    "id": "comp",
+    "name": "Rhythm Gtr (riff)",
+    "prog": 30
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "A#maj7",
+   "Em7",
+   "A7b9",
+   "Dm7",
+   "Dm6",
+   "A#maj7",
+   "A13",
+   "Em7b5",
+   "A9",
+   "Dm6",
+   "Gm9",
+   "Dm9",
+   "Gm9",
+   "Dm6",
+   "Fmaj7",
+   "A#9",
+   "A#maj7",
+   "D#13",
+   "Dm9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 121). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-12_mathrock_auto16m/2026-10-12_mathrock_auto16m_midi-set.zip",
+   "midi": "demos/2026-10-12_mathrock_auto16m/2026-10-12_mathrock_auto16m_all.mid",
+   "info": "demos/2026-10-12_mathrock_auto16m/info.md"
+  },
+  "audio": "demos/2026-10-12_mathrock_auto16m/2026-10-12_mathrock_auto16m.mp3",
+  "cover": "covers/2026-10-12_mathrock_auto16m.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-12_mathrock_auto16m-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-12_indian_candramukhi-kanhra-adi-tala",
+  "date": "2026-10-12",
+  "style": "indian",
+  "styleShort": "インド古典",
+  "styleLabel": "インド古典（ラーガとターラ：ラヴィ・シャンカール型／シャクティ型）",
+  "form": "in_shakti",
+  "formLabel": "シャクティ型（マクラフリン：変拍子・ギターとヴァイオリンの掛け合い・コナッコル風）",
+  "title": "Candramukhi Kanhra ・ Adi Tala（シャクティ型）",
+  "key": "A",
+  "tempo": 242,
+  "tempoGenerated": 242,
+  "bars": null,
+  "seed": 45259,
+  "status": "demo",
+  "audio": "demos/2026-10-12_indian_candramukhi-kanhra-adi-tala/candramukhi-kanhra-adi-tala_s45259.mp3",
+  "files": {
+   "info": "demos/2026-10-12_indian_candramukhi-kanhra-adi-tala/info.md",
+   "zip": "",
+   "midi": "demos/2026-10-12_indian_candramukhi-kanhra-adi-tala/Candramukhi_Kanhra_Adi_Tala_s45259_ALL.mid"
+  },
+  "youtube": "lR5JCC_eh40",
+  "cover": "covers/2026-10-12_indian_candramukhi-kanhra-adi-tala.jpg",
+  "coverKind": "video",
+  "scorePages": [
+   "scores/2026-10-12_indian_candramukhi-kanhra-adi-tala-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-11_baroque_prelude16",
+  "date": "2026-10-11",
+  "style": "baroque",
+  "styleShort": "バロック",
+  "styleLabel": "バロック（バッハ風・対位法）",
+  "form": "prelude16",
+  "formLabel": "プレリュード 16小節（分散和音）",
+  "title": "Café Bleue (G)",
+  "key": "G",
+  "tempo": 104,
+  "bars": 89,
+  "seed": 20261011,
+  "gen": 121,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 6
+   },
+   {
+    "id": "solo",
+    "name": "Voice 2",
+    "prog": 6
+   },
+   {
+    "id": "comp",
+    "name": "Continuo",
+    "prog": 6
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   }
+  ],
+  "chordsOneChorus": [
+   "Gmaj7",
+   "Am9",
+   "D7",
+   "Gmaj7",
+   "Em9",
+   "D#13",
+   "Dmaj7",
+   "B7",
+   "Em7",
+   "Cmaj7",
+   "F#m7b5",
+   "B7",
+   "Em7",
+   "Am7",
+   "D7",
+   "Gmaj7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 121). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-11_baroque_prelude16/2026-10-11_baroque_prelude16_midi-set.zip",
+   "midi": "demos/2026-10-11_baroque_prelude16/2026-10-11_baroque_prelude16_all.mid",
+   "info": "demos/2026-10-11_baroque_prelude16/info.md"
+  },
+  "audio": "demos/2026-10-11_baroque_prelude16/cafe-bleue-g.mp3",
+  "tempoGenerated": 104,
+  "cover": "covers/2026-10-11_baroque_prelude16.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-11_baroque_prelude16-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-11_djent_cafe-a-django-am",
+  "date": "2026-10-11",
+  "style": "djent",
+  "styleShort": "ジェント／テクニカル・メタル",
+  "styleLabel": "ジェント／テクニカル・メタル（メシュガー型：奇数長のリフ×4拍子）",
+  "form": "djent32",
+  "formLabel": "ジェント 32小節（奇数長のリフが4拍子の上で回る）",
+  "title": "Café à Django (Am)",
+  "key": "Am",
+  "tempo": 128,
+  "bars": null,
+  "seed": 75601,
+  "status": "demo",
+  "audio": "demos/2026-10-11_djent_cafe-a-django-am/cafe-a-django-am_s75601.mp3",
+  "files": {
+   "info": "demos/2026-10-11_djent_cafe-a-django-am/info.md",
+   "zip": "demos/2026-10-11_djent_cafe-a-django-am/Caf_Django_Am_s75601_ALL.zip",
+   "midi": "demos/2026-10-11_djent_cafe-a-django-am/Caf_Django_Am_s75601_ALL.mid"
+  },
+  "tempoGenerated": 128,
+  "cover": "covers/2026-10-11_djent_cafe-a-django-am.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-11_djent_cafe-a-django-am-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-11_mathrock_rue-d-automne-em",
+  "date": "2026-10-11",
+  "style": "mathrock",
+  "styleShort": "実験ロック",
+  "styleLabel": "実験ロック（ギター・ベース・ドラムの3点／変拍子とループ）",
+  "form": "odd7",
+  "formLabel": "変拍子 7拍子 16小節（フリジアン）",
+  "title": "Rue d'Automne (Em)",
+  "key": "Em",
+  "tempo": 200,
+  "bars": null,
+  "seed": 3037,
+  "status": "demo",
+  "audio": "demos/2026-10-11_mathrock_rue-d-automne-em/rue-d-automne-em_s3037.mp3",
+  "files": {
+   "info": "demos/2026-10-11_mathrock_rue-d-automne-em/info.md",
+   "zip": "",
+   "midi": "demos/2026-10-11_mathrock_rue-d-automne-em/Rue_d_Automne_Em_s3037_ALL.mid"
+  },
+  "tempoGenerated": 200,
+  "cover": "covers/2026-10-11_mathrock_rue-d-automne-em.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-11_mathrock_rue-d-automne-em-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-11_swing_tempo-rapide-f",
+  "date": "2026-10-11",
+  "style": "swing",
+  "styleShort": "スタンダード・スウィング",
+  "styleLabel": "スタンダード・スウィング",
+  "form": "auto32",
+  "formLabel": "AABA 32小節",
+  "title": "Tempo Rapide (F)",
+  "key": "F",
+  "tempo": 232,
+  "bars": null,
+  "seed": 90269,
+  "status": "demo",
+  "audio": "demos/2026-10-11_swing_tempo-rapide-f/tempo-rapide-f_s90269.mp3",
+  "files": {
+   "info": "demos/2026-10-11_swing_tempo-rapide-f/info.md",
+   "zip": "",
+   "midi": "demos/2026-10-11_swing_tempo-rapide-f/Tempo_Rapide_F_s90269_ALL.mid"
+  },
+  "tempoGenerated": 271,
+  "cover": "covers/2026-10-11_swing_tempo-rapide-f.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-11_swing_tempo-rapide-f-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-11_gypsy_nuit-sans-fin-am",
+  "date": "2026-10-11",
+  "style": "gypsy",
+  "styleShort": "ジプシー・スウィング",
+  "styleLabel": "ジプシー・スウィング（マヌーシュ）",
+  "form": "manouche32",
+  "formLabel": "マヌーシュ AABA 32小節",
+  "title": "Nuit Sans Fin (Am)",
+  "key": "Am",
+  "tempo": 220,
+  "tempoGenerated": 232,
+  "bars": null,
+  "seed": 66825,
+  "status": "demo",
+  "audio": "demos/2026-10-11_gypsy_nuit-sans-fin-am/nuit-sans-fin-am_s66825.mp3",
+  "files": {
+   "info": "demos/2026-10-11_gypsy_nuit-sans-fin-am/info.md",
+   "zip": "",
+   "midi": "demos/2026-10-11_gypsy_nuit-sans-fin-am/Nuit_Sans_Fin_Am_s66825_ALL.mid"
+  },
+  "cover": "covers/2026-10-11_gypsy_nuit-sans-fin-am.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-11_gypsy_nuit-sans-fin-am-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-11_wa_manouche-bleue-dm",
+  "date": "2026-10-11",
+  "style": "wa",
+  "styleShort": "和",
+  "styleLabel": "和（日本音階：都節・ヨナ抜き・民謡・律・琉球）",
+  "form": "minyo16",
+  "formLabel": "民謡 16小節（2拍の掛け声のノリ）",
+  "title": "Manouche Bleue (Dm)",
+  "key": "Dm",
+  "tempo": 97,
+  "tempoGenerated": 97,
+  "bars": null,
+  "seed": 8060,
+  "status": "demo",
+  "audio": "demos/2026-10-11_wa_manouche-bleue-dm/manouche-bleue-dm_s8060.mp3",
+  "files": {
+   "info": "demos/2026-10-11_wa_manouche-bleue-dm/info.md",
+   "zip": "",
+   "midi": "demos/2026-10-11_wa_manouche-bleue-dm/Manouche_Bleue_Dm_s8060_ALL.mid"
+  },
+  "youtube": "SLaVgt6GdvQ",
+  "cover": "covers/2026-10-11_wa_manouche-bleue-dm.jpg",
+  "coverKind": "video",
+  "scorePages": [
+   "scores/2026-10-11_wa_manouche-bleue-dm-1.png"
+  ]
+ },
+ {
+  "id": "2026-10-11_contemporary_mobile-no-7-12-01234567891011",
+  "date": "2026-10-11",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_free",
+  "formLabel": "現代音楽（自由な形式：起承転結・頂点は黄金比）",
+  "title": "Mobile No.7 [12-01234567891011]",
+  "key": "C",
+  "tempo": 60,
+  "tempoGenerated": 60,
+  "bars": null,
+  "seed": 29957,
+  "status": "demo",
+  "audio": "demos/2026-10-11_contemporary_mobile-no-7-12-01234567891011/mobile-no-7-12-01234567891011_s29957.mp3",
+  "files": {
+   "info": "demos/2026-10-11_contemporary_mobile-no-7-12-01234567891011/info.md",
+   "zip": "",
+   "midi": "demos/2026-10-11_contemporary_mobile-no-7-12-01234567891011/Mobile_No_7_12-01234567891011_s29957_ALL.mid"
+  },
+  "cover": "covers/2026-10-11_contemporary_mobile-no-7-12-01234567891011.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-1.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-2.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-3.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-4.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-5.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-6.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-7.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-8.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-9.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-10.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-11.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-12.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-13.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-14.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-15.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-16.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-17.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-18.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-19.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-20.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-21.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-22.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-23.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-24.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-25.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-26.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-27.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-28.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-29.png",
+   "scores/2026-10-11_contemporary_mobile-no-7-12-01234567891011-30.png"
+  ]
+ },
+ {
+  "id": "2026-10-10_epic_blues-bleue-gm",
+  "date": "2026-10-10",
+  "style": "epic",
+  "styleShort": "エピック",
+  "styleLabel": "エピック（映画音楽・マンシーニ路線）",
+  "formLabel": "",
+  "title": "Blues Bleue (Gm)",
+  "key": "Gm",
+  "tempo": 60,
+  "bars": null,
+  "seed": 5279,
+  "status": "demo",
+  "audio": "demos/2026-10-10_epic_blues-bleue-gm/blues-bleue-gm_s5279.mp3",
+  "files": {
+   "info": "demos/2026-10-10_epic_blues-bleue-gm/info.md",
+   "zip": "demos/2026-10-10_epic_blues-bleue-gm/Blues_Bleue_Gm_s5279.zip",
+   "midi": "demos/2026-10-10_epic_blues-bleue-gm/Blues_Bleue_Gm_s5279_ALL.mid"
+  },
+  "tempoGenerated": 60,
+  "cover": "covers/2026-10-10_epic_blues-bleue-gm.jpg",
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-10-10_epic_blues-bleue-gm-1.png"
+  ]
+ }
+]

@@ -1,0 +1,64 @@
+{
+  "id": "2026-10-11_baroque_prelude16",
+  "date": "2026-10-11",
+  "style": "baroque",
+  "styleShort": "バロック",
+  "styleLabel": "バロック（バッハ風・対位法）",
+  "form": "prelude16",
+  "formLabel": "プレリュード 16小節（分散和音）",
+  "title": "Café Bleue (G)",
+  "key": "G",
+  "tempo": 104,
+  "bars": 89,
+  "seed": 20261011,
+  "gen": 121,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 6
+    },
+    {
+      "id": "solo",
+      "name": "Voice 2",
+      "prog": 6
+    },
+    {
+      "id": "comp",
+      "name": "Continuo",
+      "prog": 6
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    }
+  ],
+  "chordsOneChorus": [
+    "Gmaj7",
+    "Am9",
+    "D7",
+    "Gmaj7",
+    "Em9",
+    "D#13",
+    "Dmaj7",
+    "B7",
+    "Em7",
+    "Cmaj7",
+    "F#m7b5",
+    "B7",
+    "Em7",
+    "Am7",
+    "D7",
+    "Gmaj7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 121). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-11_baroque_prelude16/2026-10-11_baroque_prelude16_midi-set.zip",
+    "midi": "demos/2026-10-11_baroque_prelude16/2026-10-11_baroque_prelude16_all.mid",
+    "info": "demos/2026-10-11_baroque_prelude16/info.md"
+  },
+  "audio": "demos/2026-10-11_baroque_prelude16/cafe-bleue-g.mp3",
+  "tempoGenerated": 104
+}

@@ -1,0 +1,21 @@
+{
+  "id": "2026-10-10_epic_blues-bleue-gm",
+  "date": "2026-10-10",
+  "style": "epic",
+  "styleShort": "エピック",
+  "styleLabel": "エピック（映画音楽・マンシーニ路線）",
+  "formLabel": "",
+  "title": "Blues Bleue (Gm)",
+  "key": "Gm",
+  "tempo": 60,
+  "bars": null,
+  "seed": 5279,
+  "status": "demo",
+  "audio": "demos/2026-10-10_epic_blues-bleue-gm/blues-bleue-gm_s5279.mp3",
+  "files": {
+    "info": "demos/2026-10-10_epic_blues-bleue-gm/info.md",
+    "zip": "demos/2026-10-10_epic_blues-bleue-gm/Blues_Bleue_Gm_s5279.zip",
+    "midi": "demos/2026-10-10_epic_blues-bleue-gm/Blues_Bleue_Gm_s5279_ALL.mid"
+  },
+  "tempoGenerated": 60
+}

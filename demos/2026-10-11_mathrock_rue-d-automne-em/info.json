@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-11_mathrock_rue-d-automne-em",
+  "date": "2026-10-11",
+  "style": "mathrock",
+  "styleShort": "実験ロック",
+  "styleLabel": "実験ロック（ギター・ベース・ドラムの3点／変拍子とループ）",
+  "form": "odd7",
+  "formLabel": "変拍子 7拍子 16小節（フリジアン）",
+  "title": "Rue d'Automne (Em)",
+  "key": "Em",
+  "tempo": 200,
+  "bars": null,
+  "seed": 3037,
+  "status": "demo",
+  "audio": "demos/2026-10-11_mathrock_rue-d-automne-em/rue-d-automne-em_s3037.mp3",
+  "files": {
+    "info": "demos/2026-10-11_mathrock_rue-d-automne-em/info.md",
+    "zip": "",
+    "midi": "demos/2026-10-11_mathrock_rue-d-automne-em/Rue_d_Automne_Em_s3037_ALL.mid"
+  },
+  "tempoGenerated": 200
+}

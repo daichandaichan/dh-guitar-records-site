@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-11_swing_tempo-rapide-f",
+  "date": "2026-10-11",
+  "style": "swing",
+  "styleShort": "スタンダード・スウィング",
+  "styleLabel": "スタンダード・スウィング",
+  "form": "auto32",
+  "formLabel": "AABA 32小節",
+  "title": "Tempo Rapide (F)",
+  "key": "F",
+  "tempo": 232,
+  "bars": null,
+  "seed": 90269,
+  "status": "demo",
+  "audio": "demos/2026-10-11_swing_tempo-rapide-f/tempo-rapide-f_s90269.mp3",
+  "files": {
+    "info": "demos/2026-10-11_swing_tempo-rapide-f/info.md",
+    "zip": "",
+    "midi": "demos/2026-10-11_swing_tempo-rapide-f/Tempo_Rapide_F_s90269_ALL.mid"
+  },
+  "tempoGenerated": 271
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-11_gypsy_nuit-sans-fin-am",
+  "date": "2026-10-11",
+  "style": "gypsy",
+  "styleShort": "ジプシー・スウィング",
+  "styleLabel": "ジプシー・スウィング（マヌーシュ）",
+  "form": "manouche32",
+  "formLabel": "マヌーシュ AABA 32小節",
+  "title": "Nuit Sans Fin (Am)",
+  "key": "Am",
+  "tempo": 220,
+  "tempoGenerated": 232,
+  "bars": null,
+  "seed": 66825,
+  "status": "demo",
+  "audio": "demos/2026-10-11_gypsy_nuit-sans-fin-am/nuit-sans-fin-am_s66825.mp3",
+  "files": {
+    "info": "demos/2026-10-11_gypsy_nuit-sans-fin-am/info.md",
+    "zip": "",
+    "midi": "demos/2026-10-11_gypsy_nuit-sans-fin-am/Nuit_Sans_Fin_Am_s66825_ALL.mid"
+  }
+}

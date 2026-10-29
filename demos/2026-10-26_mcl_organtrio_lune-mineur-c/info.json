@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-26_mcl_organtrio_lune-mineur-c",
+  "date": "2026-10-26",
+  "style": "mcl_organtrio",
+  "styleShort": "マクラフリン風オルガン・トリオ",
+  "styleLabel": "マクラフリン風オルガン・トリオ（マクラフリン＝ギター、デフランチェスコ＝オルガンとベース、チェンバース＝ドラム）",
+  "form": "rhythm32",
+  "formLabel": "リズムチェンジ型 32小節",
+  "title": "Lune Mineur (C)",
+  "key": "C",
+  "tempo": 320,
+  "tempoGenerated": 320,
+  "bars": null,
+  "seed": 27663,
+  "status": "demo",
+  "audio": "demos/2026-10-26_mcl_organtrio_lune-mineur-c/lune-mineur-c_s27663.mp3",
+  "files": {
+    "info": "demos/2026-10-26_mcl_organtrio_lune-mineur-c/info.md",
+    "zip": "",
+    "midi": "demos/2026-10-26_mcl_organtrio_lune-mineur-c/Lune_Mineur_C_s27663_ALL.mid"
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-11_contemporary_mobile-no-7-12-01234567891011",
+  "date": "2026-10-11",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_free",
+  "formLabel": "現代音楽（自由な形式：起承転結・頂点は黄金比）",
+  "title": "Mobile No.7 [12-01234567891011]",
+  "key": "C",
+  "tempo": 60,
+  "tempoGenerated": 60,
+  "bars": null,
+  "seed": 29957,
+  "status": "demo",
+  "audio": "demos/2026-10-11_contemporary_mobile-no-7-12-01234567891011/mobile-no-7-12-01234567891011_s29957.mp3",
+  "files": {
+    "info": "demos/2026-10-11_contemporary_mobile-no-7-12-01234567891011/info.md",
+    "zip": "",
+    "midi": "demos/2026-10-11_contemporary_mobile-no-7-12-01234567891011/Mobile_No_7_12-01234567891011_s29957_ALL.mid"
+  }
+}

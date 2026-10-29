@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-11_djent_cafe-a-django-am",
+  "date": "2026-10-11",
+  "style": "djent",
+  "styleShort": "ジェント／テクニカル・メタル",
+  "styleLabel": "ジェント／テクニカル・メタル（メシュガー型：奇数長のリフ×4拍子）",
+  "form": "djent32",
+  "formLabel": "ジェント 32小節（奇数長のリフが4拍子の上で回る）",
+  "title": "Café à Django (Am)",
+  "key": "Am",
+  "tempo": 128,
+  "bars": null,
+  "seed": 75601,
+  "status": "demo",
+  "audio": "demos/2026-10-11_djent_cafe-a-django-am/cafe-a-django-am_s75601.mp3",
+  "files": {
+    "info": "demos/2026-10-11_djent_cafe-a-django-am/info.md",
+    "zip": "demos/2026-10-11_djent_cafe-a-django-am/Caf_Django_Am_s75601_ALL.zip",
+    "midi": "demos/2026-10-11_djent_cafe-a-django-am/Caf_Django_Am_s75601_ALL.mid"
+  },
+  "tempoGenerated": 128
+}

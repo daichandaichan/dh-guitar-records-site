@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-12_indian_candramukhi-kanhra-adi-tala",
+  "date": "2026-10-12",
+  "style": "indian",
+  "styleShort": "インド古典",
+  "styleLabel": "インド古典（ラーガとターラ：ラヴィ・シャンカール型／シャクティ型）",
+  "form": "in_shakti",
+  "formLabel": "シャクティ型（マクラフリン：変拍子・ギターとヴァイオリンの掛け合い・コナッコル風）",
+  "title": "Candramukhi Kanhra ・ Adi Tala（シャクティ型）",
+  "key": "A",
+  "tempo": 242,
+  "tempoGenerated": 242,
+  "bars": null,
+  "seed": 45259,
+  "status": "demo",
+  "audio": "demos/2026-10-12_indian_candramukhi-kanhra-adi-tala/candramukhi-kanhra-adi-tala_s45259.mp3",
+  "files": {
+    "info": "demos/2026-10-12_indian_candramukhi-kanhra-adi-tala/info.md",
+    "zip": "",
+    "midi": "demos/2026-10-12_indian_candramukhi-kanhra-adi-tala/Candramukhi_Kanhra_Adi_Tala_s45259_ALL.mid"
+  }
+}

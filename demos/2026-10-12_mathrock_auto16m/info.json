@@ -1,0 +1,72 @@
+{
+  "id": "2026-10-12_mathrock_auto16m",
+  "date": "2026-10-12",
+  "style": "mathrock",
+  "styleShort": "実験ロック",
+  "styleLabel": "実験ロック（ギター・ベース・ドラムの3点／変拍子とループ）",
+  "form": "auto16m",
+  "formLabel": "16小節・短調（毎回ちがう）",
+  "title": "Rue d'Automne (Dm)",
+  "key": "Dm",
+  "tempo": 182,
+  "tempoGenerated": 182,
+  "bars": 89,
+  "seed": 20261012,
+  "gen": 121,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 30
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 30
+    },
+    {
+      "id": "comp",
+      "name": "Rhythm Gtr (riff)",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "A#maj7",
+    "Em7",
+    "A7b9",
+    "Dm7",
+    "Dm6",
+    "A#maj7",
+    "A13",
+    "Em7b5",
+    "A9",
+    "Dm6",
+    "Gm9",
+    "Dm9",
+    "Gm9",
+    "Dm6",
+    "Fmaj7",
+    "A#9",
+    "A#maj7",
+    "D#13",
+    "Dm9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 121). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-12_mathrock_auto16m/2026-10-12_mathrock_auto16m_midi-set.zip",
+    "midi": "demos/2026-10-12_mathrock_auto16m/2026-10-12_mathrock_auto16m_all.mid",
+    "info": "demos/2026-10-12_mathrock_auto16m/info.md"
+  },
+  "audio": "demos/2026-10-12_mathrock_auto16m/2026-10-12_mathrock_auto16m.mp3"
+}

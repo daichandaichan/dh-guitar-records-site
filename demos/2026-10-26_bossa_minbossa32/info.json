@@ -1,0 +1,91 @@
+{
+  "id": "2026-10-26_bossa_minbossa32",
+  "date": "2026-10-26",
+  "style": "bossa",
+  "styleShort": "ボサノヴァ",
+  "styleLabel": "ボサノヴァ",
+  "form": "minbossa32",
+  "formLabel": "マイナー・ボサ AABA 32小節",
+  "title": "Étoile Sans Fin (Em)",
+  "key": "Em",
+  "tempo": 138,
+  "tempoGenerated": 138,
+  "bars": 172,
+  "seed": 20261026,
+  "gen": 143,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 24
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 24
+    },
+    {
+      "id": "comp",
+      "name": "Nylon Gtr",
+      "prog": 24
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "Em9",
+    "Em9",
+    "F#m7b5",
+    "B7b9",
+    "Em6/9",
+    "Am9",
+    "D9",
+    "Gmaj7",
+    "B7b9",
+    "Em6",
+    "Em9",
+    "F#m7b5",
+    "B7alt",
+    "Em9",
+    "Am9",
+    "D9",
+    "Gmaj7",
+    "B7b9",
+    "Gmaj7",
+    "Gm7",
+    "C7",
+    "Fmaj7",
+    "C7b9",
+    "Fmaj7",
+    "Am9",
+    "G#13",
+    "Gmaj7",
+    "B7alt",
+    "Em9",
+    "Em9",
+    "F#m7b5",
+    "B7b9",
+    "Em9",
+    "Am7",
+    "Am7",
+    "D7b9",
+    "Gmaj7",
+    "F9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-26_bossa_minbossa32/2026-10-26_bossa_minbossa32_midi-set.zip",
+    "midi": "demos/2026-10-26_bossa_minbossa32/2026-10-26_bossa_minbossa32_all.mid",
+    "info": "demos/2026-10-26_bossa_minbossa32/info.md"
+  },
+  "audio": "demos/2026-10-26_bossa_minbossa32/2026-10-26_bossa_minbossa32.mp3"
+}

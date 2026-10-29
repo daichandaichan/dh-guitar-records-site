@@ -1,0 +1,61 @@
+{
+  "id": "2026-10-20_djent_djentf16",
+  "date": "2026-10-20",
+  "style": "djent",
+  "styleShort": "ジェント／テクニカル・メタル",
+  "styleLabel": "ジェント／テクニカル・メタル（メシュガー型：奇数長のリフ×4拍子）",
+  "form": "djentf16",
+  "formLabel": "ジェント・フュージョン 16小節（拡張和音とテクニカルなリードの短い形）",
+  "title": "Manouche Mineur (Bbm)",
+  "key": "Bbm",
+  "tempo": 136,
+  "tempoGenerated": 136,
+  "bars": 105,
+  "seed": 20261020,
+  "gen": 143,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 30
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 30
+    },
+    {
+      "id": "comp",
+      "name": "Rhythm Gtr (djent)",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "A#m9",
+    "G#13",
+    "F#maj7(#11)",
+    "D#m11",
+    "F9",
+    "C#maj7(#11)",
+    "E7(#11)",
+    "F7alt"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-20_djent_djentf16/2026-10-20_djent_djentf16_midi-set.zip",
+    "midi": "demos/2026-10-20_djent_djentf16/2026-10-20_djent_djentf16_all.mid",
+    "info": "demos/2026-10-20_djent_djentf16/info.md"
+  },
+  "audio": "demos/2026-10-20_djent_djentf16/2026-10-20_djent_djentf16.mp3"
+}

@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D・H Guitar Records</title>
+<meta name="description" content="自作の自動作曲アプリ「Hot Club Generator」が毎日つくる、曲種別の自動作曲デモサイト。D・H Guitar Records。">
+
+<!-- ===== OGP / Twitter Card（X・LINE・Facebook・Discord等での共有プレビュー用）=====
+     現在は Netlify の既定URL。独自ドメイン取得後はここと sitemap.xml / robots.txt を差し替えてください -->
+<link rel="canonical" href="https://dh-guitar-records.netlify.app/">
+<meta property="og:type" content="music.album">
+<meta property="og:site_name" content="D・H Guitar Records">
+<meta property="og:title" content="D・H Guitar Records | Guitar Instrumental & Contemporary Music Label">
+<meta property="og:description" content="曲種ごとに自動作曲したデモを、毎日ひとつずつ公開する自動作曲デモサイトです。">
+<meta property="og:image" content="https://dh-guitar-records.netlify.app/jackets/moonlit-waltz.jpg">
+<meta property="og:url" content="https://dh-guitar-records.netlify.app/">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="D・H Guitar Records">
+<meta name="twitter:description" content="自動作曲デモサイト。曲種ごとのデモを毎日公開。">
+<meta name="twitter:image" content="https://dh-guitar-records.netlify.app/jackets/moonlit-waltz.jpg">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Noto+Serif+JP:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --bg:#151009;
+    --bg-alt:#1c1610;
+    --panel:#1f180f;
+    --ink:#f4ead9;
+    --ink-dim:#a99678;
+    --amber:#e0a153;
+    --amber-dim:#8a5f2c;
+    --line:rgba(244,234,217,.12);
+    --grain-op:.05;
+  }
+  *{box-sizing:border-box;}
+  body{
+    font-family:'Noto Serif JP','Fraunces',serif;
+    background:var(--bg);
+    color:var(--ink);
+    margin:0;
+    position:relative;
+    overflow-x:hidden;
+  }
+  .disp{font-family:'Fraunces',serif; font-variation-settings:'opsz' 60;}
+  .mono{font-family:'JetBrains Mono',monospace;}
+
+  /* film-grain texture overlay */
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+    opacity:var(--grain-op); mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* faint vignette */
+  body::after{
+    content:""; position:fixed; inset:0; z-index:1; pointer-events:none;
+    background:radial-gradient(ellipse at 50% 0%, transparent 40%, #0000 60%, #00000066 100%);
+  }
+
+  ::-webkit-scrollbar{width:9px;}
+  ::-webkit-scrollbar-thumb{background:#3a2f20;border-radius:0;}
+  ::selection{background:var(--amber);color:#1c1610;}
+
+  .hairline{border-color:var(--line);}
+  .kicker{letter-spacing:.32em; font-size:10.5px; font-family:'JetBrains Mono',monospace;}
+
+  /* ---- reveal-on-scroll ---- */
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .8s ease, transform .8s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* ---- vinyl record ---- */
+  .vinyl-wrap{position:relative; width:clamp(220px,30vw,340px); aspect-ratio:1/1; margin-left:auto;}
+  .vinyl{
+    width:100%; height:100%; border-radius:50%;
+    background:
+      repeating-radial-gradient(circle at 50% 50%, #0d0906 0 2px, #1a1410 2px 4px),
+      radial-gradient(circle at 38% 32%, #2a2119 0%, #0d0906 70%);
+    box-shadow:0 30px 60px -20px #000000aa, 0 0 0 1px #00000055;
+    animation:spin 22s linear infinite;
+    position:relative;
+  }
+  @media (prefers-reduced-motion:reduce){ .vinyl{animation:none;} }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+  .vinyl::before{
+    content:""; position:absolute; inset:36%; border-radius:50%;
+    background:radial-gradient(circle at 40% 35%, var(--amber) 0%, var(--amber-dim) 55%, #3a2812 100%);
+    box-shadow:0 4px 14px #00000088, inset 0 0 0 1px #00000033;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .vinyl::after{
+    content:""; position:absolute; inset:47.5%; border-radius:50%; background:#100c08;
+    box-shadow:0 0 0 1px #00000066;
+  }
+  .vinyl-label{
+    position:absolute; inset:36%; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-family:'Fraunces',serif; font-style:italic; font-size:11px; color:#2a1c0c; letter-spacing:.02em; text-align:center; z-index:2;
+    pointer-events:none;
+  }
+  .tonearm{
+    position:absolute; top:-8%; right:-6%; width:46%; height:2px; background:linear-gradient(90deg,#5c4a30,#a99678);
+    transform-origin:100% 0; transform:rotate(28deg); border-radius:2px;
+  }
+  .tonearm::after{
+    content:""; position:absolute; right:-6px; top:-6px; width:14px; height:14px; border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #cbb88f, #6b5734); box-shadow:0 2px 6px #0008;
+  }
+
+  /* ---- catalog tiles ---- */
+  .tile{
+    position:relative; border-radius:2px; padding:26px 20px; min-height:190px;
+    display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;
+    border:1px solid var(--line); cursor:default;
+    transition:transform .35s ease, box-shadow .35s ease;
+  }
+  .tile:hover{ transform:translateY(-6px); box-shadow:0 20px 40px -20px #000000aa; }
+  .tile .ghost-num{
+    position:absolute; top:6px; left:10px; font-family:'Fraunces',serif; font-style:italic; font-weight:400;
+    font-size:64px; color:#ffffff14; line-height:1; user-select:none;
+  }
+  .tile h3{ font-family:'Fraunces',serif; font-size:19px; font-weight:500; margin:0 0 4px; }
+  .tile p{ font-size:11.5px; color:#ffffffb0; margin:0; font-family:'JetBrains Mono',monospace; letter-spacing:.02em;}
+
+  /* ---- track rows ---- */
+  .track-row{
+    border-top:1px solid var(--line);
+    padding:20px 4px;
+    display:grid; grid-template-columns:auto auto 1fr auto; gap:16px; align-items:center;
+  }
+  .track-row:last-child{border-bottom:1px solid var(--line);}
+  /* ---- テーマ譜（右側のサムネイル → クリックで全画面。ダウンロードは出さない） ---- */
+  .score-thumb{ display:block; width:168px; height:104px; padding:0; border:1px solid var(--line); background:#fff; overflow:hidden; cursor:zoom-in; border-radius:2px; position:relative; }
+  .score-thumb img{ width:100%; height:100%; object-fit:cover; object-position:top left; display:block; -webkit-user-drag:none; user-select:none; -webkit-touch-callout:none; pointer-events:none; }
+  .score-thumb span{ position:absolute; right:4px; bottom:4px; font:10px 'JetBrains Mono',monospace; background:rgba(20,16,10,.78); color:#f1e6cf; padding:2px 6px; border-radius:99px; }
+  .score-thumb:hover{ border-color:var(--amber); }
+  @media (max-width:640px){ .score-thumb{ width:84px; height:56px; } .score-thumb span{ display:none; } }
+  #score-ov{ position:fixed; inset:0; z-index:9999; background:rgba(10,8,5,.94); display:none; flex-direction:column; }
+  #score-ov.open{ display:flex; }
+  #score-ov header{ display:flex; align-items:center; justify-content:space-between; gap:12px; padding:12px 18px; color:#f1e6cf; font-family:'JetBrains Mono',monospace; font-size:12px; }
+  #score-ov header button{ font:inherit; color:#f1e6cf; border:1px solid #6b5a3a; background:transparent; padding:6px 14px; border-radius:99px; cursor:pointer; }
+  #score-pages{ flex:1; overflow:auto; padding:0 16px 28px; display:flex; flex-direction:column; align-items:center; gap:18px; -webkit-overflow-scrolling:touch; }
+  #score-pages img{ width:min(1400px,100%); height:auto; background:#fff; display:block; -webkit-user-drag:none; user-select:none; -webkit-touch-callout:none; }
+  /* ---- スクショ対策（完全には防げない：キー操作・ウィンドウ切替・印刷で譜面を黒く隠し、透かしを重ねる） ---- */
+  body.score-guard #score-pages img, body.score-guard .score-thumb img{ visibility:hidden; }
+  body.score-guard #score-pages, body.score-guard .score-thumb{ background:#000; }
+  .score-wm{ position:relative; width:min(1400px,100%); }
+  .score-wm img{ width:100% !important; }
+  .score-wm::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.18;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='320' height='180'><text x='160' y='95' text-anchor='middle' font-family='sans-serif' font-size='20' fill='%23000' transform='rotate(-24 160 90)'>D・H Guitar Records</text></svg>"); }
+  @media print{ #score-ov, .score-thumb{ display:none !important; } }
+  .track-idx{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-dim); width:24px; }
+  .pill{
+    font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:4px 10px; border-radius:99px;
+    border:1px solid var(--line); color:var(--ink-dim); transition:border-color .2s,color .2s; letter-spacing:.03em;
+  }
+  .pill:hover{border-color:var(--amber); color:var(--amber);}
+
+  .btn-outline{
+    border:1px solid var(--ink); padding:12px 26px; font-family:'JetBrains Mono',monospace; font-size:11px;
+    letter-spacing:.12em; text-transform:uppercase; transition:background .2s,color .2s;
+  }
+  .btn-outline:hover{ background:var(--ink); color:var(--bg); }
+  .btn-solid{
+    background:var(--amber); color:#1c1408; padding:12px 26px; font-family:'JetBrains Mono',monospace; font-size:11px;
+    letter-spacing:.12em; text-transform:uppercase; transition:filter .2s;
+  }
+  .btn-solid:hover{ filter:brightness(1.12); }
+</style>
+</head>
+<body class="min-h-screen">
+
+  <!-- ===== Header ===== -->
+  <header class="relative z-20 border-b hairline sticky top-0 backdrop-blur bg-[var(--bg)]/85">
+    <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+      <a href="#top" class="flex items-baseline gap-2">
+        <span class="disp text-xl italic tracking-tight" id="label-name">D・H Guitar Records</span>
+        <span class="mono text-[10px] text-[var(--ink-dim)] hidden sm:inline">EST. 2026</span>
+      </a>
+      <nav class="hidden md:flex gap-7 kicker text-[var(--ink-dim)] uppercase">
+        <a href="#genres" class="hover:text-[var(--amber)] transition">Catalog</a>
+        <a href="#tracks" class="hover:text-[var(--amber)] transition">Pressings</a>
+        <a href="#demos" class="hover:text-[var(--amber)] transition">Demos</a>
+        <a href="#about" class="hover:text-[var(--amber)] transition">About</a>
+        <a href="#contact" class="hover:text-[var(--amber)] transition">Contact</a>
+      </nav>
+      <div id="header-social" class="flex items-center gap-2 text-[var(--ink-dim)] text-xs"></div>
+    </div>
+  </header>
+
+  <!-- ===== Hero ===== -->
+  <section id="top" class="relative z-10 max-w-6xl mx-auto px-5 pt-16 md:pt-24 pb-20 grid md:grid-cols-[1.2fr_.8fr] gap-10 items-center">
+    <div class="reveal">
+      <p class="kicker text-[var(--amber)] uppercase mb-6">Guitar Instrumental &amp; Contemporary Music Label</p>
+      <h1 class="disp text-4xl md:text-6xl font-medium leading-[1.08] mb-7">
+        D・H <span class="italic text-[var(--amber)]">Record</span>
+      </h1>
+      <p class="text-[var(--ink-dim)] max-w-md text-[15px] leading-relaxed mb-9">
+        ジャズ／ジプシー／フラメンコ／バロック／ゲーム音楽／エピック／現代音楽など、30の曲種。曲種ごとにコード進行・旋律・伴奏を組み立てたデモを公開しています。
+      </p>
+      <div class="flex gap-3 flex-wrap">
+        <a href="#tracks" class="btn-solid">Listen Now</a>
+        <a href="#about" class="btn-outline">About</a>
+      </div>
+    </div>
+    <div class="reveal vinyl-wrap" style="transition-delay:.15s">
+      <div class="vinyl"><span class="vinyl-label">NGR</span></div>
+      <div class="tonearm"></div>
+    </div>
+  </section>
+
+  <!-- ===== Genres / Catalog ===== -->
+  <section id="genres" class="relative z-10 max-w-6xl mx-auto px-5 py-16">
+    <div class="flex items-end justify-between mb-9 reveal">
+      <h2 class="disp text-2xl italic">The Catalog</h2>
+      <span class="kicker text-[var(--ink-dim)] uppercase" id="catalog-count">30 Song Types</span>
+    </div>
+    <div id="genre-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 reveal"></div>
+  </section>
+
+  <!-- ===== Tracks / Pressings ===== -->
+  <section id="tracks" class="relative z-10 max-w-6xl mx-auto px-5 py-16">
+    <div class="flex items-end justify-between mb-4 reveal">
+      <h2 class="disp text-2xl italic">Latest Pressings</h2>
+      <span class="kicker text-[var(--ink-dim)] uppercase" id="track-count"></span>
+    </div>
+    <div id="track-list" class="reveal"></div>
+    <p id="empty-state" class="text-center text-[var(--ink-dim)] text-sm py-20 hidden border-t border-b hairline mt-2">
+      <span class="mono text-[11px] tracking-widest uppercase text-[var(--amber)]">Coming Soon</span><br><br>
+      まだ公開トラックがありません。新曲が完成したら <code class="text-[var(--amber)]">tracks</code> 配列に追加してください。
+    </p>
+  </section>
+
+  <!-- ===== Demos（毎日自動作曲・ジャンル別） ===== -->
+  <div id="score-ov" role="dialog" aria-modal="true" aria-label="テーマ譜"><header><span id="score-title"></span><button type="button" id="score-close">✕ 閉じる</button></header><div id="score-pages"></div></div>
+  <section id="demos" class="relative z-10 max-w-6xl mx-auto px-5 py-16">
+    <div class="flex items-end justify-between mb-3 reveal">
+      <h2 class="disp text-2xl italic">Daily Demos</h2>
+      <span class="kicker text-[var(--ink-dim)] uppercase" id="demo-count"></span>
+    </div>
+    <div id="demo-filter" class="flex flex-wrap gap-2 mb-6"></div>
+    <div id="zip-bar" class="hidden items-center gap-3 mb-6 flex-wrap">
+      <button type="button" id="zip-all" class="pill">⬇ 全デモを zip で保存</button>
+      <span id="zip-msg" class="mono text-[10.5px] text-[var(--ink-dim)]"></span>
+    </div>
+    <div id="demo-list"></div>
+    <p id="demo-empty" class="text-center text-[var(--ink-dim)] text-sm py-14 hidden border-t border-b hairline">
+      <span class="mono text-[11px] tracking-widest uppercase text-[var(--amber)]">Coming Soon</span><br><br>最初のデモを準備中です。
+    </p>
+  </section>
+
+  <!-- ===== About ===== -->
+  <section id="about" class="relative z-10 max-w-4xl mx-auto px-5 py-20 reveal">
+    <div class="border hairline p-9 md:p-12">
+      <p class="disp italic text-2xl md:text-3xl leading-snug mb-6 text-[var(--amber)]">
+        “曲種ごとの作曲デモを聴く。”
+      </p>
+      <p class="text-[var(--ink-dim)] text-[14px] leading-relaxed">
+        D・H Guitar Records は、デモを公開する作曲サイトです。
+        ジャズ、ジプシー・スウィング、フラメンコ、バロック、ゲーム音楽、エピック、現代音楽など、曲種ごとにコード進行・旋律・伴奏を自動で組み立て、その草稿（デモ）をここで聴けるようにしています。
+        デモは MIDI の草稿です。後日、Cubase で音源とアレンジを整えた「デモアレンジ」として、あらためて公開予定。
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== Footer ===== -->
+  <footer id="contact" class="relative z-10 border-t hairline mt-6">
+    <div class="max-w-6xl mx-auto px-5 py-14 text-center space-y-8">
+      <div>
+        <p class="kicker text-[var(--ink-dim)] uppercase mb-4">Follow &amp; Listen</p>
+        <div id="footer-social" class="flex flex-wrap items-center justify-center gap-2"></div>
+      </div>
+      <div class="mono text-[10.5px] text-[var(--ink-dim)] space-y-1.5">
+        <p id="footer-copyright"></p>
+        <p>Demos generated with Hot Club Generator（自作の自動作曲アプリ）</p>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  // ------------------------------------------------------------
+  // レーベル設定
+  // ------------------------------------------------------------
+  const LABEL_NAME = "D・H Guitar Records";
+  const SITE_URL = "https://dh-guitar-records.netlify.app"; // 独自ドメイン取得後に差し替え（シェアURL生成に使用）
+
+  // ------------------------------------------------------------
+  // SNS / 配信プラットフォーム導線（レーベル全体）
+  // URLが空文字のものは自動的に非表示になります。取得・開設し次第ここを埋めてください。
+  // ------------------------------------------------------------
+  const SOCIAL_LINKS = [
+    { key: "x",         label: "X",            icon: "𝕏",  url: "https://x.com/EV6J3QHr3V4wB8k" },
+    { key: "instagram", label: "Instagram",    icon: "📷", url: "https://www.instagram.com/daisukehanano" },
+    { key: "tiktok",    label: "TikTok",       icon: "🎵", url: "" },
+    { key: "youtube",   label: "YouTube",      icon: "▶",  url: "https://www.youtube.com/@hananodaisuke1983" },
+    { key: "spotify",   label: "Spotify",      icon: "🟢", url: "" },
+    { key: "appleMusic",label: "Apple Music",  icon: "🎧", url: "" },
+  ];
+
+  // ------------------------------------------------------------
+  // ジャンル定義（duotone配色はカタログタイルに使用）
+  // ------------------------------------------------------------
+  const genres = [
+    { key: "jazz",       label: "Jazz Guitar",            desc: "スムース／モダン／メロウ",       grad: "linear-gradient(150deg,#3a2a17,#6b4423)" },
+    { key: "flamenco",   label: "Flamenco Guitar",        desc: "情熱的なラスゲアード",           grad: "linear-gradient(150deg,#3d1712,#7a2e1f)" },
+    { key: "classic",    label: "Classic Guitar",         desc: "ナイロン弦／バロック・ロマン派", grad: "linear-gradient(150deg,#2e2416,#5c4a26)" },
+    { key: "hrhm",       label: "HR/HM",                  desc: "ディストーション／速弾き",       grad: "linear-gradient(150deg,#150a0a,#3a0f0f)" },
+    { key: "avantgarde", label: "Contemporary Classical", desc: "12音技法／ミニマリズム",         grad: "linear-gradient(150deg,#101a1c,#24393c)" },
+    { key: "epic",       label: "Epic / Cinematic",       desc: "映画音楽・弦とホルンの大きな物語", grad: "linear-gradient(150deg,#1a1d2e,#3b3a5c)", demo: "epic" },
+  ];
+
+  // ------------------------------------------------------------
+  // 楽曲データ（新曲追加時はこの配列にオブジェクトを追加してください）
+  // 例:
+  // {
+  //   title: "曲名",
+  //   genre: "jazz",
+  //   audio: "audio/example.mp3",
+  //   jacket: "jackets/example.jpg",
+  //   releaseDate: "2026-08-07",
+  //   copyright: `© ${new Date().getFullYear()} ${LABEL_NAME} All Rights Reserved.`,
+  //   rights: "Licensed via Suno AI Commercial License",
+  //   links: {                                   // TuneCore配信後、各ストアURLが発行され次第埋める（空欄は非表示）
+  //     spotify: "", appleMusic: "", youtubeMusic: "", amazonMusic: "",
+  //   },
+  // }
+  // ------------------------------------------------------------
+  const tracks = [
+    {
+      title: "月明かりのワルツ (Moonlit Waltz)",
+      genre: "jazz",
+      audio: "audio/moonlit-waltz.mp3",
+      jacket: "jackets/moonlit-waltz.jpg",
+      releaseDate: "2026-09-12",
+      copyright: `© ${new Date().getFullYear()} ${LABEL_NAME} All Rights Reserved.`,
+      rights: "Licensed via Suno AI Commercial License",
+      links: { spotify: "", appleMusic: "", youtubeMusic: "", amazonMusic: "" },
+    },
+  ];
+
+  const STREAM_ICONS = { spotify: "🟢", appleMusic: "🎧", youtubeMusic: "▶", amazonMusic: "🛒" };
+  const STREAM_LABELS = { spotify: "Spotify", appleMusic: "Apple Music", youtubeMusic: "YouTube Music", amazonMusic: "Amazon Music" };
+  const slugify = (s) => String(s).toLowerCase().trim().replace(/[^\p{L}\p{N}]+/gu, "-").replace(/^-+|-+$/g, "");
+
+  function renderSocialRow(containerId, withLabel) {
+    const box = document.getElementById(containerId);
+    if (!box) return;
+    const active = SOCIAL_LINKS.filter(s => s.url && ["x", "instagram", "youtube"].includes(s.key));
+    if (active.length === 0) {
+      box.innerHTML = `<span class="mono text-[11px] text-[var(--ink-dim)]/60">（SNS・配信アカウント準備中）</span>`;
+      return;
+    }
+    box.innerHTML = active.map(s => withLabel
+      ? `<a href="${s.url}" target="_blank" rel="noopener" title="${s.label}"
+           class="h-10 px-4 rounded-full border hairline flex items-center gap-2 hover:border-[var(--amber)] hover:text-[var(--amber)] transition text-sm"><span>${s.icon}</span><span class="mono text-[12px]">${s.label}</span></a>`
+      : `<a href="${s.url}" target="_blank" rel="noopener" title="${s.label}"
+           class="w-9 h-9 rounded-full border hairline flex items-center justify-center hover:border-[var(--amber)] hover:text-[var(--amber)] transition text-sm">${s.icon}</a>`
+    ).join("");
+  }
+
+  function renderTrackLinks(t) {
+    const links = t.links || {};
+    const streamBtns = Object.keys(STREAM_ICONS)
+      .filter(k => links[k])
+      .map(k => `<a href="${links[k]}" target="_blank" rel="noopener" class="pill">${STREAM_ICONS[k]} ${STREAM_LABELS[k]}</a>`)
+      .join("");
+
+    const shareUrl = `${SITE_URL}/#track-${slugify(t.title)}`;
+    const shareText = encodeURIComponent(`${t.title} / ${LABEL_NAME}`);
+    const shareBtns = `
+      <a href="https://twitter.com/intent/tweet?text=${shareText}&url=${encodeURIComponent(shareUrl)}" target="_blank" rel="noopener" class="pill">Xでシェア</a>
+      <a href="https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareUrl)}" target="_blank" rel="noopener" class="pill">LINEでシェア</a>
+      <button type="button" onclick="navigator.clipboard.writeText('${shareUrl}').then(()=>this.textContent='✓ コピー済み')" class="pill">🔗 リンクをコピー</button>
+    `;
+
+    return `<div class="flex flex-wrap gap-1.5 mt-3">${streamBtns}${shareBtns}</div>`;
+  }
+
+  // ------------------------------------------------------------
+  // レンダリング
+  // ------------------------------------------------------------
+  document.getElementById("label-name").textContent = LABEL_NAME;
+  document.getElementById("footer-copyright").textContent =
+    `© ${new Date().getFullYear()} ${LABEL_NAME} All Rights Reserved.`;
+
+  renderSocialRow("header-social");
+  renderSocialRow("footer-social", true);
+
+  // ---- The Catalog：自動作曲アプリ（Hot Club Generator）の曲種。デモがある曲種は押すとタブへ移動 ----
+    // カテゴリのまとめ：フュージョン各型は「モダン／フュージョン」、オルガン・トリオ（デフランチェスコ／チェンバース型）は「マクラフリン風オルガンジャズ」に含める（語法はアプリで選べる）
+  const CAT_OF = { fusion: "modern", fu_corea: "modern", fu_weather: "modern", fu_metheny: "modern", fu_funk: "modern", fu_smooth: "modern", fu_latin: "modern", fu_prog: "modern", mcl_organtrio: "mcl_organ" };
+  const catOf = (s) => CAT_OF[s] || s;
+  const CAT_LABEL = { modern: "モダン／フュージョン", mcl_organ: "マクラフリン風オルガンジャズ" };
+  const SONG_TYPES = [{"k":"gypsy","s":"ジプシー・スウィング","d":"マヌーシュ"},{"k":"swing","s":"スタンダード・スウィング","d":""},{"k":"bebop","s":"ビバップ","d":"速め・8分主体"},{"k":"ballad","s":"バラード","d":""},{"k":"bossa","s":"ボサノヴァ","d":""},{"k":"soul","s":"ソウル・ジャズ／ハードバップ","d":""},{"k":"modern","s":"モダン／フュージョン","d":"ストレート8分／フュージョン各型（コリア・ウェザー・メセニー・ハンコック・スムース・ラテン・ロック・プログレ）"},{"k":"odd","s":"変拍子","d":"5・7・9・11・13・15拍子"},{"k":"flamenco","s":"フラメンコ","d":"ソレア・ブレリア・タンゴス"},{"k":"brazil","s":"ブラジル","d":"サンバ・ショーロ・フレヴォ"},{"k":"latin","s":"ラテン","d":"モントゥーノ・サルサ・チャチャチャ"},{"k":"neo","s":"ネオクラシカル","d":"ハーモニック・マイナー"},{"k":"baroque","s":"バロック","d":"バッハ風・対位法"},{"k":"organjazz","s":"オルガン・ジャズ","d":"ジミー・スミス風"},{"k":"classical","s":"クラシックギター","d":"編曲もの"},{"k":"mcl_fusion","s":"マクラフリン風フュージョン","d":"歪んだギターとエレピ・速い16分・ラテンの8分"},{"k":"mcl_organ","s":"マクラフリン風オルガンジャズ","d":"ライフタイム型（歪んだギターとオルガン）／オルガン・トリオ（デフランチェスコ＝オルガン、チェンバース＝ドラム）"},{"k":"mcl_mahav","s":"マクラフリン風マハヴィシュヌ","d":"モードのヴァンプ・変拍子・速いユニゾン"},{"k":"guitartrio","s":"スーパー・ギタートリオ","d":"ギター3本：マクラフリン・パコ・ディ・メオラ"},{"k":"mathrock","s":"実験ロック","d":"ギター・ベース・ドラムの3点／変拍子とループ"},{"k":"wa","s":"和","d":"日本音階：都節・ヨナ抜き・民謡・律・琉球"},{"k":"chaos","s":"ぶっ飛び","d":"様式にとらわれない実験：和声・拍・音色が次々に裏切る"},{"k":"game","s":"ゲーム音楽","d":"RPG風：ドラクエ風の序曲・お城・フィールド、FF風のプレリュード・バトル・感動"},{"k":"chip","s":"ゲーム音楽","d":"ファミコン風・8ビット音源：矩形波2つ・三角波・ノイズ"},{"k":"epic","s":"エピック","d":"映画音楽・マンシーニ路線：弦・独奏・ハープ・ホルン・ティンパニ"},{"k":"contemporary","s":"現代音楽","d":"ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか"},{"k":"indian","s":"インド古典","d":"ラーガとターラ：ラヴィ・シャンカール型／シャクティ型"},{"k":"djent","s":"ジェント／テクニカル・メタル","d":"メシュガー型：奇数長のリフ×4拍子"},{"k":"arena","s":"ロック","d":"80年代の産業ロック：シンセのリフとパワー・コード・歌うギター／パワー・バラードも"},{"k":"waltz","s":"ジャズ・ワルツ","d":""}];
+  const genreGrid = document.getElementById("genre-grid");
+  SONG_TYPES.forEach((t, i) => {
+    const h = (i * 14.4 + 18) % 360;
+    const el = document.createElement("div");
+    el.className = "tile"; el.dataset.style = t.k;
+    el.style.background = `linear-gradient(150deg,hsl(${h} 28% 13%),hsl(${h} 34% 28%))`;
+    el.innerHTML = `
+      <span class="ghost-num">${String(i + 1).padStart(2, "0")}</span>
+      <h3 class="text-white">${t.s}</h3>
+      <p class="text-white/70">${t.d || ""}</p>
+      <span class="mono text-[10px] text-white/50 mt-2 tile-state">準備中</span>`;
+    genreGrid.appendChild(el);
+  });
+  window.__catalogCount = (list) => {
+    const n = {}; list.forEach(d => { const c = catOf(d.style); n[c] = (n[c] || 0) + 1; });
+    genreGrid.querySelectorAll(".tile").forEach(el => {
+      const c = n[el.dataset.style] || 0, st = el.querySelector(".tile-state");
+      if (c) {
+        st.textContent = "▶ デモ " + c + "曲"; st.style.color = "var(--amber)";
+        el.style.cursor = "pointer"; el.style.borderColor = "var(--amber-dim)";
+        el.onclick = () => { window.__demoFilter && window.__demoFilter(el.dataset.style); document.getElementById("demos").scrollIntoView({ behavior: "smooth" }); };
+      } else { el.style.opacity = ".6"; }
+    });
+  };
+
+  document.getElementById("track-count").textContent = `${tracks.length} Track${tracks.length === 1 ? "" : "s"}`;
+
+  const trackList = document.getElementById("track-list");
+  const emptyState = document.getElementById("empty-state");
+  if (tracks.length === 0) {
+    emptyState.classList.remove("hidden");
+  } else {
+    tracks.forEach((t, i) => {
+      const genreInfo = genres.find(g => g.key === t.genre);
+      const el = document.createElement("div");
+      el.id = `track-${slugify(t.title)}`;
+      el.className = "track-row scroll-mt-24";
+      el.innerHTML = `
+        <span class="track-idx">${String(i + 1).padStart(2, "0")}</span>
+        ${t.jacket
+          ? `<img src="${t.jacket}" alt="${t.title}" class="w-16 h-16 object-cover bg-white/5 flex-shrink-0" style="box-shadow:0 8px 20px -8px #000a;">`
+          : `<div class="w-16 h-16 flex items-center justify-center flex-shrink-0 text-lg" style="background:${(genreInfo && genreInfo.grad) || 'linear-gradient(150deg,#2a2117,#3a2f20)'};box-shadow:0 8px 20px -8px #000a;">🎵</div>`}
+        <div class="min-w-0">
+          <p class="disp text-lg truncate">${t.title}</p>
+          <p class="mono text-[10.5px] text-[var(--ink-dim)] uppercase tracking-wide mt-0.5">${genreInfo ? genreInfo.label : t.genre} ・ ${t.releaseDate || ''}</p>
+          ${t.video ? `<video controls playsinline preload="metadata" src="${t.video}" ${t.jacket ? `poster="${t.jacket}"` : ''} class="w-full mt-3 bg-black" style="max-width:640px"></video>` : t.audio ? `<audio controls src="${t.audio}" class="w-full mt-3 h-8"></audio>` : ''}
+          ${renderTrackLinks(t)}
+        </div>
+        <p class="mono text-[9px] text-[var(--ink-dim)]/70 self-start text-right hidden md:block">${t.copyright || ''}</p>
+      `;
+      trackList.appendChild(el);
+    });
+  }
+
+  // ------------------------------------------------------------
+  // Daily Demos（demos.json を読み、曲種（アプリのスタイル）別に表示・再生）
+  // ------------------------------------------------------------
+  (function () {
+    const listEl = document.getElementById("demo-list"), filterEl = document.getElementById("demo-filter");
+    const countEl = document.getElementById("demo-count"), emptyEl = document.getElementById("demo-empty");
+    const esc = (s) => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+    // MIDI のダウンロードは、制作者が手元のファイル／localhost で開いた時だけ表示する（公開サイトでは再生のみ）
+    const OWNER = location.protocol === "file:" || ["localhost", "127.0.0.1"].includes(location.hostname);
+    const CAN_EMBED_YT = location.protocol === "file:" || /(^|\.)(netlify\.app|github\.io)$/.test(location.hostname) || ["localhost", "127.0.0.1"].includes(location.hostname);
+    // 全デモを1つの zip で保存（制作者の手元・Artifact のみ。公開サイトでは出さない）
+    (async () => {
+      let dl = null; try { dl = window.claude && window.claude.use ? await window.claude.use("downloads") : null; } catch (e) {}
+      if (!OWNER && !dl) return;
+      const bar = document.getElementById("zip-bar"), btn = document.getElementById("zip-all"), msg = document.getElementById("zip-msg");
+      bar.classList.remove("hidden"); bar.classList.add("flex");
+      const loadJSZip = () => window.JSZip ? Promise.resolve() : new Promise((ok, ng) => { const sc = document.createElement("script"); sc.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"; sc.onload = ok; sc.onerror = () => ng(new Error("zip ライブラリを読み込めません")); document.head.appendChild(sc); });
+      btn.onclick = async () => {
+        btn.disabled = true;
+        try {
+          msg.textContent = "準備中…"; await loadJSZip();
+          const list = await fetch("demos.json").then(r => r.json()); const zip = new JSZip(); let n = 0;
+          zip.file("demos.json", JSON.stringify(list, null, 1));
+          for (const d of list) {
+            const dir = zip.folder(d.id + "_" + String(d.title).replace(/[\/:*?"<>|]/g, "").replace(/\s+/g, "_"));
+            const add = async (url, name) => { if (!url) return; try { const r = await fetch(url); if (r.ok) { dir.file(name || url.split("/").pop(), await r.blob()); } } catch (e) {} };
+            await add(d.audio); await add(d.files && d.files.info, "info.md"); await add(d.cover);
+            msg.textContent = (++n) + " / " + list.length + " 曲を追加";
+          }
+          msg.textContent = "zip を作成中…";
+          const blob = await zip.generateAsync({ type: "blob", compression: "STORE" });
+          const name = "DH-Guitar-Records_demos_" + new Date().toISOString().slice(0, 10) + ".zip";
+          if (dl) { await dl.save({ filename: name, data: blob }); }
+          else { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
+          msg.textContent = "保存しました（" + (blob.size / 1048576).toFixed(1) + " MB）";
+        } catch (e) { msg.textContent = (e && e.code === "declined") ? "キャンセルしました" : "失敗しました：" + ((e && e.message) || e); }
+        btn.disabled = false;
+      };
+    })();
+    let demos = [], current = "all", eng = null, audioEl = null, playingId = null, libPromise = null;
+
+    const loadScript = (src) => new Promise((ok, ng) => {
+      const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = () => ng(new Error(src)); document.head.appendChild(s);
+    });
+    const loadLib = () => libPromise || (libPromise = loadScript("player/core.js").then(() => loadScript("player/engine.js")));
+
+    function stop(keep) {
+      if (eng) { try { eng.stop(); } catch (e) {} }
+      if (audioEl) { audioEl.pause(); }
+      document.querySelectorAll(".demo-video video").forEach(v => { if (v !== keep) v.pause(); });
+      document.querySelectorAll(".demo-video[data-yt]").forEach(b => { b.innerHTML = ""; b.removeAttribute("data-yt"); b.classList.add("hidden"); });
+      playingId = null;
+      document.querySelectorAll("[data-play]").forEach(b => { b.textContent = "▶ 再生"; });
+    }
+
+    async function play(d, btn) {
+      if (playingId === d.id) { stop(); return; }
+      stop();
+      if (d.youtube && CAN_EMBED_YT) {                                // YouTube の埋め込み：再生すると音声と映像が同時に動く
+        const box = btn.closest(".track-row").querySelector(".demo-video");
+        box.setAttribute("data-yt", d.youtube);
+        box.innerHTML = '<div style="position:relative;width:100%;max-width:640px;aspect-ratio:16/9;background:#000">' +
+          '<iframe src="https://www.youtube-nocookie.com/embed/' + encodeURIComponent(d.youtube) + '?autoplay=1&rel=0&modestbranding=1" ' +
+          'title="' + esc(d.title) + '" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen ' +
+          'style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe></div>';
+        box.classList.remove("hidden");
+        playingId = d.id; btn.textContent = "■ 止める";
+        return;
+      }
+      if (d.video) {                                  // 動画（音声入りMP4）：再生すると音声と映像が同時に動く
+        const box = btn.closest(".track-row").querySelector(".demo-video");
+        let v = box.querySelector("video");
+        if (!v) {
+          v = document.createElement("video");
+          v.src = d.video; v.controls = true; v.playsInline = true; v.preload = "auto";
+          v.className = "w-full bg-black"; v.style.maxWidth = "640px";
+          v.onplay = () => { stop(v); playingId = d.id; btn.textContent = "■ 止める"; };
+          v.onpause = () => { if (playingId === d.id) { playingId = null; btn.textContent = "▶ 再生"; } };
+          v.onended = () => { v.currentTime = 0; };
+          box.appendChild(v);
+        }
+        box.classList.remove("hidden");
+        v.play().catch(e => { btn.textContent = "再生できません"; console.error(e); });
+        return;
+      }
+      if (d.audio) {                                  // 書き出し済みの MP3 を再生
+        if (!audioEl) { audioEl = new Audio(); audioEl.onended = () => stop(); }
+        audioEl.src = d.audio; audioEl.play(); playingId = d.id; btn.textContent = "■ 止める";
+        return;
+      }
+      btn.textContent = "読み込み中…";
+      try {
+        await loadLib();
+        const res = await fetch(d.files.song); const { pack } = await res.json();
+        const song = window.HCG.unpackSong(pack);
+        if (!eng) eng = new window.HCGX.Engine();
+        eng.ensure();                                  // iOS: ボタン操作の流れの中で音声を用意
+        eng.load(song, false);
+        eng.onTick = (b) => { if (b > song.totalBeats + 2) stop(); };
+        playingId = d.id; btn.textContent = "■ 止める";
+        setTimeout(() => eng.play(0), 20);
+      } catch (e) {
+        btn.textContent = "再生できません"; console.error(e);
+      }
+    }
+
+    // テーマ譜の全画面表示（閲覧のみ：保存ボタン・右クリック保存・ドラッグ保存は出さない）
+    const ov = document.getElementById("score-ov"), pagesEl = document.getElementById("score-pages");
+    function closeScore() { ov.classList.remove("open"); pagesEl.innerHTML = ""; document.body.style.overflow = ""; }
+    function openScore(d) {
+      document.getElementById("score-title").textContent = d.title + "　テーマ譜（閲覧のみ）";
+      pagesEl.innerHTML = d.scorePages.map(u => `<div class="score-wm"><img src="${esc(u)}" alt="テーマ譜" draggable="false"></div>`).join("");
+      ov.classList.add("open"); document.body.style.overflow = "hidden"; pagesEl.scrollTop = 0;
+    }
+    // スクショ対策：PrintScreen／Win+Shift+S／Cmd+Shift+3・4・5／ウィンドウ切替／印刷の間は、譜面を黒く隠す
+    let guardTimer = null;
+    const guardOn = (ms) => { document.body.classList.add("score-guard"); clearTimeout(guardTimer); guardTimer = setTimeout(() => { if (document.hasFocus() && !document.hidden) document.body.classList.remove("score-guard"); }, ms || 1500); };
+    document.addEventListener("keydown", (e) => {
+      const k = e.key;
+      if (k === "PrintScreen" || k === "Snapshot" || ((e.metaKey || e.ctrlKey) && e.shiftKey && /^(s|S|3|4|5)$/.test(k)) || ((e.ctrlKey || e.metaKey) && /^(p|P|s|S)$/.test(k) && ov.classList.contains("open"))) guardOn(2500);
+    }, true);
+    document.addEventListener("keyup", (e) => { if (e.key === "PrintScreen" || e.key === "Snapshot") guardOn(2500); }, true);
+    window.addEventListener("blur", () => { if (ov.classList.contains("open")) document.body.classList.add("score-guard"); });
+    window.addEventListener("focus", () => { setTimeout(() => document.body.classList.remove("score-guard"), 300); });
+    document.addEventListener("visibilitychange", () => { if (document.hidden) { if (ov.classList.contains("open")) document.body.classList.add("score-guard"); } else setTimeout(() => document.body.classList.remove("score-guard"), 300); });
+    window.addEventListener("beforeprint", () => document.body.classList.add("score-guard"));
+    window.addEventListener("afterprint", () => document.body.classList.remove("score-guard"));
+    document.getElementById("score-close").onclick = closeScore;
+    ov.addEventListener("click", (e) => { if (e.target === ov || e.target === pagesEl) closeScore(); });
+    ov.addEventListener("contextmenu", (e) => e.preventDefault());
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape" && ov.classList.contains("open")) closeScore(); });
+    document.addEventListener("contextmenu", (e) => { if (e.target.closest && e.target.closest(".score-thumb")) e.preventDefault(); });
+
+    function render() {
+      const items = demos.filter(d => current === "all" || catOf(d.style) === current);
+      countEl.textContent = items.length + " Demo" + (items.length === 1 ? "" : "s");
+      emptyEl.classList.toggle("hidden", demos.length > 0);
+      listEl.innerHTML = "";
+      items.forEach((d, i) => {
+        const el = document.createElement("div");
+        el.className = "track-row";
+        el.innerHTML = `
+          <span class="track-idx">${esc(d.date.slice(5).replace("-", "/"))}</span>
+          ${d.cover ? `<img class="w-16 h-16 flex-shrink-0 object-cover" src="${esc(d.cover)}" alt="" loading="lazy" decoding="async" onerror="this.outerHTML='&lt;div class=&quot;w-16 h-16 flex items-center justify-center text-lg flex-shrink-0&quot; style=&quot;background:linear-gradient(150deg,#2a2117,#5c4a26)&quot;&gt;♪&lt;/div&gt;'">` : `<div class="w-16 h-16 flex items-center justify-center text-lg flex-shrink-0" style="background:linear-gradient(150deg,#2a2117,#5c4a26)">♪</div>`}
+          <div class="min-w-0">
+            <p class="disp text-lg truncate">${esc(d.title)}</p>
+            <p class="mono text-[10.5px] text-[var(--ink-dim)] uppercase tracking-wide mt-0.5">${esc(d.styleShort || d.style)} ・ ${[d.key, d.tempo ? d.tempo + ' BPM' : '', d.bars ? d.bars + ' bars' : ''].filter(Boolean).map(esc).join(' ・ ')}</p>
+            <p class="text-[12px] text-[var(--ink-dim)] mt-1">${esc(d.formLabel)}${d.tempoNote ? " ／ " + esc(d.tempoNote) : ""}</p>
+            <div class="flex flex-wrap gap-1.5 mt-3">
+              <button type="button" class="pill" data-play="${esc(d.id)}">▶ 再生</button>
+              ${d.youtube ? `<a class="pill" href="https://youtu.be/${esc(d.youtube)}" target="_blank" rel="noopener">YouTube で見る</a>` : ""}
+            </div>
+            <div class="demo-video hidden mt-3"></div>
+          </div>
+          ${(d.scorePages && d.scorePages.length) ? `<button type="button" class="score-thumb" data-score="${esc(d.id)}" aria-label="テーマ譜を全画面で見る"><img src="${esc(d.scorePages[0])}" alt="テーマ譜" loading="lazy" decoding="async" draggable="false"><span>譜面</span></button>` : "<span></span>"}`;
+        el.querySelector("[data-play]").onclick = (ev) => play(d, ev.currentTarget);
+        const sb = el.querySelector("[data-score]"); if (sb) sb.onclick = () => openScore(d);
+        listEl.appendChild(el);
+      });
+    }
+
+    function renderFilter() {
+      const seen = {}; demos.forEach(d => { const c = catOf(d.style); seen[c] = CAT_LABEL[c] || d.styleShort || d.style; });
+      const opts = [{ key: "all", label: "All" }].concat(Object.keys(seen).sort().map(k => ({ key: k, label: seen[k] })));
+      filterEl.innerHTML = opts.map(o => `<button type="button" class="pill ${o.key === current ? "!border-[var(--amber)] !text-[var(--amber)]" : ""}" data-f="${o.key}">${esc(o.label)}</button>`).join("");
+      filterEl.querySelectorAll("[data-f]").forEach(b => b.onclick = () => { current = b.getAttribute("data-f"); stop(); renderFilter(); render(); });
+    }
+
+    window.__demoFilter = (k) => { current = k; stop(); renderFilter(); render(); };
+    fetch("demos.json").then(r => r.ok ? r.json() : []).catch(() => []).then(list => { demos = list; renderFilter(); render(); window.__catalogCount && window.__catalogCount(list); });
+  })();
+
+  // ------------------------------------------------------------
+  // スクロールで要素をふわっと表示
+  // ------------------------------------------------------------
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
+  }, { threshold: .15 });
+  document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+</script>
+</body>
+</html>

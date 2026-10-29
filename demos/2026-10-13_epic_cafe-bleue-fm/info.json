@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-13_epic_cafe-bleue-fm",
+  "date": "2026-10-13",
+  "style": "epic",
+  "styleShort": "エピック",
+  "styleLabel": "エピック（映画音楽・マンシーニ路線：弦・独奏・ハープ・ホルン・ティンパニ）",
+  "form": "epic32w",
+  "formLabel": "エピック・ワルツ AABA 32小節・短調（3拍子の映画音楽）",
+  "title": "Café Bleue (Fm)",
+  "key": "Fm",
+  "tempo": 118,
+  "tempoGenerated": 70,
+  "bars": null,
+  "seed": 87719,
+  "status": "demo",
+  "audio": "demos/2026-10-13_epic_cafe-bleue-fm/cafe-bleue-fm_s87719.mp3",
+  "files": {
+    "info": "demos/2026-10-13_epic_cafe-bleue-fm/info.md",
+    "zip": "",
+    "midi": "demos/2026-10-13_epic_cafe-bleue-fm/Caf_Bleue_Fm_s87719_ALL.mid"
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "id": "2026-10-28_flamenco_bulerias12",
+  "date": "2026-10-28",
+  "style": "flamenco",
+  "styleShort": "フラメンコ",
+  "styleLabel": "フラメンコ（ソレア・ブレリア・タンゴス）",
+  "form": "bulerias12",
+  "formLabel": "ブレリア 12拍 × 8コンパス（速い）",
+  "title": "Bulería del Puerto (Am)",
+  "key": "Am",
+  "tempo": 235,
+  "tempoGenerated": 235,
+  "bars": 53,
+  "seed": 20261028,
+  "gen": 148,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 24
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 24
+    },
+    {
+      "id": "comp",
+      "name": "Flamenco Gtr (rasgueado)",
+      "prog": 24
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Cajon",
+      "prog": 0
+    },
+    {
+      "id": "perc",
+      "name": "Palmero 1 (accent)",
+      "prog": 0
+    },
+    {
+      "id": "perc2",
+      "name": "Palmero 2 (offbeat)",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "Am",
+    "Am",
+    "G",
+    "Fmaj7(#11)",
+    "E(b9)",
+    "Am",
+    "G",
+    "F",
+    "Esus4(b9)",
+    "Fsus2",
+    "E7b9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 148). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-28_flamenco_bulerias12/2026-10-28_flamenco_bulerias12_midi-set.zip",
+    "midi": "demos/2026-10-28_flamenco_bulerias12/2026-10-28_flamenco_bulerias12_all.mid",
+    "info": "demos/2026-10-28_flamenco_bulerias12/info.md"
+  },
+  "audio": "demos/2026-10-28_flamenco_bulerias12/2026-10-28_flamenco_bulerias12.mp3"
+}

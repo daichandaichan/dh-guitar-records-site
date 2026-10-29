@@ -1,0 +1,89 @@
+{
+  "id": "2026-10-14_chaos_chaos24",
+  "date": "2026-10-14",
+  "style": "chaos",
+  "styleShort": "ぶっ飛び",
+  "styleLabel": "ぶっ飛び（様式にとらわれない実験：和声・拍・音色が次々に裏切る）",
+  "form": "chaos24",
+  "formLabel": "ぶっ飛び 24小節（3つの仕掛けを駆け抜ける）",
+  "title": "Manouche Bleue (E)",
+  "key": "E",
+  "tempo": 168,
+  "tempoGenerated": 168,
+  "bars": 132,
+  "seed": 20261014,
+  "gen": 121,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 26
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 26
+    },
+    {
+      "id": "comp",
+      "name": "Comp (chaos)",
+      "prog": 6
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "Emaj7(#11)",
+    "Gm7",
+    "A#m9",
+    "C#maj7",
+    "B9",
+    "Em9",
+    "Gm9",
+    "A#mMaj7",
+    "C#maj7",
+    "Emaj7",
+    "G7",
+    "Cmaj7",
+    "D#7",
+    "G#maj7",
+    "Dm7",
+    "G7",
+    "Cmaj7",
+    "D#13",
+    "G#maj7",
+    "B7",
+    "Emaj7",
+    "A#m7",
+    "D#7",
+    "G#maj7",
+    "G#9",
+    "D7(#11)",
+    "C#7alt",
+    "G7(#11)",
+    "C7alt",
+    "F#7(#11)",
+    "F7alt",
+    "B7(#11)",
+    "A#7alt",
+    "E7(#11)",
+    "B7alt",
+    "Emaj7(#11)"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 121). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-14_chaos_chaos24/2026-10-14_chaos_chaos24_midi-set.zip",
+    "midi": "demos/2026-10-14_chaos_chaos24/2026-10-14_chaos_chaos24_all.mid",
+    "info": "demos/2026-10-14_chaos_chaos24/info.md"
+  },
+  "audio": "demos/2026-10-14_chaos_chaos24/2026-10-14_chaos_chaos24.mp3"
+}

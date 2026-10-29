@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-15_gypsy_rue-de-paris-dm",
+  "date": "2026-10-15",
+  "style": "gypsy",
+  "styleShort": "ジプシー・スウィング",
+  "styleLabel": "ジプシー・スウィング（マヌーシュ）",
+  "form": "manouche32",
+  "formLabel": "マヌーシュ AABA 32小節",
+  "title": "Rue de Paris (Dm)",
+  "key": "Dm",
+  "tempo": 248,
+  "tempoGenerated": 248,
+  "bars": null,
+  "seed": 40021,
+  "status": "demo",
+  "audio": "demos/2026-10-15_gypsy_rue-de-paris-dm/rue-de-paris-dm_s40021.mp3",
+  "files": {
+    "info": "demos/2026-10-15_gypsy_rue-de-paris-dm/info.md",
+    "zip": "",
+    "midi": "demos/2026-10-15_gypsy_rue-de-paris-dm/Rue_de_Paris_Dm_s40021_ALL.mid"
+  }
+}

@@ -1,0 +1,79 @@
+{
+  "id": "2026-10-24_bebop_countdown16",
+  "date": "2026-10-24",
+  "style": "bebop",
+  "styleShort": "ビバップ",
+  "styleLabel": "ビバップ（速め・8分主体）",
+  "form": "countdown16",
+  "formLabel": "3つの調へ割る 16小節（カウントダウン型の置換）",
+  "title": "Manouche du Nord (D)",
+  "key": "D",
+  "tempo": 224,
+  "tempoGenerated": 224,
+  "bars": 108,
+  "seed": 20261024,
+  "gen": 143,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 65
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 65
+    },
+    {
+      "id": "comp",
+      "name": "Piano",
+      "prog": 0
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 32
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "Em7",
+    "F7",
+    "A#maj7",
+    "C#7",
+    "F#maj7",
+    "A7",
+    "Dmaj7",
+    "Dm7",
+    "D#7",
+    "G#maj7",
+    "B7",
+    "Emaj7",
+    "G7",
+    "Cmaj7",
+    "Cm7",
+    "C#7",
+    "F#maj7",
+    "A13",
+    "Dmaj7",
+    "F7",
+    "A#maj7",
+    "Em7",
+    "A7",
+    "D6/9",
+    "Em7",
+    "A9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-24_bebop_countdown16/2026-10-24_bebop_countdown16_midi-set.zip",
+    "midi": "demos/2026-10-24_bebop_countdown16/2026-10-24_bebop_countdown16_all.mid",
+    "info": "demos/2026-10-24_bebop_countdown16/info.md"
+  },
+  "audio": "demos/2026-10-24_bebop_countdown16/2026-10-24_bebop_countdown16.mp3"
+}

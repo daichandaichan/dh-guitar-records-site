@@ -1,0 +1,93 @@
+{
+  "id": "2026-10-15_game_gm_boss",
+  "date": "2026-10-15",
+  "style": "game",
+  "styleShort": "ゲーム音楽",
+  "styleLabel": "ゲーム音楽（RPG風：ドラクエ風の序曲・お城・フィールド、FF風のプレリュード・バトル・感動）",
+  "form": "gm_boss",
+  "formLabel": "ボス戦（FF風：パイプオルガンと合唱・ロックのドラム・三全音で揺れる和声）",
+  "title": "Rue Mineur (Bm)",
+  "key": "Bm",
+  "tempo": 150,
+  "tempoGenerated": 150,
+  "bars": 137,
+  "seed": 20261015,
+  "gen": 122,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Strings (theme)",
+      "prog": 48
+    },
+    {
+      "id": "solo",
+      "name": "Solo trumpet",
+      "prog": 56
+    },
+    {
+      "id": "comp",
+      "name": "Church organ",
+      "prog": 19
+    },
+    {
+      "id": "bass",
+      "name": "Electric bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "horn",
+      "name": "Choir",
+      "prog": 52
+    }
+  ],
+  "chordsOneChorus": [
+    "Bm",
+    "Cmaj7",
+    "F#7b9",
+    "Bm",
+    "Cmaj7",
+    "Em7",
+    "Gmaj7",
+    "Em6",
+    "C7",
+    "Bm7",
+    "Cmaj7",
+    "Bm7",
+    "Cmaj7",
+    "Em7",
+    "Gmaj7",
+    "Em7",
+    "Bm",
+    "Gmaj7",
+    "B9",
+    "Em7",
+    "Cmaj7",
+    "E7b9",
+    "A7",
+    "Em7",
+    "Cmaj7",
+    "F#7sus4",
+    "F#7b9",
+    "Bm",
+    "C",
+    "Bm",
+    "F",
+    "Em",
+    "C",
+    "F#7b9",
+    "Bm"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 122). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-15_game_gm_boss/2026-10-15_game_gm_boss_midi-set.zip",
+    "midi": "demos/2026-10-15_game_gm_boss/2026-10-15_game_gm_boss_all.mid",
+    "info": "demos/2026-10-15_game_gm_boss/info.md"
+  },
+  "audio": "demos/2026-10-15_game_gm_boss/2026-10-15_game_gm_boss.mp3"
+}

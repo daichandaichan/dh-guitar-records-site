@@ -1,0 +1,22 @@
+{
+  "id": "2026-10-11_wa_manouche-bleue-dm",
+  "date": "2026-10-11",
+  "style": "wa",
+  "styleShort": "和",
+  "styleLabel": "和（日本音階：都節・ヨナ抜き・民謡・律・琉球）",
+  "form": "minyo16",
+  "formLabel": "民謡 16小節（2拍の掛け声のノリ）",
+  "title": "Manouche Bleue (Dm)",
+  "key": "Dm",
+  "tempo": 97,
+  "tempoGenerated": 97,
+  "bars": null,
+  "seed": 8060,
+  "status": "demo",
+  "audio": "demos/2026-10-11_wa_manouche-bleue-dm/manouche-bleue-dm_s8060.mp3",
+  "files": {
+    "info": "demos/2026-10-11_wa_manouche-bleue-dm/info.md",
+    "zip": "",
+    "midi": "demos/2026-10-11_wa_manouche-bleue-dm/Manouche_Bleue_Dm_s8060_ALL.mid"
+  }
+}

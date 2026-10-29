@@ -1,0 +1,80 @@
+{
+  "id": "2026-10-16_chip_gm_minuet",
+  "date": "2026-10-16",
+  "style": "chip",
+  "styleShort": "ゲーム音楽",
+  "styleLabel": "ゲーム音楽（ファミコン風・8ビット音源：矩形波2つ・三角波・ノイズ）",
+  "form": "gm_minuet",
+  "formLabel": "お城のメヌエット（ドラクエ風：チェンバロと弦・3拍子・終止のトリル）",
+  "title": "Lune de Paris (Gb)",
+  "key": "F#",
+  "tempo": 126,
+  "tempoGenerated": 126,
+  "bars": 139,
+  "seed": 20261016,
+  "gen": 143,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Pulse 1 (melody)",
+      "prog": 80
+    },
+    {
+      "id": "comp",
+      "name": "Pulse 2 (arpeggio)",
+      "prog": 80
+    },
+    {
+      "id": "bass",
+      "name": "Triangle (bass)",
+      "prog": 38
+    },
+    {
+      "id": "drums",
+      "name": "Noise (drums)",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "F#",
+    "D#m",
+    "G#m7",
+    "C#7",
+    "F#",
+    "Bmaj7",
+    "Bmaj7",
+    "C#7b9",
+    "F#",
+    "D#m",
+    "G#m7",
+    "C#7",
+    "F#",
+    "Bmaj7",
+    "C#7",
+    "F#",
+    "D#m",
+    "A#7",
+    "D#m",
+    "G#7",
+    "G#m7",
+    "G9",
+    "Bmaj7",
+    "C#7sus4",
+    "F#",
+    "A#7",
+    "D#m",
+    "G#7",
+    "G#m7",
+    "C#7",
+    "D",
+    "F#"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-16_chip_gm_minuet/2026-10-16_chip_gm_minuet_midi-set.zip",
+    "midi": "demos/2026-10-16_chip_gm_minuet/2026-10-16_chip_gm_minuet_all.mid",
+    "info": "demos/2026-10-16_chip_gm_minuet/info.md"
+  },
+  "audio": "demos/2026-10-16_chip_gm_minuet/2026-10-16_chip_gm_minuet.mp3"
+}

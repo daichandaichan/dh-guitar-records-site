@@ -1,0 +1,42 @@
+{
+  "id": "2026-10-19_indian_in_ravi",
+  "date": "2026-10-19",
+  "style": "indian",
+  "styleShort": "インド古典",
+  "styleLabel": "インド古典（ラーガとターラ：ラヴィ・シャンカール型／シャクティ型）",
+  "form": "in_ravi",
+  "formLabel": "ラヴィ・シャンカール型（アーラープ→ジョール→ジャーラー→ガット）",
+  "title": "Nat Kedar ・ Jhoomra（ラヴィ型）",
+  "key": "Eb",
+  "tempo": 80,
+  "tempoGenerated": 80,
+  "bars": 32,
+  "seed": 20261019,
+  "gen": 143,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Sitar",
+      "prog": 104
+    },
+    {
+      "id": "harp",
+      "name": "Tanpura",
+      "prog": 46
+    },
+    {
+      "id": "perc",
+      "name": "Tabla",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 143). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-19_indian_in_ravi/2026-10-19_indian_in_ravi_midi-set.zip",
+    "midi": "demos/2026-10-19_indian_in_ravi/2026-10-19_indian_in_ravi_all.mid",
+    "info": "demos/2026-10-19_indian_in_ravi/info.md"
+  },
+  "audio": "demos/2026-10-19_indian_in_ravi/2026-10-19_indian_in_ravi.mp3"
+}
