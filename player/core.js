@@ -15177,6 +15177,11 @@ var CT_TECHS = [
   { id: "polymeter", jp: "ポリメーター", on: true }, { id: "echo", jp: "エコー", on: true }, { id: "morph", jp: "スペクトル・モーフィング", on: true },
   { id: "cycle", jp: "音程サイクル", on: true }, { id: "entropy", jp: "エントロピー制御", on: true }, { id: "stochorch", jp: "確率的な管弦楽法", on: true },
   { id: "microtiming", jp: "マイクロタイミング", on: true },
+  /* PCS Composer v9.7 */
+  { id: "themerecap", jp: "主題の再現（提示部の主題を再現部の頭に戻す）", on: true }, { id: "harmsupport", jp: "和声的サポート（内声が3度・6度で支える）", on: true },
+  { id: "octdouble", jp: "オクターヴ・ダブリング（フルート・低音・トランペット）", on: true }, { id: "antiphony", jp: "セクション間の呼応（弦と管が交互に前へ）", on: true },
+  { id: "swell", jp: "ダイナミック・スウェル（フレーズの抑揚と全体の弧）", on: true }, { id: "phrasing", jp: "フレージング（末尾の着地と息継ぎ）", on: true },
+  { id: "timpani", jp: "ティンパニ（管弦楽のとき、頂点の一撃とロール）", on: true },
   { id: "phasing", jp: "フェイジング（ミニマル）", on: false }, { id: "additive", jp: "加算的な変化（ミニマル）", on: false },
   { id: "micropoly", jp: "ミクロポリフォニー", on: false }, { id: "cluster", jp: "トーン・クラスター", on: false }, { id: "quartertone", jp: "微分音（4分音）", on: false }
 ];
@@ -15193,7 +15198,9 @@ var CT_INSTS = [
   { id: "oboe", stem: "ob", name: "Oboe", jp: "オーボエ", lo: 58, hi: 91, prog: 68, ch: 10, n: 8 },
   { id: "bassoon", stem: "bsn", name: "Bassoon", jp: "ファゴット", lo: 34, hi: 72, prog: 70, ch: 12, n: 9 },
   { id: "trombone", stem: "trb", name: "Trombone", jp: "トロンボーン", lo: 40, hi: 72, prog: 57, ch: 14, n: 10 },
-  { id: "tuba", stem: "tuba", name: "Tuba", jp: "チューバ", lo: 28, hi: 55, prog: 58, ch: 15, n: 11 }
+  { id: "tuba", stem: "tuba", name: "Tuba", jp: "チューバ", lo: 28, hi: 55, prog: 58, ch: 15, n: 11 },
+  /* PCS Composer v9.7：ティンパニ（頂点の一撃・ロール）。旋律は生成せず、ctTimpani が構成から書く */
+  { id: "timpani", stem: "timp", name: "Timpani", jp: "ティンパニ", lo: 36, hi: 55, prog: 47, ch: 3, n: 12 }
 ];
 var CT_INSTSETS = [
   { n: "木管五重奏", p: ["flute", "oboe", "clarinet", "bassoon", "horn"] },
@@ -15723,6 +15730,169 @@ function ctNorm(c) {
   return { pcs: pcs.length ? pcs : [0, 1, 3, 4, 6, 7, 9, 10], algo: algoOk ? c.algo : "stochastic", insts: insts,
     dur: Math.max(20, Math.min(240, c.dur || 60)), dens: Math.max(1, Math.min(5, Math.round(c.dens || 3))), plan: (c.plan != null ? c.plan : -1), tech: tech };
 }
+
+/* ================= PCS Composer v9.7 の後処理（HCG 向けに移植）=================
+   声部＝音符の配列 { m, pc, t(秒), d, dyn(0〜1), inst, sec }。voices[i] の楽器は voices[i][0].inst。乱数は R（シード固定）。 */
+function ctInstOf(v) { return v && v.length ? v[0].inst : null; }
+function ctFindVoice(voices, id) { var i; for (i = 0; i < voices.length; i++) if (ctInstOf(voices[i]) && ctInstOf(voices[i]).id === id) return i; return -1; }
+function ctMake(src, over) { var o = ctClone(src, over); o.pc = ctMod12(o.m); return o; }
+/* 主題の再現：提示部（Exp1）の第1声部の主題を、再現部（Recap1）の頭にそのまま戻す。フルートが1オクターブ上で寄り添う */
+function ctThemeRecap(R, voices) {
+  var lead = voices[0];
+  if (!lead || lead.length < 4) return voices;
+  var theme = lead.filter(function (n) { return n.sec === "Exp1"; });
+  if (theme.length < 4) theme = lead.filter(function (n) { return n.sec === "Exp1" || n.sec === "Exp2"; });
+  if (theme.length < 3) return voices;
+  var recap = lead.filter(function (n) { return n.sec === "Recap1"; });
+  if (!recap.length) return voices;
+  var rs = Infinity, re = 0;
+  recap.forEach(function (n) { if (n.t < rs) rs = n.t; if (n.t + n.d > re) re = n.t + n.d; });
+  var span = re - rs; if (span <= 0.5) return voices;
+  var t0 = theme[0].t, themeEnd = rs, restated = [];
+  theme.forEach(function (n) {
+    var rel = n.t - t0; if (rel >= span) return;
+    var nn = ctMake(n, { t: rs + rel, sec: "Recap1", recap: true, dyn: Math.min(0.95, (n.dyn || 0.4) * 1.35) });
+    nn.d = Math.max(0.08, Math.min(n.d, re - nn.t));
+    restated.push(nn);
+    if (nn.t + nn.d > themeEnd) themeEnd = nn.t + nn.d;
+  });
+  if (restated.length < 3) return voices;
+  var out = voices.slice();
+  out[0] = lead.filter(function (n) { return !(n.sec === "Recap1" && n.t < themeEnd); }).concat(restated).sort(function (a, b) { return a.t - b.t; });
+  var fi = ctFindVoice(out, "flute");
+  if (fi > 0) {
+    var fin = ctInstOf(out[fi]), fl = out[fi].filter(function (n) { return !(n.sec === "Recap1" && n.t < themeEnd); });
+    restated.forEach(function (n) {
+      var m = n.m + 12; if (m > fin.hi || R.f() > 0.75) return;
+      fl.push(ctMake(n, { m: m, inst: fin, dyn: Math.max(0.1, n.dyn * 0.6) }));
+    });
+    out[fi] = fl.sort(function (a, b) { return a.t - b.t; });
+  }
+  return out;
+}
+/* 和声的サポート：第1声部の各音を、第2・第3声部とホルンが、セットの中の音で3度〜6度下から支える */
+function ctHarmonicSupport(R, voices, pcs) {
+  if (!voices || voices.length < 3 || !pcs || !pcs.length) return voices;
+  var lead = voices[0]; if (!lead || !lead.length) return voices;
+  var out = voices.map(function (v) { return v.slice(); }), set = {};
+  pcs.forEach(function (p) { set[ctMod12(p)] = true; });
+  var hi = ctFindVoice(voices, "horn");
+  var sup = [{ vi: 1, a: 3, b: 5, dyn: 0.7, p: 0.55 }, { vi: 2, a: 7, b: 9, dyn: 0.65, p: 0.5 }];
+  if (hi > 2) sup.push({ vi: hi, a: 10, b: 15, dyn: 0.6, p: 0.4 });
+  sup.forEach(function (sp) {
+    var inst = ctInstOf(out[sp.vi]); if (!inst || sp.vi === 0) return;
+    lead.forEach(function (n) {
+      if ((n.dyn || 0) < 0.35 || n.d < 0.18 || R.f() > sp.p) return;
+      var d, h = null;
+      for (d = sp.a; d <= sp.b; d++) { var c = n.m - d; if (c >= inst.lo && c <= inst.hi && set[ctMod12(c)]) { h = c; break; } }
+      if (h == null) return;
+      out[sp.vi].push(ctMake(n, { m: h, inst: inst, d: n.d * 0.9, dyn: Math.max(0.1, (n.dyn || 0.5) * sp.dyn), harm: true }));
+    });
+  });
+  return out.map(function (v) { return v.sort(function (a, b) { return a.t - b.t; }); });
+}
+/* オクターヴ・ダブリング：フルートが第1声部の1オクターブ上、低音楽器がチェロの1オクターブ下、トランペットが強い音を同度で補強 */
+function ctOctaveDoubling(R, voices) {
+  if (!voices || voices.length < 2) return voices;
+  var out = voices.map(function (v) { return v.slice(); });
+  function clone(src, ti, semis, prob, dsc, minDyn) {
+    var inst = ctInstOf(out[ti]); if (!inst || !src) return;
+    src.forEach(function (n) {
+      if (minDyn && (n.dyn || 0) < minDyn) return;
+      var m = n.m + semis;
+      if (semis === 0) { if (m < inst.lo) m += 12; if (m > inst.hi) m -= 12; }
+      if (m < inst.lo || m > inst.hi || R.f() > prob) return;
+      out[ti].push(ctMake(n, { m: m, inst: inst, d: n.d * 0.95, dyn: Math.max(0.1, (n.dyn || 0.5) * dsc), dbl: true }));
+    });
+  }
+  var vn = ctFindVoice(voices, "violin"), cl = ctFindVoice(voices, "cello"), fl = ctFindVoice(voices, "flute"), tp = ctFindVoice(voices, "trumpet");
+  var low = ["tuba", "bassoon", "trombone"].map(function (id) { return ctFindVoice(voices, id); }).filter(function (x) { return x >= 0; })[0];
+  if (fl >= 0 && vn >= 0) clone(voices[vn], fl, 12, 0.45, 0.7);
+  if (low != null && cl >= 0) clone(voices[cl], low, -12, 0.45, 0.85);
+  if (tp >= 0 && vn >= 0) clone(voices[vn], tp, 0, 0.5, 0.85, 0.7);
+  return out.map(function (v) { return v.sort(function (a, b) { return a.t - b.t; }); });
+}
+/* セクション間の呼応：弦と管が、数小節ごとに交互に主役になる（もう一方は控えめ） */
+function ctAntiphony(voices, total) {
+  var STR = { violin: 1, cello: 1 }, WND = { flute: 1, oboe: 1, clarinet: 1, bassoon: 1, trumpet: 1, horn: 1, trombone: 1, tuba: 1 }, hasS = false, hasW = false;
+  voices.forEach(function (v) { var i = ctInstOf(v); if (i && STR[i.id]) hasS = true; if (i && WND[i.id]) hasW = true; });
+  if (!hasS || !hasW) return voices;
+  var period = Math.max(3, total / 8);
+  return voices.map(function (v) {
+    var i = ctInstOf(v); if (!i || (!STR[i.id] && !WND[i.id])) return v;
+    return v.map(function (n) {
+      var phase = Math.floor(n.t / period) % 2, g = (phase === 0) ? (STR[i.id] ? 1 : 0.55) : (WND[i.id] ? 1 : 0.6);
+      return g < 1 ? ctClone(n, { dyn: Math.max(0.08, (n.dyn || 0.5) * g) }) : n;
+    });
+  });
+}
+/* ダイナミック・スウェル：フレーズごとの山なりの抑揚と、全体の起承転結の弧（頂点は黄金比） */
+function ctDynamicSwell(voices, total) {
+  var phraseLen = Math.max(2.5, total / 12), peak = 0.62;
+  function arc(t) { var x = t / total; return x < peak ? 0.55 + 0.45 * Math.pow(x / peak, 1.3) : 1.0 - 0.5 * Math.pow((x - peak) / (1 - peak), 0.8); }
+  return voices.map(function (v) {
+    return v.map(function (n) {
+      var pos = (n.t % phraseLen) / phraseLen, sw = 0.82 + 0.24 * Math.sin(Math.PI * pos), a = 0.78 + 0.22 * arc(n.t);   /* 弧は、すでに各区間の音量(dc)に入っているので半分ほど重ねる */
+      return ctClone(n, { dyn: Math.max(0.06, Math.min(1, (n.dyn || 0.5) * sw * a)) });
+    });
+  });
+}
+/* フレージング：フレーズの末尾は長めに伸ばして柔らかく着地、頭は主旋律と最低声部以外を間引いて息継ぎ */
+function ctPhrasing(R, voices, total) {
+  var phraseLen = Math.max(3, total / 10), lowest = -1, lo0 = 999;
+  voices.forEach(function (v, vi) { var i = ctInstOf(v); if (i && i.lo < lo0) { lo0 = i.lo; lowest = vi; } });
+  return voices.map(function (v, vi) {
+    var out = [];
+    v.forEach(function (n) {
+      var pos = n.t % phraseLen, tail = phraseLen - pos;
+      if (tail < 0.55 && n.d > 0.1) { out.push(ctClone(n, { d: Math.min(n.d * 1.6, tail + 0.7), dyn: Math.max(0.06, (n.dyn || 0.5) * 0.78) })); return; }
+      if (pos < 0.4 && vi !== 0 && vi !== lowest && R.f() < 0.5) return;
+      out.push(n);
+    });
+    return out;
+  });
+}
+/* ティンパニ：起＝ppのロール／転への助走＝属音のクレッシェンド・ロール→頂点の頭で主音の一撃／頂点＝主音・属音の拍打ち／頂点末＝属→主／再現部の頭＝柔らかな一打／結＝静かなロールと最後の一打 */
+function ctTimpani(R, voices, inst, S, pcs) {
+  var per = {}, allEnd = 0;
+  voices.forEach(function (v) {
+    var mn = {}, mx = {};
+    v.forEach(function (n) {
+      var e = n.t + n.d; if (e > allEnd) allEnd = e; if (!n.sec) return;
+      if (mn[n.sec] === undefined || n.t < mn[n.sec]) mn[n.sec] = n.t;
+      if (mx[n.sec] === undefined || e > mx[n.sec]) mx[n.sec] = e;
+    });
+    Object.keys(mn).forEach(function (k) { (per[k] = per[k] || { s: [], e: [] }); per[k].s.push(mn[k]); per[k].e.push(mx[k]); });
+  });
+  function med(a) { a = a.slice().sort(function (x, y) { return x - y; }); return a[Math.floor(a.length / 2)]; }
+  var ss = {}, se = {};
+  Object.keys(per).forEach(function (k) { ss[k] = med(per[k].s); se[k] = med(per[k].e); });
+  allEnd = Math.min(allEnd, S.total - 0.2);                  /* 曲の長さの中に収める（後処理で音が長さを越えることがある） */
+  if (ss.Peak === undefined || !allEnd) return [];
+  var tonic = ctMod12(pcs[0]), dom = pcs.indexOf((tonic + 7) % 12) >= 0 ? (tonic + 7) % 12 : (pcs.indexOf((tonic + 5) % 12) >= 0 ? (tonic + 5) % 12 : tonic);
+  function keyPcs(sec) { var base = [tonic, dom]; if (sec === "Exp2" || sec === "Dev1") return ctOp(S.plan.sho, base); if (sec === "Peak") return ctOp(S.plan.ten, base); return base; }
+  function toM(pc, lo, hi) { for (var m = lo; m <= hi; m++) if (ctMod12(m) === pc) return m; return lo; }
+  function pair(sec) { var kp = keyPcs(sec); return { T: toM(kp[0], 41, 52), D: toM(kp[1], 36, 47) }; }
+  var notes = [];
+  function hit(t, m, dyn, d, sec) { if (t < 0) return; notes.push({ m: m, pc: ctMod12(m), t: t, d: d, dyn: Math.max(0.05, Math.min(0.98, dyn)), inst: inst, sec: sec, timp: true }); }
+  function roll(t0, t1, m, d0, d1, sec) { var step = 0.075, n = Math.max(2, Math.floor((t1 - t0) / step)), i; for (i = 0; i < n; i++) hit(t0 + i * step, m, d0 + (d1 - d0) * (i / (n - 1)), 0.22, sec); }
+  var q = 60 / S.tempo, e1 = pair("Exp1"), exp1Len = (se.Exp1 || ss.Exp2 || 4) - (ss.Exp1 || 0);
+  roll(0.05, 0.05 + Math.min(2.4, Math.max(1, exp1Len * 0.35)), e1.T, 0.10, 0.24, "Exp1");
+  var pk = pair("Peak"), pS = ss.Peak, pE = se.Peak || pS + 6;
+  roll(Math.max(0, pS - 2.4), pS - 0.05, pk.D, 0.18, 0.85, "Dev1");
+  hit(pS, pk.T, 0.96, 1.3, "Peak");
+  var beat = 2 * q, idx = 0, t;
+  for (t = pS + beat; t < pE - beat; t += beat) { var acc = (idx % 2 === 0); if (R.f() < 0.15 && !acc) { idx++; continue; } hit(t, acc ? pk.T : pk.D, acc ? 0.78 : 0.58, 0.7, "Peak"); idx++; }
+  hit(pE - beat, pk.D, 0.8, 0.6, "Peak"); hit(pE - beat * 0.4, pk.T, 0.9, 1.2, "Peak");
+  if (ss.Recap1 !== undefined) { var r1 = pair("Recap1"); hit(ss.Recap1, r1.T, 0.34, 1.0, "Recap1"); }
+  var cd = pair("Coda");
+  roll(Math.max(0, allEnd - 2.6), allEnd - 0.6, cd.T, 0.12, 0.32, "Coda");
+  hit(allEnd - 0.55, cd.T, 0.42, 1.6, "Coda");
+  return notes.sort(function (a, b) { return a.t - b.t; });
+}
+/* 空間音響（MIDI 版）：楽器をオーケストラの座席でステレオ定位（CC10）し、楽器ごとにホール残響の送り量（CC91）を変える */
+var CT_SEAT = { violin: [-0.6, 40], flute: [-0.3, 36], oboe: [0.25, 36], clarinet: [0.5, 36], bassoon: [0.55, 34], horn: [-0.15, 30], trumpet: [0.05, 30], trombone: [-0.05, 30], tuba: [0.35, 28], cello: [-0.35, 40], harp: [0.2, 18], piano: [0.35, 18], timpani: [0.15, 46] };
+
 function generateContemporary(opt) {
   var optIn = JSON.parse(JSON.stringify(opt));
   var C = ctNorm(opt.ct), R = RNG(opt.seed || 1), rngE = RNG(((opt.seed || 1) * 733 + 11) % 2147483647);
@@ -15733,6 +15903,10 @@ function generateContemporary(opt) {
   var plan = CT_PLANS[(C.plan >= 0 && C.plan < CT_PLANS.length) ? C.plan : R.i(CT_PLANS.length)];
   var S = { pcs: C.pcs, tempo: tempo, total: total, dens: C.dens, plan: plan };
   var ai = CT_INSTS.filter(function (i) { return C.insts.indexOf(i.id) >= 0; });
+  var timpInst = CT_INSTS.filter(function (i) { return i.id === "timpani"; })[0];
+  var wantTimp = C.insts.indexOf("timpani") >= 0 || (C.tech.timpani && ai.some(function (i) { return i.id === "trumpet" || i.id === "horn" || i.id === "trombone" || i.id === "tuba" || i.id === "oboe" || i.id === "bassoon"; }) && ai.length >= 4);
+  ai = ai.filter(function (i) { return i.id !== "timpani"; });
+  if (!ai.length) ai = [CT_INSTS[0]];
   var mainPool = ctPool(C.pcs, ai[0].lo, ai[0].hi), shared = ctMotif(R, mainPool, 5), gs = { callNotes: [], grandPauseAt: 0 };
   var tech = C.tech, used = [];
   var voices = ai.map(function (inst, vi) {
@@ -15741,6 +15915,7 @@ function generateContemporary(opt) {
     return ctVoice(R, inst, S, C.algo, role, shared, vi, ai.length, gs);
   }).filter(function (v) { return v.length; });
   if (!voices.length) { C.pcs = [0, 2, 4, 7, 9]; voices = [ctVoice(R, ai[0], S, "melodic", "melody", shared, 0, 1, gs)]; }
+  if (tech.themerecap && voices.length >= 1) { var vr = ctThemeRecap(R, voices); if (vr !== voices) { voices = vr; used.push("主題の再現（再現部の頭）"); } }
   if (tech.entropy) { var et = 2.6 + R.f() * 0.9; voices = voices.map(function (v) { return ctEntropyControl(R, v, et, C.pcs); }); used.push("エントロピー制御（目標 " + et.toFixed(1) + " bit）"); }
   if (tech.isorhythm && voices[0] && total >= 20) { voices[0] = ctIsorhythm(R, voices[0], [2, 1, 1, 3, 1], q); used.push("アイソリズム（タレア 2-1-1-3-1）"); }
   if (tech.stretto && voices.length >= 2) { voices = ctStretto(R, voices, ctPool(C.pcs, ai[0].lo, ai[0].hi), total, q); used.push("ストレット（頂点）"); }
@@ -15772,6 +15947,9 @@ function generateContemporary(opt) {
     if (cyv.length) { voices[1] = voices[1].concat(cyv).sort(function (a, b) { return a.t - b.t; }); used.push("音程サイクル（短3度）"); }
   }
   if (tech.stochorch && ai.length >= 2) { voices = ctStochOrch(R, voices, ai, total); used.push("確率的な管弦楽法（頂点）"); }
+  if (tech.harmsupport && voices.length >= 3) { voices = ctHarmonicSupport(R, voices, C.pcs); used.push("和声的サポート"); }
+  if (tech.octdouble && voices.length >= 2) { voices = ctOctaveDoubling(R, voices); used.push("オクターヴ・ダブリング"); }
+  if (tech.antiphony && voices.length >= 3) { var va = ctAntiphony(voices, total); if (va !== voices) { voices = va; used.push("セクション間の呼応"); } }
   /* ミニマル・ミクロポリフォニー・クラスター・微分音 */
   var extra = [];
   if (tech.phasing && ai.length >= 2) { extra = extra.concat(ctPhasing(R, ai, shared, S, C.pcs)); used.push("フェイジング（2声の速さをわずかにずらす）"); }
@@ -15784,6 +15962,9 @@ function generateContemporary(opt) {
     voices = voices.map(function (v) { return ctMicroTiming(R, v, g1); }); used.push("マイクロタイミング（" + g1 + "）");
   }
   if (tech.quartertone) { ctQuarterTone(R, voices); used.push("微分音（4分音）"); }
+  if (tech.swell) { voices = ctDynamicSwell(voices, total); used.push("ダイナミック・スウェル"); }
+  if (tech.phrasing) { voices = ctPhrasing(R, voices, total); used.push("フレージング"); }
+  if (wantTimp && timpInst) { var tpv = ctTimpani(R, voices, timpInst, S, C.pcs); if (tpv.length) { voices.push(tpv); used.push("ティンパニ（頂点の一撃・ロール）"); } }
   /* 仕上げ：範囲内に収め、時間を拍に直し、楽器ごとのパートにする */
   var by = {}, i, totalBeats = total * spb;
   voices.forEach(function (v) {
@@ -15800,6 +15981,8 @@ function generateContemporary(opt) {
     ns.sort(function (a, b) { return a.t - b.t; });
     var ex = [];
     if (inst.id !== "piano" && inst.id !== "harp") ex = polishExtras(stemExpression("horn", ns, sections, opt, rngE, beats, opt.style), ns);
+    var seat = CT_SEAT[inst.id];
+    if (seat) { ex.push({ t: 0, cc: 10, val: Math.max(0, Math.min(127, Math.round(64 + seat[0] * 63))) }); ex.push({ t: 0, cc: 91, val: seat[1] }); }   /* 座席の定位と残響の送り量 */
     ns.forEach(function (n) { if (n.micro) { ex.push({ t: Math.max(0, n.t - 0.01), bend: n.micro }); ex.push({ t: n.t + n.d + 0.005, bend: 0 }); } });
     ex.sort(function (a, b) { return a.t - b.t; });
     stems.push({ id: inst.stem, name: inst.name, jp: inst.jp, prog: inst.prog, ch: inst.ch, notes: ns, extra: ex });
@@ -19657,9 +19840,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 382;
+var BUILD_NO = 383;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 155;
+var GEN_NO = 156;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
