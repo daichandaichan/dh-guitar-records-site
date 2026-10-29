@@ -4944,7 +4944,7 @@ var VOICE_PROFILE = {
   yamashita:   { reg: 4,  span: 1.55, dens: 1.20, leg: 0.80, stac: 0.70, ahead: 0.000, rest: 0.9, phr: [4, 6, 8], slide: 0.06, vib: 0.5, land: "root", sc: "classical", start: [0, 0], rep: 0.03, bend: 0.4 },
   jsmith:      { reg: 5, span: 0.9, dens: 1.05, leg: 0.72, stac: 0.66, ahead: -0.010, rest: 1.3, phr: [2, 3, 3], slide: 0.10, vib: 0.0, land: "blue", sc: "blues", start: [0, -0.5, 0], rep: 0.22, bend: 0 },
   bach:        { reg: 3,  span: 1.15, dens: 1.25, leg: 0.78, stac: 0.72, ahead: 0.000, rest: 0.5, phr: [4, 8, 8], slide: 0.0, vib: 0.0, land: "third", sc: "bach", start: [0, 0], rep: 0.02, bend: 0 },
-  yngwie:      { reg: 5,  span: 1.35, dens: 1.35, leg: 0.80, stac: 0.62, ahead: -0.006, rest: 0.5, phr: [4, 6, 8], slide: 0.10, vib: 1.6, land: "root", sc: "neo", start: [0, 0, 0.5], rep: 0.05, bend: 1.5 },
+  yngwie:      { reg: 5,  span: 1.35, dens: 1.35, leg: 0.80, stac: 0.62, ahead: -0.006, rest: 0.5, phr: [4, 6, 8], slide: 0.10, vib: 1.6, land: "root", sc: "neo", start: [0, 0, 0.5], rep: 0.20, bend: 1.5 },
   tradicional: { reg: -2, span: 0.95, dens: 0.80, leg: 0.70, stac: 0.68, ahead: -0.006, rest: 1.2, phr: [1, 2, 2], slide: 0.16, vib: 0.9, land: "root", sc: "phrygian", start: [0, 0], rep: 0.10, bend: 1.1 },
   larryy:     { reg: 0,  span: 1.35, dens: 1.0,  leg: 0.78, stac: 0.6,  ahead: 0.0,    rest: 1.2, phr: [2, 3, 5],  slide: 0.04, vib: 0.0, land: "any",   sc: "symmetric", start: [0, 0.5, 1], rep: 0.2, bend: 0, nps: 8 },
   joeyd:      { reg: 0,  span: 1.0,  dens: 1.25, leg: 0.84, stac: 0.7,  ahead: -0.006, rest: 0.9, phr: [2, 4, 4],  slide: 0.06, vib: 0.0, land: "third", sc: "bebop",     start: [0, 0.5, -0.5], rep: 0.12, bend: 0, nps: 9 },
@@ -6544,20 +6544,28 @@ function devOddGroup(t0, beats, ch, tonic, minor, cur, lo, hi, rng) {
 /* マクラフリン：長い走句（最大17音）と、19・20…の変拍子の割り方。16分が主で、熱が上がると32分と5度の跳躍が増える */
 function devMclPhrase(kind, t0, beats, ch, tonic, minor, cur, lo, hi, rng, heat, dm) {
   var pcs = dm ? [0, 2, 3, 5, 7, 8, 11] : (minor ? [0, 3, 5, 7, 10] : [0, 2, 4, 7, 9]);
-  var root = rng.chance(0.5) ? tonic : (tonic + 7) % 12;
+  var yng = (dm === "yng"), root = (rng.chance(0.5) && !yng) ? tonic : ((yng || rng.chance(0.5)) ? tonic : (tonic + 7) % 12);
   var g = arpGrid(pcs, root, lo, hi), out = [], t = t0, i, ix = idxOf(g, cur), dir = rng.chance(0.5) ? 1 : -1;
   var p32 = dm ? 0.03 + 0.04 * heat : Math.min(0.5, 0.08 + 0.35 * heat);            /* 32分の割合：熱とともに増える */
-  var p5 = 0.10 + 0.14 * heat;                              /* 5度の跳躍 */
+  var p5 = yng ? 0.02 : 0.10 + 0.14 * heat;                  /* 5度の跳躍（イングヴェイは順次進行が主：4度以上の跳躍は約12%） */
   function stepOf() { return rng.chance(p32) ? 0.125 : 0.25; }
   function nextIx(k) {
-    if (dm && rng.chance(0.2)) { return; }                  /* ディ・メオラ：同音の反復（実曲の走句内の約19%） */
-    if (dm && rng.chance(0.07)) { var po = g[clampIdx(g, ix)] + (dir > 0 ? 12 : -12); ix = clampIdx(g, idxOf(g, po)); return; }   /* オクターヴの跳躍（約8%） */
+    if (dm && rng.chance(yng ? 0.22 : 0.2)) { return; }                  /* ディ・メオラ：同音の反復（実曲の走句内の約19%） */
+    if (dm && rng.chance(yng ? 0.015 : 0.07)) { var po = g[clampIdx(g, ix)] + (dir > 0 ? 12 : -12); ix = clampIdx(g, idxOf(g, po)); return; }   /* オクターヴの跳躍（約8%） */
     if (rng.chance(p5)) { var tp = g[clampIdx(g, ix)] + (dir > 0 ? 7 : -7); ix = clampIdx(g, idxOf(g, tp)); dir = -dir; }
     else { ix = clampIdx(g, ix + dir * (rng.chance(0.78) ? 1 : 2)); }
     if (ix <= 1) dir = 1; else if (ix >= g.length - 2) dir = -1;
     if (rng.chance(0.14)) dir = -dir;
   }
-  if (kind === "run") {
+  if (kind === "run" && yng) {                                /* イングヴェイ（28曲の統計）：16分の走句（平均22音）。16分3連・8分3連の区間が混ざる */
+    var nY = rng.pick([18, 22, 24, 28, 32]), left = nY;
+    while (left > 0) {
+      var segN = Math.min(left, rng.pick([6, 8, 12, 12, 16])), rk = rng.wpick([["s16", 5], ["t16", 3], ["t8", 2], ["s32", 0.4]]);
+      var stp = rk === "s16" ? 0.25 : (rk === "t16" ? 1 / 6 : (rk === "t8" ? 1 / 3 : 0.125));
+      for (i = 0; i < segN; i++) { out.push({ t: t, d: stp * 0.92, p: g[clampIdx(g, ix)], v: (i % 4 === 0 ? 98 : 80) + rng.i(8) }); t += stp; nextIx(i); }
+      left -= segN;
+    }
+  } else if (kind === "run") {
     var n = dm ? rng.pick([16, 18, 19, 21, 24]) : rng.pick([13, 15, 16, 17, 17]);                 /* 12音 → 17音（ディ・メオラ実曲は平均18.7音） */
     for (i = 0; i < n; i++) {
       var st = stepOf();
@@ -11334,7 +11342,7 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
         mode = form.sweep
           ? rng.wpick([["swchords", 14], ["seq4", 2], ["pedal2", last === "pedal2" ? 0 : 1.2],
                        ["dimchain", last === "dimchain" ? 0 : 0.8], ["hold", last === "hold" ? 0 : 1]])
-          : rng.wpick([["sweep3", 5], ["seq4", 5], ["pedal2", last === "pedal2" ? 0 : 3],
+          : rng.wpick([["mrun", last === "mrun" ? 20 : 60], ["sweep3", 4], ["seq4", 4], ["pedal2", last === "pedal2" ? 0 : 3],
                        ["dimchain", last === "dimchain" ? 0 : 3], ["trill", last === "trill" ? 0 : 1.5],
                        ["bebop", 2], ["hold", last === "hold" ? 0 : 0.8]]);
       } else if (v === "mclaughlin") {
@@ -11496,7 +11504,7 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
       }
       if ((mode === "mrun" || mode === "modd") && beats >= 4) {
         var tS = Math.max(t0, skipUntil), hM = Math.min(1.2, 0.5 * heat + (chTot > 1 ? 0.6 * chIdx / (chTot - 1) : 0.3));
-        var rM = devMclPhrase(mode === "mrun" ? "run" : "odd", tS, beats - (tS - t0), ch, opt.tonic, form.minor, cur, lo, hi, rng, hM, v === "dimeola");
+        var rM = devMclPhrase(mode === "mrun" ? "run" : "odd", tS, beats - (tS - t0), ch, opt.tonic, form.minor, cur, lo, hi, rng, hM, v === "dimeola" ? true : (v === "yngwie" ? "yng" : false));
         push(rM); cur = rM.cur; skipUntil = rM.end; prevBar = notes.slice(mark); continue;
       }
       if (mode === "mrun" || mode === "modd") mode = "odd";
@@ -11558,7 +11566,7 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
     }
   }        /* マクラフリン系：走句内に広い跳躍 */
   if (v === "dimeola") notes = mclWide(notes, lo, hi, rng, 0.10, 6, 0.1);                 /* オクターヴ・5度の跳躍 */
-  if (v === "dimeola") for (var qd = 1; qd < notes.length; qd++) {                           /* 同音の反復（ディ・メオラ15曲：走句内の約19%・3連続も多い） */
+  if (v === "dimeola" || v === "yngwie") for (var qd = 1; qd < notes.length; qd++) {                           /* 同音の反復（ディ・メオラ15曲：走句内の約19%・3連続も多い） */
     if (!notes[qd].sw && notes[qd].t - notes[qd - 1].t <= 0.3 && notes[qd].t > notes[qd - 1].t && notes[qd].d <= 0.6 && rng.chance(0.12)) notes[qd].p = notes[qd - 1].p;
   }
   if (v === "mclacoustic") notes = mclWide(notes, lo, hi, rng, 0.06, 6, 0.35);
@@ -17312,6 +17320,27 @@ function generateGuitarTrio(opt) {
       roles.push(first ? "head1" : "head2");
     } else if (kind === "solo") {
       var who = soloCount % 3; soloCount++;
+      if (opt.tradeMore) {                                   /* 掛け合い多め：ソロ区間を交代制に。ソロが進むほど交代が速くなる（4小節→2小節→1小節）＝だんだん盛り上がる */
+        var turnBars = [4, 2, 1, 1][Math.min(3, soloCount - 1)], b1 = 0, tn = 0, nB = nBars;
+        while (b1 < nB) {
+          var ln = Math.min(turnBars, nB - b1), w2 = (who + tn) % 3;
+          var part = take(SRC[w2], "solo", si, b1 * beats, (b1 + ln) * beats, S.at + b1 * beats);
+          if (tn === 0 && quote) {                           /* 最初の番は、前の人の最後の1小節を受けて始める */
+            var chq = chordAt(S, S.at + 0.01), shq = (((chq.root - quote.root) % 12) + 18) % 12 - 6;
+            part = part.filter(function (n) { return n.t >= S.at + beats - 1e-6; });
+            quote.notes.forEach(function (q) { part.push({ t: S.at + q.rel, d: q.d, p: Math.max(40, Math.min(96, q.p + shq)), v: Math.max(30, q.v - 4) }); });
+          }
+          addAll(OUT[w2], part);
+          backing(S, w2, b1, ln);
+          b1 += ln; tn++;
+        }
+        var lb0 = S.at + (nBars - 1) * beats, lch2 = chordAt(S, lb0 + 0.01), w3 = (who + tn - 1) % 3;
+        quote = { root: lch2.root, notes: [] };
+        take(SRC[w3], "solo", si, (nBars - 1) * beats, nBars * beats, 0).forEach(function (n) { quote.notes.push({ rel: n.t, d: n.d, p: n.p, v: n.v }); });
+        if (!quote.notes.length) quote = null;
+        roles.push("trade" + who);
+        return;
+      }
       var mine = take(SRC[who], who === 0 ? "solo" : "solo", si, 0, S.beats, S.at);      /* ソロ（各自の語法のソロ） */
       if (who === 2) mine = take(Cv, "solo", si, 0, S.beats, S.at);
       if (quote) {                                           /* 呼応：前の人の最後の1小節を受けて始める（和音に合わせて移す） */
@@ -17333,7 +17362,7 @@ function generateGuitarTrio(opt) {
     } else if (kind === "shout") {                           /* 掛け合い：2小節ずつ交代（ギター1→2→3）、最後の2小節は全員のユニゾン */
       var tradeBars = Math.max(0, nBars - 2), b0 = 0, turn = 0;
       while (b0 < tradeBars) {
-        var len = Math.min(2, tradeBars - b0), w = turn % 3, srcSec = soloSecIdx[w] != null ? soloSecIdx[w] : soloSecIdx[0];
+        var len = Math.min((opt.tradeMore && si >= secs.length - 3) ? 1 : 2, tradeBars - b0), w = turn % 3, srcSec = soloSecIdx[w] != null ? soloSecIdx[w] : soloSecIdx[0];
         addAll(OUT[w], take(SRC[w], "solo", srcSec, b0 * beats, (b0 + len) * beats, S.at + b0 * beats));
         backing(S, w, b0, len);
         b0 += len; turn++;
@@ -17361,6 +17390,15 @@ function generateGuitarTrio(opt) {
   vo.forEach(function (p, j) { solo.push({ t: endT + j * 0.016, d: 3.2, p: p, v: jit(100, 4), fx: 1 }); });
   mel.push({ t: endT, d: 3.2, p: vo[3], v: jit(96, 4) });
   g3.push({ t: endT, d: 3.2, p: vo[2], v: jit(92, 4) });
+  if (opt.tradeMore || opt.arc === "build") {                 /* だんだん盛り上がる：区間が進むほど音量を上げる（イントロ 0.78 → 最後 1.08） */
+    var nS = secs.length;
+    [mel, solo, g3].forEach(function (arr) {
+      arr.forEach(function (n) {
+        var si2 = 0, k2; for (k2 = 0; k2 < nS; k2++) if (secs[k2].at <= n.t + 1e-6) si2 = k2;
+        n.v = Math.max(20, Math.min(124, Math.round(n.v * (0.78 + 0.30 * si2 / Math.max(1, nS - 1)))));
+      });
+    });
+  }
   function srt(a) { return a.filter(function (n) { return n.t >= 0 && n.d > 0.01; }).sort(function (x, y) { return x.t - y.t || x.p - y.p; }); }
   mel = srt(mel); solo = srt(solo); g3 = srt(g3);
   var song = {};
@@ -17382,7 +17420,7 @@ function generateGuitarTrio(opt) {
     "【語法】ギター1＝モードの速い16分・ペンタと4度・変則のリズム（voice: マクラフリン風）／ギター2＝ピカード・トレモロ・アルサプア・ラスゲアード（voice: パコ風）／ギター3＝ハーモニック・マイナーとフリジア・ドミナントの速いピッキング・ラテンの刻み（voice: ディ・メオラ風）。",
     "【構成】導入（ギター2のラスゲアード）→テーマ（ギター1が旋律、ギター2が3度下で重ねる、ギター3が分散和音のオスティナート）→ソロ：ギター1→ギター2→ギター3（前の人の最後の1小節を受けて始める。残りの2本は、ラスゲアード・和音の刻み・オスティナートで支える）→掛け合い（2小節ずつ交代）＋最後の2小節は全員のユニゾン（ギター3は1オクターヴ下）→テーマ→結び（3本で主和音をかき鳴らす）。",
     "【和声】" + (String(gform.label || "").split("（")[1] ? "（" + String(gform.label).split("（").slice(1).join("（") : "") + "　キー " + NN[tonicRoot] + (minorKey ? "m" : "") + "　テンポ ♩=" + tempo + (beats !== 4 ? "　" + beats + "拍子" : "") + "。",
-    "【注意】3人の語法を別々に作って組み合わせています（同じコード進行・同じテンポ）。聴感は未確認です。"
+    (opt.tradeMore ? "【掛け合い多め】ソロの区間も交代制：最初の合唱は4小節ずつ、次は2小節、最後は1小節ずつ（だんだん速く）。音量も少しずつ上げる。" : "") + "【注意】3人の語法を別々に作って組み合わせています（同じコード進行・同じテンポ）。聴感は未確認です。"
   ];
   song.chordText = A.chordText;
   song.form = { label: gform.label, ts: [beats, 4], bars: A.form.bars, minor: minorKey };
@@ -19619,9 +19657,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 376;
+var BUILD_NO = 377;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 154;
+var GEN_NO = 155;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
