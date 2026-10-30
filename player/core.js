@@ -5609,7 +5609,15 @@ function twinHarmony(mel, solo, sections, beats, opt, tempo) {
     var dirs = {};
     rg.src.forEach(function (n) {
       if (n.t < rg.a - 1e-6 || n.t >= rg.z - 1e-6 || n.grace || n.d < 0.1) return;
-      var ph = Math.floor((n.t - rg.a) / (2 * beats)); if (dirs[ph] == null) dirs[ph] = rr.chance(0.65) ? 2 : -2;
+      var ph = Math.floor((n.t - rg.a) / (2 * beats));
+      if (opt.style === "neo") {                                   /* ネオクラシカル：バロック風の6度・3度下の平行と、長い音・フレーズ終わりのオクターヴ重ね（スラッシュ／デスの「3度上の平行」とは違う動き） */
+        if (dirs[ph] == null) dirs[ph] = rr.wpick([[-5, 4], [-2, 3], [0, 1.5], [2, 1]]);
+        var qn = n.d >= 1.5 ? n.p - 12 : (dirs[ph] === 0 ? n.p - 12 : twinPitch(n.p, tonic, dirs[ph], !!opt.neoMajor));
+        if (qn == null || qn < 40) return;
+        out.push({ t: n.t + 0.004, d: n.d, p: qn, v: Math.max(30, n.v - 14) });
+        return;
+      }
+      if (dirs[ph] == null) dirs[ph] = rr.chance(0.65) ? 2 : -2;
       var q = twinPitch(n.p, tonic, dirs[ph]); if (q == null) return;
       out.push({ t: n.t + 0.004, d: n.d, p: q, v: Math.max(30, n.v - 10) });
     });
@@ -19900,6 +19908,11 @@ function generateMain(opt) {
       arr.sort(function (a, b) { return a.t - b.t; });
     });
   }
+  if (opt.style === "neo" && opt.neoSnap !== false) {
+    var abN = absChords({ chords: chs, sections: sections, beats: beats, opt: opt });
+    neoSnapOut(solo, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor);
+    neoSnapOut(mel, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor);
+  }
   var fingerFix = { mel: 0, solo: 0 };
   var chordFix = { comp: null, mel: null, solo: null };
   if (!opt.noFinger) {                                                          /* 和音の運指の検証：押さえられない組を、オクターヴをずらすか、内側の音を減らして直す */
@@ -20335,6 +20348,31 @@ function orgSustainNotes(ab, totalBeats, wins, rng) {
   }
   return out.sort(function (a, b) { return a.t - b.t; });
 }
+/* ネオクラシカル：調の外れ音を直す。ソロ・テーマの音のうち、「調の音階（短調＝自然＋和声的短音階）」にも「そのときのコードの音」にも「ドミナントのフリジア音階」にも無い音を、近い許される音へ寄せる。
+   ただし、半音で続く経過音（半音階の上行・下行）は残す。opt.neoSnap=false で外せる */
+function neoSnapOut(notes, ab, tonic, minor) {
+  var key = minor ? [0, 2, 3, 5, 7, 8, 10, 11] : [0, 2, 4, 5, 7, 8, 9, 11], fixed = 0, i, k;
+  var sorted = notes.filter(function (n) { return !n.grace && !n.cm; }).sort(function (a, b) { return a.t - b.t; });
+  function chAt(t) { var c = ab[0], z; for (z = 0; z < ab.length; z++) { if (ab[z].t <= t + 1e-6) c = ab[z]; else break; } return c; }
+  for (i = 0; i < sorted.length; i++) {
+    var n = sorted[i], c = chAt(n.t), q = QUAL[c.q]; if (!q) continue;
+    var iv = q.iv.map(function (x) { return x % 12; }), ok = {};
+    key.forEach(function (x) { ok[((x + tonic) % 12 + 12) % 12] = 1; });
+    iv.forEach(function (x) { ok[((x + c.root) % 12 + 12) % 12] = 1; });
+    if (iv.indexOf(4) >= 0 && iv.indexOf(10) >= 0) neoScale({ q: "7", root: c.root }).forEach(function (x) { ok[(x + c.root) % 12] = 1; });
+    if (ok[((n.p % 12) + 12) % 12]) continue;
+    var pv = i > 0 ? sorted[i - 1] : null, nx = i + 1 < sorted.length ? sorted[i + 1] : null;
+    if (pv && nx && Math.abs(n.p - pv.p) === 1 && Math.abs(nx.p - n.p) === 1 && (n.p - pv.p) === (nx.p - n.p)) continue;      /* 半音階の経過 */
+    var best = null;
+    for (k = 1; k <= 2 && best == null; k++) {
+      var up = ok[(((n.p + k) % 12) + 12) % 12], dn = ok[(((n.p - k) % 12) + 12) % 12];
+      if (up && dn) best = (pv && pv.p < n.p) ? n.p + k : n.p - k;                  /* 同じ近さなら、来た向きに続ける */
+      else if (up) best = n.p + k; else if (dn) best = n.p - k;
+    }
+    if (best != null) { n.p = best; fixed++; }
+  }
+  return fixed;
+}
 function absChords(song) {
   if (song.chordsAbs) return song.chordsAbs;
   var out = [], beats = song.beats;
@@ -20763,9 +20801,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 427;
+var BUILD_NO = 428;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 157;
+var GEN_NO = 158;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */

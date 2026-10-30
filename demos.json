@@ -75,6 +75,118 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-10-31_orchestra_sarabande24",
+  "date": "2026-10-31",
+  "style": "orchestra",
+  "styleShort": "クラシック・オーケストラ",
+  "styleLabel": "クラシック・オーケストラ（バロック〜古典派：弦楽合奏＋木管・ホルン・トランペット・ティンパニ）",
+  "form": "sarabande24",
+  "formLabel": "サラバンド 24小節（3拍子・2拍目が重い）",
+  "title": "Café Rapide (Dm)",
+  "key": "Dm",
+  "tempo": 108,
+  "tempoGenerated": 108,
+  "bars": 105,
+  "seed": 72910,
+  "gen": 158,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Violin I",
+    "prog": 40
+   },
+   {
+    "id": "solo",
+    "name": "Violin II",
+    "prog": 40
+   },
+   {
+    "id": "comp",
+    "name": "Strings (viola ensemble)",
+    "prog": 48
+   },
+   {
+    "id": "bass",
+    "name": "Contrabass",
+    "prog": 43
+   },
+   {
+    "id": "cello",
+    "name": "Cello",
+    "prog": 42
+   },
+   {
+    "id": "fl",
+    "name": "Flute",
+    "prog": 73
+   },
+   {
+    "id": "ob",
+    "name": "Oboe",
+    "prog": 68
+   },
+   {
+    "id": "bsn",
+    "name": "Bassoon",
+    "prog": 70
+   },
+   {
+    "id": "horn",
+    "name": "Horn",
+    "prog": 60
+   },
+   {
+    "id": "tpt",
+    "name": "Trumpet",
+    "prog": 56
+   },
+   {
+    "id": "timp",
+    "name": "Timpani",
+    "prog": 47
+   }
+  ],
+  "chordsOneChorus": [
+   "Dm",
+   "Gm",
+   "A7",
+   "Dm",
+   "C",
+   "F",
+   "A#",
+   "A7",
+   "Dm",
+   "Gm",
+   "Em",
+   "D#7",
+   "Dm",
+   "A#",
+   "A7alt",
+   "Dm",
+   "Gm7",
+   "C",
+   "F",
+   "A#",
+   "Em",
+   "A7",
+   "D#7",
+   "Dm"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 158). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-31_orchestra_sarabande24/2026-10-31_orchestra_sarabande24_midi-set.zip",
+   "midi": "demos/2026-10-31_orchestra_sarabande24/2026-10-31_orchestra_sarabande24_all.mid",
+   "info": "demos/2026-10-31_orchestra_sarabande24/info.md"
+  },
+  "audio": "demos/2026-10-31_orchestra_sarabande24/2026-10-31_orchestra_sarabande24.mp3",
+  "scorePages": [
+   "scores/2026-10-31_orchestra_sarabande24-1.png"
+  ],
+  "cover": "covers/2026-10-31_orchestra_sarabande24.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-10-30_guitartrio_gt_med",
   "date": "2026-10-30",
   "style": "guitartrio",
