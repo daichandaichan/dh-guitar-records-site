@@ -1,0 +1,90 @@
+{
+  "id": "2026-10-31_arena_auto32m",
+  "date": "2026-10-31",
+  "style": "arena",
+  "styleShort": "ロック",
+  "styleLabel": "ロック（80年代の産業ロック：シンセのリフとパワー・コード・歌うギター／パワー・バラードも）",
+  "form": "auto32m",
+  "formLabel": "AABA 32小節・短調（毎回ちがう）",
+  "title": "Tempo des Lilas (Ebm)",
+  "key": "Ebm",
+  "tempo": 120,
+  "tempoGenerated": 120,
+  "bars": 204,
+  "seed": 20261031,
+  "gen": 158,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 29
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 29
+    },
+    {
+      "id": "comp",
+      "name": "Piano",
+      "prog": 90
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "F#maj7",
+    "B7",
+    "C#7b9",
+    "F#maj7",
+    "G#m9",
+    "D#m9",
+    "Bmaj7",
+    "A#9",
+    "D#m9",
+    "F#maj7",
+    "F#m7",
+    "B7",
+    "C#7",
+    "F#maj7",
+    "G#m7",
+    "D#m9",
+    "Bmaj7",
+    "A#9",
+    "D#m9",
+    "F#maj7",
+    "B9",
+    "G#m9",
+    "D#m9",
+    "Bmaj7",
+    "A#7alt",
+    "Fm7b5",
+    "A#7alt",
+    "D#m6",
+    "F#maj7",
+    "B7alt",
+    "C#7",
+    "F#maj7",
+    "G#m6",
+    "D#m6",
+    "Bmaj7",
+    "A#13",
+    "D#m9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 158). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-31_arena_auto32m/2026-10-31_arena_auto32m_midi-set.zip",
+    "midi": "demos/2026-10-31_arena_auto32m/2026-10-31_arena_auto32m_all.mid",
+    "info": "demos/2026-10-31_arena_auto32m/info.md"
+  },
+  "audio": "demos/2026-10-31_arena_auto32m/2026-10-31_arena_auto32m.mp3"
+}
