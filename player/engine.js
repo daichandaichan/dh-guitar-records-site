@@ -270,6 +270,7 @@ var MIX = {
   gtrg:  { gain: 0.9,  pan: 0.0,  verb: 0.24 },
   solo:  { gain: 1.0,  pan: -0.10, verb: 0.30 },
   comp:  { gain: 1.0,  pan: -0.34, verb: 0.24 },
+  org:   { gain: 0.8,  pan: 0.30, verb: 0.34 },     /* オルガン（コードのサスティン：ネオクラシカル） */
   pno:   { gain: 0.9,  pan: 0.30, verb: 0.26 },     /* ピアノの伴奏（追加）：ギターの伴奏と左右に分ける */     /* 測定（build #221）：伴奏がテーマより 12〜18dB 小さかった → 約 +4dB */
   bass:  { gain: 0.86, pan: 0.0,  verb: 0.05 },
   drums: { gain: 0.64, pan: 0.10, verb: 0.16 },
@@ -1714,6 +1715,7 @@ Engine.prototype.voice = function (kind, p, when, dur, vel, g, gd, ao, vw, fl, a
   if (TT.ind && kind === "solo") { this.orchVoice(kind, p, when, dur, vel, out, "strings"); return; }
   if ((kind === "mel" || kind === "solo") && TT.lead === "blown") { this.blownVoice(p, when, dur, vel, out); return; }
   if ((kind === "mel" || kind === "solo") && TT.lead === "keys") { this.keysVoice(p, when, dur, vel, out, TT.keysKind); return; }
+  if (kind === "org") { this.keysVoice(p, when, dur, vel, out, "organ"); return; }        /* ネオクラシカルのオルガン（コードのサスティン） */
   if (kind === "pno") { this.keysVoice(p, when, dur, vel, out, "piano"); return; }
   if (kind === "comp" && TT.comp === "keys") { this.keysVoice(p, when, dur, vel, out, TT.keysKind || "piano"); return; }
   if (kind === "comp" && TT.comp === "synth") { this.synthSaw(p, when, dur, v, out); return; }

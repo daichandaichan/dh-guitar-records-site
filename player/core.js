@@ -20000,6 +20000,12 @@ function generateMain(opt) {
     var twinN = twinHarmony(mel, solo, sections, beats, opt, opt.tempo);
     if (twinN.length) stems.push({ id: "gtr2", name: "Guitar 2 (twin harmony)", jp: "2本目のギター（ツイン・ハーモニー：3度）", prog: (leadProgM >= 24 && leadProgM <= 31) ? leadProgM : 30, ch: 6, notes: twinN, extra: [] });
   }
+  /* ネオクラシカル：オルガンのサスティン（コードを伸ばして鳴らす）。SINE Player などのオルガン音色を VST で割り当てる用。
+     コードの変わり目ごとに和音（3〜4音）を弾き、次のコードまで保つ。声部は、前の和音から最短で動く。ドラムだけの区間（4バース）は鳴らさない。opt.orgSustain=false で外せる */
+  if (opt.style === "neo" && opt.orgSustain !== false) {
+    var orgN = orgSustainNotes(absChords({ chords: chs, sections: sections, beats: beats, opt: opt }), totalBeats, drumWins.map(function (w) { return { a: w.a + barShiftAll, b: w.b + barShiftAll }; }), RNG(((opt.seed || 1) * 389 + 41) % 2147483647));
+    if (orgN.length) stems.push({ id: "org", name: "Organ sustain (chords)", jp: "オルガン（コードのサスティン）", prog: 19, ch: 7, notes: orgN, extra: [] });
+  }
   if (opt.orgTrade && horn.length) {                              /* オルガンのソロ（デフランチェスコ風）：ギターとの掛け合いの片方 */
     horn.sort(function (a, b) { return a.t - b.t; });
     stems.splice(2, 0, { id: "horn", name: "Organ solo (" + ({ larryy: "Larry Young", jsmith: "Jimmy Smith" }[opt.orgVoice] || "DeFrancesco") + ")", jp: "オルガン（ソロ：" + ({ larryy: "ラリー・ヤング風", jsmith: "ジミー・スミス風" }[opt.orgVoice] || "デフランチェスコ風") + "）", prog: 16, ch: 4, notes: horn, extra: polishExtras(stemExpression("horn", horn, sections, opt, rngE, beats, opt.style), horn) });
@@ -20292,6 +20298,43 @@ function trackChunk(events) {
 }
 
 /* 曲全体を通した和音の並び（各区間がコーラスのどこを弾いているかを見て並べる） */
+/* オルガンのサスティン用：コードごとに、根音・3度・5度（あれば7度）の和音を、前の和音から最短で動く転回で。低い根音（ペダル）を足す。ドラムだけの区間は、音を切る／入れない */
+function orgSustainNotes(ab, totalBeats, wins, rng) {
+  var out = [], prev = null, i, k;
+  for (i = 0; i < ab.length; i++) {
+    var c = ab[i], t0 = c.t, t1 = (i + 1 < ab.length) ? ab[i + 1].t : totalBeats;
+    if (t0 >= totalBeats - 0.2 || !QUAL[c.q]) continue;
+    var iv = QUAL[c.q].iv, third = iv.indexOf(3) >= 0 ? 3 : (iv.indexOf(4) >= 0 ? 4 : (iv.indexOf(2) >= 0 ? 2 : 5)), fifth = iv.indexOf(7) >= 0 ? 7 : (iv.indexOf(6) >= 0 ? 6 : (iv.indexOf(8) >= 0 ? 8 : 7));
+    var seven = iv.indexOf(10) >= 0 ? 10 : (iv.indexOf(11) >= 0 ? 11 : (iv.indexOf(9) >= 0 ? 9 : -1));
+    var tones = [0, third, fifth]; if (seven >= 0 && rng.chance(0.5)) tones.push(seven);
+    var best = null, bd = 1e9, rot, oct;
+    for (rot = 0; rot < tones.length; rot++) {
+      for (oct = -1; oct <= 1; oct++) {
+        var cand = [], ok = true;
+        for (k = 0; k < tones.length; k++) {
+          var pp = c.root + tones[(k + rot) % tones.length] + oct * 12 + (k + rot >= tones.length ? 12 : 0);
+          while (pp < 50) pp += 12; while (pp > 76) pp -= 12;
+          cand.push(pp);
+        }
+        cand.sort(function (a, b) { return a - b; });
+        var cost = 0, z, m;
+        if (prev) { for (k = 0; k < cand.length; k++) { m = 99; for (z = 0; z < prev.length; z++) m = Math.min(m, Math.abs(cand[k] - prev[z])); cost += m; } }
+        else for (k = 0; k < cand.length; k++) cost += Math.abs(cand[k] - 62) * 0.3;
+        if (cost < bd) { bd = cost; best = cand; }
+      }
+    }
+    prev = best;
+    var dEnd = Math.min(t1, totalBeats) - 0.04;
+    wins.forEach(function (w) { if (t0 < w.a && dEnd > w.a - 0.02) dEnd = w.a - 0.02; });       /* ドラムだけの区間に入る前で切る */
+    var inWin = wins.some(function (w) { return t0 >= w.a - 1e-6 && t0 < w.b - 1e-6; });
+    var len = dEnd - t0;
+    if (inWin || len < 0.4) continue;
+    best.forEach(function (p, j) { out.push({ t: t0 + j * 0.012, d: len, p: p, v: 54 + rng.i(8) - j }); });
+    var ped = c.root; while (ped > 47) ped -= 12; while (ped < 36) ped += 12;              /* ペダル（低い根音） */
+    out.push({ t: t0, d: len, p: ped, v: 50 + rng.i(6) });
+  }
+  return out.sort(function (a, b) { return a.t - b.t; });
+}
 function absChords(song) {
   if (song.chordsAbs) return song.chordsAbs;
   var out = [], beats = song.beats;
@@ -20720,9 +20763,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 426;
+var BUILD_NO = 427;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 156;
+var GEN_NO = 157;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
