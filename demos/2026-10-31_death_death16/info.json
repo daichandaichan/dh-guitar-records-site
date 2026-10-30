@@ -1,0 +1,70 @@
+{
+  "id": "2026-10-31_death_death16",
+  "date": "2026-10-31",
+  "style": "death",
+  "styleShort": "デス・メタル",
+  "styleLabel": "デス・メタル（カーカス／ヴェイダー型：16分のトレモロ刻みとブラスト）",
+  "form": "death16",
+  "formLabel": "デス 16小節（半音とトライトーンの刻み）",
+  "title": "Lune Mineur (Ebm)",
+  "key": "Ebm",
+  "tempo": 278,
+  "tempoGenerated": 278,
+  "bars": 105,
+  "seed": 10594,
+  "gen": 156,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 30
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 30
+    },
+    {
+      "id": "comp",
+      "name": "Piano",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "gtr2",
+      "name": "Guitar 2 (twin harmony)",
+      "prog": 30
+    }
+  ],
+  "chordsOneChorus": [
+    "D#5",
+    "E5",
+    "A5",
+    "D#5",
+    "F#5",
+    "G5",
+    "D#5",
+    "B5",
+    "A#5",
+    "E5",
+    "D#5",
+    "D#5"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 156). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-10-31_death_death16/2026-10-31_death_death16_midi-set.zip",
+    "midi": "demos/2026-10-31_death_death16/2026-10-31_death_death16_all.mid",
+    "info": "demos/2026-10-31_death_death16/info.md"
+  },
+  "audio": "demos/2026-10-31_death_death16/2026-10-31_death_death16.mp3"
+}
