@@ -187,6 +187,83 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-10-31_classical_sarabande24",
+  "date": "2026-10-31",
+  "style": "classical",
+  "styleShort": "クラシックギター",
+  "styleLabel": "クラシックギター（編曲もの）",
+  "form": "sarabande24",
+  "formLabel": "サラバンド 24小節（3拍子・2拍目が重い）",
+  "title": "Swing de Paris (Ebm)",
+  "key": "Ebm",
+  "tempo": 76,
+  "tempoGenerated": 76,
+  "bars": 129,
+  "seed": 20261031,
+  "gen": 158,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 24
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 24
+   },
+   {
+    "id": "comp",
+    "name": "Classical Gtr",
+    "prog": 24
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   }
+  ],
+  "chordsOneChorus": [
+   "D#m",
+   "G#m",
+   "A#7",
+   "D#m",
+   "C#",
+   "F#",
+   "B",
+   "A#7",
+   "D#m",
+   "G#m",
+   "Fm",
+   "A#13",
+   "D#m",
+   "B",
+   "E13",
+   "D#m",
+   "G#m",
+   "C#",
+   "F#",
+   "B",
+   "Fm",
+   "A#9",
+   "A#7",
+   "D#m6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 158). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-10-31_classical_sarabande24/2026-10-31_classical_sarabande24_midi-set.zip",
+   "midi": "demos/2026-10-31_classical_sarabande24/2026-10-31_classical_sarabande24_all.mid",
+   "info": "demos/2026-10-31_classical_sarabande24/info.md"
+  },
+  "audio": "demos/2026-10-31_classical_sarabande24/2026-10-31_classical_sarabande24.mp3",
+  "scorePages": [
+   "scores/2026-10-31_classical_sarabande24-1.png"
+  ],
+  "cover": "covers/2026-10-31_classical_sarabande24.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-10-30_guitartrio_gt_med",
   "date": "2026-10-30",
   "style": "guitartrio",
