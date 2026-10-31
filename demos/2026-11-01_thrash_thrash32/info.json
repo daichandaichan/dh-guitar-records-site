@@ -1,0 +1,72 @@
+{
+  "id": "2026-11-01_thrash_thrash32",
+  "date": "2026-11-01",
+  "style": "thrash",
+  "styleShort": "スラッシュ・メタル",
+  "styleLabel": "スラッシュ・メタル（メタリカ／スレイヤー／テスタメント型：ブリッジミュートの刻みとアクセント）",
+  "form": "thrash32",
+  "formLabel": "スラッシュ 32小節（リフA16＋リフB16）",
+  "title": "Café de Paris (Em)",
+  "key": "Em",
+  "tempo": 278,
+  "tempoGenerated": 278,
+  "bars": 233,
+  "seed": 68858,
+  "gen": 162,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 30
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 30
+    },
+    {
+      "id": "comp",
+      "name": "Piano",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "gtr2",
+      "name": "Guitar 2 (twin harmony)",
+      "prog": 30
+    }
+  ],
+  "chordsOneChorus": [
+    "E5",
+    "D5",
+    "C5",
+    "E5",
+    "F5",
+    "E5",
+    "A5",
+    "B5",
+    "A5",
+    "G5",
+    "E5",
+    "F5",
+    "A#5",
+    "E5"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 162). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-01_thrash_thrash32/2026-11-01_thrash_thrash32_midi-set.zip",
+    "midi": "demos/2026-11-01_thrash_thrash32/2026-11-01_thrash_thrash32_all.mid",
+    "info": "demos/2026-11-01_thrash_thrash32/info.md"
+  },
+  "audio": "demos/2026-11-01_thrash_thrash32/2026-11-01_thrash_thrash32.mp3"
+}
