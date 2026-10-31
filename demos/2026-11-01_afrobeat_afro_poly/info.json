@@ -1,0 +1,71 @@
+{
+  "id": "2026-11-01_afrobeat_afro_poly",
+  "date": "2026-11-01",
+  "style": "afrobeat",
+  "styleShort": "アフロビート",
+  "styleLabel": "アフロビート（フェラ・クティ：絡み合う16分のギターとベースのオスティナート、長いヴァンプ、コール＆レスポンス）",
+  "form": "afro_poly",
+  "formLabel": "アフロビート（ポリリズム）16小節（3対4・5対4の重ね）",
+  "title": "Lagos Night (Bbm)",
+  "key": "Bbm",
+  "tempo": 104,
+  "tempoGenerated": 104,
+  "bars": 108,
+  "seed": 20261101,
+  "gen": 162,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 65
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 65
+    },
+    {
+      "id": "comp",
+      "name": "Piano",
+      "prog": 28
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "A#m7",
+    "A#m7",
+    "A#m7",
+    "A#m7",
+    "A#m7",
+    "D#7b9",
+    "D#7",
+    "A#m7",
+    "A#m7",
+    "A#m7",
+    "A#m7",
+    "G#7",
+    "D13",
+    "A#m7",
+    "D#7b9",
+    "A7",
+    "A#m7",
+    "A#m7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 162). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-01_afrobeat_afro_poly/2026-11-01_afrobeat_afro_poly_midi-set.zip",
+    "midi": "demos/2026-11-01_afrobeat_afro_poly/2026-11-01_afrobeat_afro_poly_all.mid",
+    "info": "demos/2026-11-01_afrobeat_afro_poly/info.md",
+    "song": "demos/2026-11-01_afrobeat_afro_poly/song.json"
+  }
+}

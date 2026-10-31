@@ -68,7 +68,12 @@
    "midi": "demos/2026-11-01_afrobeat_afro_poly/2026-11-01_afrobeat_afro_poly_all.mid",
    "info": "demos/2026-11-01_afrobeat_afro_poly/info.md",
    "song": "demos/2026-11-01_afrobeat_afro_poly/song.json"
-  }
+  },
+  "scorePages": [
+   "scores/2026-11-01_afrobeat_afro_poly-1.png"
+  ],
+  "cover": "covers/2026-11-01_afrobeat_afro_poly.jpg",
+  "coverKind": "generated"
  },
  {
   "id": "2026-10-31_death_death16",
