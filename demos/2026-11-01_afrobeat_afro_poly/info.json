@@ -65,7 +65,7 @@
   "files": {
     "zip": "demos/2026-11-01_afrobeat_afro_poly/2026-11-01_afrobeat_afro_poly_midi-set.zip",
     "midi": "demos/2026-11-01_afrobeat_afro_poly/2026-11-01_afrobeat_afro_poly_all.mid",
-    "info": "demos/2026-11-01_afrobeat_afro_poly/info.md",
-    "song": "demos/2026-11-01_afrobeat_afro_poly/song.json"
-  }
+    "info": "demos/2026-11-01_afrobeat_afro_poly/info.md"
+  },
+  "audio": "demos/2026-11-01_afrobeat_afro_poly/2026-11-01_afrobeat_afro_poly.mp3"
 }
