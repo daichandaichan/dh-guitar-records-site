@@ -236,6 +236,9 @@ var TONE = {
   fusion:   { bank: "electric", lp: [1500, 4600], nasal: 0, pick: 0.03, body: 0.08, det: 4, rel: 1.4, lead: "keys", comp: "keys", pad: 0.10 },
   /* マクラフリン風：歪みのある、伸びるギター（フュージョン＝エレピ伴奏／オルガン・ジャズ＝オルガン伴奏） */
   /* 80年代の産業ロック：歪んだギター（歌う）とシンセ（リフ・パッド） */
+  rk_la:    { bank: "electric", lp: [1700, 5200], nasal: 0, pick: 0.10, body: 0.05, det: 6, rel: 1.0, drive: 14, driveComp: 20, lvl: 0.62, lead: "pluck", comp: "pluck" },
+  rk_hard:  { bank: "electric", lp: [1600, 5000], nasal: 0, pick: 0.09, body: 0.05, det: 6, rel: 1.1, drive: 12, driveComp: 18, lvl: 0.64, lead: "pluck", comp: "pluck" },
+  rk_90:    { bank: "electric", lp: [1700, 5400], nasal: 0, pick: 0.08, body: 0.05, det: 6, rel: 1.1, drive: 9, driveComp: 13, lvl: 0.68, lead: "pluck", comp: "pluck" },
   arena:    { bank: "electric", lp: [1700, 5600], nasal: 0, pick: 0.06, body: 0.05, det: 7, rel: 1.8, drive: 8, lvl: 0.78, lead: "pluck", comp: "synth", pad: 0 },
   /* マクラフリン風オルガン・トリオ：ベース奏者はいない＝オルガンの左手（足鍵盤）がベース */
   mcl_organtrio: { bank: "electric", lp: [1700, 6000], nasal: 0, pick: 0.07, body: 0.04, det: 8, rel: 1.9, drive: 9, lvl: 0.7, lead: "pluck", comp: "organ", bassOrgan: true },
@@ -2051,7 +2054,7 @@ var STEM_TRIM = {
   modern: { comp: 1.4 }, odd: { comp: 1.4 }, waltz: { comp: 1.5 }, organjazz: { comp: 0.9 }, fusion: { comp: 1.4 }, brazil: { comp: 1.15 }, latin: { comp: 1.2 },
   classical: { comp: 1.35 }, indian: { perc: 1.5, harp: 1.6 }, wa: { drums: 0.7 },
   mcl_fusion: { comp: 1.4 }, mcl_organ: { comp: 0.9 }, mcl_mahav: { comp: 1.4 }, mcl_organtrio: { comp: 0.9, drums: 0.95 },
-  arena: { comp: 1.0 },
+  arena: { comp: 1.0 }, rk_la: { comp: 1.0 }, rk_hard: { comp: 1.0 }, rk_90: { comp: 1.0 },
   fu_corea: { comp: 1.4 }, fu_weather: { comp: 1.4 }, fu_metheny: { comp: 1.3 }, fu_funk: { comp: 1.4 }, fu_smooth: { comp: 1.4 }, fu_latin: { comp: 1.2 }, fu_prog: { comp: 1.4 },
   guitartrio: { mel: 1.2, gt3: 1.2 }       /* 測定：ギター1（旋律・ソロ）が、ギター2のラスゲアードより 7dB 小さかった */
 };
