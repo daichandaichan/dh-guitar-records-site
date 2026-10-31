@@ -2294,9 +2294,29 @@ var STYLES = {
   /* ロック（group:"ロック"）：80年代の産業ロック（アリーナ・AOR。ジャーニー・スティクス・ボストン・フォリナー・TOTO 系） */
   arena: {
     label: "ロック（80年代の産業ロック：シンセのリフとパワー・コード・歌うギター／パワー・バラードも）",
-    swing: 0.5, tempo: 120, comp: "arena", bass: "even8", drums: "rock", mel: "ballad",
-    forms: ["arena_sep", "arena_anthem", "arena_dont", "arena_wheel", "arena_major", "arena_pb", "arena_pb2", "auto16m", "auto32m"],
+    fuFamily: "rock", fuName: "80年代の産業ロック（AOR：ジャーニー・サバイバー型／シンセ＋ギター2本）", rockKind: "aor",
+    swing: 0.5, tempo: 120, comp: "arena", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["arena_sep", "arena_anthem", "arena_dont", "arena_wheel", "arena_major", "arena_pb", "arena_pb2", "rk_aor1", "rk_aor2", "auto16m", "auto32m"],
     voice: "schon", lead: 29, compProg: 90, feel: 16
+  },
+  /* ロックの型（fuFamily:"rock"）：基の曲種 arena に、伴奏(ギターの和音)・ベース・ドラム・テンポ・語法・音色を重ねる。ギター1(旋律・ソロ)＋ギター2(リズムのリフ)＋伴奏ギター＋ベース＋ドラム */
+  rk_la: {
+    fuFamily: "rock", fuName: "LAメタル（ラット・ドッケン・モトリー型：8分のペダルとパワーコード）", rockKind: "la",
+    label: "ロック：LAメタル（ラット・ドッケン・モトリー・クルー型／ギター2本＋和音のギター）", fuBase: "arena", fuTone: "rk_la",
+    swing: 0.5, tempo: 124, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["rk_la1", "rk_la2", "rk_la3", "auto16m", "auto32m"], voice: "vai", lead: 30, compProg: 30, feel: 16
+  },
+  rk_hard: {
+    fuFamily: "rock", fuName: "ハード・ロック（ガンズ・ヴァン・ヘイレン・オジー型）", rockKind: "hard",
+    label: "ロック：ハード・ロック（ガンズ・アンド・ローゼズ／ヴァン・ヘイレン／オジー型／ギター2本＋和音のギター）", fuBase: "arena", fuTone: "rk_hard",
+    swing: 0.5, tempo: 126, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["rk_hard_a", "rk_hard_b", "auto16m", "auto32m"], voice: "page", lead: 30, compProg: 30, feel: 16
+  },
+  rk_90: {
+    fuFamily: "rock", fuName: "90年代ロック（エクストリーム型：ファンク・メタル／3+3+2のシンコペ）", rockKind: "x90",
+    label: "ロック：90年代（エクストリーム型・ファンク・メタル／ギター2本＋和音のギター）", fuBase: "arena", fuTone: "rk_90",
+    swing: 0.5, tempo: 104, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["rk_90", "auto16m", "auto32m"], voice: "vai", lead: 29, compProg: 29, feel: 16
   },
   /* フュージョンのバリエーション（group:"フュージョン"）：基の曲種 fuBase の作り方に、伴奏・ベース・ドラム・テンポ・語法・音色を重ねる */
   fu_corea: {
@@ -4849,7 +4869,8 @@ function genMelody(chs, form, sty, opt, rng) {
     notes = bridgeContrast(notes, form, beats, lo, hi);
     notes = emotionalArc(notes, chs, beats, bars, lo, hi, opt.tonic, !!form.minor, rng);
   }
-  if (opt.style !== "wa") notes = jazzify(notes, chs, beats, bars, lo, hi, rng, antAmt(opt));
+  /* ロックのテーマ：ジャズの装飾(和音の変わり目への食い込み・フレーズのひと息・装飾の音)を、ロックの歌い方に合う量で入れる(食い込み＝先取りのシンコペ0.4、ひと息＝歌う間0.85、装飾＝0.15)。opt.rockJazz=false で入れない、true で従来の量 */
+  if (opt.style !== "wa" && !(opt.style === "arena" && opt.rockJazz === false)) notes = jazzify(notes, chs, beats, bars, lo, hi, rng, (opt.style === "arena" && opt.rockJazz !== true) ? [0.3, 0.8, 0.08] : antAmt(opt));
   if (WA_SC) notes = waShape(notes, chs, beats, bars, lo, hi, rng);
   /* テーマも変わり目で和音を感じさせる（歌いやすさを崩さない程度に軽く） */
   var mkT = { bebop: 0.5, swing: 0.45, soul: 0.4, organjazz: 0.4, ballad: 0.45, bossa: 0.4, waltz: 0.45, gypsy: 0.3 }[opt.style];
@@ -4861,6 +4882,7 @@ function genMelody(chs, form, sty, opt, rng) {
   if (ODD_G) notes = oddFill(notes, chs, lo, hi, beats, bars, rng);
   resolveTensions(notes, chs, lo, hi, rng);
   if (opt.style === "tango") tangoAccent(notes, beats);
+  if (opt.style === "neo" && YNG_PROF[v] && opt.yngTheme !== false) notes = yngThemeShape(notes, rng, YNG_PROF[v].th);
   return notes;
 }
 function tangoSeason(form) {
@@ -5466,6 +5488,11 @@ METAL_PATS.melodeath = [["rrrrrrrrrrrrrrrr", 8.5], ["r-r-r-r-r-r-r-r-", 8.0], ["
   ["rrr-----r---r-r-", 1.2], ["rrrrxrrrxrrrrrxr", 1.1], ["rrr-rrr-rrr-rrr-", 1.1], ["rrrrx-x-rrx-x-rr", 1.1], ["rrrrr-rrrrr-rrrr", 1.0], ["rrr---rrr---rrrr", 0.9], ["rrrrrrrrrrrrxxxx", 0.8], ["rrrrrrrrx-x-x-x-", 0.8]];
 METAL_PATS.black = [["rrrrrrrrrrrrrrrr", 27.1], ["xxxxrrrrxxxxrrrr", 9.8], ["r---r---r---r---", 9.5], ["r-r-r-r-r-r-r-r-", 3.9], ["rrrrrrrrxxxxxxxx", 3.8], ["r-r-r-r-x-x-x-x-", 2.7], ["r-r-x---r-r-x---", 2.3], ["r---x---r---x---", 1.9],
   ["r-r-r-x-r-x-r-x-", 1.9], ["r-r-r-r-x---x---", 1.9], ["x---r-r-r-r-r-r-", 1.6], ["r-r-x-x-r-r-x-x-", 1.4], ["xxxxxxxxrrrrrrrr", 1.2], ["rxrxr-x-rxrxr-x-", 1.2], ["x---rrrrrrrrrrrr", 1.2], ["xrxrxrxrxrxrxrxr", 0.8]];
+/* ギャロップ（スラッシュ／メロデス）とブレイクダウン（デス／スラッシュ：疎で重い刻み＝ドラムはハーフ）の型 */
+METAL_PATS.thrash.push(["rr-rr-rr-rr-rr-r", 1.6], ["r-rr-rr-r-rr-rr-", 1.4], ["rrr-rrr-rrr-rrr-", 0.9]);
+METAL_PATS.melodeath.push(["rr-rr-rr-rr-rr-r", 2.2], ["r-rr-rr-r-rr-rr-", 1.8], ["x-rrx-rrx-rrx-rr", 1.0]);
+var METAL_BREAK = [["r-----r-r-x-----", 3], ["x-------r-r-x---", 2.5], ["r---r-----r-r---", 2.5], ["x---r---x-r-r---", 2], ["r-r---r-r-r---x-", 2], ["x-----x---x-x---", 1.5]];
+var METAL_BREAK_P = { death: 0.16, thrash: 0.07, melodeath: 0.03, black: 0.02 };
 var METAL_IVL = {
   thrash: [[1, 4.4], [3, 4.1], [2, 3.0], [5, 2.9], [12, 2.5], [7, 2.4], [-2, 2.3], [6, 2.0], [10, 1.4], [-1, 1.1], [4, 1.0], [-3, 0.9], [8, 0.9]],
   death: [[1, 6.0], [3, 5.5], [2, 3.7], [6, 3.1], [-1, 3.0], [4, 2.6], [7, 2.5], [5, 2.5], [-3, 1.9], [8, 1.7], [-4, 1.5], [12, 1.3], [-2, 1.2]],
@@ -5485,6 +5512,10 @@ function metalBarPlan(opt, form, bar, solo) {
   var A = metalPatPick(rr, METAL_PATS[kind]), B = metalPatPick(rr, METAL_PATS[kind]), tries = 0;
   while (B === A && tries++ < 6) B = metalPatPick(rr, METAL_PATS[kind]);
   if (solo) { A = rr.chance(0.7) ? "r-r-r-r-r-r-r-r-" : "r---r---r---r---"; B = "r-r-r-r-r-r-r-x-"; }
+  else {
+    var rb = RNG(((((opt.seed || 1) * 61 + ph * 17 + ({ death: 3, melodeath: 5, black: 7, thrash: 11 }[kind])) % 2147483647) + 2147483647) % 2147483647 || 1);
+    if (ph >= 1 && ph < Math.floor(form.bars / 4) - 1 && rb.chance(METAL_BREAK_P[kind])) { A = metalWPick(rb, METAL_BREAK); B = metalWPick(rb, METAL_BREAK); }     /* ブレイクダウン（曲の頭と終わりの4小節は除く） */
+  }
   var ivA = [], ivB = [], s;
   for (s = 0; s < 16; s++) { ivA.push(metalWPick(rr, METAL_IVL[kind])); ivB.push(metalWPick(rr, METAL_IVL[kind])); }
   var pat, iv;
@@ -5545,6 +5576,294 @@ function bridgeBass(chs, form, sty, opt, rng, ctx) {
   }
   return notes;
 }
+/* ---------- ドラムMIDIの型の図書館（Terminus Metal MIDIPack 180本・Burzukh Grooves 51本を、analyze_drums.js で16分の16ステップに直した 259 の2小節）----------
+   書式：種類|元のテンポ|キック(2小節,)|スネア|刻み(h＝ハイハット o＝オープン r＝ライド c＝クラッシュ)|タム(H/M/L、なければ空)。 x＝強い音、g＝ゴースト。
+   種類：blast＝ブラスト／dbl＝16分の連打／half_dbl＝ハーフ＋連打／half＝ハーフ(3拍目だけスネア)／dbeat＝Dビート／skank＝裏のスネア／gallop＝ギャロップ／back＝2・4拍／other＝その他 */
+var DRUM_LIB = (function () {
+  var raw = [
+    "blast|180|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|x-x-x-x-x-x-x-xx,--x-x-x-x-x-x-x-|--h-h-h-h-h-h-h-,h-h-h-h-h-h-h-h-|",
+    "blast|130|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|--r-r-r-r-r-r---,--r-r-r-r-r-r-r-|",
+    "blast|115|xxxxxxxxxxxxxxxx,xxxxxxxxxxxx----|xxxxxxxxxxxxxxxx,xxxxxxxxxxxx----|--rrrrrrrrrrrr-r,--rrrrrrrrrr----|",
+    "half_dbl|175|xxxxxxxxxxxxxxxx,-xxxxxxxxxxxxxxx|--------x-------,--------x---x---|----h---h---h---,h---h---h---h---|",
+    "half_dbl|175|-xxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|--------x-------,--------x---xxxx|h---h---h---h--h,----h---h-------|",
+    "dbl|175|xx-xxx-xxx-xxx-x,xx-xxx-xxx-xxx-x|----x-------x---,----x-------x---|----h---h---h---,h---h---h---h---|",
+    "dbl|175|xx-xxx-xxx-xxx-x,xx-xxx-xxx-xxx-x|----x-------x---,----x------xxx-x|h---h---h---h---,h----h-hhh------|",
+    "other|170|x-x-----x-x---x-,--x-----x-x----x|----x--x----x---,----x--x----x---|----h---h---h---,h---h---h---h---|",
+    "other|170|--x-----x-x---x-,--x-----x---x---|----x--x----x---,----x-xxxxxx----|----h---h---h--h,----h-----------|",
+    "other|170|x---x-----x-----,x---x-----x-----|--------x-----xx,--------x-----x-|h---h---h---h---,h---h---h---h--h|",
+    "other|170|----x-----x---x-,x---x-x---x-----|--------x-----xx,--x-----x------x|----h---h---h--h,----h---h---h--h|",
+    "other|170|x---x-----x-----,x---x-----x-----|--------x-----gx,--------x-----x-|----h---h---h---,h---h---h---h---|",
+    "other|170|----x-----x---xx,--------x-------|--x-----x-------,--xxx-x---------|h---h---h---h---,h---------------|",
+    "half|170|x-----x-------x-,--x-------x-----|--------x-------,----x-------x---|----r---r---r--r,----r---r---r---|",
+    "half|170|x-----x-------x-,--x-------------|--------x-------,----x---xxxxxxx-|----r---r---r--r,----------------|",
+    "half|170|x---x-x-----x--x,--x-----x---x-x-|--------x-------,----x-----------|----r-------r---,r-------r---r---|",
+    "other|170|----x-----x-----,----x-----x-----|x-----x-x---x---,x-----x-x---x---|----r---r-------,----r---r-------|",
+    "other|170|----x---x-------,x---x-------x--x|x-----------x---,--------x-------|----r---r-------,r---r-------r---|",
+    "other|170|----x-----x-----,----x-----x-----|------x-----x---,------x-----x---|r-------r-------,r-------r-------|",
+    "half|170|x---x-x-----x--x,--x-----x---x-x-|--------x-------,----x-----------|----r-------r--r,--------r---r---|",
+    "dbeat|170|x-----x-x------x,--x---x---x---x-|----x-------x---,----x-------x---|----r---r---r---,r---r---r---r---|",
+    "dbeat|170|x-----x-x-------,xxxx--x---x---x-|----x-------x---,----x-------x---|r---r---r---r--r,----r---r---r---|",
+    "dbeat|170|x-----x-x-------,x-x---x---x---x-|----x-------x---,----x-------x---|----r---r---r--r,----r---r---r---|",
+    "other|170|x-----x-x-------,----------------|----x-------x--x,--xxxxxx--------|r---r---r---r---,----------------|",
+    "skank|100|x--x-x--xx--xx-x,---x-x--xx--xx-x|--x---x---x---x-,--x---x---x---x-|----------h-----,----------h-----|",
+    "other|100|---x-x--xx--xx-x,-xx-xx-x-xx-xx--|--x---x---x---xx,---x--x-x--x--xx|----------h-----,----h-------h---|",
+    "skank|100|x--x-x--xx--xx--,x--x-x--xxxxxxxx|--x---x---x---x-,--x---x---x---x-|--------h-h-h-h-,--------h-h-h---|",
+    "skank|100|x--x-x--xx--xx-x,-xx-xx-x-xx--xx-|--x---x---x---x-,x--x--x-x--xx-x-|--------h-h-h-h-,----------------|",
+    "gallop|100|x-xx-xx---xx-xxx,--xx-xx---xx-x--|-x--x--x-x--x---,-x--x--x-x--x---|------h---h-----,--h---h---h-----|",
+    "gallop|100|x-xx-xx---xx-x-x,--xx-xx---xx-x-x|-x--x--x-x--x---,-x--x--x-x--x---|--h---h---h----h,--h---h---h-----|",
+    "gallop|100|xxxx-xx---xx-xxx,--xx-xx---xx-x--|----x--x-x--x---,----x--x-x--x---|--h---h---h----h,---------h------|",
+    "gallop|100|x-xx-xx---xx-xx-,x-xx-xx---xx----|-x--x--x-x--x--x,-x--x--x-x--x---|--h---h---h---h-,--h---h---h-----|",
+    "skank|95|xx-x-x-xx-xx-x--,x-xx-x-xx-xx-x-x|--x---x---x---x-,--x---x---x---x-|--r-r-r-r-r-r-r-,----------------|",
+    "skank|95|x-xx-x-x-x-x-x--,x-xx-x-xx-xx-xxx|--x---x---x---x-,--x---x---x---x-|--r-r-r-r-r-r-r-,----------------|",
+    "skank|100|xxxxxxxxxxxxxxxx,---x-x--x--x-xx-|--x---x---x---x-,--x---x---x---x-|------------r---,--r-r-r-r-r-r---|",
+    "half|110|x--x--xx--xxxxxx,x--x--xx----x-x-|--------x-------,--------x--x----|------r-----r---,------r---r-r-r-|",
+    "half_dbl|145|xxxxxxxxxxxxxxxx,xxxxxxxx--x---x-|--------x-------,--------xx--xx--|--h-------h-----,--h-------------|",
+    "half_dbl|145|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|--------x-------,--------xx-xx---|--h-------h-----,--h-------------|",
+    "dbl|145|xxxxxxxxxxxxxxxx,xxxxxxxx--xxxxxx|x-----x-x--x----,----x---x-------|--------r-r-r---,----r-r---r---r-|",
+    "dbl|145|xxxxxxxxxxxxxxxx,-xxxxxxx--xx----|x-------x--x--x-,----x-----------|--r-r-r--------r,--r-r-r---------|",
+    "half|140|x-x------xxxxxxx,--x------xxxxxxx|--------x-------,--------x-------|----h-----------,----h-----------|",
+    "half|160|x-x-------x-----,----x-------x--x|--------x-------,------g---g-----|--------h------h,--------h-------|",
+    "other|160|--x---------x-x-,----------------|------x---xgg---,x-------x-xxx---|h-------h-----hh,----------------|",
+    "other|160|x-----x-----x---,--x---x---------|--------------gx,x-------x-------|----------------,----------------|",
+    "other|160|x-----------x---,--------------xx|------x---g-----,x---------------|-------h--------,--------h-------|",
+    "other|160|------x-----x---,------xx--------|--------------gx,x-x-x---x-------|h-------h-------,----------------|",
+    "dbeat|175|x--x-x--x-x---xx,--x--x--x--x-x--|----x-------x---,----x-------x---|----h---h---h---,h---h---h---h---|",
+    "dbeat|175|x-x--x--x--x--xx,--x---x-x-x-----|----x-------x---,----x-------xxx-|----h---h---h--h,----h---h-------|",
+    "half|175|x-----x---------,--x-x---------x-|--------x-------,--------x-------|--------c-------,c-------c-------|",
+    "other|175|x-----x---------,--x-x-----x---x-|--------x-----x-,--------x-------|c-------c------c,--------c-------|",
+    "half|175|x-----x---------,--x---xx------xx|--------x-------,--------x-------|----c---c---c---,c---c---c-------|",
+    "other|175|------x---------,--x-x-xx--x-x-x-|--------x-----x-,--------x-------|----c---c---c---,c---------------|",
+    "other|160|x-x-x-----x---x-,--x-x-----x-----|---------------x,------x-----x-x-|h---------------,h---------------|",
+    "other|160|x-x-x-----x-x---,--x-x----------x|------x---------,--------x-------|----h-----------,----h-----------|",
+    "other|160|--x-x-----x---x-,------x---x-----|----------------,x-----------x---|------------h---,------------h---|",
+    "other|160|x-x-x-----x-x---,--x-x-----------|------x-------x-,--------x-------|h-------h-------,----h-------h---|",
+    "other|190|x-------x-------,--------x-------|------------x---,----------------|----r-------r---,r-------r---r---|",
+    "other|190|x-----x---x-----,x-------x-x-----|----x-----------,------------x---|----r---r---r---,----r----------r|",
+    "other|190|----x---x-----x-,--x-x-----x---x-|---------------x,------------x---|--------r---r---,--------r-------|",
+    "other|190|x-----x---x----x,--------x-x-----|----x-----------,------------x---|----r---r-------,----r-------r---|",
+    "other|190|----x---x-----x-,----x-x-x-x-----|----------------,x-----------x---|r-----------r---,----r---r-------|",
+    "other|140|x-x-x-x-x-x-x-xx,xxxxxxxxxxxxxxxx|----------------,--------x-----xx|--h-h-h-h-h-h-h-,------h-------hh|",
+    "other|140|x-x-x-x-x-x-x--x,xxxxxxxxxxxxxxxx|----------------,--------------xx|--h-h-h-h-h-h-hh,--h-h-h-h-h-h---|",
+    "other|140|x-x-x-x-x-x-x-xx,xxxxxxxxxxxxxxxx|----------------,------------xxxx|--h-h-h-h-h-h-h-,h-h-h-h-h-h-----|",
+    "gallop|130|x-xx--xx--x--xx-,x-xx--xx-xx---x-|----x------x----,----x---x--x-x--|----h-h-h-h-h-h-,----h-h-h-h-h---|",
+    "dbl|125|xxxxxxxxxxxxxxxx,-xxxxxxxxxxxxxxx|---------------x,--------------x-|---------------h,----------------|",
+    "blast|120|x-x-x-x-x-x-x-xx,--x-x-x-x-x-----|---x-x-x-x-x-x-x,---x-x-x-x-xxx--|--h-h-h-h-h-h-h-,--h-h-h-h-h-----|",
+    "dbeat|120|x-x--x--x--x-x-x,x-x--x--x--x-x-x|----x-------x---,----x-------x---|---hhhhhhhhhhhhh,---hhhhhhhhhhhhh|",
+    "back|110|xx-x-x-x-x-x-x-x,xx-x-x-x-x-x-x-x|----x-------x---,----x-------x---|--r-r-r-r-r-r-r-,--r-r-r-r-r-r-r-|",
+    "half|110|x--x--xx---x--xx,x--x--xx---x--x-|--------x-------,--------x-------|----r---r---r--r,----r---r-------|",
+    "other|120|x-x---x---x---x-,--x---x---x---x-|----x----------x,--------x---xx--|----h---h---h---,----h---h-------|",
+    "other|110|x-x--x--x--x---x,--x--x--x-----xx|---x--x-----x-xx,---x--x---------|--r-r-r-r-r-r---,r-r-r-r-r-r-r---|",
+    "dbeat|110|x-----x---x----x,------x---x---xx|----x-------x---,----x-------x---|----h---h---h--h,----h---h---h---|",
+    "dbeat|110|------x---x-----,x-----x---x--x-x|----x-------x---,----x-------x---|h---h---h---h--h,----h---h-------|",
+    "other|110|x-x------------x,--x-------------|----x----x--xx--,----xx---x--xx--|h-h-h-h-h-h-h-hh,--h-h-h-h-h-h-h-|",
+    "other|110|x-x------------x,--x-------------|----xx---x--xx--,----xx---x-xxx--|h-h-h-h-h-h-h-h-,h-h-h-h-h-h-h-hh|",
+    "half|115|x--x--x----x--x-,x--x--xx-x-x--x-|--------x-------,--------x---x---|----h---h---h--h,----h---h---h---|",
+    "half|175|x-x-x-x-x-x-x-xx,--x-x-x-x-x-x-xx|--------x-------,--------x-------|----h---h---h---,h---h---h---h---|",
+    "other|175|--x-x-x-x-x-x-x-,x-x-x-x-x-x-x-x-|--------x-----x-,--------x-------|----h---h-------,h---h-------h---|",
+    "half|175|x-x-x-x-x-x-x-xx,--x-x-xxx-x-x-x-|--------x-------,--------x-------|----h---h---h---,h---h-----------|",
+    "gallop|175|x-x-x-x-x-x-x-x-,x-x-x-x-x-x-x-x-|--------x-----x-,------gx-x------|----h---h---h---,h---h-----------|",
+    "half|175|x-x-x-------x-x-,--x-x-----x---xx|--------x-------,--------x-------|----r---r---r---,r---r---r---r---|",
+    "half|175|--x-x-------x-x-,--x-x-----x---x-|--------x-------,--------x-------|----r---r------r,----r-------r---|",
+    "half|175|x-x-x-------x-x-,--x-x-----x---x-|--------x-------,--------x-------|----r---r---r---,r---r---r---r---|",
+    "half|175|x-x-x-------x-x-,----x-x-x-x-x-x-|--------x-------,--x-------------|----r---r-------,----------------|",
+    "other|135|x-------x---x---,x-------x---x---|-gxxxx----------,-gxxxx----------|------hh-hhh-h--,------hh-hhh-h--|",
+    "skank|195|x---x---x---x--x,----x---x---x---|--x---x---x---x-,--x---x---xx--xx|----h-----h-----,------h---------|",
+    "dbeat|180|x---------x---x-,--x-------x---xx|----x-------x---,----x-------x---|----r---r---r--r,----r---r---r---|",
+    "dbeat|180|----------x---x-,--x-------xx--x-|----x-------x---,----x-------x---|----r---r------r,--------r---r---|",
+    "other|180|x-x------------x,--x-------------|----x-----------,----x-----------|----h---h---h---,h---h---h---h---|",
+    "other|180|x-x-------------,x-x---x---xx--x-|----x-----------,------------x---|h---h---h---h---,h---h---h-------|",
+    "other|180|x-x-x-x-x------x,--x-x-x-x-------|----x-----------,----x-----------|--------c-------,c-------c-------|",
+    "other|180|x-x-x-x-x-------,x-x---x---xx--x-|----x-----------,----x-------x---|c-------c-------,c-------c-------|",
+    "other|180|x---------------,x---------------|----------------,----------------|h-h-h-h-h-h-h-h-,h-h-h-h-h-h-h-h-|",
+    "other|180|x-------x-------,x---x---x---x---|----------------,------------xxxx|h-h-h-h-h-h-h-hh,--h-h-h-h-h-----|",
+    "dbl|180|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|----x---x---x---,x---x---x---x---|--r-r-r-r-r-r---,--r-r-r-r-r-r---|",
+    "half|180|x-x-x-----x-----,--x-x-x---x-----|--------x-------,--------x-----x-|--------h-------,h-------h-------|",
+    "half|180|x-x---xx--x-x-x-,--x-x-x---x-x-x-|--------x-------,--------x-------|h-------h-------,h-------h-------|",
+    "half_dbl|175|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|--------x-------,--------x-------|hhhhhhhh-hhhhhhh,-hhhhhhh-hhhhhhh|",
+    "half_dbl|175|xxxxxxxxxxxxxxxx,-xxxxxx-x-xxx---|--------x-------,--------x-------|-hhhhhhh-hhhhhhh,-hhhhhhh--h-----|",
+    "other|180|x---x-----x-x---,x-x-xx--xxx-xx--|------x-------x-,------x-------x-|------r---r---r-,--r---r---r---r-|",
+    "other|180|x---xx----x-xx-x,----x---x---x---|------x--x----x-,------x---x---x-|--r---r---r---r-,--r---r---------|",
+    "other|157|x---x---x---x---,x---x---x---x-x-|----------------,----------------|----h---h---h---,h---h---h---h---|",
+    "other|157|----x---x---x--x,----x---x---x-x-|----------------,----------------|----h---h---h---,h---h---h---h---|",
+    "blast|157|x-x-x-x-x-x-x-x-,x-x-x-x-x-x-x-x-|---x-x-x-x-x-x-x,-x-x-x-x-x-x-x-x|--h-h-h-h-h-h-h-,h-h-h-h-h-h-h---|",
+    "blast|157|x-x-x-x-x-x-x-xx,--x-x-x-xxxx-xxx|---x-x-x-x-x-x-x,-x-x-x-x----x---|--h-h-h-h-h-h-h-,h-h-h-h---------|",
+    "dbl|180|xxxxxxxxxxxxxxxx,-xxxxxxxxxxxxxxx|----x-------x---,----x-------x---|--r-r-r-r-r-r-r-,r-r-r-r-r-r-r-r-|",
+    "dbl|180|-xxxxxxxxxxxxxxx,-xxxxxxxxxxxxxxx|----x-------x---,----x-----x-----|--r-r-r-r-r-r-r-,r-r-r-r-r-r-----|",
+    "dbl|180|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|--------x---x---,--------x---x---|-----hhh-----hhh,-----hhh-----hhh|",
+    "half|180|x--x--x---x---x-,--x---x---x---x-|--------x-------,--------x-------|----c---c---c---,c---c---c---c---|",
+    "gallop|180|x---xxxxxxxxx---,x---xxxxxxxxx---|--------x-----x-,--------x-----x-|----c---c---c---,----c---c---c---|",
+    "dbl|150|-xxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|x-----x-----x---,--x-----x-----x-|---r--r--r--r--r,--r--r-----r--r-|",
+    "dbl|150|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|----x-----x-----,----x-----x-----|-r--r--r--r--r--,-r--r--r--r--r--|",
+    "dbl|150|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxx--|x-----x-----x---,--x-----x-----xx|---r--r--r--r--r,--r--r-----r----|",
+    "other|150|----x-x---x-x---,----x-x---x-x---|xxxx---xxx---xxx,xxxx---xxx---xxx|----------------,----------------|",
+    "skank|110|xxxxxxxxxxxxxxxx,-xxxxxxxxxxxxxxx|--x---x---x---x-,--x---x---x---x-|--h-h-h-h-h-h-hh,--h-h-h-h-h-h-h-|",
+    "back|110|xx-x----xx-x---x,-x-x----xxxx-x-x|----x-------x---,----x-------x---|----c-------c---,----c-------c---|",
+    "half_dbl|115|xxxxxxxxxxxxxxxx,-xxxxxxxxxxxxxxx|--------x-------,--------x-------|----h---h---h--h,----h---h---h---|",
+    "blast|115|x-x-x-x-x-x-x-x-,x-x-x-x-x-------|-x-x-x-x-x-x-x-x,-x-x-x-x-xxx----|----h---h---h--h,----h---h-------|",
+    "other|175|x---x---x---x-xx,----------------|---------------x,-xxx------------|----------------,--------hh--hh--|",
+    "half_dbl|180|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|--------x-------,--------x-------|h--------------h,----------------|",
+    "half_dbl|180|xxxxxxxxxxxxxxxx,xxxxxxxxx-xxx---|--------x-------,--------x-------|h---------------,h-------h-------|",
+    "half|180|x-x-x--x--x-x--x,--x-x--xx-x-x--x|--------x-------,--------x-----x-|----------------,----------------|",
+    "half|180|-xxxxxxx--x-x-xx,----------------|--------x-------,xx--xx--xxxx----|----------------,------hh----h---|",
+    "other|140|x---x---x-x---x-,x-----x-x---x---|------x---------,--x--g--------x-|--h---h---h---h-,--h---h-h-h-h-h-|",
+    "gallop|140|xxxxxxxxxx------,xxxxxxxxxx------|----x-----x-----,----x-----x-----|h-h---h-h-------,h-h---h-h-------|",
+    "other|140|x-xxx---x-x-x---,x-----x-x-xxx---|------x---------,--x-----------x-|------h-----h---,--h-----h-----h-|",
+    "other|140|x-x-x---x-----x-,x-x-x---x-----x-|----------x-----,----------x-----|----h-----------,----h-----------|",
+    "blast|110|x-x-x-xxx-x-x-xx,x-x-x-xxx-x-x-x-|---x-x-x-x-x-x-x,-x-x-x-x-x-x-x--|--h-h-h-h-h-h-hh,--h-h-h-h-h-h---|",
+    "blast|110|x-x-x-x-x-x-x-xx,--x-x-x-x-x-----|---x-x-x-x-x-x-x,-x-x-x-x-x------|--h-h-h-h-h-h-h-,h-h-h-h-h-h-----|",
+    "blast|110|x-x-x-x-x-x-x-xx,--x-x-x---------|---x-x-x-x-x-x-x,-x-x-x-xxxxxxxxx|--h-h-h-h-h-h-h-,h-h-h-h---------|",
+    "blast|110|-xx-xxxxx-xxxxxx,-xx-xxxxx-x-x-x-|xxxxxxxxxxxxxxxx,-xxxxxxxxx------|--h-h-h-h-h-h-h-,h-h-h-h---------|",
+    "dbeat|110|xxx---x---xx--xx,-xx---x---xxxxxx|----x-------x---,----x-------x---|--h-h-h-h-h-h-h-,--h-h-h-h-h-h-h-|",
+    "dbeat|110|x-xx------xx-x--,x-xx------xxxxxx|----x-------x---,----x-----------|----h---h---h--h,----h---h-------|",
+    "other|110|x---x---x---x---,x---x---x---x---|-xxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|h---------------,----------------|",
+    "half|110|x-----x-----x---,--x-x-----x-x---|--------x-------,--------x-------|----h---h---h---,h---h---h---h---|",
+    "half|110|x-----x-----x---,--x-x--x--x-x-x-|--------x-------,--------x-------|h---h---h-------,h---h---h-------|",
+    "half|112|x-----x-----x---,--x-x-----x-x-x-|--------x-------,------xxxx------|h---h---h---h---,h---------------|",
+    "other|110|xx----xx----xx--,xx----xx--xx----|----------------,----------------|--hh----hh----hh,--------hh--hhhh|",
+    "half_dbl|110|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|--------x-------,--------x-------|--h---h---h---h-,--h---h---h---h-|",
+    "half|120|x---x-----------,x---x-x-------xx|--------x-------,--------x-x-----|----h-------h--h,----h-------h--h|",
+    "half|120|----x-----------,x---x-x---x---x-|--------x-------,--------x-------|----h-------h---,h---h-------h---|",
+    "half|135|x---x-----------,x---x---------x-|--------x-------,--------x-------|h---h-------h--h,----h-------h---|",
+    "other|135|----x-------x-x-,--------------x-|--------x------x,-xx-x-----x-xx--|----h-------h---,----------------|",
+    "half|135|x---x-------x-xx,--x-x-x---x-x-x-|--------x-------,--------x-------|----h-------h---,h---h-------h---|",
+    "blast|135|-x-x-x-x-x-x-x-x,-x-x-x-x-x-x-x-x|x-x-x-x-x-x-x-xx,--x-x-x-x-x-x-x-|--h-h-h-h-h-h-h-,h-h-h-h-h-h-h-h-|",
+    "half|135|x-x-x-----x-x---,----x-x---x-x-x-|--------x-------,--------x-------|----h---h------h,----h---h---h---|",
+    "half|135|x-x-x-----x-x---,----x-xx--------|--------x-------,--------xx------|----h---h-------,h---h-----------|",
+    "dbl|135|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|----x-------x---,----x----x--x---|--h-h-h-h-h-h-h-,h-h-h-h-h-h-h-h-|",
+    "back|135|x--x-x--x--x-x--,x--x-x--x-x--x--|----x-------x---,----x----x--x---|----h---h---h--h,----h---h---h---|",
+    "dbeat|135|x-xx-x--x-xx-x--,x-xx-x----------|----x-------x---,----x---xxx-xx--|--h-h---h-h-h--h,--h-h-----------|",
+    "dbl|135|xxxxxxxxxxxxxxxx,xxxxxxxxxxxx--x-|----x-------x---,----x-------x---|----h-----------,----h---h-------|",
+    "dbl|135|xxxxxxxxxxxxxxxx,xxxxxxxxx---x-x-|----x-------x---,----x----xx-----|----h---h---h---,----h---h-------|",
+    "other|200|x---x---x---x---,x---x---x---x---|x-x-x-x-x-x-x-xx,--x-x-x-x-x-x-x-|--h-h-h-h-h-h-h-,h-h-h-h-h-h-h-h-|",
+    "other|200|x---x---x---x---,x---x-x-x-x-----|x-x-x-x-x-x-x-xx,--x-x-x-x-x-x---|h-h-h-h-h-h-h-h-,h-h-h-h-h-h-----|",
+    "half_dbl|200|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|--------x-------,----x-------x---|h-------h-------,----------------|",
+    "half|200|x---x---------x-,----x---------x-|--------x-------,--------x-------|--------h-------,----h-------h---|",
+    "half|200|--x-x-----------,------xx--x---x-|--------x-------,--------x-------|h---h---h---h---,h---h-----------|",
+    "half|200|--x-x---------x-,----x-------x-x-|--------x-------,--------x------x|h-----------h---,----h-------h---|",
+    "other|200|----------------,----------------|-xxxxxxxxxxxxxxx,-xxxxxxxxxxxxxxx|----------------,----------------|",
+    "half|200|----x-------x---,----x---------x-|--------x-------,--------x-------|h---h-------h---,h-------h---h--h|",
+    "other|200|x-x-------------,----x---x-------|------------x---,------------x---|--------h------h,--------h-------|",
+    "other|200|--x-----x-------,----x---x-------|------------x---,------------x---|h-------h------h,--------h-------|",
+    "half|200|----x-----------,x---------------|--------x-------,-----ggxx--xx---|----h-------h---,----------------|",
+    "half_dbl|200|xx-xxx-xxx-xxx-x,-x-xxx-xxx-xxx-x|--------x-------,--------x-------|----h---h---h---,----h--h---h---h|",
+    "half_dbl|200|xx-xxx-xxx-xxx-x,-x-xxx-xxx-xxx-x|--------x-------,x---------------|----h---h---h---,----------------|",
+    "half|200|x-----x---------,x-x---x---x-----|--------x-------,--------x-------|----h---h---h---,h---h---h---h---|",
+    "half|200|x-----x---------,------x---x---x-|--------x-------,----------------|----h---h---h---,h---h---h---h---|",
+    "half|200|x-----xx--------,--x---x---x---xx|--------x-------,----------------|----h-------h---,h---h---h---h---|",
+    "other|200|------x---x---x-,x-----x---x-----|x-----------x---,--------x-------|----h---h---h---,h---h---h---h---|",
+    "dbl|200|xx-xxx-xxx-xxx-x,xx-xxx-x--------|x-------x------x,----x---x---x---|---------------h,----h---h---h---|",
+    "other|200|x---x---x---x--x,----x---x--x----|--g-g-g-g-g-g-g-,g-g-g-g-g-g-x---|----h---h---h---,h---h---h-------|",
+    "dbeat|200|x-----xxx-x-----,--x---xxx-x---xx|----x-------x---,----x-------x---|----h---h---h--h,----h---h---h---|",
+    "dbeat|200|------xxx-x-----,--x---xxx-x-xxxx|----x-------x---,----x-------x---|h---h---h---h--h,----h---h---h---|",
+    "dbeat|200|------xxx-x-----,------xx--x-xx--|----x-------x---,--x-----x-----x-|h---h---h---h---,h---h-----------|",
+    "dbeat|200|x-----xxx-x-----,--x---xxx-x---xx|----x-------x---,----x-------x---|----h---h---h---,h---h---h---h--h|",
+    "dbeat|200|------xxx-x-----,x---------------|----x-------x---,---xxx-xxx-xxx-x|----h---h---h---,----------------|",
+    "dbl|200|xx-xxx-xxx-xxx-x,xx-xxx-xxx-xxx-x|----x-------x---,----x-------x---|----------------,----------------|",
+    "back|200|-x-xxx-xxx-xxx-x,xx-xxx-xxx-xxx-x|----x-------x---,----x-------x---|----------------,--h---h---h-----|",
+    "gallop|200|-x-xxx-xxx-xxx-x,----------------|----x-------x--x,----gggxgxxxx---|----------------,--------------hh|",
+    "other|200|x---xx--x---xx--,----x-----------|--x---x---x---xx,-xxx--------x---|h---h---h---h---,----------------|",
+    "skank|200|x---x---x---x---,x---x---x---xx--|--x---x---x---x-,--x---x---x---x-|----h---h---h--h,----h---h---h---|",
+    "skank|200|x---x---x---xx--,x---x---x---xx--|--x---x---x---x-,--x---x---x---x-|----h---h---h---,----h---h---h---|",
+    "skank|200|x---x---x---xx--,x--x--x-x-------|--x---x---x---x-,------------x---|----h---h---h---,----------------|",
+    "other|200|x---xx--x---xx-x,----xx--x---xx--|------x---x---x-,--x---x---x---x-|----h---h---h---,h---h---h---h-h-|",
+    "skank|200|x---x---x---xx-x,----x---x---x---|--x---x---x---x-,--x---x---x---x-|----h---h---h---,h---h---h-------|",
+    "other|200|x---x---x---xx--,x---xx--x---xx--|------x---x---x-,--x---x---x---x-|----h-h-h-h-h-h-,h-h-h-h-h-h-h-h-|",
+    "skank|200|x---xx--x---xx--,x---xx--x---xx--|--x---x---x---x-,--x---x---x---x-|----h---h---h---,h---h---h---h---|",
+    "skank|200|x---xx--x---xx-x,----xx--x---xx--|--x---x---x---x-,--x---x---x---x-|h---h---h---h---,h---h---h---h---|",
+    "other|120|x---------------,x--x--x----x--x-|--------xg----g-,--------x-------|h-h-h-h-h-hhhhhh,h-hh-hh-h-hh-ho-|",
+    "other|120|x---------------,x--x--x----x--x-|--------xg----g-,--------x---x-x-|h-h-h-h-h-hhhhhh,h-hh-hh-h-hh-ho-|",
+    "blast|120|-xxxxxxxxxxxxxxx,-xxxxxxxx------x|xgxgxxxxxxxxxxxx,xxxxxxxx--xxxxxx|--c-r-c---c-r-c-,--c-r-c---------|H-------H-------,H-------LL------",
+    "blast|120|-xxxxxxxxxxxxxxx,-xxxxxxxx-------|xgxgxxxxxxxxxxxx,xxxxxxxxxx--xx--|--c-r-c---c-r-c-,--c-r-c---------|H-------H-------,H-------H-LL--MM",
+    "blast|120|xxxxxxxxxxxxxxxx,-xxxxxx-xx--x-x-|xxxxxxxxxxxxxxxx,xxxxxxxxx--xggxx|--c---cc--c--cc-,--c---cc--------|H---H---H---H---,H---H---H-LLH-H-",
+    "blast|120|xxxxxxxxxxxxxxxx,-xxxxxx-xx------|xxxxxxxxxxxxxxxx,xxxxxxxxx---x-x-|--c---cc--c--cc-,--c---cc----rr--|H---H---H---H---,H---H---H-LL--HH",
+    "blast|120|xxxxxxxxxxxxxxxx,-xxxxxx-xx------|xgxgxxxxxxxxxxxx,xxxxxxxx----xxxx|--c-r-c---c-r-c-,--c-r-c---------|H-------H-------,H-------H-LLH-H-",
+    "half|120|x---------------,x---------------|--------x-------,--------x-------|h-------h---h---,h-------h-------|",
+    "half|120|x---x-----------,x---x-----------|--------x-------,--------x-------|h---h---h-------,h-------h---h---|",
+    "half|120|x-----------x---,----x-------x---|--------x-------,--------x-------|h-------h---h---,h-------h---h---|",
+    "other|120|----------------,--------x-------|x---x-----------,----x-------x-x-|h---------------,----------------|--------L---L---,M-----------H---",
+    "half|120|x---------------,x---------------|--------x-------,--------x-------|--------o---o---,o-------o-------|H---------------,----------------",
+    "half|120|x---x-----------,x---x-----------|--------x-------,--------x-------|----o---o-------,o-------o---o---|H---------------,----------------",
+    "half|120|x-----------x---,----x-------x---|--------x-------,--------x-------|--------o---o---,o-------o---o---|H---------------,----------------",
+    "other|120|----x-----------,--------x-------|x-------x-------,----x-------x---|----------------,----------------|H-----------L---,M-----------H---",
+    "dbl|120|xxx-xxx-xxx-xxx-,xxx-xxx-xxx-xxx-|----------------,----------------|c---------------,c---------------|",
+    "dbl|120|xxx-xxx-xxx-xxx-,xxx-xxx-xxx-----|----------------,----------------|c---------------,c---------------|----------------,------------MLM-",
+    "dbl|120|xxx-xxx-xxx-xxx-,xxx-xxx-xxx-xxx-|----------------,----------------|r---r---r---rrr-,r---r---r---rrr-|",
+    "dbl|120|xxx-xxx-xxx-xxx-,xxx-xxx-xxx-----|----------------,------------xxxx|r---r---r---rrr-,r---r---r-------|----------------,---------------H",
+    "gallop|120|xxx-xx--xxx-xx--,xxx-xx--xxx-xx--|------x-------x-,------x-------x-|rcr-r---rcr-r---,rcr-r---rcr-r---|",
+    "gallop|120|xxx-xx--xxx-xx--,xxx-xx--x-------|------x-------x-,------x--xx-xx--|rcr-r---rcr-r---,rcr-r---rcr-----|----------------,-----------M--L-",
+    "gallop|120|xxx-xx--xxx-xx--,xxx-xx--xxx-xx--|------x-------x-,------x-------xx|c-c-c---c-c-c---,c-c-c---c-c-c---|-H-------H------,-H-------H------",
+    "gallop|120|xxx-xx--xxx-xx--,xxx-xx--x-------|------x-------x-,------x--xx-----|c-c-c---c-c-c---,c-c-c---c-c---o-|-H-------H------,-H-------H--LLL-",
+    "skank|120|xxxxx-x-x-x-x-x-,xxxxx-x-x-x-x-x-|--x---x---x---x-,--x---x---x---x-|h-h-h-h-h-h-h-h-,h-h-h-h-h-h-h-h-|",
+    "skank|120|xxxxx-x-x-x-x-x-,xxxxx-x-xxxxxxxx|--x---x---x---x-,--x---x-xxxxxxxx|h-h-h-h-h-h-h-h-,h-h-h-h---------|----------------,---------------H",
+    "skank|120|xxxxx-x-x-x-x-x-,xxxxx-x-xxxxxxxx|--x---x---x---x-,--x---x------xxx|h-h-h-h-h-h-h-h-,h-h-h-h---------|----------------,--------MMMMM--H",
+    "skank|120|xxxxx-x-x-x-x-x-,xxxxx-x-x-x-x-x-|--x---x---x---x-,--x---x---x---x-|c-h-h-h-c-h-h-h-,c-h-h-h-c-h-h-h-|",
+    "skank|120|xxxxx-x-x-x-x-x-,xxxxx-x-xxxxxxxx|--x---x---x---x-,--x---x-xx-x----|c-h-h-h-c-h-h-h-,c-h-h-h---------|----------------,----------M-MLML",
+    "skank|120|xxxxx-x-xxxxx-x-,xxxxx-x-xxxxx-x-|--x---x---x---x-,--x---x---x---x-|c-------c-------,c-------c-------|--H---H-----H-H-,----H-H-----H-H-",
+    "skank|120|xxxxx-x-x-x-x-x-,xxxxx-x-xxxxxxxx|--x---x---x---x-,--x---x-xx-x----|c-------c-------,c---------------|--H---H---H---H-,--H---H---M-MLML",
+    "dbeat|120|x-----x---x-----,x-x---x---x---x-|----x-------x---,----x-------x-x-|h---h---h---h---,h---h---h---h---|",
+    "dbeat|120|--x---x---x---x-,----------------|----x-------x---,x-x-------x-x-xx|h---h---h---h---,h---------------|----------------,----LMM-M---H-H-",
+    "dbeat|120|x-x---x-x-x---x-,x-x---x-x-x---x-|----x-------x---,----x-------x-x-|h---h---h---h---,h---h---h---h---|",
+    "dbeat|120|x-x---x-x-x---x-,----------------|----x-------x---,x-x-------x-x-xx|h---h---h---h---,h---------------|----------------,----L-M-L-----H-",
+    "dbeat|120|x-x---x-x-x---x-,x-x---x-x-x---x-|----x-------x---,----x-------x-x-|--------c-------,c-------c-------|H---------------,----------------",
+    "dbeat|120|x-x---x-x-x---x-,------x---x-----|----x-------x---,x-x---------x-xx|--------c-------,c---------------|H---------------,----L---L-----H-",
+    "dbl|120|xxxx-xxxxxxx-xxx,xxxx-xxxxxxx-x-x|----x-------x---,----x-------x-x-|--------c-------,--------c-------|H---------------,H---------------",
+    "dbl|120|xxxx-xxxxxxx--x-,----------x-----|----x-------x---,x----xx-----x--x|--------c-------,c---------------|H---------------,--M-L---L-----L-",
+    "dbl|120|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|----x-------x---,----x-------x---|----c---c---c---,c---c---c---c---|H-H---H---H---H-,--H---H---H---H-",
+    "dbl|120|xxxxxxxxxxxxx-x-,-x-x---x-xxx-x--|----x-------x---,x----xx-----x--x|----c---c---c---,c---------------|H-H---H---H-----,--M-L---L-----M-",
+    "skank|120|xx-xxx-xxx-xxx-x,xx-xxx-x--------|--x---x---x---x-,--x---x-xxxxxxxx|h-h-h-h-h-h-h-h-,h-h-h-h-h-------|----------------,---------------H",
+    "skank|120|xx-xxx-xxx-xxx-x,xx-xxx-x--------|--x---x---x---x-,--x---x---------|h-hhh-h-hhh-h-h-,hhh-h-h---------|----------------,--------LLMMLMML",
+    "skank|120|xx-xxx-xxx-xxx-x,xx-xxx-x--------|--x---x---x---x-,--x---x-------xx|o-hhh-h-hhh-h-h-,ohh-h-h---------|----------------,--------LMMMLM--",
+    "skank|120|xx-xxx-xxx-xxx-x,xx-xxx-x---xx-x-|--x---x---x---x-,--x---x----x--xx|o---hhhho---hhhh,o---hhhh--------|----------------,--------LML-LM-L",
+    "skank|120|xx-xxx-xxx-xxx-x,xx-xxx-x--xx--x-|--x---x---x---x-,--x---x--x-xx-xx|o---hhhho---hhhh,o---hhhh--------|----------------,--------L-L-MM-M",
+    "skank|120|xx-xxx-xxx-xxx-x,xx-xxx-x--------|--x---x---x---x-,--x---x-xxx-xxx-|c---c---c---c---,c---c-----------|--H---H---H---H-,--H---H-H---H---",
+    "skank|120|xxxxxxxxxxxxxxxx,xxxxxxxxx-------|--x---x---x---x-,--x---x-xxx-xxx-|c---c---c---c---,c---c-----------|--H---H---H---H-,--H---H-H-MMH-HM",
+    "blast|120|-xxxxxxxxxxxxxxx,-xxxxxxxxxx-xxx-|x-x-x-x-x-x-x-x-,x-x-x-x--x---xx-|c---c---c---c---,c---c-----------|--H---H---H---H-,--H---H-H-HMH-HM",
+    "blast|120|-xxxxxxxxxxxxxxx,-xxxxxxxxxxxxx-x|x-x-x-x-x-x-x-x-,x-x-x-x---------|c---c---c---c---,c---c-----------|--H---H---H---H-,--H---H-H-----LM",
+    "other|120|x--x----x-x-----,x--x--x---------|----x-g-----x---,----x---xxxgxxxx|o---o---o---o---,o---o-----------|--H---H---H---H-,--H---H-H---H---",
+    "other|120|x--x----x-x-----,x--x--x---------|----x-g-----xg--,----x---xx-g-xxx|o---o---o---o---,o---o-----------|--H---H---H---H-,--H---H-H-------",
+    "skank|120|x--x-x-x-x-x-x--,x--x-x-x-x-x-x--|--x---x---x---x-,--x---x---x-xgxx|h-hhhohhh-h-h-h-,h-hhhohhh-h-o---|",
+    "skank|120|x--x-x-x-x-x-x--,x--x-x-x-x-x-x--|--x---x---x---x-,--x---x---x----x|h-hhhohhh-h-h-h-,h-hhhohhh-h-o---|----------------,------------LLM-",
+    "skank|120|xx-xxx-xxx-xxx-x,xx-xxx-xxx------|--x---x---x---x-,--x---x---xxxxxx|c---c---c---c---,c---c---c-------|--H---H---H---H-,--H---H---H-----",
+    "skank|120|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|--x---x---x---x-,--x---x---xxxxxx|--r---r---r---r-,--r---r---c-----|H---H---H---H---,H---H---H-------",
+    "other|120|x-x---x-x-x---x-,x-x---x-x-x---x-|----x-------x-gx,----xg------xx-x|h-h-h-h-h-h-h-h-,h-h-h-h-h-h-h---|-M-M-L-L-M-M--M-,-MMM-LML-M-M-MM-",
+    "other|120|x-x---x-x-x---x-,x-x---x-x-x---x-|----x-------x--x,----xg------x--x|h-h-h-h-h-h-h-h-,h-h-h-h-h-h-h---|-MMM-LML-M-M----,-MMM--ML-M-M--M-",
+    "other|120|x---------------,x---------------|--------x---x-x-,--------x---x-x-|c---c---c-----c-,c---c---c-----c-|--H---H---M-M---,--H---H---M-M---",
+    "skank|120|xx-xxx-xxx-xxx-x,xx-xxx-x--------|--x---x---x---x-,--x---x-xxxxxxxx|h-o-h-o-h-o-h-o-,h-o-h-o-h-------|----------------,---------------H",
+    "skank|120|xxxxxxxxxxxxxxxx,xxxxxxxxxxxxxxxx|--x---x---x---x-,--x---x-xxxxxxxx|c---c---c---c---,c---c---c-------|--H---H---H---H-,--H---H--------H",
+    "blast|120|xxxxxxxxxxxxxxxx,xxxxxxxx------xx|x-x-x-x-x-x-x-x-,x-x-x-x-------xx|c---c---c---c---,c---c-----------|--H---H---H---H-,--H---H-LLLLMMMM",
+    "blast|120|xxxxxxxxxxxxxxxx,xxxxxxxx-xxx-xxx|-ggggggggggggggg,-gggggggg------g|o---oo-oo---oo--,oo-ooo-o--------|--H---H---H---H-,--H---H-MMLLMMMM",
+    "blast|120|xxxxx-x-xxxxx-x-,xxxxx-x-xxxxx-x-|xxxx----xxxx----,xxxx----xxxx----|----------------,----------------|",
+    "blast|120|xxxxx-x-xxxxx-x-,x-x-x---x-x-x-x-|xxxg----xxxx----,-------------x-x|----------------,------h-------h-|----------------,H-H-H---MMMMM---",
+    "half|120|x-----x-----x---,x-----x-----x---|--------x-------,--------x-----xx|h-h-h-h-o-h-h-h-,h-h-h-h-o-h-h-h-|",
+    "half|120|x-----x--x--x---,x-----x--x--x---|--------x-------,--------x----xxx|c-c-c-c-o-c-c-c-,c-c-c-c-o-c-c-c-|",
+    "dbeat|120|x-x---x-x-x---x-,x-x---x-x-x-----|----x-------x---,----x-------xxxx|c-c--cc---c---c-,c-c---c---c-----|----H---HH--HH--,----HH--H---H---",
+    "dbl|120|xxx--xxxxxx--xxx,xxx--xxx--------|----x-------x---,----x---------xx|c-c--ccc--cc--cc,cccc--cc--------|-H--H---HH--HH--,----HH--LLMMLM--",
+    "other|120|x---x---x---x---,x---x---x-xx-xx-|------x-------g-,------g-g-gg-xx-|c---c-c-c---c-c-,c---c-ccc-cc-c--|----------------,--------------H-",
+    "other|120|x---x---x---x---,x---x---x-xx-xx-|------x-------x-,------x-g-gx-xxx|c-----c-----c---,c-----ccc-cc-c--|----H---H-----H-,----H---------H-"
+  ], out = [];
+  raw.forEach(function (r) { var f = r.split("|"); out.push({ kind: f[0], tempo: +f[1], k: f[2].split(","), s: f[3].split(","), h: f[4].split(","), t: f[5] ? f[5].split(",") : null }); });
+  return out;
+})();
+/* 曲種ごとの、型の種類の重み。リフの密度（16分のうち音のある数）が多いと連打・ブラスト寄り、少ないとハーフ・その他寄りにする */
+var DRUM_KIND_W = {
+  thrash: { skank: 3, dbeat: 3.5, gallop: 2, back: 2.5, dbl: 2.5, other: 2.5, half: 0.7, blast: 0.4, half_dbl: 0.3 },
+  death: { blast: 4, dbl: 3, half_dbl: 2, half: 1.5, other: 1.5, gallop: 1, dbeat: 1, skank: 0.3, back: 0.2 },
+  melodeath: { gallop: 3, dbl: 2.5, dbeat: 3, skank: 1.5, back: 1.5, other: 1.5, half: 0.6, blast: 0.5, half_dbl: 0.4 },
+  black: { blast: 5, half: 1.5, dbl: 1.5, dbeat: 1, half_dbl: 1, other: 0.8, gallop: 0.5, skank: 0.1 }
+};
+function metalLibPick(kind, rg, dens, twinP, solo, tempo) {
+  var w = {}, k, tot = 0, cand = [];
+  for (k in DRUM_KIND_W[kind]) w[k] = DRUM_KIND_W[kind][k];
+  if (twinP) { w.dbl *= 1.6; w.half_dbl *= 1.4; } else { w.dbl *= 0.5; w.half_dbl *= 0.6; }
+  if (dens >= 12) { w.blast *= 2; w.dbl *= 1.8; w.gallop *= 1.3; w.half *= 0.3; w.other *= 0.4; }
+  else if (dens <= 6) { w.half *= 2.5; w.other *= 2; w.half_dbl *= 1.5; w.blast *= 0.2; w.dbl *= 0.4; w.dbeat *= 1.3; }
+  if (solo) { w.blast *= 0.1; w.dbl *= 0.4; }
+  var ks = []; for (k in w) ks.push([k, w[k]]);
+  var kk = metalWPick(rg, ks), pool = DRUM_LIB.filter(function (e) { return e.kind === kk; });
+  if (!pool.length) return null;
+  var ws = pool.map(function (e) { return [e, Math.exp(-Math.abs(Math.log(tempo / Math.max(60, e.tempo))) * 1.5) + 0.05]; });
+  return metalWPick(rg, ws);
+}
 /* ドラム：スラッシュ＝2・4拍のスネアとダブルベース／メロデス＝16分キックの多いダブルベース／デス＝ブラスト・Dビート・ハーフ／ブラスト（ブラック）＝キックが全部の16分、スネアが奇数の16分 */
 function metalDrums(chs, form, sty, opt, rng, ctx) {
   var beats = form.ts[0], bars = form.bars, notes = [], bar, s, solo = ctx && ctx.role === "solo", kind = metalKind(opt.style), blastish = sty.drums === "blast", step = beats / 16;
@@ -5552,6 +5871,7 @@ function metalDrums(chs, form, sty, opt, rng, ctx) {
   /* ツインペダル：曲ごとに使うか決める（opt.twinPedal＝true／false で固定。ふだんは、曲のシードで、曲種ごとの確率）。右足＝キック36、左足＝キック35を交互に（左はわずかに弱く） */
   var twinP = opt.twinPedal != null ? !!opt.twinPedal : (RNG((((opt.seed || 1) * 91 + 7) % 2147483647) || 1).f() < { thrash: 0.55, death: 0.7, melodeath: 0.65, black: 0.4 }[kind]);
   function addKick(t, s, v) { var left = twinP && (s % 2 === 1); add(t, left ? D.kick2 : D.kick, left ? v - 4 : v); }
+  var libCache = {};
   for (bar = 0; bar < bars; bar++) {
     var plan = metalBarPlan(opt, form, bar, solo), t0 = bar * beats;
     var rg = RNG((((opt.seed || 1) * 31 + plan.ph * 977 + ({ thrash: 3, death: 7, melodeath: 13, black: 19 }[kind])) % 2147483647) || 1);
@@ -5561,6 +5881,37 @@ function metalDrums(chs, form, sty, opt, rng, ctx) {
       : rg.wpick([["back", 5], ["dbl", twinP ? 5.5 : 2.5], ["skank", 1.5], ["half", 1]]);
     if (solo && kind === "black") groove = "half";
     if (plan.last) { add(t0, D.crash, 112, 1.0); add(t0, D.kick, 112); add(t0 + beats / 2, D.snare, 108); add(t0 + beats / 2, D.kick, 108); continue; }
+    /* ドラムMIDIの型の図書館から（2小節ごとに1つ。リフの密度で種類を選ぶ）。ブラックのブラストの一部は、手作り（blastb）を残す */
+    var wph = Math.floor(bar / 2), LIBP = { thrash: 0.88, death: 0.88, melodeath: 0.88, black: 0.62 }[kind];
+    if (!libCache[wph]) {
+      var rgl = RNG((((opt.seed || 1) * 53 + wph * 131 + ({ thrash: 3, death: 7, melodeath: 13, black: 19 }[kind])) % 2147483647) || 1);
+      var pa = metalBarPlan(opt, form, wph * 2, solo), pb = metalBarPlan(opt, form, Math.min(bars - 1, wph * 2 + 1), solo);
+      var dn = function (p) { var n = 0, q; for (q = 0; q < 16; q++) if (p.pat.charAt(q) !== "-") n++; return n; };
+      libCache[wph] = rgl.chance(LIBP) ? metalLibPick(kind, rgl, (dn(pa) + dn(pb)) / 2, twinP, solo, opt.tempo || sty.tempo || 160) : null;
+    }
+    var ent = libCache[wph];
+    if (ent && !(solo && kind === "black")) {
+      var bi = bar % 2, ks = ent.k[bi] || ent.k[0], ss = ent.s[bi] || ent.s[0], hs = ent.h[bi] || ent.h[0], ts = ent.t ? (ent.t[bi] || "") : "";
+      for (s = 0; s < 16; s++) {
+        var tt = t0 + s * step, hc = hs.charAt(s), sc = ss.charAt(s), kc = ks.charAt(s), rc2 = plan.pat.charAt(s);
+        if (hc === "h") add(tt, ent.kind === "blast" ? D.hhC : D.hhC, 74 + (s % 4 === 0 ? 12 : 0) + rg.i(8));
+        else if (hc === "o") add(tt, D.hhO, 84 + rg.i(8), 0.3);
+        else if (hc === "r") add(tt, D.ride, 78 + (s % 4 === 0 ? 10 : 0) + rg.i(8));
+        else if (hc === "c") add(tt, D.crash, 104 + rg.i(8), 0.9);
+        if (sc === "x") add(tt, D.snare, 108 + (s % 4 === 0 ? 4 : 0) + rg.i(10)); else if (sc === "g") add(tt, D.snare, 44 + rg.i(10));
+        var tc = ts.charAt(s); if (tc === "H" || tc === "M" || tc === "L") add(tt, tc === "H" ? D.tomH : (tc === "M" ? D.tomM : D.tomL), 96 + rg.i(10));
+        var kk2 = kc === "x";
+        if (kk2 && !twinP && s % 2 === 1 && rc2 === "-" && ent.kind !== "gallop" && ent.kind !== "skank" && ent.kind !== "other") kk2 = false;                    /* ツインペダルなし：連打は、偶数の16分とリフの音に合わせる */
+        if (!kk2 && rc2 === "x" && ent.kind !== "blast" && rg.chance(0.7)) kk2 = true;                                                                              /* リフのアクセントに、キックを合わせる */
+        if (kk2) addKick(tt, s, 94 + (rc2 === "x" ? 14 : 0) + (s % 4 === 0 ? 6 : 0) - (twinP && s % 2 === 1 ? 6 : 0) + rg.i(8));
+      }
+      if (plan.pos === 0 && (bar % 8 === 0 || rg.chance(0.5))) add(t0, D.crash, 104, 0.9);
+      if (plan.pos === 3 && !ts && ent.kind !== "blast") {
+        var fv2 = [D.snare, D.tomH, D.tomM, D.tomL], fz2;
+        for (fz2 = 0; fz2 < 4; fz2++) add(t0 + beats - 1 + fz2 * 0.25, fv2[fz2], 92 + fz2 * 6 + rg.i(8));
+      }
+      continue;
+    }
     var rideOn = (plan.ph % 2 === 1) && !blastish && kind !== "death";
     /* シンバル／ハイハット */
     if (groove === "blast" || groove === "blastb") { for (s = 0; s < 16; s += (groove === "blastb" && rg.chance(0.4) ? 1 : 2)) add(t0 + s * step, rideOn ? D.ride : D.hhC, 80 + (s % 4 === 0 ? 10 : 0) + rg.i(8)); }
@@ -5590,6 +5941,301 @@ function metalDrums(chs, form, sty, opt, rng, ctx) {
   }
   return notes;
 }
+/* ---------- イングヴェイ風の伴奏リフ（GP 譜 167曲の解析：参考資料_イングヴェイの解析.md ／ analyze_yng.js・analyze_yng2.js）----------
+   実曲の伴奏(リズム・ギター)は、パワーコードの連打ではなく、低い弦の「根音のペダル」が主で、ところどころに動く音・オクターヴ・和音が入る。
+   根音からの音程：根音60%・2度8%・短3度7%・完全4度5%・5度4%…／単音81%・2音11%・3音6%／打点は8分が最多(根音の8分ペダル29%)、16分の連打、4分の刻み／
+   3+3+2のアクセント(拍の頭から3・3・2の16分)に、♭6・5度・オクターヴのアクセント音／小節の終わりに、♭3→4→♭3→2 の順次の下がり(ターンアラウンド)／
+   16分の分散和音・音階の模進(−5 3 2 0 2 0 −2 −3 の繰り返しなど)。前の小節と同じ型が約47％(4小節のまとまりで、同じ型を繰り返し、4小節目で変える)。
+   音の長さ：ペダルはブリッジミュート(短く)、アクセント音・和音は開放で伸ばす。 */
+var YNG_CELLS = {
+  A: [   /* 1・2・3小節目の型：[名前, 重み, 16分の位置ごとの根音からの半音(.＝休み)] */
+    ["ped8", 8, "0 . 0 . 0 . 0 . 0 . 0 . 0 . 0 ."], ["acc332", 3.2, "A . . 0 . . B . . 0 . . A . 0 ."], ["oct8", 1.6, "0 . 0 . 12 . . . 0 . 0 . 12 . . ."],
+    ["ped16", 5, "0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0"], ["gal16", 1.8, "0 . 0 0 0 . 0 0 0 . 0 0 0 . 0 0"], ["q4", 2, "0 . . . 0 . . . 0 . . . 0 . . ."],
+    ["syn", 1.3, "0 . . . . . 0 . 0 . 0 . . . 0 ."], ["ped16rise", 1, "0 0 0 0 0 0 0 0 0 0 2 2 3 3 5 5"],
+    ["pwq", 1.6, "K . . . K . . . K . . . K . . ."], ["pw332", 1.4, "K . . . . . K . . . . . K . 0 ."], ["seqA", 1.3, "-5 3 2 0 2 0 -2 -3 -5 3 2 0 2 0 -2 -3"], ["seqB", 1.0, "0 8 7 5 7 5 3 2 5 3 2 0 3 2 0 -1"]
+  ],
+  B: [   /* 4小節目(終わり)の型 */
+    ["turn1", 4, "0 . 0 . 0 . 0 . 3 . 5 . 3 . 2 ."], ["turn2", 3, "3 . 5 . 3 . 2 . 3 . 0 . 0 . 0 ."], ["turn3", 3, "0 . 0 . 0 . 5 . 3 . 2 . 0 . -2 ."],
+    ["turn4", 2, "0 . 0 . 3 . 0 . 0 . 0 . 0 . 0 ."], ["endc", 3, "0 . 0 . 0 . 0 . 0 . 0 . C . . ."], ["ped16c", 2, "0 0 0 0 0 0 0 0 0 0 0 0 C . . ."]
+  ]
+};
+/* 奏者ごとの違い（analyze_neo2.js：伴奏の和音の音数・同じ型の割合・テーマの8分の割合）。chordP＝和音(根音＋5度、ときにオクターヴ)にする割合、same＝3小節目が1・2小節目と同じ型の確率、th＝テーマで8分2つを4分にまとめる確率、extra＝足す型 */
+var YNG_PROF = {
+  yngwie: { chordP: 0.12, same: 0.78, th: 0.55 },
+  takasaki: { chordP: 0.45, same: 0.35, th: 0.15, extra: [["rk7", 4, "0 . 0 . 10 . 0 . 0 . 5 . 0 . 10 ."], ["rk2", 3, "0 . 0 . 2 . 0 . 0 . 0 . 2 . 0 ."]] },
+  impellitteri: { chordP: 0.33, same: 0.45, th: 0.3 },
+  gilbert: { chordP: 0.19, same: 0.45, th: 0.3 },
+  macalpine: { chordP: 0.03, same: 0.8, th: 0.2 }
+};
+function yngRiffComp(chs, form, sty, opt, rng, ctx) {
+  var PR = YNG_PROF[voiceOf(opt, sty)] || YNG_PROF.yngwie;
+  var beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", inten = (ctx && ctx.inten != null) ? ctx.inten : 0.6;
+  var tonic = ((opt.tonic || 0) % 12 + 12) % 12, scale = form.minor ? [0, 2, 3, 5, 7, 8, 10, 11] : [0, 2, 4, 5, 7, 9, 11], step = 0.25, bar, s;
+  function parse(str) { return str.split(" "); }
+  function pickCell(list, wmul) {
+    var tot = 0, i, w = list.map(function (c) { var m = (wmul && wmul[c[0]]) || 1; if (inten < 0.45 && /^(ped16|gal16|seq)/.test(c[0])) m *= 0.3; if (solo && /^(seq|gal16|acc|oct)/.test(c[0])) m *= 0.15; tot += c[1] * m; return c[1] * m; }), r = rng.f() * tot;
+    for (i = 0; i < list.length; i++) { r -= w[i]; if (r <= 0) return list[i]; }
+    return list[0];
+  }
+  var cur = { A: null, B: null }, accA = 8, accB = 7;
+  function allowed(p, ch) {                                       /* 調の音階と、その和音の音。外れる音は、半音だけずらす */
+    var ct = chordTonesOf(ch), set = {}, k;
+    scale.forEach(function (x) { set[(x + tonic) % 12] = 1; }); set[ct.r % 12] = 1; set[ct.t3 % 12] = 1; set[ct.f5 % 12] = 1;
+    if (set[((p % 12) + 12) % 12]) return p;
+    if (set[((p - 1) % 12 + 12) % 12]) return p - 1;
+    if (set[((p + 1) % 12 + 12) % 12]) return p + 1;
+    return p;
+  }
+  for (bar = 0; bar < bars; bar++) {
+    var pos = bar % 4, t0 = bar * beats, last = (bar === bars - 1);
+    if (beats !== 4) {                                            /* 4拍子以外：根音の8分ペダル */
+      for (s = 0; s * 0.5 < beats; s++) { var cb = chordAt(chs, t0 + s * 0.5), rp = metalRootIn(cb.root, 40); notes.push({ t: t0 + s * 0.5, d: 0.18, p: rp, v: 66 + (s % 2 === 0 ? 8 : 0) + rng.i(6), ar: 2 }); }
+      continue;
+    }
+    if (pos === 0 || !cur.A) {                                    /* 4小節のまとまりごとに型を決める */
+      cur.A = pickCell(YNG_CELLS.A.concat(PR.extra || [])); cur.A2 = rng.chance(PR.same) ? cur.A : pickCell(YNG_CELLS.A); cur.B = pickCell(YNG_CELLS.B);
+      accA = rng.pick([8, 7, 12, 3]); accB = rng.pick([7, 8, 5, 12]);
+    }
+    var cell = pos === 3 ? cur.B : (pos === 2 ? cur.A2 : cur.A), offs = parse(cell[2]), cname = cell[0];
+    var neg = offs.some(function (x) { return x !== "." && x !== "A" && x !== "B" && x !== "C" && x !== "K" && +x < -1; });
+    var low = neg ? 45 : 40;
+    for (s = 0; s < 16; s++) {
+      var o = offs[s]; if (o === ".") continue;
+      var tt = t0 + s * step, ch = chordAt(chs, tt), rootP = metalRootIn(ch.root, low), nxt = s + 1, gap;
+      for (; nxt < 16 && offs[nxt] === "."; nxt++) ;
+      gap = (nxt - s) * step;
+      if (o === "K") {                                            /* 開放のパワーコードの刻み（4分・3+3+2） */
+        var dK = Math.max(0.3, Math.min(1.2, gap * 0.92));
+        [0, 7, 12].forEach(function (iv, z) { notes.push({ t: tt + z * 0.004, d: dK, p: rootP + iv, v: 100 + rng.i(8) - z * 3 - (solo ? 12 : 0) }); });
+        continue;
+      }
+      if (o === "C") {                                            /* 開放のパワーコード（句の終わり）：根音・5度・オクターヴ */
+        var dC = Math.max(0.5, (beats - s * step) * 0.9);
+        [0, 7, 12].forEach(function (iv, z) { notes.push({ t: tt + z * 0.004, d: dC, p: rootP + iv, v: 104 + rng.i(8) - z * 3 }); });
+        continue;
+      }
+      var off = o === "A" ? accA : (o === "B" ? accB : +o), accent = (o === "A" || o === "B" || (+o !== 0 && /^(oct8|acc332)/.test(cname))), seqc = /^seq/.test(cname);
+      var p = allowed(rootP + off, ch);
+      if (accent || (off !== 0 && !seqc && gap >= 0.5 && s % 2 === 0 && /^turn|^endc/.test(cname) === false && off === 12)) {
+        notes.push({ t: tt, d: Math.max(0.3, Math.min(1.2, gap * 0.92)), p: p, v: Math.min(118, 100 + rng.i(10) - (solo ? 12 : 0)) });
+        if (!solo && accent && off !== 12 && rng.chance(0.5)) notes.push({ t: tt + 0.004, d: Math.max(0.3, Math.min(1.2, gap * 0.92)), p: p + 7, v: 92 + rng.i(8) });         /* 5度を重ねる */
+      } else if (seqc) {
+        notes.push({ t: tt, d: 0.2, p: p, v: 76 + (s % 4 === 0 ? 10 : 0) + rng.i(6) - (solo ? 10 : 0) });                           /* 分散和音・模進：粒をそろえて短く */
+      } else {
+        var pm = !(cname === "q4" && rng.chance(0.5));            /* 4分の刻みは、半分を開放にして鳴らす */
+        if (!solo && !seqc && off === 0 && rng.chance(PR.chordP)) { notes.push({ t: tt + 0.004, d: pm ? Math.min(0.18, gap * 0.8) : Math.max(0.2, gap * 0.85), p: p + 7, v: 60 + rng.i(6), ar: pm ? 2 : 0 }); if (rng.chance(0.25)) notes.push({ t: tt + 0.008, d: pm ? Math.min(0.18, gap * 0.8) : Math.max(0.2, gap * 0.85), p: p + 12, v: 56 + rng.i(6), ar: pm ? 2 : 0 }); }
+        notes.push({ t: tt, d: pm ? Math.min(0.18, gap * 0.8) : Math.max(0.2, gap * 0.85), p: p, v: Math.max(34, Math.min(104, (pm ? 62 : 90) + (s % 4 === 0 ? 10 : 0) + (off ? 6 : 0) + (solo ? -10 : 0) + rng.i(6))), ar: pm ? 2 : 0 });
+      }
+    }
+    /* 4小節の頭：開放のパワーコードをひとつ当てる（ソロの支えには入れない） */
+    if (pos === 0 && !solo && rng.chance(bar % 8 === 0 ? 0.8 : 0.45) && notes.length) {
+      var cs = chordAt(chs, t0), r0 = metalRootIn(cs.root, 40);
+      notes = notes.filter(function (n) { return !(n.t >= t0 - 1e-6 && n.t < t0 + 0.5 - 1e-6); });
+      [0, 7, 12].forEach(function (iv, z) { notes.push({ t: t0 + z * 0.004, d: 0.9, p: r0 + iv, v: 108 + rng.i(8) - z * 3 }); });
+    }
+  }
+  notes.sort(function (a, b) { return a.t - b.t || a.p - b.p; });
+  return notes;
+}
+/* イングヴェイ風のテーマ：実曲の旋律の拍の長さは、8分32%・4分24%・16分10%・付点4分8%・2分7%。8分が続きすぎないよう、拍の頭の8分2つを4分にまとめ、句の終わりを伸ばす */
+function yngThemeShape(notes, rng, pm) {
+  var i, out = [];
+  notes.sort(function (a, b) { return a.t - b.t; });
+  for (i = 0; i < notes.length; i++) {
+    var n = notes[i], m = notes[i + 1], n2 = notes[i + 2];
+    if (m && !n.grace && !m.grace && Math.abs(n.t - Math.round(n.t)) < 0.02 && Math.abs(m.t - n.t - 0.5) < 0.03 && n.d < 0.6 && (!n2 || n2.t - m.t >= 0.45) && rng.chance(pm != null ? pm : 0.55)) {
+      n.d = 0.97; out.push(n); i++; continue;
+    }
+    out.push(n);
+  }
+  for (i = 0; i < out.length; i++) {
+    var nx = out[i + 1], gap = nx ? nx.t - out[i].t : 8;
+    if (gap >= 1.4 && out[i].d < gap * 0.8 && rng.chance(0.6)) out[i].d = Math.min(gap * 0.92, 3.5);
+  }
+  return out;
+}
+/* ---------- ロック（80年代の産業ロック／LAメタル／ハード・ロック／90年代）----------
+   GP 譜 8バンド(ジャーニー・サバイバー／ラット・ドッケン／ガンズ・アンド・ローゼズ／ヴァン・ヘイレン／オジー・オズボーン／エクストリーム)の解析(analyze_rock.js、参考資料_ロックの解析.md)。
+   構成：ギター1(旋律・ソロ)＋ギター2(リズムのリフ＝gtr2)＋伴奏(AOR＝シンセ／ほかはギターの和音)＋ベース＋ドラム。
+   ・リフ：16分の型は、8分の根音ペダル(o-o-o-o-o-o-o-o-)が最多。ガンズは裏の8分(--o-o-o-o-o-o-o-)、エクストリームは 3+3+2 のシンコペ(o--o--o-o-o-o---)。
+   ・和音の音数(単音／2音／3音／4音)：AOR 73/15/9/3、LA 64/15/17/4、ガンズ 44/16/27/13、エクストリーム 61/12/15/12。根音の割合：AOR 81%・LA 60%・ガンズ 51%・エクストリーム 42%。
+   ・ベース：根音の8分(LA・ガンズ・ヴァン・ヘイレン)／AOR は4分／エクストリームはシンコペ。リフと同じ型(ユニゾン)も多い。
+   ・ドラム：キック＝1・3拍(K.......K.......)が最多、スネア＝2・4拍。LA は16分のダブルベース(約10%)。エクストリームはライド・タムが少なく、ゴースト入り。 */
+var ROCK_RIFF = {
+  aor: [["o-o-o-o-o-o-o-o-", 3], ["--o-o-o-o-o-o-o-", 1.2], ["oooooooooooooooo", 1.4], ["----------o-o-o-", 1], ["o-ooo-oooooooooo", 1], ["o---o--oo-o---o-", 0.9], ["--o-o---o-o-o-o-", 0.9], ["o---o---o---o---", 1.2]],
+  la: [["o-o-o-o-o-o-o-o-", 6], ["oooooooooooooooo", 2.4], ["--o-o-o-o-o-o-o-", 1], ["o-----o-----o---", 0.8], ["o-----o---------", 0.7], ["o-o-o-o---------", 0.6], ["o-ooo-ooo-ooo-oo", 0.7], ["o---o-o-o-o-o-o-", 0.8]],
+  hard: [["--o-o-o-o-o-o-o-", 3], ["o-o-o-o-o-o-o-o-", 3.4], ["oooooooooooooooo", 1.6], ["o-------o-------", 1.4], ["o---o-o-o-o-o-o-", 1.2], ["o---o---o-o-o-o-", 0.9], ["o---o---o---o---", 0.8], ["o-o-o-o-o-o---o-", 0.7]],
+  x90: [["o-o-o-o-o-o-o-o-", 3], ["o--o--o-o-o-o---", 1.8], ["oooooooooooooooo", 1.4], ["o--o--o---------", 1.2], ["--o---o-o-o---o-", 1], ["--o-o-o-o-o-o-o-", 0.9], ["--o---o---o---o-", 0.6], ["o--o--o---o-o---", 0.7]]
+};
+var ROCK_PROF = {
+  aor: { chord: [0.73, 0.15, 0.09, 0.03], pm: 0.1, root: 0.81, same: 0.7, move: [[2, 4], [5, 3], [7, 3], [1, 2], [3, 2], [4, 2]] },
+  la: { chord: [0.64, 0.15, 0.17, 0.04], pm: 0.5, root: 0.6, same: 0.6, move: [[2, 14], [7, 5], [5, 5], [3, 4], [10, 4], [8, 3]] },
+  hard: { chord: [0.44, 0.16, 0.27, 0.13], pm: 0.35, root: 0.51, same: 0.55, move: [[5, 12], [2, 8], [3, 8], [7, 7], [4, 4], [1, 3], [10, 3]] },
+  x90: { chord: [0.61, 0.12, 0.15, 0.12], pm: 0.15, root: 0.42, same: 0.5, move: [[5, 10], [7, 9], [2, 9], [3, 8], [10, 5], [1, 4]] }
+};
+var ROCK_BASS = {
+  aor: [["x---x---x---x---", 3], ["x-x-x-x-x-x-x-x-", 2.2], ["x---------------", 1], ["x-----x-x-----x-", 0.8], ["--x-x-x-x-x-x-x-", 0.6], ["x---x--xx-x---x-", 0.5]],
+  la: [["x-x-x-x-x-x-x-x-", 6], ["xxxxxxxxxxxxxxxx", 1.2], ["x-xxx-xxx-xxx-xx", 0.6], ["x---------------", 0.6], ["--x-x-x-x-x-x-x-", 0.5], ["x--x--x---------", 0.4]],
+  hard: [["x-x-x-x-x-x-x-x-", 5], ["--x-x-x-x-x-x-x-", 2.4], ["x---------------", 2], ["x---x---x---x---", 0.8], ["x-x-x-xx-xx-x-x-", 0.7], ["x---x-x---x-x-x-", 0.6]],
+  x90: [["x-x-x-x-x-x-x-x-", 3], ["x---------------", 1.2], ["--x-x-x-x-x-x-x-", 1.1], ["x-----x-x--xxxxx", 1], ["x---x---x--x----", 0.7], ["xxx----xxxx----x", 0.5]]
+};
+var ROCK_DR = {
+  aor: { kick: [["K.......K.......", 5], ["K.......K...K...", 1.8], ["K.......K.....K.", 1.5], ["..K.....K.....K.", 0.8], ["......K.K.....K.", 0.8]], snare: [["....S.......S...", 9.8], ["....S...........", 2.2], ["......S.........", 0.3]], ride: 0.24 },
+  la: { kick: [["K.......K.......", 3], ["K.......K.K.....", 2.1], ["KKKKKKKKKKKKKKKK", 1.7], ["K..KK.K...K.K...", 0.6], ["K.KK..KKK.KK..KK", 0.6]], snare: [["....S.......S...", 10], ["..S.......S.....", 0.9], ["....S....S..S...", 0.5]], ride: 0.19 },
+  hard: { kick: [["K.......K.......", 4], ["K.K...K...K.....", 1.9], ["K.K.....K.K.....", 2.2], ["K.......K.K.....", 2.4], ["K...K...K...K...", 1.2], ["K...............", 1]], snare: [["....S.......S...", 9], ["....S...........", 0.5]], ride: 0.2 },
+  x90: { kick: [["K.......K.......", 5], ["K...K...K...K...", 1.3], ["K.....K.K.....K.", 1.1], ["K.........K.....", 1], ["K........KK.....", 0.8]], snare: [["....S.......S...", 7], ["....S..S....S...", 1.3], ["S...S...S...S...", 1]], ride: 0.02 }
+};
+function rockSize(rng, c) { var r = rng.f(), a = 0, i; for (i = 0; i < 4; i++) { a += c[i]; if (r < a) return i + 1; } return 1; }
+function rockKindOf(sty) { return sty.rockKind || "aor"; }
+/* 小節の型。同じ曲・同じ4小節のまとまりなら、ギター・ベースが同じ型(ユニゾン) */
+function rockBarPat(opt, form, bar, kind, solo) {
+  var ph = Math.floor(bar / 4), pos = bar % 4, P = ROCK_PROF[kind];
+  var rr = RNG(((((opt.seed || 1) * 733 + ph * 101 + ({ aor: 3, la: 7, hard: 11, x90: 13 }[kind]) + (solo ? 19 : 0)) % 2147483647) + 2147483647) % 2147483647 || 1);
+  var A = metalWPick(rr, ROCK_RIFF[kind]), B = rr.chance(P.same) ? A : metalWPick(rr, ROCK_RIFF[kind]);
+  if (solo) { A = rr.chance(0.7) ? "o-o-o-o-o-o-o-o-" : "o---o---o---o---"; B = A; }
+  return { pat: pos === 3 ? (rr.chance(0.5) ? B : A) : (pos === 2 ? B : A), ph: ph, pos: pos };
+}
+function rockScaleOk(p, ch, opt, form) {
+  var tonic = ((opt.tonic || 0) % 12 + 12) % 12, scale = form.minor ? [0, 2, 3, 5, 7, 8, 10, 11] : [0, 2, 4, 5, 7, 9, 11], ct = chordTonesOf(ch), set = {};
+  scale.forEach(function (x) { set[(x + tonic) % 12] = 1; }); set[ct.r % 12] = 1; set[ct.t3 % 12] = 1; set[ct.f5 % 12] = 1;
+  if (set[((p % 12) + 12) % 12]) return p;
+  if (set[((p - 1) % 12 + 12) % 12]) return p - 1;
+  if (set[((p + 1) % 12 + 12) % 12]) return p + 1;
+  return p;
+}
+/* ギター2：リズムのリフ。16分の型に、根音のペダル・動く音・和音(根音＋5度＋オクターヴ＋3度)を、解析の割合で */
+function rockRiffGtr(chs, form, sty, opt, rng, ctx) {
+  var kind = rockKindOf(sty), P = ROCK_PROF[kind], beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", bar, step = 0.25;
+  if (form.arenaFeel === "ballad") return notes;
+  for (bar = 0; bar < bars; bar++) {
+    var t0 = bar * beats, s;
+    if (beats !== 4) { for (s = 0; s * 0.5 < beats; s++) { var cb = chordAt(chs, t0 + s * 0.5); notes.push({ t: t0 + s * 0.5, d: 0.2, p: metalRootIn(cb.root, 40), v: 66 + (s % 2 === 0 ? 8 : 0) + rng.i(6), ar: 2 }); } continue; }
+    var plan = rockBarPat(opt, form, bar, kind, solo), idx = [];
+    for (s = 0; s < 16; s++) if (plan.pat.charAt(s) !== "-") idx.push(s);
+    idx.forEach(function (st, k) {
+      var tt = t0 + st * step, ch = chordAt(chs, tt), rootP = metalRootIn(ch.root, 40), nxt = k + 1 < idx.length ? idx[k + 1] : 16, gap = (nxt - st) * step;
+      var pm = rng.chance(P.pm) && gap <= 0.55, p = rootP, sz = solo ? 1 : rockSize(rng, P.chord);
+      if (!rng.chance(P.root) && !solo) p = rockScaleOk(rootP + metalWPick(rng, P.move), ch, opt, form);
+      var d = pm ? Math.min(0.18, gap * 0.8) : Math.max(0.2, Math.min(1.6, gap * 0.9)), v = Math.max(34, Math.min(112, (pm ? 62 : 84) + (st % 4 === 0 ? 10 : 0) + rng.i(6) - (solo ? 12 : 0)));
+      notes.push({ t: tt, d: d, p: p, v: v, ar: pm ? 2 : 0 });
+      if (sz >= 2) notes.push({ t: tt + 0.004, d: d, p: p + 7, v: v - 4, ar: pm ? 2 : 0 });
+      if (sz >= 3) notes.push({ t: tt + 0.008, d: d, p: p + 12, v: v - 8, ar: pm ? 2 : 0 });
+      if (sz >= 4) { var t3 = chordTonesOf(ch).t3, q4 = p + 12 + (((t3 - p) % 12) + 12) % 12; notes.push({ t: tt + 0.012, d: d, p: q4, v: v - 10, ar: pm ? 2 : 0 }); }
+    });
+    if (plan.pos === 3 && !solo && rng.chance(0.4)) {                         /* 4小節の終わり：4拍目を、開放のパワーコードで止める */
+      var cE = chordAt(chs, t0 + 3), rE = metalRootIn(cE.root, 40);
+      notes = notes.filter(function (n) { return !(n.t >= t0 + 3 - 1e-6 && n.t < t0 + 4 - 1e-6); });
+      [0, 7, 12].forEach(function (iv, z) { notes.push({ t: t0 + 3 + z * 0.004, d: 0.85, p: rE + iv, v: 104 + rng.i(8) - z * 3 }); });
+    }
+    if (plan.pos === 0 && !solo && bar % 8 === 0 && rng.chance(0.6) && notes.length) {          /* 8小節の頭：開放のパワーコード */
+      var c0 = chordAt(chs, t0), r0 = metalRootIn(c0.root, 40);
+      notes = notes.filter(function (n) { return !(n.t >= t0 - 1e-6 && n.t < t0 + 0.5 - 1e-6); });
+      [0, 7, 12].forEach(function (iv, z) { notes.push({ t: t0 + z * 0.004, d: 0.9, p: r0 + iv, v: 108 + rng.i(8) - z * 3 }); });
+    }
+  }
+  notes.sort(function (a, b) { return a.t - b.t || a.p - b.p; });
+  return notes;
+}
+/* 伴奏のギター(LA・ハード・90年代)：和音(パワーコード／3度入り)の伸ばし・2分・4分・シンコペのスタブ。サビは開放で鳴らしきる */
+function rockChordGtr(chs, form, sty, opt, rng, ctx) {
+  var kind = rockKindOf(sty), beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", inten = (ctx && ctx.inten != null) ? ctx.inten : 0.6, bar;
+  var PT = {
+    hold: [[0], beats * 0.95], half: [[0, 8], 1.9], quarter: [[0, 4, 8, 12], 0.9], stab: [[0, 8, 14], 0.5], syn: [[0, 3, 6, 8, 10, 12], 0.32]
+  };
+  var W = kind === "x90" ? [["syn", 3], ["half", 2], ["quarter", 1.5], ["hold", 2]] : (kind === "hard" ? [["hold", 3], ["half", 3], ["quarter", 2], ["stab", 1.5]] : [["hold", 3.2], ["half", 3], ["quarter", 1.6], ["stab", 1.4]]);
+  var cur = null;
+  for (bar = 0; bar < bars; bar++) {
+    var t0 = bar * beats, pos = bar % 4, rr = RNG(((((opt.seed || 1) * 421 + Math.floor(bar / 4) * 59 + ({ aor: 3, la: 7, hard: 11, x90: 13 }[kind])) % 2147483647) + 2147483647) % 2147483647 || 1);
+    var nm = metalWPick(rr, W), alt = metalWPick(rr, W);
+    if (beats !== 4) nm = "hold";
+    var pat = PT[pos === 3 ? alt : nm] || PT.hold; if (solo) pat = PT.hold;
+    pat[0].forEach(function (s) {
+      var tt = t0 + s * 0.25, ch = chordAt(chs, tt), nextAt = beats * (bar + 1), i;
+      for (i = 0; i < chs.length; i++) if (chs[i].at > tt + 0.01 && chs[i].at < nextAt) { nextAt = chs[i].at; break; }
+      var d = Math.max(0.2, Math.min(pat[1], nextAt - tt - 0.05)), r = metalRootIn(ch.root, 45), v = Math.round((solo ? 70 : 88) + (s === 0 ? 8 : 0) + (inten >= 0.85 ? 6 : 0) + rng.i(6));
+      var tones = [0, 7, 12]; if ((kind === "x90" || kind === "hard") && rng.chance(0.4)) tones.push(12 + (chordTonesOf(ch).t3 - r + 120) % 12 % 12);
+      tones.forEach(function (iv, z) { notes.push({ t: tt + z * 0.005, d: d, p: r + iv, v: v - z * 3 }); });
+    });
+  }
+  notes.sort(function (a, b) { return a.t - b.t || a.p - b.p; });
+  return notes;
+}
+function rockBass(chs, form, sty, opt, rng, ctx) {
+  var kind = rockKindOf(sty), beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", bar, s, step = 0.25, ballad = form.arenaFeel === "ballad";
+  for (bar = 0; bar < bars; bar++) {
+    var t0 = bar * beats;
+    if (beats !== 4 || ballad) {                                             /* バラード・4拍子以外：根音の2分／8分 */
+      for (s = 0; s < beats; s += (ballad ? 2 : 0.5)) { var cb = chordAt(chs, t0 + s); notes.push({ t: t0 + s, d: ballad ? 1.8 : 0.4, p: metalRootIn(cb.root, 28), v: ballad ? 76 : 84 + rng.i(6) }); }
+      continue;
+    }
+    var plan = rockBarPat(opt, form, bar, kind, solo), rb = RNG(((((opt.seed || 1) * 887 + bar * 37) % 2147483647) + 2147483647) % 2147483647 || 1);
+    var own = !solo && rb.chance(kind === "aor" || kind === "x90" ? 0.55 : 0.2), pat = own ? metalWPick(rb, ROCK_BASS[kind]) : plan.pat.replace(/o/g, "x");
+    if (solo) pat = "x---x---x---x---";
+    var idx = []; for (s = 0; s < 16; s++) if (pat.charAt(s) !== "-") idx.push(s);
+    var chN = chordAt(chs, t0 + beats + 0.01);
+    idx.forEach(function (st, k) {
+      var tt = t0 + st * step, ch = chordAt(chs, tt), p = metalRootIn(ch.root, 28), nxt = k + 1 < idx.length ? idx[k + 1] : 16, gap = (nxt - st) * step;
+      if (st >= 12 && st === idx[idx.length - 1] && chN !== ch && chN.root !== ch.root && rb.chance(0.3)) p = metalRootIn(chN.root + 11, 28);     /* 次の和音への経過音 */
+      else if (st % 4 === 2 && kind !== "aor" && rb.chance(0.06)) p += 12;                                                                                                    /* オクターヴ移動(約4〜7%) */
+      notes.push({ t: tt, d: Math.max(0.12, Math.min(1.8, gap * 0.88)), p: p, v: 90 + (st % 4 === 0 ? 8 : 0) + rb.i(6) - (solo ? 8 : 0) });
+    });
+  }
+  return notes;
+}
+function rockDrums(chs, form, sty, opt, rng, ctx) {
+  var kind = rockKindOf(sty), beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", bar, s, step = beats / 16, ballad = form.arenaFeel === "ballad", DR = ROCK_DR[kind];
+  var inten = (ctx && ctx.inten != null) ? ctx.inten : 0.6, chorus = inten >= 0.85 || (ctx && ctx.role === "shout");
+  function add(t, p, v, d) { notes.push({ t: t, d: d || 0.1, p: p, v: Math.max(18, Math.min(126, Math.round(v))) }); }
+  var cache = {};
+  for (bar = 0; bar < bars; bar++) {
+    var t0 = bar * beats, w = Math.floor(bar / 2), pos = bar % 4, last = (bar === bars - 1);
+    if (!cache[w]) {
+      var rg = RNG(((((opt.seed || 1) * 61 + w * 193 + ({ aor: 3, la: 7, hard: 11, x90: 13 }[kind])) % 2147483647) + 2147483647) % 2147483647 || 1);
+      cache[w] = { k: metalWPick(rg, DR.kick), s: metalWPick(rg, DR.snare), rideOn: rg.chance(DR.ride * (chorus ? 2.2 : 1)), rg: rg };
+    }
+    var C = cache[w], kk = C.k, sn = C.s, rg2 = C.rg;
+    if (beats !== 4 || ballad || solo) { kk = ballad ? "K.......K.......".replace("K.......K", "K.......K") : "K.......K......."; sn = "....S.......S..."; }
+    if (last) { add(t0, D.crash, 112, 1.0); add(t0, D.kick, 112); add(t0 + beats / 2, D.snare, 108); add(t0 + beats / 2, D.kick, 108); continue; }
+    if (beats !== 4) { for (s = 0; s < beats; s++) { add(t0 + s, D.hhC, 76); if (s % 2 === 1) add(t0 + s, D.snare, 104); if (s % 2 === 0) add(t0 + s, D.kick, 100); } continue; }
+    var twin = (kk === "KKKKKKKKKKKKKKKK");
+    for (s = 0; s < 16; s++) {
+      var tt = t0 + s * step;
+      if (kk.charAt(s) === "K") add(tt, twin && s % 2 === 1 ? D.kick2 : D.kick, (ballad ? 84 : 98) + (s % 4 === 0 ? 8 : 0) - (twin && s % 2 === 1 ? 6 : 0) + rg2.i(8));
+      if (sn.charAt(s) === "S") add(tt, D.snare, (ballad ? 84 : 112) + (s % 8 === 4 ? 2 : 0) + rg2.i(10));
+    }
+    if (kind === "x90" && !ballad && rg2.chance(0.5)) [3, 7, 11, 15].forEach(function (g) { if (kk.charAt(g) !== "K" && rg2.chance(0.5)) add(t0 + g * step, D.snare, 40 + rg2.i(10)); });      /* ゴースト */
+    /* 刻み：8分のハイハット／サビ・ライド／AOR はオープン・ハットも／エクストリームはときに16分 */
+    var hat16 = kind === "x90" && !ballad && rg2.chance(0.25);
+    for (s = 0; s < 16; s += (hat16 ? 1 : 2)) {
+      var th = t0 + s * step, acc = (s % 4 === 0);
+      if (ballad) { if (s % 4 === 0) add(th, D.hhC, 64 + rg2.i(6)); continue; }
+      if (C.rideOn || chorus && kind === "la" && rg2.chance(0.3)) add(th, D.ride, 76 + (acc ? 10 : 0) + rg2.i(8));
+      else if (kind === "aor" && s === 14 && rg2.chance(0.5)) add(th, D.hhO, 82 + rg2.i(6), 0.3);
+      else add(th, D.hhC, (hat16 && s % 2 === 1 ? 56 : 74) + (acc ? 12 : 0) + rg2.i(8));
+    }
+    if (pos === 0 && (bar % 8 === 0 || rg2.chance(0.4)) && !solo) add(t0, D.crash, 104, 0.9);
+    var fp = { aor: 0.5, la: 0.6, hard: 0.5, x90: 0.25 }[kind];
+    if (pos === 3 && !solo && rg2.chance(fp)) {                                                     /* 4小節目の終わり：スネア・タムのフィル */
+      var fv = kind === "x90" ? [D.snare, D.snare, D.snare, D.tomM] : [D.snare, D.tomH, D.tomM, D.tomL], fz;
+      for (fz = 0; fz < 4; fz++) add(t0 + beats - 1 + fz * 0.25, fv[fz], 90 + fz * 6 + rg2.i(10));
+    }
+  }
+  return notes;
+}
+function rockForm(label, minor, tempo, prog, extra) {
+  var ch = [], f = { label: label, minor: minor, ts: [4, 4], sec: "AAAA", tempo: tempo, ch: ch }, k;
+  prog.forEach(function (c) { var i; for (i = 0; i < c[2]; i++) ch.push({ deg: c[0], q: c[1], b: 4 }); });
+  f.bars = ch.length; for (k in (extra || {})) f[k] = extra[k];
+  return f;
+}
+FORMS.rk_la1 = rockForm("LAメタル：i → ♭VI → i → ♭VII の反復(ラット・ドッケン型) 16小節", true, 124, [[0, "min", 2], [8, "maj", 2], [0, "min", 2], [10, "maj", 2], [0, "min", 2], [8, "maj", 2], [3, "maj", 2], [10, "maj", 2]]);
+FORMS.rk_la2 = rockForm("LAメタル：i → ♭VII → ♭VI → IV(ドリアン風の下降) 16小節", true, 126, [[0, "min", 2], [10, "maj", 2], [8, "maj", 2], [5, "maj", 2], [0, "min", 2], [10, "maj", 2], [8, "maj", 2], [7, "maj", 2]]);
+FORMS.rk_la3 = rockForm("LAメタル：i のペダル → ♭III → ♭VI → ♭VII 16小節", true, 120, [[0, "min", 4], [0, "min", 2], [3, "maj", 2], [0, "min", 4], [8, "maj", 2], [10, "maj", 2]]);
+FORMS.rk_hard_a = rockForm("ハード・ロック(長調)：I I I ♭VII → IV V IV V → I V ♭VII I → V ♭VII II IV(ガンズ型) 16小節", false, 128, [[0, "maj", 3], [10, "maj", 1], [5, "maj", 1], [7, "maj", 1], [5, "maj", 1], [7, "maj", 1], [0, "maj", 1], [7, "maj", 1], [10, "maj", 1], [0, "maj", 1], [7, "maj", 1], [10, "maj", 1], [2, "maj", 1], [5, "maj", 1]]);
+FORMS.rk_hard_b = rockForm("ハード・ロック(短調)：♭III i ♭III i → ♭VI i i ♭VI → i ♭VI II V(ヴァン・ヘイレン／オジー型) 16小節", true, 122, [[3, "maj", 1], [0, "min", 1], [3, "maj", 1], [0, "min", 1], [8, "maj", 1], [0, "min", 2], [8, "maj", 1], [0, "min", 1], [8, "maj", 1], [2, "maj", 1], [7, "maj", 1], [0, "min", 3], [10, "maj", 1]]);
+FORMS.rk_90 = rockForm("90年代ロック：I I I IV → IV I IV I → vi → V(エクストリーム型・ファンク・メタル) 16小節", false, 104, [[0, "dom7", 3], [5, "dom7", 1], [5, "dom7", 1], [0, "dom7", 1], [5, "dom7", 1], [0, "dom7", 1], [9, "m7", 4], [7, "dom7", 4]]);
+FORMS.rk_aor1 = rockForm("AOR：vi → IV → I → V → V vi IV I → IV I → I ♭VII(サバイバー・ジャーニー型) 16小節", false, 112, [[9, "min", 1], [5, "maj", 1], [0, "maj", 1], [7, "maj", 1], [7, "maj", 1], [9, "min", 1], [5, "maj", 1], [0, "maj", 1], [5, "maj", 2], [0, "maj", 2], [0, "maj", 2], [10, "maj", 2]]);
+FORMS.rk_aor2 = rockForm("AOR(短調)：♭VI IV ♭VII → i ♭VI → IV V i(ジャーニー型) 16小節", true, 110, [[8, "maj", 2], [5, "maj", 1], [10, "maj", 1], [0, "min", 2], [8, "maj", 2], [5, "maj", 1], [7, "maj", 1], [0, "min", 2], [0, "min", 2], [10, "maj", 2]]);
 /* ---------- ツイン・ギターの3度ハモリ（スラッシュ／デス／メロデス／ブラック）----------
    2本目のギター(gtr2)が、旋律に3度の平行（上か下）を付ける。入れる場所：テーマ(head)と山場(shout)、および、ソロとソロの間(最初のソロの終わり4小節＝ソロの曲間)。
    音は、短調（導音は和声的短音階）の音階の上で2つ上(3度上)か2つ下(3度下＝6度上)に移す。音階の外の半音は、付けない。2小節ごとに向きを決める(上65%・下35%)。 */
@@ -7220,17 +7866,17 @@ function devMclPhrase(kind, t0, beats, ch, tonic, minor, cur, lo, hi, rng, heat,
   var p5 = yng ? 0.02 : 0.10 + 0.14 * heat;                  /* 5度の跳躍（イングヴェイは順次進行が主：4度以上の跳躍は約12%） */
   function stepOf() { return rng.chance(p32) ? 0.125 : 0.25; }
   function nextIx(k) {
-    if (dm && rng.chance(yng ? 0.22 : 0.2)) { return; }                  /* ディ・メオラ：同音の反復（実曲の走句内の約19%） */
+    if (dm && rng.chance(yng ? 0.05 : 0.2)) { return; }                  /* ディ・メオラ：同音の反復（実曲の走句内の約19%） */
     if (dm && rng.chance(yng ? 0.015 : 0.07)) { var po = g[clampIdx(g, ix)] + (dir > 0 ? 12 : -12); ix = clampIdx(g, idxOf(g, po)); return; }   /* オクターヴの跳躍（約8%） */
     if (rng.chance(p5)) { var tp = g[clampIdx(g, ix)] + (dir > 0 ? 7 : -7); ix = clampIdx(g, idxOf(g, tp)); dir = -dir; }
-    else { ix = clampIdx(g, ix + dir * (rng.chance(0.78) ? 1 : 2)); }
+    else { ix = clampIdx(g, ix + dir * (rng.chance(yng ? 0.86 : 0.78) ? 1 : 2)); }
     if (ix <= 1) dir = 1; else if (ix >= g.length - 2) dir = -1;
-    if (rng.chance(0.14)) dir = -dir;
+    if (rng.chance(yng ? 0.2 : 0.14)) dir = -dir;
   }
   if (kind === "run" && yng) {                                /* イングヴェイ（28曲の統計）：16分の走句（平均22音）。16分3連・8分3連の区間が混ざる */
     var nY = rng.pick([18, 22, 24, 28, 32]), left = nY;
     while (left > 0) {
-      var segN = Math.min(left, rng.pick([6, 8, 12, 12, 16])), rk = rng.wpick(rgrid || [["s16", 5], ["t16", 3], ["t8", 2], ["s32", 0.4]]);
+      var segN = Math.min(left, rng.pick([6, 8, 12, 12, 16])), rk = rng.wpick(rgrid || [["t16", 4.3], ["s16", 3.4], ["t8", 1], ["s32", 1]]);
       var stp = rk === "s16" ? 0.25 : (rk === "t16" ? 1 / 6 : (rk === "t8" ? 1 / 3 : (rk === "e8" ? 0.5 : 0.125)));
       for (i = 0; i < segN; i++) { out.push({ t: t, d: stp * 0.92, p: g[clampIdx(g, ix)], v: (i % 4 === 0 ? 98 : 80) + rng.i(8) }); t += stp; nextIx(i); }
       left -= segN;
@@ -9053,6 +9699,63 @@ function devSweepChords(t0, beats, chs, cur, lo, hi, rng) {
       out.push({ t: tb + k * stx, d: stx * 1.02, p: seq[k], v: (k === 0 ? 102 : (seq[k] === top ? 96 : 78)) + rng.i(6), sw: 1 });
     }
     pos += len;
+  }
+  return { notes: out, cur: top };
+}
+/* 3弦スウィープ（第429版）：三和音を「1弦に1音」で掃く。根音→3度→5度（またはその転回）の3音を上がって戻り、
+   1拍ごとに和音の音を1つずつ上へずらして、バロックの進行（5度圏・パッヘルベル型）の上で和声を描く。
+   和音が小節の途中で変われば、変わり目ごとに形を作り直す。 */
+function devSweep3Str(t0, beats, chs, cur, lo, hi, rng) {
+  var out = [], pos = 0, savedNps = CUR_NPS, top = cur, k;
+  CUR_NPS = 15;                                          /* 人が弾ける上限（名手の実用域）：〜150BPMは16分の6連、それより速い曲は3連に粗くする */
+  var st = tStep(1 / 6);
+  CUR_NPS = savedNps;
+  var sLo = Math.max(lo, 55), sHi = Math.min(hi, 76);      /* 1〜3弦(G3〜E5付近)に収める */
+  if (sHi - sLo < 14) { sLo = lo; sHi = hi; }
+  if (1 / st < 5.5 && beats >= 4) {                       /* 速い曲：8分音符の6連（2拍に6音）を、1小節に2つ。小節いっぱいに掃く */
+    var gi, rs = rng.chance(0.6);
+    for (gi = 0; gi < 2; gi++) {
+      var chF = chordAt(chs, t0 + gi * 2), pF = chordPcs(chF).slice(0, 3);
+      if (chF.q === "dim7" || chF.q === "dim") pF = [0, 3, 6];
+      var gF = arpGrid(pF, chF.root, sLo, sHi), bF = clampIdx(gF, idxOf(gF, top) - 2 + (rs === (gi === 0) ? 0 : 1));
+      var c0 = Math.min(bF, gF.length - 3), cellF = [c0, c0 + 1, c0 + 2, c0 + 1, c0, c0 + 1];
+      for (k = 0; k < 6; k++) out.push({ t: t0 + gi * 2 + k * st, d: st * (k === 2 ? 1.5 : 1.02), p: gF[cellF[k]],
+        v: (k === 0 ? 102 : (k === 2 ? 98 : 76)) + rng.i(6), sw: 1 });
+      top = gF[c0 + 2];
+    }
+    return { notes: out, cur: top };
+  }
+  while (pos < beats - 0.05) {
+    var ch = chordAt(chs, t0 + pos), len = 0.5;
+    while (pos + len < beats && chordAt(chs, t0 + pos + len) === ch) len += 0.5;
+    var pcs = chordPcs(ch).slice(0, 3);
+    if (ch.q === "dim7" || ch.q === "dim") pcs = [0, 3, 6];
+    var g = arpGrid(pcs, ch.root, sLo, sHi);
+    var ix = clampIdx(g, idxOf(g, top) - 2);           /* 前の高さの近くから始める */
+    var nb = Math.max(1, Math.round(len)), b, rising = (ix < g.length / 2) ? rng.chance(0.7) : rng.chance(0.25);
+    for (b = 0; b < nb; b++) {
+      if (pos + b >= 2 && beats >= 3) break;               /* 1小節に6連を2つ：頭の2拍で掃き、あとは歌う音を伸ばす */
+      var base = clampIdx(g, ix + (rising ? b : -b)), a0 = clampIdx(g, base), a1 = clampIdx(g, base + 1), a2 = clampIdx(g, base + 2);
+      if (a2 + 0 >= g.length) { a0 = g.length - 3; a1 = g.length - 2; a2 = g.length - 1; }
+      var cell = (1 / st < 5.5)                        /* 刻みが粗い曲(3音/拍)は、拍ごとに上り・下りを交互にして途切れなく掃く */
+        ? ((b % 2 === 0) === rising ? [a0, a1, a2] : [a2, a1, a0])
+        : [a0, a1, a2, a1, a0, a1];                    /* 掃き上げ→頂点→掃き下ろし（6連） */
+      var tb = t0 + pos + b * 1;
+      for (k = 0; k < 6; k++) {
+        var tt = tb + k * st;
+        if (tt >= t0 + pos + len - 0.01 || k * st >= 0.999) break;
+        out.push({ t: tt, d: st * (k === 2 ? 1.5 : 1.02), p: g[cell[k]],
+          v: (k === 0 ? 102 : (k === 2 ? 98 : 76)) + rng.i(6), sw: 1 });
+      }
+      top = g[a2];
+    }
+    pos += len;
+  }
+  if (beats >= 3) {                                        /* 掃いたあとは、そのときの和音の音を最高音のあたりで伸ばす */
+    var ch2 = chordAt(chs, t0 + 2), g2 = arpGrid(chordPcs(ch2).slice(0, 3), ch2.root, sLo, sHi), best = g2[0], bd = 999;
+    for (k = 0; k < g2.length; k++) if (Math.abs(g2[k] - top) < bd) { bd = Math.abs(g2[k] - top); best = g2[k]; }
+    out.push({ t: t0 + 2, d: (beats - 2) * 0.92, p: best, v: 100 + rng.i(6) });
+    top = best;
   }
   return { notes: out, cur: top };
 }
@@ -11817,8 +12520,11 @@ function soloSpace(notes, beats, bars, mode, opt, salt) {
   }
   return ns;
 }
+/* ロックのソロで使うジャズ寄りのフレーズの確率(使ってよい場面でだけ)。ロックの定番(3和音の組み合わせ・ペンタの重ね)は高め、バップは低め */
+var ROCK_JZ = { bebop: 0.1, lick: 0.25, chrom: 0.4, slip: 0.2, pair: 0.6, psuper: 0.6, double: 0.25, dim: 0.25, dimchain: 0.2 };
 function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
   TANGO_SUBJ = null;
+  var jzR = [], jzPrev = false, jzNext = false;
   if (opt.style === "baroque" && sctx && sctx.theme) {
     /* バロックでは2声目＝上声の模倣（カノン）。5度上か1オクターヴ下で追いかける */
     var dly = (form.ts[0] === 3) ? 3 : 4;
@@ -12000,11 +12706,11 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
       } else if (v === "page") {
         mode = rng.wpick([["riff", last === "riff" ? 1 : 5], ["blue", last === "blue" ? 1 : 4], ["penta", 4], ["lick", 3], ["hold", last === "hold" ? 0 : 1]]);
       } else if (v === "becker") {
-        mode = rng.wpick([["tap", last === "tap" ? 0 : 3], ["sweep3", last === "sweep3" ? 1 : 5], ["seq4", last === "seq4" ? 1 : 5], ["pedal2", last === "pedal2" ? 0 : 3],
+        mode = rng.wpick([["tap", last === "tap" ? 0 : 3], ["sweep3", last === "sweep3" ? 1 : 5], ["sw3str", last === "sw3str" ? 3 : 9], ["seq4", last === "seq4" ? 1 : 5], ["pedal2", last === "pedal2" ? 0 : 3],
                           ["dimchain", last === "dimchain" ? 0 : 2.5], ["legato", last === "legato" ? 1 : 2], ["trill", last === "trill" ? 0 : 1.5], ["bebop", 1], ["hold", last === "hold" ? 0 : 0.8]]);
       } else if (v === "impellitteri") {
         /* 解析：走句16%・模進11%・アルペジオ5.6%・ペダル5.5%・反復7%。跳躍21%（3連の下降アルペジオの細胞が多い） */
-        mode = rng.wpick([["mrun", last === "mrun" ? 8 : 24], ["tcell", last === "tcell" ? 12 : 40], ["sweep3", last === "sweep3" ? 1 : 10], ["pedal2", last === "pedal2" ? 0 : 6], ["seq4", 5],
+        mode = rng.wpick([["mrun", last === "mrun" ? 8 : 24], ["tcell", last === "tcell" ? 12 : 40], ["sweep3", last === "sweep3" ? 1 : 10], ["sw3str", last === "sw3str" ? 6 : 18], ["pedal2", last === "pedal2" ? 0 : 6], ["seq4", 5],
                           ["dimchain", last === "dimchain" ? 0 : 3], ["trill", last === "trill" ? 0 : 1], ["bebop", 1.5], ["hold", last === "hold" ? 0 : 0.8]]);
       } else if (v === "gilbert") {
         /* 解析：走句15.5%・模進6.7%（3音の細胞を同じ高さで反復）・反復6.7%・ペダル4.6%・6連が48% */
@@ -12088,9 +12794,9 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
       } else if (v === "yngwie") {
         /* 和音が2拍ごとに変わる形式では、変わり目に合わせたスウィープを主役にする */
         mode = form.sweep
-          ? rng.wpick([["swchords", 14], ["seq4", 2], ["pedal2", last === "pedal2" ? 0 : 1.2],
+          ? rng.wpick([["swchords", 14], ["sw3str", 8], ["seq4", 2], ["pedal2", last === "pedal2" ? 0 : 1.2],
                        ["dimchain", last === "dimchain" ? 0 : 0.8], ["hold", last === "hold" ? 0 : 1]])
-          : rng.wpick([["mrun", last === "mrun" ? 20 : 60], ["sweep3", 4], ["seq4", 4], ["pedal2", last === "pedal2" ? 0 : 3],
+          : rng.wpick([["mrun", last === "mrun" ? 20 : 60], ["sw3str", last === "sw3str" ? 10 : 36], ["sweep3", 4], ["seq4", 4], ["pedal2", last === "pedal2" ? 0 : 3],
                        ["dimchain", last === "dimchain" ? 0 : 3], ["trill", last === "trill" ? 0 : 1.5],
                        ["bebop", 2], ["hold", last === "hold" ? 0 : 0.8]]);
       } else if (v === "mclaughlin") {
@@ -12162,6 +12868,18 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
         cur = hp2; prevBar = null; continue;
       }
       var mark = notes.length;
+      if (opt.style === "arena" && opt.rockJazz !== true && ROCK_JZ[mode] != null) {
+        /* ロックのソロで、ジャズ寄りのフレーズ(バップ・ジャズのリック・半音階・サイドスリップ・3和音の組み合わせ・ペンタの重ね・ディミニッシュ)を使うときの判断：
+           ①熱(heat)が高い所(盛り上がり)だけ、②4小節の頭の小節・最後の小節には置かない(頭はペンタ／ブルースで主題を示し、最後は落ち着ける)、③続けて使わない、
+           ④使う確率は、フレーズごと(ロックの定番＝3和音の組み合わせ・ペンタの重ねは高く、バップは低く)、⑤使った次の小節は、伸ばすかブルースで解決する。
+           使った小節の音は、調外れの補正の対象から外す(意図した緊張)。和音と半音でぶつかる長い音だけは、補正する。 */
+        var okJz = opt.rockJazz !== false && heat >= 0.7 && !lastBar && bi % 4 !== 0 && !jzPrev && rng.chance(ROCK_JZ[mode]);
+        if (okJz) { jzR.push([t0, t0 + beats]); jzPrev = true; jzNext = true; }
+        else { mode = rng.wpick([["penta", 4], ["blue", 4], ["riff", 2], ["hold", 1]]); jzPrev = false; }
+      } else if (opt.style === "arena" && opt.rockJazz !== true) {
+        jzPrev = false;
+        if (jzNext) { jzNext = false; if (mode !== "hold" && rng.chance(0.5)) mode = "blue"; }
+      }
       if (mode === "bebop") { push(bebopLine(t0, beats, ch, cur, goal, lo, hi, rng, Math.max(2, Math.round((3 + heat * 5) * prof.dens)), off, 0.5, pl.next)); prevBar = notes.slice(mark); continue; }
       if (mode === "wide") { push(devWideRun(t0, beats, ch, cur, goal, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "par") { push(devParallel(t0, beats, ch, chs, cur, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
@@ -12181,6 +12899,7 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
       if (mode === "digital") { push(devDigitalSeq(t0, beats, ch, cur, goal, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "pquartal") { push(devPentaQuartal(t0, beats, ch, cur, goal, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "swchords") { push(devSweepChords(t0, beats, chs, cur, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
+      if (mode === "sw3str") { push(devSweep3Str(t0, beats, chs, cur, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "quartal") { push(devQuartalLine(t0, beats, ch, cur, goal, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "grp3") { push(devGroup3(t0, beats, ch, cur, goal, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "spanish") { push(devSpanish(t0, beats, ch, opt.tonic, cur, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
@@ -12335,6 +13054,7 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
   notes = instrShape(notes, chs, lo, hi, prof, rng);
   if (opt.style === "tango") tangoAccent(notes, beats);
   if (v !== "paco") avoidRepeats(notes, chs, lo, hi, rng, prof.rep);
+  if (jzR.length) notes.forEach(function (n) { var z; for (z = 0; z < jzR.length; z++) if (n.t >= jzR[z][0] - 1e-6 && n.t < jzR[z][1] - 1e-6) { n.jz = 1; break; } });      /* ロック：ジャズ寄りのフレーズの小節の印 */
   for (i = 0; i < notes.length; i++) {
     var frac = notes[i].t / (bars * beats);
     notes[i].v = Math.max(34, Math.min(122, Math.round(notes[i].v * (0.88 + 0.26 * Math.sin(Math.min(1, frac * 1.1) * Math.PI)))));
@@ -12582,7 +13302,9 @@ function arenaComp(chs, form, opt, rng, ctx) {
 function genComp(chs, form, sty, opt, rng, ctx) {
   if (form.cafe) return cafeComp(chs, form, opt, rng, ctx);
   if (sty.comp === "arena") return arenaComp(chs, form, opt, rng, ctx);
+  if (sty.comp === "rockgtr") return rockChordGtr(chs, form, sty, opt, rng, ctx);
   if (sty.comp === "bridge") return bridgeComp(chs, form, sty, opt, rng, ctx);
+  if (sty.comp === "power" && opt.style === "neo" && opt.yngRiff !== false && YNG_PROF[voiceOf(opt, sty)]) return yngRiffComp(chs, form, sty, opt, rng, ctx);
   if (sty.comp === "game") return gameComp(chs, form, opt, rng, ctx);
   if (sty.comp === "epic") return epicPad(chs, form, opt, rng, { i: (ctx && ctx.inten != null) ? ctx.inten : 0.5, n: 1, role: ctx && ctx.role, orch: ctx && ctx.orch });
   var prevV = null, compKind = "", lastFig = null, greenMode = "four", clsPat = null, chaosComp = "stab", clsBass = null, clsCl = 0;
@@ -13481,6 +14203,7 @@ function genComp(chs, form, sty, opt, rng, ctx) {
 
 /* ---------- ベース ---------- */
 function genBass(chs, form, sty, opt, rng, ctx) {
+  if (sty.bass === "rockbass") return rockBass(chs, form, sty, opt, rng, ctx);
   if (form.cafe) return cafeBass(chs, form, opt, rng);
   if (sty.bass === "game") return gameBass(chs, form, opt, rng, ctx);
   if (sty.bass === "bridge") return bridgeBass(chs, form, sty, opt, rng, ctx);
@@ -14031,6 +14754,7 @@ function genDrums(chs, form, sty, opt, rng, ctx) {
   if (sty.drums === "epic") return epicLineDrums(chs, form, opt, rng, ctx);
   if (sty.drums === "game") return gameDrums(chs, form, opt, rng, ctx);
   if (sty.drums === "thrash" || sty.drums === "blast") return metalDrums(chs, form, sty, opt, rng, ctx);
+  if (sty.drums === "rockdr") return rockDrums(chs, form, sty, opt, rng, ctx);
   var chaosD = rng.i(4);
   var beats = form.ts[0], bars = form.bars, notes = [], bar, i, k;
   var st = sty.drums;
@@ -18473,7 +19197,7 @@ function generate(opt) {
   if (!S0 || !baseKey) { var sg0 = generateMain(opt); if (opt.style === "epic") { try { epicIdiom(sg0, opt); } catch (eE) {} } return sg0; }
   var key = opt.style, saved = STYLES[baseKey], mix = {}, k, song;
   for (k in saved) mix[k] = saved[k];
-  ["swing", "tempo", "comp", "bass", "drums", "mel", "voice", "lead", "compProg", "feel"].forEach(function (f) { if (S0[f] !== undefined) mix[f] = S0[f]; });
+  ["swing", "tempo", "comp", "bass", "drums", "mel", "voice", "lead", "compProg", "feel", "rockKind"].forEach(function (f) { if (S0[f] !== undefined) mix[f] = S0[f]; });
   opt.style = baseKey;
   if (S0.mclBase) {
     if (!opt.voice || opt.voice === "auto") opt.voice = S0.voice || "mclaughlin";
@@ -18858,7 +19582,7 @@ function generateMain(opt) {
       plan[i].play.drums = 0; plan[i].play.perc = 0;
     }
   }
-  var mel = [], solo = [], comp = [], bass = [], drums = [], perc = [], horn = [], harp = [], timp = [], cello = [];
+  var mel = [], solo = [], comp = [], bass = [], drums = [], perc = [], horn = [], harp = [], timp = [], cello = [], gtrR = [];
   var soloSeen = 0, soloTotal = opt.solos, headSeen = 0, secParts = [], twoFeelWins = [], tradeBlk = 0, drumWins = [];
   var headNotes;
   DJENT = (opt.style === "djent") ? { A: makeDjentRiff(rng, false), B: makeDjentRiff(rng, false), C: makeDjentRiff(rng, true) } : null;
@@ -19182,6 +19906,15 @@ function generateMain(opt) {
           v: Math.max(28, Math.min(120, Math.round(cn[k].v + lift - (keepAll && P.inten < 0.4 ? 6 : 0)))) };
         if (cn[k].ar) cpn.ar = cn[k].ar;                       /* ミュート（手のひらで止めた音）の印を残す */
         comp.push(cpn);
+      }
+      if (sty.rockKind) {                                      /* ロック：ギター2(リズムのリフ) */
+        var rn2 = rockRiffGtr(part.chs, part.form, sty, opt, rng, { role: P.kind, inten: P.inten });
+        for (k = 0; k < rn2.length; k++) {
+          if (P.stop && (rn2[k].t % (beats * 2)) > 1.2) continue;
+          var gp = { t: rn2[k].t + off, d: rn2[k].d, p: rn2[k].p, v: Math.max(28, Math.min(120, Math.round(rn2[k].v + lift))) };
+          if (rn2[k].ar) gp.ar = rn2[k].ar;
+          gtrR.push(gp);
+        }
       }
     }
     if (P.play.bass) {
@@ -19908,10 +20641,11 @@ function generateMain(opt) {
       arr.sort(function (a, b) { return a.t - b.t; });
     });
   }
-  if (opt.style === "neo" && opt.neoSnap !== false) {
-    var abN = absChords({ chords: chs, sections: sections, beats: beats, opt: opt });
-    neoSnapOut(solo, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor);
-    neoSnapOut(mel, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor);
+  if ((opt.style === "neo" || opt.style === "arena") && opt.neoSnap !== false) {          /* 調外れ音の補正（ネオクラシカル／ロック）。ロックの長調は、♭7(ミクソリディアン)も調の音とする */
+    var abN = absChords({ chords: chs, sections: sections, beats: beats, opt: opt }), exN = (opt.style === "arena" && !form.minor) ? [10] : null;
+    neoSnapOut(solo, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor, exN);
+    neoSnapOut(mel, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor, exN);
+    if (opt.style === "arena" && opt.rockAvoid !== false) { rockAvoidFix(solo, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor); rockAvoidFix(mel, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor); }
   }
   var fingerFix = { mel: 0, solo: 0 };
   var chordFix = { comp: null, mel: null, solo: null };
@@ -19985,12 +20719,13 @@ function generateMain(opt) {
               rasgueado: "Flamenco Gtr (rasgueado)", waltz: "Rhythm Gtr", power: "Rhythm Gtr (power)", riff: "Rhythm Gtr (riff)", continuo: "Continuo",
               organ: "Organ", quartal: "Piano (quartal)", ballad: "Piano",
               djent: "Rhythm Gtr (djent)", chaos: "Comp (chaos)", koto: "Koto", clasica: "Classical Gtr",
-              rhodes: "Rhodes" }[sty.comp] || "Piano",
+              rhodes: "Rhodes", rockgtr: "Chord Gtr", arena: "Synth (riff/pad)" }[sty.comp] || "Piano",
       jp: "伴奏（" + ({ pompe: "ラ・ポンプ", green: "4つ切り", bossa: "ボサ", rasgueado: "ラスゲアード",
                        waltz: "ワルツ", power: "パワーコード", organ: "オルガン", quartal: "4度堆積", continuo: "通奏低音の和音", clasica: "分散和音と総奏", rhodes: "ローズ", riff: "リフの重音", unison: "ユニゾン", koto: "琴", chaos: "人格が変わる伴奏", djent: "ジェントの刻み", classical: "分散和音と和音",
                        montuno: "モントゥーノ", samba: "サンバ", partido: "パルチード", choro: "ショーロ",
-                       frevo: "フレヴォ", baiao: "バイアォン" }[sty.comp] || "ピアノ") + "）",
+                       frevo: "フレヴォ", baiao: "バイアォン", rockgtr: "ギターの和音", arena: "シンセのリフ・パッド" }[sty.comp] || "ピアノ") + "）",
       prog: sty.compProg, ch: 2, notes: comp, extra: polishExtras(stemExpression("comp", comp, sections, opt, rngE, beats, opt.style), comp) },
+    { id: "gtr2", name: "Guitar 2 (rhythm riff)", jp: "2本目のギター（リズム・リフ）", prog: sty.rockKind === "aor" ? 29 : 30, ch: 6, notes: gtrR, extra: [] },
     { id: "bass", name: opt.orgBass ? "Organ bass (left hand)" : "Bass", jp: opt.orgBass ? "オルガン・ベース（左手）" : (sty.bass === "walk2" || sty.bass === "walk4" || sty.bass === "waltz") ? "ウッドベース" : "ベース",
       prog: opt.orgBass ? 16 : (sty.bass === "walk2" || sty.bass === "walk4" || sty.bass === "waltz" || sty.bass === "choro") ? 32 : 33, ch: 3, notes: bass, extra: polishExtras(stemExpression("bass", bass, sections, opt, rngE, beats, opt.style), bass) },
     { id: "drums", name: sty.drums === "palmas" ? "Cajon" : (sty.drums === "latin" ? "Timbales" : "Drums"),
@@ -20350,14 +21085,16 @@ function orgSustainNotes(ab, totalBeats, wins, rng) {
 }
 /* ネオクラシカル：調の外れ音を直す。ソロ・テーマの音のうち、「調の音階（短調＝自然＋和声的短音階）」にも「そのときのコードの音」にも「ドミナントのフリジア音階」にも無い音を、近い許される音へ寄せる。
    ただし、半音で続く経過音（半音階の上行・下行）は残す。opt.neoSnap=false で外せる */
-function neoSnapOut(notes, ab, tonic, minor) {
+function neoSnapOut(notes, ab, tonic, minor, extra) {
   var key = minor ? [0, 2, 3, 5, 7, 8, 10, 11] : [0, 2, 4, 5, 7, 8, 9, 11], fixed = 0, i, k;
   var sorted = notes.filter(function (n) { return !n.grace && !n.cm; }).sort(function (a, b) { return a.t - b.t; });
   function chAt(t) { var c = ab[0], z; for (z = 0; z < ab.length; z++) { if (ab[z].t <= t + 1e-6) c = ab[z]; else break; } return c; }
   for (i = 0; i < sorted.length; i++) {
     var n = sorted[i], c = chAt(n.t), q = QUAL[c.q]; if (!q) continue;
+    if (n.jz) continue;                                                                      /* ロック：ジャズ寄りのフレーズ(意図した緊張)は、そのまま */
     var iv = q.iv.map(function (x) { return x % 12; }), ok = {};
     key.forEach(function (x) { ok[((x + tonic) % 12 + 12) % 12] = 1; });
+    if (extra) extra.forEach(function (x) { ok[((x + tonic) % 12 + 12) % 12] = 1; });
     iv.forEach(function (x) { ok[((x + c.root) % 12 + 12) % 12] = 1; });
     if (iv.indexOf(4) >= 0 && iv.indexOf(10) >= 0) neoScale({ q: "7", root: c.root }).forEach(function (x) { ok[(x + c.root) % 12] = 1; });
     if (ok[((n.p % 12) + 12) % 12]) continue;
@@ -20370,6 +21107,24 @@ function neoSnapOut(notes, ab, tonic, minor) {
       else if (up) best = n.p + k; else if (dn) best = n.p - k;
     }
     if (best != null) { n.p = best; fixed++; }
+  }
+  return fixed;
+}
+/* ロック：和音の音と半音でぶつかる長めの音を直す。シンセの持続和音・ギターの和音・ベースが鳴っている上で、旋律・ソロの長めの音(0.4拍以上)が、和音の音(根音・3度・5度・7度)の半音上／下だと、濁って「外れた」ように聞こえる。
+   その音を、ぶつかっている和音の音へ寄せる(そのとき音階の外にならない向きを選ぶ。経過音・短い音は、そのまま)。 */
+function rockAvoidFix(notes, ab, tonic, minor) {
+  var key = minor ? [0, 2, 3, 5, 7, 8, 10, 11] : [0, 2, 4, 5, 7, 8, 9, 10, 11], fixed = 0, i;
+  var sorted = notes.filter(function (n) { return !n.grace && !n.cm; }).sort(function (a, b) { return a.t - b.t; });
+  function chAt(t) { var c = ab[0], z; for (z = 0; z < ab.length; z++) { if (ab[z].t <= t + 1e-6) c = ab[z]; else break; } return c; }
+  for (i = 0; i < sorted.length; i++) {
+    var n = sorted[i]; if (n.d < 0.4) continue;
+    var c = chAt(n.t), q = c && QUAL[c.q]; if (!q) continue;
+    var ct = {}; q.iv.forEach(function (x) { ct[((x + c.root) % 12 + 12) % 12] = 1; });
+    var pc = ((n.p % 12) + 12) % 12; if (ct[pc]) continue;
+    var up = ct[(pc + 1) % 12], dn = ct[(pc + 11) % 12];
+    if (!up && !dn) continue;
+    var pv = i > 0 ? sorted[i - 1] : null, goUp = up && dn ? !(pv && pv.p > n.p) : !!up;
+    n.p += goUp ? 1 : -1; fixed++;
   }
   return fixed;
 }
@@ -20801,9 +21556,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 428;
+var BUILD_NO = 439;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 158;
+var GEN_NO = 162;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
@@ -22693,7 +23448,10 @@ var KW_RULES = [
   [/ヴァルス・?タンゴ|タンゴ・?ワルツ|vals/i, { style: "tango", form: "vals_tango" }, 8, "タンゴのワルツ"],
   [/ラヴィ・?シャンカ[ー]?ル|ravi\s*shankar|シタール|sitar|ラーガ|raga/i, { style: "indian", form: "in_ravi" }, 8, "インド古典（シタールのラーガ）"],
   [/ザキール|zakir|ラクシュミ・?シャンカ|shakti|シャクティ/i, { style: "indian", form: "in_shakti", voice: "mclacoustic" }, 9, "シャクティ型（ギターとヴァイオリンの掛け合い）"],
-  [/ヴァン・?ヘイレン|van\s*halen|エディ・?ヴァン/i, { voice: "vai", style: "arena" }, 7, "語法：ヴァン・ヘイレン系（タッピング）"],
+  [/ヴァン・?ヘイレン|van\s*halen|エディ・?ヴァン/i, { voice: "vai", style: "rk_hard" }, 7, "語法：ヴァン・ヘイレン系（タッピング）"],
+  [/LAメタル|LA\s*metal|ラット\b|ratt\b|ドッケン|dokken|モトリー|motley|ポイズン|poison|ウォレント|warrant|ヘア・?メタル|glam\s*metal/i, { style: "rk_la" }, 8, "LAメタル"],
+  [/ガンズ|guns\s*n|ハード・?ロック|hard\s*rock|オジー|ozzy|ブラック・?サバス|black\s*sabbath|エアロスミス|aerosmith|ACDC|AC\/DC/i, { style: "rk_hard" }, 7, "ハード・ロック"],
+  [/90年代(?:の)?ロック|90s\s*rock|エクストリーム|extreme\b|ファンク・?メタル|オルタナ|alternative|ヌーノ|nuno/i, { style: "rk_90" }, 7, "90年代ロック"],
   [/メタリカ|metallica|メガデス|megadeth|パンテラ|pantera|ヘヴィ・?メタル|スラッシュ・?メタル/i, { style: "djent" }, 7, "ヘヴィ・メタル（刻みとリフ）"],
   [/スコフィールド|scofield|ジャコ|jaco\s*pastorius|ウェザー・?リポート|weather\s*report|リターン・?トゥ・?フォーエヴァー/i, { style: "fusion" }, 6, "ジャズ・フュージョン"],
   [/ベートーヴェン|ベートーベン|beethoven|ショパン|chopin|モーツァルト|mozart|ドビュッシー|debussy/i, { style: "classical" }, 6, "クラシック（古典〜ロマン派）"],
