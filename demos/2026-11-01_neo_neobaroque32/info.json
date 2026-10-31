@@ -1,0 +1,95 @@
+{
+  "id": "2026-11-01_neo_neobaroque32",
+  "date": "2026-11-01",
+  "style": "neo",
+  "styleShort": "ネオクラシカル",
+  "styleLabel": "ネオクラシカル（ハーモニック・マイナー）",
+  "form": "neobaroque32",
+  "formLabel": "バロック循環 32小節（ネオクラシカル）",
+  "title": "Valse Django (Ebm)",
+  "key": "Ebm",
+  "tempo": 168,
+  "tempoGenerated": 168,
+  "bars": 204,
+  "seed": 98049,
+  "gen": 162,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 30
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 30
+    },
+    {
+      "id": "comp",
+      "name": "Rhythm Gtr (power)",
+      "prog": 29
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "gtr2",
+      "name": "Guitar 2 (twin harmony)",
+      "prog": 30
+    },
+    {
+      "id": "org",
+      "name": "Organ sustain (chords)",
+      "prog": 19
+    }
+  ],
+  "chordsOneChorus": [
+    "D#m",
+    "G#m7",
+    "C#",
+    "F#",
+    "B",
+    "Fm7b5",
+    "A#(b9)",
+    "D#m",
+    "D#m",
+    "G#m6/9",
+    "C#",
+    "F#",
+    "B",
+    "Fm7b5",
+    "A#(b9)",
+    "D#m",
+    "F#",
+    "A#m",
+    "D#m",
+    "G#m",
+    "C#",
+    "B",
+    "Fm7b5",
+    "E9",
+    "D#m",
+    "G#m",
+    "C#",
+    "F#",
+    "B",
+    "Fm7b5",
+    "A#(b9)",
+    "D#m"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 162). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-01_neo_neobaroque32/2026-11-01_neo_neobaroque32_midi-set.zip",
+    "midi": "demos/2026-11-01_neo_neobaroque32/2026-11-01_neo_neobaroque32_all.mid",
+    "info": "demos/2026-11-01_neo_neobaroque32/info.md"
+  },
+  "audio": "demos/2026-11-01_neo_neobaroque32/2026-11-01_neo_neobaroque32.mp3"
+}
