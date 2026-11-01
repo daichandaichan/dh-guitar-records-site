@@ -5,13 +5,13 @@
 - 形式: スラッシュ 32小節（リフA16＋リフB16）
 - 調: Em
 - テンポ: 278 BPM（自動作曲の生成テンポ）
-- 種(seed): 68858／生成器: Hot Club Generator（第162版）
+- 種(seed): 68858／生成器: Hot Club Generator（第166版）
 
 ## 位置づけ
 自動作曲アプリによるデモ（MIDI 草稿）。後日 Cubase で音源・アレンジを整えて、デモアレンジとして再公開予定。
 
 ## 権利
-© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 162). MIDI draft — to be arranged in Cubase.
+© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 166). MIDI draft — to be arranged in Cubase.
 
 ## 曲の解説
 
@@ -50,4 +50,5 @@
 - 伴奏（コード）（GM音色 30）: E2〜Ab4／1小節あたり約8.1音
 - ベース（GM音色 33）: E1〜F2／1小節あたり約7.3音
 - ドラム（GM音色 0）: 2973打／1小節あたり約12.8打
-- Guitar 2 (twin harmony)（GM音色 30）: G3〜D6／1小節あたり約2.1音
+- Guitar 3 (riff double / harmony)（GM音色 30）: B1〜Eb5／1小節あたり約4.1音
+- Guitar 2 (twin harmony)（GM音色 30）: F3〜D6／1小節あたり約2.1音
