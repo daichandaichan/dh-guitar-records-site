@@ -318,6 +318,7 @@ Engine.prototype.ensure = function () {
     comp.attack.value = 0.006; comp.release.value = 0.18;
   } catch (e) {}
   this.master.connect(comp); comp.connect(ctx.destination);
+  try { this.meter = ctx.createAnalyser(); this.meter.fftSize = 2048; this.meter.smoothingTimeConstant = 0; comp.connect(this.meter); this._mbuf = new Float32Array(2048); } catch (eM) { this.meter = null; }      /* 音量計：再生の出口のピーク（約46msの窓。40msごとに読めば取りこぼさない） */
   /* 初期反射：小さな部屋の壁からの返り（11・17・29ms）。ごく小さく足して、音が空中に浮かないようにする */
   this.early = [];
   try {
@@ -577,7 +578,7 @@ Engine.prototype.setLoop = function (buf, o) {
   this.stopLoopSrcs();
   if (!buf) { this.loop = null; return; }
   o = o || {};
-  this.loop = { buf: buf, bars: Math.max(1, o.bars || 4), bpb: Math.max(1, o.bpb || 4), start: o.start || 0, gain: o.gain == null ? 1 : o.gain, on: o.on !== false, replace: o.replace || [] };
+  this.loop = { buf: buf, bars: Math.max(1, o.bars || 4), bpb: Math.max(1, o.bpb || 4), start: o.start || 0, gain: o.gain == null ? 1 : o.gain, on: o.on !== false, replace: o.replace || [], stems: o.stems || null };
   if (this.loop.on && this.loop.replace.length) {
     this._loopMuted = this.loop.replace.slice();
     this._loopMuted.forEach(function (k) { self.setMute(k, true); });
@@ -586,6 +587,43 @@ Engine.prototype.setLoop = function (buf, o) {
     var cb = (this.ctx.currentTime - this.t0) / this.spb, lb = this.loop.bars * this.loop.bpb;
     this._lk = Math.max(0, Math.floor((cb - this.loop.start) / lb));
   }
+};
+Engine.prototype.outPeak = function () {
+  if (!this.meter || !this._mbuf) return null;
+  this.meter.getFloatTimeDomainData(this._mbuf);
+  var m = 0, b = this._mbuf, i, a;
+  for (i = 0; i < b.length; i++) { a = b[i] < 0 ? -b[i] : b[i]; if (a > m) m = a; }
+  return m;
+};
+Engine.prototype.loopRig = function (L) {
+  var ctx = this.ctx, self = this;
+  if (L._rig && L._rigCtx === ctx) return L._rig;
+  L._rigCtx = ctx;
+  L._rig = L.stems.map(function (s) {
+    var inN = ctx.createGain(), sp = ctx.createChannelSplitter(2), mg = ctx.createChannelMerger(2), gL = ctx.createGain(), gR = ctx.createGain(), an = ctx.createAnalyser();
+    an.fftSize = 2048; an.smoothingTimeConstant = 0;
+    inN.connect(sp); sp.connect(gL, 0); sp.connect(gR, 1); gL.connect(mg, 0, 0); gR.connect(mg, 0, 1); mg.connect(self._lg); mg.connect(an);
+    gL.gain.value = s.gl * s.mult; gR.gain.value = s.gr * s.mult;
+    return { id: s.id, buf: s.buf, inN: inN, gL: gL, gR: gR, an: an, s: s, tb: new Float32Array(2048) };
+  });
+  return L._rig;
+};
+Engine.prototype.setStemGain = function (id, mult) {
+  var L = this.loop; if (!L || !L.stems) return;
+  var i, t = this.ctx ? this.ctx.currentTime : 0;
+  for (i = 0; i < L.stems.length; i++) if (L.stems[i].id === id) L.stems[i].mult = mult;
+  if (L._rig) for (i = 0; i < L._rig.length; i++) if (L._rig[i].id === id) {
+    var r = L._rig[i]; try { r.gL.gain.setTargetAtTime(r.s.gl * mult, t, 0.015); r.gR.gain.setTargetAtTime(r.s.gr * mult, t, 0.015); } catch (e) {}
+  }
+};
+Engine.prototype.stemPeak = function (id) {
+  var L = this.loop; if (!L || !L._rig) return null;
+  for (var i = 0; i < L._rig.length; i++) if (L._rig[i].id === id) {
+    var r = L._rig[i], b = r.tb, m = 0, j, a; r.an.getFloatTimeDomainData(b);
+    for (j = 0; j < b.length; j++) { a = b[j] < 0 ? -b[j] : b[j]; if (a > m) m = a; }
+    return m;
+  }
+  return null;
 };
 Engine.prototype.stopLoopSrcs = function () {
   (this._ls || []).forEach(function (s) { try { s.stop(0); } catch (e) {} });
@@ -605,13 +643,15 @@ Engine.prototype.pumpLoop = function (now, ahead) {
     var ts = this.t0 + tb * this.spb;
     if (ts >= ahead) break;
     if (ts + sec > now + 0.03) {
-      var src = ctx.createBufferSource();
-      src.buffer = L.buf; src.playbackRate.value = rate;
-      src.connect(this._lg);
-      var when = Math.max(ts, now + 0.02), off = Math.max(0, (when - ts) * rate);
-      try { src.start(when, off); src.stop(ts + sec + 0.05); } catch (e) {}
-      this._ls.push(src);
-      if (this._ls.length > 10) this._ls.shift();
+      var when = Math.max(ts, now + 0.02), off = Math.max(0, (when - ts) * rate), outs = L.stems ? this.loopRig(L) : null, nk = outs ? outs.length : 1, k;
+      for (k = 0; k < nk; k++) {                                       /* パート別の WAV があれば、パートごとに別のゲインを通して混ぜる（フェーダーがその場で効く） */
+        var src = ctx.createBufferSource();
+        src.buffer = outs ? outs[k].buf : L.buf; src.playbackRate.value = rate;
+        src.connect(outs ? outs[k].inN : this._lg);
+        try { src.start(when, off); src.stop(ts + sec + 0.05); } catch (e) {}
+        this._ls.push(src);
+      }
+      if (this._ls.length > 10 * nk) this._ls.splice(0, this._ls.length - 10 * nk);
     }
     this._lk = (this._lk || 0) + 1;
   }
@@ -2129,6 +2169,9 @@ Engine.prototype.play = function (fromBeat) {
   this.playing = true;
   var pump = function () {
     if (!self.playing || !self.ctx) return;
+    var tn = (typeof performance !== "undefined" ? performance.now() : Date.now());      /* 診断：この処理の呼ばれる間隔（本来は45ms。250ms を超えたら、画面側の処理が詰まって音が途切れる恐れ） */
+    if (self._pt) { var gp = tn - self._pt; if (gp > (self._gapMax || 0)) self._gapMax = gp; if (gp > 250) self._stall = (self._stall || 0) + 1; }
+    self._pt = tn;
     var now = self.ctx.currentTime, ahead = now + 0.5;                  /* 先読みを広めに：処理が一瞬詰まっても音が途切れない */
     while (self.idx < self.evs.length && self.t0 + self.evs[self.idx].s < ahead) {
       var e = self.evs[self.idx++];
@@ -2144,7 +2187,7 @@ Engine.prototype.play = function (fromBeat) {
     if (self.idx >= self.evs.length && self.evs.length &&
         self.t0 + self.evs[self.evs.length - 1].s + 1.5 < now) { var cbEnd = self.onEnd; self.stop(); if (cbEnd) { try { cbEnd(); } catch (xe) {} } }   /* 曲の終わり（onEnd：無限再生・ボタンの表示戻し用） */
   };
-  this._late = 0; this._noExtra = false;
+  this._late = 0; this._noExtra = false; this._gapMax = 0; this._stall = 0; this._pt = 0;
   this.stopLoopSrcs();
   if (this.loop && this.loop.on) this._lk = Math.max(0, Math.floor(((fromBeat || 0) - this.loop.start) / (this.loop.bars * this.loop.bpb)));
   this.timer = setInterval(pump, 45);
@@ -3566,8 +3609,9 @@ function renderSongAudio(song, opts, progress) {
         }
         var rmsG = cnt ? Math.sqrt(ms / cnt) : 0, g = 0.89 / pk, tgtR = opts.rms || 0.14, capP = opts.pcap || 1.8;      /* 標準：実効値 約 −17dBFS・ピーク上限 1.8／大きめ・最大：尖った音をなだらかに抑えて、全体を持ち上げる */
         if (rmsG > 1e-5) g = Math.min(tgtR / rmsG, capP / pk);          /* 目標の実効値。ピークが大きい曲は上限で止める */
+        if (opts.asis) g = Math.min(1, 0.98 / pk);                      /* フェーダーのまま：音量そろえをしない（ピークが 0.98 を超えるときだけ、線形に下げる） */
         if (opts.gain) g = opts.gain;                                   /* パートごとの書き出し：全体の音量の倍率をそのまま使う（パートの音量の関係を保つ） */
-        var K = 0.72;                                                  /* これを超える山は、なだらかに丸める（ソフトリミッター） */
+        var K = opts.asis ? 99 : 0.72;                                                  /* これを超える山は、なだらかに丸める（ソフトリミッター） */
         for (i = 0; i < N; i++) {
           var xl = L[i] * g, xr = R[i] * g;
           if (xl > K) xl = K + (1 - K) * Math.tanh((xl - K) / (1 - K)); else if (xl < -K) xl = -K - (1 - K) * Math.tanh((-xl - K) / (1 - K));
