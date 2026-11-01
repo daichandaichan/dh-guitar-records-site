@@ -1,5 +1,78 @@
 [
  {
+  "id": "2026-11-02_reggae_rg_lovers",
+  "date": "2026-11-02",
+  "style": "reggae",
+  "styleShort": "レゲエ",
+  "styleLabel": "レゲエ（ワン・ドロップ：裏拍のスカンク、間のあるベース、ダブ、スカ）",
+  "form": "rg_lovers",
+  "formLabel": "ラヴァーズ・ロック 16小節（I → vi → IV → V・甘い）",
+  "title": "Rasta Morning (F)",
+  "key": "F",
+  "tempo": 68,
+  "tempoGenerated": 68,
+  "bars": 108,
+  "seed": 20261102,
+  "gen": 166,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 27
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 27
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 16
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Fmaj7",
+   "A7b9",
+   "Dm7",
+   "A#maj7",
+   "C7",
+   "Fmaj7",
+   "Dm",
+   "A#maj7",
+   "G7b9",
+   "Gm7",
+   "C7",
+   "Fmaj7",
+   "Dm",
+   "A#maj7",
+   "G7b9",
+   "C7",
+   "A#maj7",
+   "F#7",
+   "Fmaj7",
+   "Fmaj7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 166). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-02_reggae_rg_lovers/2026-11-02_reggae_rg_lovers_midi-set.zip",
+   "midi": "demos/2026-11-02_reggae_rg_lovers/2026-11-02_reggae_rg_lovers_all.mid",
+   "info": "demos/2026-11-02_reggae_rg_lovers/info.md",
+   "song": "demos/2026-11-02_reggae_rg_lovers/song.json"
+  }
+ },
+ {
   "id": "2026-11-01_neo_neobaroque32",
   "date": "2026-11-01",
   "style": "neo",

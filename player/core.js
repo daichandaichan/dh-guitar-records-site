@@ -2259,7 +2259,7 @@ var STYLES = {
   bossa: {
     label: "ボサノヴァ", swing: 0.5, tempo: 138,
     comp: "bossa", bass: "bossa", drums: "bossa", mel: "bossa",
-    forms: ["bossa32", "bossa16", "standard32", "cycle32", "minbossa32", "mstd32"],
+    forms: ["bossa32", "bossa16", "standard32", "cycle32", "minbossa32", "mstd32", "jobim32", "jobimmin32", "jobim16"],
     voice: "auto", lead: 24, compProg: 24, feel: 16
   },
   soul: {
@@ -2364,6 +2364,36 @@ var STYLES = {
     label: "ロック：90年代（エクストリーム型・ファンク・メタル／ギター2本＋和音のギター）", fuBase: "arena", fuTone: "rk_90",
     swing: 0.5, tempo: 104, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
     forms: ["rk_90", "auto16m", "auto32m"], voice: "vai", lead: 29, compProg: 29, feel: 16
+  },
+  rk_purple: {
+    fuFamily: "rock", fuName: "70年代ハード・ロック（ディープ・パープル型：オルガンとギターの掛け合い、3+3+2のリフ）", rockKind: "purple",
+    label: "ロック：70年代ハード・ロック（ディープ・パープル型／オルガン＋ギター2本）", fuBase: "arena", fuTone: "rk_purple",
+    swing: 0.5, tempo: 120, comp: "arena", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["rk_pu1", "rk_pu2", "auto16m", "auto32m"], voice: "blackmore", lead: 29, compProg: 18, feel: 16
+  },
+  rk_sabbath: {
+    fuFamily: "rock", fuName: "70年代ヘヴィ・ロック（ブラック・サバス型：半音〜短3度下げ、トライトーンと重いブルース・リフ）", rockKind: "sabbath",
+    label: "ロック：70年代ヘヴィ・ロック（ブラック・サバス型／ギター2本＋和音のギター）", fuBase: "arena", fuTone: "rk_sabbath",
+    swing: 0.5, tempo: 110, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["rk_sb1", "rk_sb2", "auto16m", "auto32m"], voice: "iommi", lead: 30, compProg: 30, feel: 16
+  },
+  rk_maiden: {
+    fuFamily: "rock", fuName: "NWOBHM（アイアン・メイデン型：ギャロップのリフとツイン・ハーモニー）", rockKind: "maiden",
+    label: "ロック：NWOBHM（アイアン・メイデン型／ギター2本＋和音のギター）", fuBase: "arena", fuTone: "rk_maiden",
+    swing: 0.5, tempo: 140, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["rk_mai1", "rk_mai2", "auto16m", "auto32m"], voice: "murray", lead: 30, compProg: 30, feel: 16
+  },
+  rk_hendrix: {
+    fuFamily: "rock", fuName: "ブルース・ロック（ジミ・ヘンドリックス型：ペンタのダブルストップ、太いベンド、半音下げ）", rockKind: "hendrix",
+    label: "ロック：ブルース・ロック（ジミ・ヘンドリックス型／ギター2本＋和音のギター）", fuBase: "arena", fuTone: "rk_hendrix",
+    swing: 0.5, tempo: 100, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["rk_hx1", "rk_hx2", "auto16m", "auto32m"], voice: "hendrix", lead: 29, compProg: 29, feel: 16
+  },
+  rk_zappa: {
+    fuFamily: "rock", fuName: "ザッパ型（変拍子とシンコペのユニゾン・リフ、ハンマリングの長い走句、クロマチックな旋律）", rockKind: "zappa",
+    label: "ロック：ザッパ型（フランク・ザッパ／変拍子・ユニゾンのリフ／ギター2本＋シンセ）", fuBase: "arena", fuTone: "rk_zappa",
+    swing: 0.5, tempo: 112, comp: "arena", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["rk_zp1", "rk_zp2", "rk_zp3", "auto16m"], voice: "zappa", lead: 29, compProg: 80, feel: 16
   },
   rk_heavy: {
     fuFamily: "rock", fuName: "ヘヴィ／パワー・メタル（ドリーム・イーヴル型：Cシャープ〜Dチューニングの8分と16分のダブルベース）", rockKind: "heavy",
@@ -5005,6 +5035,7 @@ function tangoAccent(notes, beats) {
 var VOICES = {
   auto:      { label: "スタイルにおまかせ" },
   django:    { label: "ジャンゴ風（アルペジオ・半音・ディミニッシュ）" },
+  jobim:      { label: "アントニオ・カルロス・ジョビン風（ボサノヴァ：少ない音・同音の反復と半音の下降、オクターヴの跳躍、9度で終わる歌うメロディ）", nps: 5 },
   christian: { label: "チャーリー・クリスチャン風（リフと歌うライン）" },
   wes:        { label: "ウェス・モンゴメリー風（単音→オクターヴ→ブロック）" },
   lowe:       { label: "マンデル・ロウ風（隙間のあるクールな歌）" },
@@ -5046,12 +5077,17 @@ var VOICES = {
   /* メタル／ロック（第290版） */
   vai:        { label: "スティーヴ・ヴァイ風（歌うベンドとビブラート・レガート・リディアンと広い跳躍）", nps: 12 },
   zakk:       { label: "ザック・ワイルド風（ペンタのブルース・メタル・ピンチハーモニクスと太いビブラート）", nps: 11 },
-  page:       { label: "ジミー・ペイジ風（ブルース・ロックのリフとペンタ・粘るベンド・勢いのある走り）", nps: 9 },
+  page:       { label: "ジミー・ペイジ風（レッド・ツェッペリン：ブルース・ロックのリフとペンタ・粘るベンド・ハーモニクス・勢いのある走り）", nps: 10 },
   becker:     { label: "ジェイソン・ベッカー風（ネオクラシカルの高速スウィープとレガート・ハーモニック・マイナー）", nps: 15 },
   takasaki:   { label: "高崎晃風（日本のヘヴィメタル：ハーモニック・マイナーの速弾き・ライトハンド風のうねり）", nps: 14 },
   impellitteri: { label: "クリス・インペリテリ風（ネオクラシカル：3連の下降アルペジオの細胞と、速い音階の走句・大きな跳躍）", nps: 13 },
   gilbert:    { label: "ポール・ギルバート風（レイサーX：6連・16分の3音の細胞をずらす模進、オルタネイトの走句、ペダル）", nps: 14 },
   macalpine:  { label: "トニー・マカルパイン風（鍵盤的な3度の跳躍と、8分・3連・16分を混ぜた走句、アルペジオ）", nps: 13 },
+  blackmore:  { label: "リッチー・ブラックモア風（ディープ・パープル：ハーモニック・マイナーの速い走句とペンタ、オルガンとの掛け合い）", nps: 10 },
+  iommi:      { label: "トニー・アイオミ風（ブラック・サバス：ブルース・ペンタの重いベンドと、トライトーン、太いビブラート）", nps: 8 },
+  murray:     { label: "デイヴ・マーレイ／エイドリアン・スミス風（アイアン・メイデン：自然短音階・ハーモニック・マイナーの歌う走句、ツインの3度・6度）", nps: 11 },
+  hendrix:    { label: "ジミ・ヘンドリックス風（ブルース・ロック：太いベンドとスライド・ハンマリング、ペンタのコード混じりの旋律）", nps: 11 },
+  zappa:      { label: "フランク・ザッパ風（変拍子とシンコペのリフ、ハンマリングの長い走句・クロマチックとモードの旋律）", nps: 11 },
   beck:       { label: "ジェフ・ベック風（少ない音を長く歌わせる：太いベンドとアーム・スライド、ハーモニクス、ペンタとドリアン）", nps: 8 },
   romeo:      { label: "マイケル・ロメオ風（シンフォニーX：Dチューニングの16分ユニゾン・リフ、ハーモニック・マイナーの速いレガートと半音・増4度の影）", nps: 14 },
   /* クラシックギター／バロック（第290版） */
@@ -5221,6 +5257,7 @@ function waPcs(ch) {
 var VOICE_PROFILE = {
   auto:       { reg: 0,  span: 1.00, dens: 1.00, leg: 0.72, stac: 0.66, ahead: 0.000, rest: 1.0, phr: [2, 3, 4, 5], slide: 0.22, vib: 1.0, land: "gt",     sc: "bebop",     start: [0, 0.5], rep: 0.04, bend: 0.9 },
   django:     { reg: 2,  span: 1.10, dens: 1.10, leg: 0.60, stac: 0.56, ahead: -0.014, rest: 0.5, phr: [3, 4, 6],    slide: 0.38, vib: 1.3, land: "root",   sc: "dim",       start: [0, 0, 0.5], rep: 0.16, bend: 1.4 },
+  jobim:      { reg: 1,  span: 1.00, dens: 0.50, leg: 0.80, stac: 0.70, ahead: 0.020, rest: 1.8, phr: [2, 4, 4], slide: 0.10, vib: 0.4, land: "nine", sc: "diatonic", start: [0, 1, 0.5], rep: 0.30, bend: 0.2, nps: 5 },
   christian:  { reg: 0,  span: 0.85, dens: 0.95, leg: 0.58, stac: 0.58, ahead: -0.018, rest: 1.1, phr: [2, 2, 4],    slide: 0.14, vib: 0.8, land: "blue",   sc: "blues",     start: [-0.5, -0.5, 0], rep: 0.20, bend: 1.0 },
   wes:        { reg: -3, span: 0.90, dens: 0.90, leg: 0.82, stac: 0.76, ahead: 0.010,  rest: 1.0, phr: [4, 4, 6],    slide: 0.12, vib: 0.9, land: "six",    sc: "blues",     start: [0, 0.5], rep: 0.10, bend: 0.8 },
   lowe:       { reg: 0,  span: 0.75, dens: 0.60, leg: 0.86, stac: 0.82, ahead: 0.022,  rest: 1.9, phr: [2, 3],       slide: 0.20, vib: 1.4, land: "gt",     sc: "diatonic",  start: [1, 2, 0.5], rep: 0.03, bend: 1.0 },
@@ -5272,11 +5309,16 @@ var VOICE_PROFILE = {
   mancuso:    { reg: 3,  span: 1.45, dens: 1.55, leg: 0.92, stac: 0.84, ahead: -0.004, rest: 0.5, phr: [4, 6, 8],    slide: 0.10, vib: 0.5, land: "nine",   sc: "diatonic",  start: [0, 0.5, 1], rep: 0.03, bend: 1.0 },
   vai:        { reg: 4,  span: 1.35, dens: 1.20, leg: 0.86, stac: 0.76, ahead: 0.004,  rest: 0.7, phr: [4, 6, 8],    slide: 0.38, vib: 1.7, land: "nine",   sc: "lydpenta",  start: [0, 0.5, 1.5], rep: 0.05, bend: 1.8 },
   zakk:       { reg: 2,  span: 1.10, dens: 1.10, leg: 0.70, stac: 0.65, ahead: -0.008, rest: 0.8, phr: [2, 4, 4],    slide: 0.25, vib: 1.6, land: "root",   sc: "blues",     start: [0, 0, 0.5], rep: 0.16, bend: 1.7 },
-  page:       { reg: 1,  span: 1.00, dens: 0.90, leg: 0.66, stac: 0.60, ahead: -0.010, rest: 1.0, phr: [2, 2, 4],    slide: 0.28, vib: 1.0, land: "root",   sc: "blues",     start: [0, -0.5, 0], rep: 0.20, bend: 1.8 },
+  page:       { reg: 1,  span: 1.00, dens: 1.00, leg: 0.68, stac: 0.60, ahead: -0.010, rest: 0.85, phr: [2, 2, 4],   slide: 0.22, vib: 1.2, land: "root",   sc: "blues",     start: [0, -0.5, 0], rep: 0.20, bend: 1.9, nps: 10 },       /* レッド・ツェッペリン195曲：1小節の音数8.5・ベンド3.8%・スライド1.9%・ビブラート1.4%・ハンマリング3%・走句4.5回/曲 */
   becker:     { reg: 5,  span: 1.40, dens: 1.40, leg: 0.84, stac: 0.66, ahead: -0.006, rest: 0.5, phr: [4, 6, 8],    slide: 0.06, vib: 1.2, land: "root",   sc: "hmin",      start: [0, 0, 0.5], rep: 0.04, bend: 0.9 },
   impellitteri: { reg: 5, span: 1.50, dens: 1.30, leg: 0.80, stac: 0.64, ahead: -0.006, rest: 0.5, phr: [4, 6, 8], slide: 0.08, vib: 1.3, land: "root", sc: "neo", start: [0, 0, 0.5], rep: 0.20, bend: 1.2, nps: 13 },
   gilbert:    { reg: 4,  span: 1.0, dens: 1.40, leg: 0.74, stac: 0.60, ahead: -0.006, rest: 0.5, phr: [4, 6, 8], slide: 0.05, vib: 0.9, land: "root", sc: "neo", start: [0, 0, 0.5], rep: 0.24, bend: 1.0, nps: 14 },
   romeo:      { reg: 4,  span: 1.30, dens: 1.25, leg: 0.80, stac: 0.66, ahead: -0.006, rest: 0.6, phr: [4, 6, 8], slide: 0.10, vib: 1.2, land: "root", sc: "hmin", start: [0, 0, 0.5], rep: 0.10, bend: 1.1, nps: 14 },
+  blackmore:  { reg: 3,  span: 1.30, dens: 1.00, leg: 0.80, stac: 0.62, ahead: -0.006, rest: 0.8, phr: [4, 6, 8], slide: 0.14, vib: 1.1, land: "root", sc: "hmin", start: [0, 0.5], rep: 0.10, bend: 1.4, nps: 10 },
+  iommi:      { reg: 2,  span: 1.10, dens: 0.85, leg: 0.72, stac: 0.60, ahead: -0.008, rest: 1.0, phr: [2, 4, 4], slide: 0.30, vib: 1.8, land: "root", sc: "blues", start: [0, 0], rep: 0.20, bend: 1.7, nps: 8 },
+  murray:     { reg: 3,  span: 1.30, dens: 1.05, leg: 0.85, stac: 0.60, ahead: -0.004, rest: 0.7, phr: [4, 6, 8], slide: 0.08, vib: 1.0, land: "root", sc: "hmin", start: [0, 0, 0.5], rep: 0.12, bend: 0.9, nps: 11 },
+  hendrix:    { reg: 3,  span: 1.20, dens: 1.15, leg: 0.78, stac: 0.55, ahead: -0.010, rest: 0.7, phr: [2, 4, 4], slide: 0.38, vib: 1.7, land: "root", sc: "blues", start: [0, -0.5, 0], rep: 0.18, bend: 2.0, nps: 11 },
+  zappa:      { reg: 3,  span: 1.35, dens: 1.05, leg: 0.88, stac: 0.62, ahead: -0.006, rest: 0.7, phr: [4, 6, 8], slide: 0.10, vib: 0.5, land: "root", sc: "hmin", start: [0, 0.5], rep: 0.15, bend: 1.1, nps: 11 },
   beck:       { reg: 3,  span: 1.25, dens: 0.75, leg: 0.80, stac: 0.50, ahead: -0.004, rest: 1.1, phr: [2, 4, 4], slide: 0.45, vib: 1.5, land: "root", sc: "blues", start: [0, 0.5], rep: 0.10, bend: 1.9, nps: 8 },
   macalpine:  { reg: 5,  span: 0.95, dens: 1.30, leg: 0.86, stac: 0.70, ahead: -0.004, rest: 0.6, phr: [4, 6, 8], slide: 0.06, vib: 0.8, land: "third", sc: "neo", start: [0, 0.5], rep: 0.16, bend: 0.6, nps: 13 },
   takasaki:   { reg: 4,  span: 1.30, dens: 1.30, leg: 0.78, stac: 0.66, ahead: -0.008, rest: 0.6, phr: [4, 6, 8],    slide: 0.12, vib: 1.1, land: "root",   sc: "hmin",      start: [0, 0, 0.5], rep: 0.08, bend: 1.3 },
@@ -5407,7 +5449,7 @@ function landPc(kind, ch) {
 
 /* 第114版：奏者の型を「スタイルにおまかせ」にしたとき、拍頭のコード音などの品質が近い型を曲ごとに混ぜる（専用の乱数）。
    ネオクラシカルは「イングヴェイ風」だけが和声への忠実さを保つので混ぜない（スイープの型の散らしで変える）。 */
-var VOICE_POOL = { tango: ["piazzolla"], gamelan: ["gamelan"], andean: ["andean"], arabic: ["arabic"], hawaiian: ["hawaiian"], balkan: ["balkan"], country: ["country"], afrobeat: ["afrobeat"], reggae: ["reggae"], celtic: ["celtic"], fusion: ["corea", "corea", "metheny", "pass", "mclaughlin", "martino", "mancuso"], mathrock: ["poitrine", "poitrine", "mclaughlin", "corea"],
+var VOICE_POOL = { bossa: ["jobim", "jobim", "jobim", "lowe"], tango: ["piazzolla"], gamelan: ["gamelan"], andean: ["andean"], arabic: ["arabic"], hawaiian: ["hawaiian"], balkan: ["balkan"], country: ["country"], afrobeat: ["afrobeat"], reggae: ["reggae"], celtic: ["celtic"], fusion: ["corea", "corea", "metheny", "pass", "mclaughlin", "martino", "mancuso"], mathrock: ["poitrine", "poitrine", "mclaughlin", "corea"],
   gypsy: ["django", "django", "bireli", "rosenberg"], swing: ["christian", "christian", "burrell", "kessel", "wes"],
   bebop: ["christian", "pass", "martino", "kessel"], soul: ["wes", "burrell", "kessel"], modern: ["metheny", "holdsworth", "mancuso", "martino"],
   neo: ["yngwie", "yngwie", "becker", "takasaki", "vai", "impellitteri", "gilbert", "macalpine", "romeo", "romeo"], orchestra: ["bach", "bach", "paganini", "vivaldi", "mozart", "beethoven", "chopin", "haydn"], thrash: ["kirk", "slayer", "kirk"], death: ["steer", "vader", "steer"], melodeath: ["amott", "loomis", "amott"], black: ["ihsahn", "samoth", "ihsahn"], arena: ["schon", "vai", "zakk", "page", "beck"],
@@ -6265,7 +6307,7 @@ function yngThemeShape(notes, rng, pm) {
    ・和音の音数(単音／2音／3音／4音)：AOR 73/15/9/3、LA 64/15/17/4、ガンズ 44/16/27/13、エクストリーム 61/12/15/12。根音の割合：AOR 81%・LA 60%・ガンズ 51%・エクストリーム 42%。
    ・ベース：根音の8分(LA・ガンズ・ヴァン・ヘイレン)／AOR は4分／エクストリームはシンコペ。リフと同じ型(ユニゾン)も多い。
    ・ドラム：キック＝1・3拍(K.......K.......)が最多、スネア＝2・4拍。LA は16分のダブルベース(約10%)。エクストリームはライド・タムが少なく、ゴースト入り。 */
-var ROCK_SEED = { aor: 3, la: 7, hard: 11, x90: 13, heavy: 17, prog: 19, kc: 23, elp: 29, power: 31, xj: 37 };
+var ROCK_SEED = { aor: 3, la: 7, hard: 11, x90: 13, heavy: 17, prog: 19, kc: 23, elp: 29, power: 31, xj: 37, purple: 41, sabbath: 43, maiden: 47, hendrix: 53, zappa: 59 };
 var ROCK_CELLS = {};
 var ROCK_RIFF = {
   aor: [["o-o-o-o-o-o-o-o-", 3], ["--o-o-o-o-o-o-o-", 1.2], ["oooooooooooooooo", 1.4], ["----------o-o-o-", 1], ["o-ooo-oooooooooo", 1], ["o---o--oo-o---o-", 0.9], ["--o-o---o-o-o-o-", 0.9], ["o---o---o---o---", 1.2]],
@@ -6340,6 +6382,44 @@ ROCK_DR.xj = { kick: [["K....K..K..K.K..", 1391], ["K.......K.K.....", 1221], ["
 ROCK_CELLS.xj = [["0 . 0 0 0 0 0 0 0 . 0 0 0 0 0 0", 275], ["0 . 0 . 0 0 0 0 0 . 0 . 0 0 0 0", 118], [". . 0 . 3 . 0 . 5 . 6 . . . 0 .", 80], ["1 . . . . . 1 . 0 . . . . . 0 .", 65], [". . 0 . 6 . 0 . 5 . 3 . . . 0 .", 62],
   ["0 0 0 0 3 . 0 0 0 0 3 . 0 0 5 .", 50], ["0 0 10 . 0 0 12 . 14 . 12 . . . 10 .", 42], ["0 . 0 . 0 -5 0 -5 0 . 0 . 0 -5 0 -5", 40], ["-4 0 3 7 12 7 3 0 -4 0 3 7 12 7 3 0", 36],
   ["12 . 0 0 0 0 10 . 0 0 0 0 12 . 0 0", 36], ["-4 0 6 8 15 8 6 0 -4 0 6 8 15 8 6 0", 33], ["0 . 0 0 3 . 5 . 5 5 6 . 7 . 17 .", 32]];
+/* 70年代を含むロック（GP譜：ディープ・パープル241曲・ブラック・サバス335曲・アイアン・メイデン559曲・ジミ・ヘンドリックス120曲。analyze_m2.js、analyze_m2b.js）
+   ・パープル：標準チューニング95%、鍵盤あり42%。リフ＝8分(2277)・4分(1361)・「o-o-o---o-o-o---」(675＝スモーク・オン・ザ・ウォーターの3+3+2)。0・7・12のオクターヴ・5度のリフ。ベース根音67%。
+   ・サバス：半音〜長3度下げ(E-1 27%・E-3 14%)。リフ＝8分・2分・4分・「o-----o-----o---」。根音46%・全音14%・4度11%。I ♭V I ♭V(トライトーン)の進行。ベンド3.2%・スライド2.7%。
+   ・メイデン：リフ＝8分(7327)・4分・2分・裏の8分(2258)・ギャロップ「o-ooo-ooo-ooo-oo」(1593)。ベースもギャロップ(6783)。進行＝i ♭VI ♭VII i／i i ♭VI ♭VI／i ♭VI ♭III ♭VII。ツイン・ハーモニーの3度・6度。
+   ・ヘンドリックス：半音下げ51%。リフ＝8分・「o---o-o-o-o-o-o-」・ペンタのダブルストップ(0 3 5)。ベンド7.6%・ハンマリング8%・スライド4.3%(多い)。ドラムは多彩(キックの型が分散)、シンバル35%。 */
+ROCK_RIFF.purple = [["o-o-o-o-o-o-o-o-", 2277], ["o---o---o---o---", 1361], ["o-------o-------", 972], ["o-o-o---o-o-o---", 675], ["oooooooooooooooo", 485], ["o---o---o-----o-", 414], ["o---o-----------", 364], ["o-----------o-o-", 352]];
+ROCK_PROF.purple = { chord: [0.5, 0.16, 0.24, 0.1], pm: 0.04, root: 0.51, same: 0.55, cell: 0.4, move: [[2, 11], [5, 8], [7, 8], [3, 7], [10, 4], [4, 4], [9, 2]] };
+ROCK_BASS.purple = [["x-x-x-x-x-x-x-x-", 6253], ["x---x---x---x---", 2192], ["x---------------", 1070], ["x-x-x---x-x-x---", 806], ["x-------x-------", 549]];
+ROCK_DR.purple = { kick: [["K.......K.......", 2770], ["K.......K.K.....", 2260], ["K...............", 1393], ["K.....K...K.....", 1212], ["K.........K.....", 677]], snare: [["....S.......S...", 12941], ["................", 1739], ["........S.......", 975], ["S...S...S...S...", 899]], ride: 0.19 };
+ROCK_CELLS.purple = [["0 . 0 . 0 . 0 . 0 . 0 . 0 . 0 .", 1229], ["0 . . . 0 . . . 0 . . . 0 . . .", 691], ["0 . 7 . 12 . . . 0 . 7 . 12 . . .", 466], ["0 . 10 . 9 . 7 . 12 . . . . . 0 .", 246], [". . 0 . . . 3 . 2 . . . . . . .", 186], ["0 . . . 3 . . . 5 . . . . . 0 .", 179],
+  ["-3 . . . 0 . . . 2 . . . . . 0 .", 175], ["-2 . 0 . -12 . 0 . -12 . 0 . -12 . 0 .", 136], ["0 . . . 7 . . . 12 . . . . . . .", 130], ["5 . 4 . 2 . 0 . . . . . . . . .", 106], ["2 . 9 . 14 . . . 0 . 7 . 12 . . .", 86]];
+ROCK_RIFF.sabbath = [["o-o-o-o-o-o-o-o-", 2077], ["o-------o-------", 1006], ["o---o---o---o---", 946], ["o-----o-----o---", 517], ["o-o-o-o-o-o-o-o-", 463], ["o-o-o-o---o-o---", 459], ["--o-o-o-o-o-o-o-", 343], ["o-o-o-o---o-o-o-", 316]];
+ROCK_PROF.sabbath = { chord: [0.5, 0.2, 0.22, 0.08], pm: 0.1, root: 0.46, same: 0.55, cell: 0.5, move: [[2, 14], [5, 11], [3, 8], [7, 7], [10, 3], [1, 3], [4, 3], [6, 3]] };
+ROCK_BASS.sabbath = [["x-x-x-x-x-x-x-x-", 4174], ["x---x---x---x---", 1065], ["x---------------", 950], ["x-------x-------", 580], ["xxxxxxxxxxxxxxxx", 535]];
+ROCK_DR.sabbath = { kick: [["K.......K.......", 2744], ["K...............", 1382], ["K...K...K...K...", 1080], ["K.......K.K.....", 532], ["K.K.K.K.K.K.K.K.", 478]], snare: [["....S.......S...", 8113], ["........S.......", 2516], ["................", 1585], ["....S...S...S...", 606]], ride: 0.24 };
+ROCK_CELLS.sabbath = [["0 . 0 . 0 . 0 . 0 . 0 . 0 . 0 .", 1174], ["0 . . . 0 . . . 0 . . . 0 . . .", 269], ["0 . 0 . -2 . 0 . . . 3 . 2 . . .", 252], ["0 . . . . . 0 . . . . . 0 . . .", 203], ["0 . 0 . 0 . . . 0 . 0 . 0 . . .", 170], ["-3 . . . 0 . . . 0 . 2 . 2 . . .", 144],
+  ["0 . 0 . . . 5 4 3 . . 0 3 . 5 .", 126], ["0 . 0 . 3 . -3 . 0 . 0 . . . 0 .", 120], ["0 . . . . . 0 . . . -7 . 0 . . .", 119], [". . -5 . 0 . . . 0 . . . 0 2 5 .", 119], ["6 . . . 5 . . . 1 . . . 0 . . .", 94], ["0 0 -2 -1 0 0 -2 -1 0 3 0 -2 0 0 -2 -1", 82]];
+ROCK_RIFF.maiden = [["o-o-o-o-o-o-o-o-", 7327], ["o---o---o---o---", 2953], ["o-------o-------", 2446], ["--o-o-o-o-o-o-o-", 2258], ["o-----o-----o---", 2011], ["o-ooo-ooo-ooo-oo", 1593], ["oooooooooooooooo", 1226], ["o-o-o-o-o-o-o---", 794]];
+ROCK_PROF.maiden = { chord: [0.6, 0.18, 0.17, 0.05], pm: 0.11, root: 0.57, same: 0.5, cell: 0.5, move: [[2, 11], [5, 7], [3, 6], [7, 6], [4, 4], [1, 2], [10, 2]] };
+ROCK_BASS.maiden = [["x-x-x-x-x-x-x-x-", 15989], ["x-xxx-xxx-xxx-xx", 6783], ["x---x---x---x---", 4392], ["--x-x-x-x-x-x-x-", 3017], ["x---------------", 2745]];
+ROCK_DR.maiden = { kick: [["K.......K.......", 8709], ["K.....K...K.....", 5612], ["K...............", 3140], ["K.K.....K.K.....", 2460], ["K.......K.K.....", 1663]], snare: [["....S.......S...", 30166], ["........S.......", 4218], ["..S...S...S...S.", 2082], ["................", 1500]], ride: 0.21 };
+ROCK_CELLS.maiden = [["0 . 0 . 0 . 0 . 0 . 0 . 0 . 0 .", 4283], ["0 . 0 0 0 . 0 0 0 . 0 0 0 . 0 0", 1725], ["0 . . . 0 . . . 0 . . . 0 . . .", 1106], ["0 . . . . . 0 . . . . . 0 . . .", 610], [". . 0 . 0 . 0 . 0 . 0 . 0 . 0 .", 512], [". . 0 0 0 . 0 0 0 . 0 0 0 . 0 0", 455],
+  ["0 . 0 0 0 . 0 0 0 . 0 0 0 . 0 .", 381], ["0 . . . 3 . . . 0 . . . 3 . . .", 249], ["0 . 0 . 10 . 0 . 0 . 12 . 0 . 0 .", 212]];
+ROCK_RIFF.hendrix = [["o-o-o-o-o-o-o-o-", 402], ["o---o-o-o-o-o-o-", 195], ["o-------o-------", 160], ["oooooooooooooooo", 154], ["o--oo-o---o-o-o-", 113], ["o---o---o---o---", 99], ["o-o-o-o---o-o-o-", 99], ["o---o-o-o---o---", 90]];
+ROCK_PROF.hendrix = { chord: [0.4, 0.2, 0.25, 0.15], pm: 0, root: 0.42, same: 0.45, cell: 0.55, move: [[5, 10], [7, 10], [2, 10], [3, 7], [10, 6], [4, 4], [9, 4]] };
+ROCK_BASS.hendrix = [["x-x-x-x-x-x-x-x-", 683], ["x---------------", 229], ["x---x---x---x---", 192], ["x--xxx--x-xxx-x-", 125], ["x---x-x-x-x-x-x-", 115]];
+ROCK_DR.hendrix = { kick: [["K.K.....K.K.....", 172], ["K.......K.......", 172], ["K.....K...K.....", 157], ["K.......K.K...K.", 153], ["K.......K.K.....", 150]], snare: [["....S.......S...", 1014], ["S...S...S...S...", 350], ["................", 204], ["........S...S...", 98]], ride: 0.35 };
+ROCK_CELLS.hendrix = [["0 . . 0 3 . 0 . . . 0 . 0 . 0 .", 107], ["0 . 0 . 0 . 0 . 0 . 0 . 0 . 0 .", 57], ["0 . 0 0 3 . 0 . . . 0 . 0 . 0 .", 51], [". . . . . . . . . . 0 . 3 . 5 .", 46], ["0 . . . 0 . . . 0 . . . 0 . . .", 45], ["0 . . . 0 . 0 . -5 . . . -5 . . .", 38],
+  ["0 . 1 . . . 2 . . . . . . . . .", 34], ["-12 . . . 0 . 0 . -12 . 0 . 0 . 0 .", 32], ["0 . 0 . 3 . 0 . . . 0 . 0 . 0 .", 30], ["-7 . . . 0 . 0 . -7 . 0 . 0 . 0 .", 25], ["7 . . . . . . . . . . . 0 . 2 .", 24]];
+/* フランク・ザッパ（37曲）：4/4は59%、3/4が18%・6/8が9%・5/4・7/4・5/8・3/8（変拍子）。標準チューニング92%、鍵盤51%。リフ＝シンコペ「o-o---o-------oo」(94)、ユニゾンの「-2 . 0 . . . 0 . . . . . . . 5 5」型。
+   ベース＝「x-----------x-x-」(132)。ドラム＝キック「K.....K.K.......」「K......KK.K...K.」、スネア2・4拍、シンバル35%・タム18%。2本のギターの同時打点でハモる曲の中央65%(4度10.7・5度8.9・短7度5.7)。
+   リード＝ハンマリング12%・走句10.1回/曲・ビブラート0.4%。 */
+ROCK_RIFF.zappa = [["o-o---o-------oo", 94], ["o---o---o---o---", 42], ["oooo--oooooo----", 30], ["o-o-o-o-o-o-o-o-", 29], ["o-------o-------", 27], ["o---o-----o-o-o-", 25], ["------o-o---o---", 25], ["o-------o---o---", 23]];
+ROCK_PROF.zappa = { chord: [0.6, 0.2, 0.15, 0.05], pm: 0, root: 0.37, same: 0.35, cell: 0.65, move: [[7, 13], [2, 12], [5, 10], [3, 9], [10, 6], [4, 4], [1, 3]] };
+ROCK_BASS.zappa = [["x-----------x-x-", 132], ["x---------------", 120], ["x-x-x-x-x-x-x-x-", 60], ["x-x-x-xx-xx---x-", 50], ["x---x-x-x-xxx-x-", 47]];
+ROCK_DR.zappa = { kick: [["K.....K.K.......", 86], ["K......KK.K...K.", 82], ["K...K...K...K...", 79], ["K.K.K.K.K.K.K.K.", 40], ["K.......K.......", 34]], snare: [["....S.......S...", 295], ["................", 89], ["........S.......", 79], ["S..SSS.....SSS.S", 27]], ride: 0.35 };
+ROCK_CELLS.zappa = [["-2 . 0 . . . 0 . . . . . . . 5 5", 50], ["0 . 2 . . . 0 . . . . . . . 7 7", 38], ["-7 -4 0 3 . . 3 0 3 0 12 10 . . . .", 30], ["9 . . . 5 . . . . . . . 0 . . .", 27], ["0 . . . 12 . . . . . 0 . 5 . 3 .", 25], [". . . . . . 0 . 3 . . . 5 . . .", 25],
+  ["1 0 . . . . . . 0 . . . 1 . . .", 13], ["0 1 . . . . . . 1 0 . . 0 1 . .", 13], ["0 . 0 . 0 . 0 . 3 . 3 . 3 . 3 .", 9], ["0 0 -2 -3 -5 -7 -8 -12 0 0 -2 -3 -5 -7 -8 -12", 8]];
 /* 変拍子：拍のまとまり(form.grp、例 5拍子＝3+2、7拍子＝4+3)の頭の位置 */
 function rockGrpHeads(form) { var g = form.grp || [form.ts[0]], h = {}, a = 0, i; for (i = 0; i < g.length; i++) { h[a] = 1; a += g[i]; } return h; }
 function rockSize(rng, c) { var r = rng.f(), a = 0, i; for (i = 0; i < 4; i++) { a += c[i]; if (r < a) return i + 1; } return 1; }
@@ -6503,7 +6583,7 @@ function rockDrums(chs, form, sty, opt, rng, ctx) {
       else add(th, D.hhC, (hat16 && s % 2 === 1 ? 56 : 74) + (acc ? 12 : 0) + rg2.i(8));
     }
     if (pos === 0 && (bar % 8 === 0 || rg2.chance(0.4)) && !solo) add(t0, D.crash, 104, 0.9);
-    var fp = { aor: 0.5, la: 0.6, hard: 0.5, x90: 0.25, heavy: 0.6, prog: 0.55, kc: 0.3, elp: 0.4, power: 0.5, xj: 0.55 }[kind];
+    var fp = { aor: 0.5, la: 0.6, hard: 0.5, x90: 0.25, heavy: 0.6, prog: 0.55, kc: 0.3, elp: 0.4, power: 0.5, xj: 0.55, purple: 0.5, sabbath: 0.35, maiden: 0.5, hendrix: 0.4, zappa: 0.4 }[kind];
     if (pos === 3 && !solo && rg2.chance(fp)) {                                                     /* 4小節目の終わり：スネア・タムのフィル */
       var fv = kind === "x90" ? [D.snare, D.snare, D.snare, D.tomM] : [D.snare, D.tomH, D.tomM, D.tomL], fz;
       for (fz = 0; fz < 4; fz++) add(t0 + beats - 1 + fz * 0.25, fv[fz], 90 + fz * 6 + rg2.i(10));
@@ -6540,6 +6620,34 @@ FORMS.rk_pw1 = rockForm("パワー・メタル(短調)：i i ♭III V → ♭VI 
 FORMS.rk_pw2 = rockForm("パワー・メタル(長調)：vi IV V V → vi IV V V → I I iii iii → vi V(ソナタ・アークティカ型) 16小節", false, 165, [[9, "min", 1], [5, "maj", 1], [7, "maj", 2], [9, "min", 1], [5, "maj", 1], [7, "maj", 2], [0, "maj", 2], [4, "min", 2], [9, "min", 1], [7, "maj", 1]]);
 FORMS.rk_xj1 = rockForm("X JAPAN型(短調)：i i ♭VI ♭VII → i i i ♭VI → ♭VI ♭VI ♭VII ♭VII → i i ♭VI ♭VII 16小節", true, 160, [[0, "min", 2], [8, "maj", 1], [10, "maj", 1], [0, "min", 2], [0, "min", 1], [8, "maj", 1], [8, "maj", 2], [10, "maj", 2], [0, "min", 2], [8, "maj", 1], [10, "maj", 1]]);
 FORMS.rk_xj2 = rockForm("X JAPAN型(長調のバラード寄り)：IV V vi vi → IV V vi vi → I V → IV V I I 16小節", false, 140, [[5, "maj", 1], [7, "maj", 1], [9, "min", 2], [5, "maj", 1], [7, "maj", 1], [9, "min", 2], [0, "maj", 2], [7, "maj", 2], [5, "maj", 1], [7, "maj", 1], [0, "maj", 2]]);
+FORMS.rk_pu1 = rockForm("70年代ハード・ロック(短調)：i ♭VII i → i IV V → i ♭VII i → IV V(ディープ・パープル型) 16小節", true, 120, [[0, "min", 2], [10, "maj", 1], [0, "min", 1], [0, "min", 2], [5, "maj", 1], [7, "maj", 1], [0, "min", 2], [10, "maj", 1], [0, "min", 1], [5, "maj", 2], [7, "maj", 2]]);
+FORMS.rk_pu2 = rockForm("70年代ハード・ロック(ブギー)：I7 4小節 → IV7 → I7 → V7 → IV7 → I7(ハイウェイ・スター型) 16小節", false, 138, [[0, "dom7", 4], [5, "dom7", 2], [0, "dom7", 2], [7, "dom7", 2], [5, "dom7", 2], [0, "dom7", 4]]);
+FORMS.rk_sb1 = rockForm("70年代ヘヴィ・ロック：i ♭VII の反復 → ♭VI V → i ♭V の反復(トライトーン) 16小節(ブラック・サバス型)", true, 112, [[0, "min", 1], [10, "maj", 1], [0, "min", 1], [10, "maj", 1], [0, "min", 1], [10, "maj", 1], [8, "maj", 1], [7, "maj", 1], [0, "min", 1], [6, "maj", 1], [0, "min", 1], [6, "maj", 1], [0, "min", 4]]);
+FORMS.rk_sb2 = rockForm("70年代ヘヴィ・ロック(ドゥーム)：i 4小節 → ♭V → i → i → ♭VII → V(ブラック・サバス型) 16小節", true, 96, [[0, "min", 4], [6, "maj", 2], [0, "min", 2], [0, "min", 4], [10, "maj", 2], [7, "maj", 2]]);
+FORMS.rk_mai1 = rockForm("NWOBHM：i ♭VI ♭VII i → i i ♭VI ♭VI → i ♭VI ♭III ♭VII 16小節(アイアン・メイデン型)", true, 140, [[0, "min", 2], [8, "maj", 1], [10, "maj", 1], [0, "min", 2], [8, "maj", 2], [0, "min", 2], [8, "maj", 1], [3, "maj", 1], [10, "maj", 2], [0, "min", 2]]);
+FORMS.rk_mai2 = rockForm("NWOBHM：i 4小節 → ♭VI ♭VII → i → ♭III ♭VII 16小節(アイアン・メイデン型)", true, 150, [[0, "min", 4], [8, "maj", 2], [10, "maj", 2], [0, "min", 4], [3, "maj", 2], [10, "maj", 2]]);
+FORMS.rk_hx1 = rockForm("ブルース・ロック：I7 4小節 → IV7 → I7 → V7 → IV7 → I7(ジミ・ヘンドリックス型) 16小節", false, 100, [[0, "dom7", 4], [5, "dom7", 2], [0, "dom7", 2], [7, "dom7", 2], [5, "dom7", 2], [0, "dom7", 4]]);
+FORMS.rk_hx2 = rockForm("ブルース・ロック(短調)：i 4小節 → iv → i → ♭VII V7 → i(ジミ・ヘンドリックス型) 16小節", true, 96, [[0, "min", 4], [5, "min", 2], [0, "min", 2], [10, "maj", 2], [7, "dom7", 2], [0, "min", 4]]);
+/* ジョビンの和音進行（第466版）：GP譜25曲の和音(analyze_jobim_chords.js)から、よく出る動きを、曲そのものではなく型として。
+   ・Imaj7 → II7(V/V) の動き（4小節の動機の最多：Imaj7 Imaj7 II7 II7、14＋4回）／・Imaj7 → Im6（長→同主短調、12回）／・I6 → IVmaj7、i → iv（根音の4度上、20・16回）
+   ・ii-V-I を全音ずつ下げる連鎖（Im7 → IV7 → ♭VIImaj7 型、6回ほか）／・トライトーン代理（dom7 → 半音下の maj7、12回）／・減7の経過（i7 → ♭ii°7 など） */
+FORMS.jobim32 = { label: "ボサ ジョビン型 AABA 32小節（I→II7、ii-V、全音ずつ下がる連鎖のB）", bars: 32, minor: false, ts: [4, 4], sec: "AABA", tempo: 120,
+  ch: (function () {
+    var A = [T(0, "maj7"), T(0, "maj7"), T(2, "dom9"), T(2, "dom9"), T(2, "m7"), T(7, "dom7b9"), T(0, "maj6"), T(2, "m7", 2), T(7, "dom7b9", 2)];
+    var B = [T(10, "m7"), T(3, "dom9"), T(8, "maj7", 8), T(8, "m7"), T(1, "dom9"), T(2, "m7b5"), T(7, "dom7b9")];
+    return A.concat(A, B, A);
+  })() };
+FORMS.jobimmin32 = { label: "ボサ ジョビン型（短調）AABA 32小節（i6、iim7♭5-V7♭9、iv、♭VII7→♭IIImaj7）", bars: 32, minor: true, ts: [4, 4], sec: "AABA", tempo: 116,
+  ch: (function () {
+    var A = [T(0, "m6", 8), T(2, "m7b5"), T(7, "dom7b9"), T(0, "m6"), T(5, "m7"), T(10, "dom7"), T(3, "maj7")];
+    var B = [T(5, "m7"), T(10, "dom9"), T(3, "maj7", 8), T(2, "m7b5"), T(7, "dom7b9"), T(0, "m6", 8)];
+    return A.concat(A, B, A);
+  })() };
+FORMS.jobim16 = { label: "ボサ ジョビン型 16小節（I6→IVmaj7、トライトーン代理 ♭II7、Im6、ii-Vの連鎖）", bars: 16, minor: false, ts: [4, 4], sec: "AA", tempo: 124,
+  ch: [T(0, "maj6"), T(5, "maj7"), T(2, "m7"), T(1, "dom9"), T(0, "maj7"), T(0, "m6"), T(2, "m7b5"), T(7, "dom7b9"), T(4, "m7"), T(9, "dom7b9"), T(2, "m7"), T(7, "dom9"), T(0, "maj7"), T(3, "dom9"), T(2, "m7"), T(1, "dom9")] };
+FORMS.rk_zp1 = rockForm("ザッパ型(4/4)：i IV ♭III のヴァンプ → ♭VI ♭VII 16小節", true, 112, [[0, "min", 2], [5, "maj", 1], [3, "maj", 1], [0, "min", 2], [5, "maj", 1], [3, "maj", 1], [8, "maj", 2], [10, "maj", 1], [7, "maj", 1], [0, "min", 4]]);
+FORMS.rk_zp2 = rockForm("ザッパ型(3拍子)：i IV ♭III ♭VII → i ♭VI IV V7 16小節", true, 120, [[0, "min", 2], [5, "maj", 2], [3, "maj", 2], [10, "maj", 2], [0, "min", 2], [8, "maj", 2], [5, "maj", 2], [7, "dom7", 2]], { ts: [3, 4], grp: [3] });
+FORMS.rk_zp3 = rockForm("ザッパ型(7拍子 4+3)：i IV ♭III → i ♭VII V7 16小節", true, 116, [[0, "min", 4], [5, "maj", 2], [3, "maj", 2], [0, "min", 4], [10, "maj", 2], [7, "dom7", 2]], { ts: [7, 4], grp: [4, 3] });
 FORMS.rk_aor1 = rockForm("AOR：vi → IV → I → V → V vi IV I → IV I → I ♭VII(サバイバー・ジャーニー型) 16小節", false, 112, [[9, "min", 1], [5, "maj", 1], [0, "maj", 1], [7, "maj", 1], [7, "maj", 1], [9, "min", 1], [5, "maj", 1], [0, "maj", 1], [5, "maj", 2], [0, "maj", 2], [0, "maj", 2], [10, "maj", 2]]);
 FORMS.rk_aor2 = rockForm("AOR(短調)：♭VI IV ♭VII → i ♭VI → IV V i(ジャーニー型) 16小節", true, 110, [[8, "maj", 2], [5, "maj", 1], [10, "maj", 1], [0, "min", 2], [8, "maj", 2], [5, "maj", 1], [7, "maj", 1], [0, "min", 2], [0, "min", 2], [10, "maj", 2]]);
 /* ---------- ツイン・ギターの3度ハモリ（スラッシュ／デス／メロデス／ブラック）----------
@@ -6588,14 +6696,33 @@ var RIFFHARM = {
   black: { rate: 0.20, chug: true, col: [1, 6, 11], w: { 1: 2.0, 2: 1.6, 3: 3.4, 4: 2.3, 5: 5.6, 6: 4.0, 7: 8.4, 8: 2.1, 9: 2.1, 10: 1.3, 11: 0.9 } },
   neo: { rate: 0.38, chug: true, col: [6], w: { 1: 0.7, 2: 2.0, 3: 4.0, 4: 2.6, 5: 2.9, 6: 2.6, 7: 4.0, 8: 4.1, 9: 4.0, 10: 1.9, 11: 1.1 } }
 };
-function riffHarmony(comp, sections, beats, opt, ab, wins) {
-  var P = RIFFHARM[opt.style]; if (!P || !comp.length) return [];
+/* ロックのリフのハモリ(ギター2のリフを、ギター4がなぞる)：低音域の2本のギターの同時打点(analyze_riffharm.js)。ロック全体 ハモる曲の中央38%(4度7.0・5度6.7・3度6.3・6度7.4)。
+   パープル48%(5度11.3・4度7.8・短3度4.5・長6度4.0)／ヘンドリックス47%(ダブルストップ的な4度・5度・長6度)／ハード・ロック(オジー)41%／メイデン27%(3度・6度・5度・4度＝ツイン・ハーモニー)／サバス26%(5度・4度・長2度、トライトーンを増やす)。 */
+function rockHW(w) { return w; }
+var RIFFHARM_ROCK = { 1: 1.0, 2: 3.1, 3: 3.4, 4: 2.9, 5: 7.0, 6: 0.9, 7: 6.7, 8: 3.5, 9: 3.9, 10: 3.3, 11: 0.8 };
+RIFFHARM.aor = { rate: 0.25, chug: true, col: [], w: RIFFHARM_ROCK };
+RIFFHARM.la = { rate: 0.36, chug: true, col: [], w: RIFFHARM_ROCK };
+RIFFHARM.hard = { rate: 0.41, chug: true, col: [], w: { 1: 1.0, 2: 3.2, 3: 3.2, 4: 1.8, 5: 6.2, 6: 1.0, 7: 5.3, 8: 2.1, 9: 3.1, 10: 3.4, 11: 0.8 } };
+RIFFHARM.x90 = { rate: 0.30, chug: true, col: [], w: RIFFHARM_ROCK };
+RIFFHARM.heavy = { rate: 0.35, chug: true, col: [], w: RIFFHARM_ROCK };
+RIFFHARM.power = { rate: 0.30, chug: true, col: [], w: { 1: 0.8, 2: 2.0, 3: 4.0, 4: 3.0, 5: 5.0, 6: 0.9, 7: 5.5, 8: 3.8, 9: 4.5, 10: 2.5, 11: 0.8 } };
+RIFFHARM.xj = { rate: 0.33, chug: true, col: [], w: RIFFHARM_ROCK };
+RIFFHARM.prog = { rate: 0.31, chug: true, col: [6], w: { 1: 1.0, 2: 2.2, 3: 2.5, 4: 2.3, 5: 5.6, 6: 1.3, 7: 4.1, 8: 2.4, 9: 2.5, 10: 2.3, 11: 0.9 } };
+RIFFHARM.kc = { rate: 0.31, chug: true, col: [1, 6, 11], w: { 1: 2.0, 2: 2.2, 3: 2.5, 4: 2.3, 5: 5.6, 6: 2.6, 7: 4.1, 8: 2.4, 9: 2.5, 10: 2.3, 11: 1.4 } };
+RIFFHARM.elp = { rate: 0.2, chug: true, col: [], w: { 1: 0.8, 2: 2.0, 3: 2.5, 4: 2.3, 5: 4.0, 6: 0.8, 7: 5.0, 8: 2.4, 9: 2.5, 10: 2.3, 11: 0.9 } };
+RIFFHARM.purple = { rate: 0.48, chug: true, col: [], w: { 1: 0.7, 2: 4.0, 3: 4.5, 4: 3.0, 5: 7.8, 6: 1.0, 7: 11.3, 8: 2.3, 9: 4.0, 10: 3.7, 11: 0.8 } };
+RIFFHARM.sabbath = { rate: 0.26, chug: true, col: [1, 6], w: { 1: 1.8, 2: 3.0, 3: 2.8, 4: 2.7, 5: 5.0, 6: 3.6, 7: 4.8, 8: 1.7, 9: 3.0, 10: 2.3, 11: 1.2 } };
+RIFFHARM.maiden = { rate: 0.27, chug: true, col: [6], w: { 1: 0.5, 2: 1.9, 3: 4.2, 4: 2.9, 5: 4.4, 6: 1.0, 7: 4.3, 8: 3.8, 9: 4.6, 10: 2.1, 11: 0.5 } };
+RIFFHARM.zappa = { rate: 0.65, chug: true, col: [1, 6, 11], w: { 1: 1.6, 2: 3.1, 3: 4.8, 4: 4.6, 5: 10.7, 6: 1.7, 7: 8.9, 8: 4.1, 9: 4.5, 10: 5.7, 11: 0.9 } };
+RIFFHARM.hendrix = { rate: 0.47, chug: true, col: [], w: { 1: 0.5, 2: 3.7, 3: 1.8, 4: 1.6, 5: 4.8, 6: 0.7, 7: 4.2, 8: 1.7, 9: 2.9, 10: 2.3, 11: 0.6 } };
+function riffHarmony(comp, sections, beats, opt, ab, wins, rkey) {
+  var P = RIFFHARM[rkey || opt.style]; if (!P || !comp.length) return [];
   var tonic = ((opt.tonic || 0) % 12 + 12) % 12, rh = RNG((((opt.seed || 1) * 157 + 9) % 2147483647) || 1), out = [], dec = {}, w = {}, k;
   for (k in P.w) w[k] = P.w[k];
   if (opt.m2Kind === "mayhem") { w[1] *= 2.5; w[6] *= 1.8; w[7] *= 0.7; }                        /* メイヘム：半音・増4度の不協和 */
   if (opt.m2Kind === "burzum") { w[7] *= 1.5; w[5] *= 1.3; w[1] *= 0.5; }                         /* バーズム：冷たい5度・4度 */
   var tbl = []; for (k in w) tbl.push([+k, w[k]]);
-  var songRate = P.rate * (0.45 + rh.f() * 1.2);
+  var songRate = P.rate * (rkey ? 1.25 : 1) * (0.45 + rh.f() * 1.2);        /* ロックはリフが和音で、最低音1本線のハモリ率が実測より下がるので補正 */
   var q0 = QUAL[ab[0] && ab[0].q] || { iv: [0, 7] }, minor = !(q0.iv.indexOf(4) >= 0);
   var base = {}; (minor ? [0, 2, 3, 5, 7, 8, 11] : [0, 2, 4, 5, 7, 9, 11]).forEach(function (x) { base[(x + tonic) % 12] = 1; });
   function secAt(tt) { var z; for (z = 0; z < sections.length; z++) if (tt >= sections[z].at - 1e-6 && tt < sections[z].at + sections[z].beats - 1e-6) return sections[z]; return null; }
@@ -13070,6 +13197,9 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
         mode = stg === 0 ? rng.wpick([["bebop", 6], ["riff", 3], ["blue", 2], ["lick", 3]])
           : stg === 1 ? rng.wpick([["oct", 8], ["bebop", 2]])
           : rng.wpick([["block", 8], ["oct", 2]]);
+      } else if (v === "jobim") {
+        /* 解析（ジョビン33曲）：1小節の音数4.2（少ない）・同音13%・半音の歩み・オクターヴの跳躍17%・ハンマリング4%。休みの多い、歌うメロディ */
+        mode = rng.wpick([["sparse", 5], ["chordmel", 3], ["chrom", last === "chrom" ? 0 : 2.5], ["hold", 2], ["lick", 1.5], ["bebop", 1]]);
       } else if (v === "lowe") {
         mode = rng.wpick([["sparse", 6], ["bebop", 3], ["hold", 2], ["lick", 2]]);
       } else if (v === "pass") {
@@ -13105,12 +13235,31 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
       } else if (v === "zakk") {
         mode = rng.wpick([["penta", 5], ["blue", last === "blue" ? 1 : 4], ["riff", last === "riff" ? 1 : 3], ["lick", 3], ["hold", last === "hold" ? 0 : 2],
                           ["harm", last === "harm" ? 0 : 1.2], ["trill", last === "trill" ? 0 : 0.8]]);
+      } else if (v === "blackmore") {
+        /* 解析（ディープ・パープル152曲）：ハーモニック・マイナー内77%・ベンド3.2%・走句3.2回/曲 */
+        mode = rng.wpick([["legato", last === "legato" ? 1 : 3], ["penta", 3], ["blue", last === "blue" ? 1 : 2], ["seq4", last === "seq4" ? 0.5 : 2], ["riff", last === "riff" ? 0.5 : 2], ["lick", 2], ["hold", last === "hold" ? 0 : 2],
+                          ["pedal2", last === "pedal2" ? 0 : 1.2], ["trill", last === "trill" ? 0 : 1], ["mrun", last === "mrun" ? 0 : 2]]);
+      } else if (v === "iommi") {
+        /* 解析（ブラック・サバス173曲）：ブルース／ペンタ中心（ハーモニック・マイナー内61%）・ベンド3.2%・スライド2.7%・ビブラート2.3% */
+        mode = rng.wpick([["blue", last === "blue" ? 1 : 5], ["penta", 4], ["riff", last === "riff" ? 1 : 3], ["hold", last === "hold" ? 0 : 3], ["lick", 1.5], ["harm", last === "harm" ? 0 : 1], ["trill", last === "trill" ? 0 : 0.6]]);
+      } else if (v === "murray") {
+        /* 解析（アイアン・メイデン484曲）：走句8.6回/曲（多い）・ハーモニック・マイナー内93%・ハンマリング5% */
+        mode = rng.wpick([["legato", last === "legato" ? 1 : 4], ["seq4", last === "seq4" ? 0.5 : 3], ["mrun", last === "mrun" ? 1 : 3], ["penta", 2], ["riff", last === "riff" ? 0.5 : 2], ["pedal2", last === "pedal2" ? 0 : 2],
+                          ["trill", last === "trill" ? 0 : 1.5], ["hold", last === "hold" ? 0 : 1.5], ["tcell", last === "tcell" ? 0.5 : 2]]);
+      } else if (v === "hendrix") {
+        /* 解析（ジミ・ヘンドリックス42曲）：1小節の音数10.6・ベンド7.6%・ハンマリング8%・スライド4.3%・ビブラート3.5%。ブルース／ペンタが主 */
+        mode = rng.wpick([["blue", last === "blue" ? 1 : 5], ["penta", 4], ["riff", last === "riff" ? 1 : 3], ["lick", 3], ["legato", last === "legato" ? 0 : 2], ["hold", last === "hold" ? 0 : 2], ["harm", last === "harm" ? 0 : 1.5], ["trill", last === "trill" ? 0 : 1]]);
+      } else if (v === "zappa") {
+        /* 解析（ザッパ37曲）：ハンマリング／プル12%（多い）・走句10.1回/曲（多い）・1小節の音数9.0・ビブラート0.4%（少ない）・ベンド3.1%。レガートの長い走句とモードの旋律 */
+        mode = rng.wpick([["legato", last === "legato" ? 1 : 4], ["mrun", last === "mrun" ? 1 : 3], ["seq4", last === "seq4" ? 0.5 : 2], ["tcell", last === "tcell" ? 0.5 : 2], ["lick", 2], ["penta", 2], ["blue", 1.5],
+                          ["trill", last === "trill" ? 0 : 1.5], ["pedal2", last === "pedal2" ? 0 : 1.5], ["hold", last === "hold" ? 0 : 1]]);
       } else if (v === "beck") {
         /* 解析（ジェフ・ベック2曲）：1小節の音数6（少ない）・ライド多用のハーフ・長い音。長い音（ベンド・ビブラート）とハーモニクス、ペンタ／ブルースの短い句 */
         mode = rng.wpick([["hold", last === "hold" ? 1 : 4], ["penta", 3], ["blue", last === "blue" ? 1 : 3], ["riff", last === "riff" ? 0.5 : 2], ["lick", 2],
                           ["harm", last === "harm" ? 0 : 2], ["legato", last === "legato" ? 0 : 1.2], ["trill", last === "trill" ? 0 : 0.6]]);
       } else if (v === "page") {
-        mode = rng.wpick([["riff", last === "riff" ? 1 : 5], ["blue", last === "blue" ? 1 : 4], ["penta", 4], ["lick", 3], ["hold", last === "hold" ? 0 : 1]]);
+        /* 解析（レッド・ツェッペリン195曲）：ベンド3.8%・走句4.5回/曲(中央7音)・ハンマリング3%・ハーモニック・マイナー内65%(ブルース寄り)。リフ・ブルース・ペンタが主で、ハンマリングの走句とハーモニクスを少し */
+        mode = rng.wpick([["riff", last === "riff" ? 1 : 5], ["blue", last === "blue" ? 1 : 4], ["penta", 4], ["lick", 3], ["legato", last === "legato" ? 0 : 1.5], ["harm", last === "harm" ? 0 : 0.8], ["trill", last === "trill" ? 0 : 0.5], ["hold", last === "hold" ? 0 : 1.5]]);
       } else if (v === "becker") {
         mode = rng.wpick([["tap", last === "tap" ? 0 : 3], ["sweep3", last === "sweep3" ? 1 : 5], ["sw3str", last === "sw3str" ? 3 : 9], ["seq4", last === "seq4" ? 1 : 5], ["pedal2", last === "pedal2" ? 0 : 3],
                           ["dimchain", last === "dimchain" ? 0 : 2.5], ["legato", last === "legato" ? 1 : 2], ["trill", last === "trill" ? 0 : 1.5], ["bebop", 1], ["hold", last === "hold" ? 0 : 0.8]]);
@@ -16077,6 +16226,10 @@ function stemExpression(id, notes, sections, opt, rng, beats, style, prof) {
   return extra;
 }
 
+/* ギター系のリード(ロック・メタル・ネオクラシカル)のピッチベンドは、ギターの弾き方に合わせて「整数の半音」だけにする(第468版)：
+   ・フレーズ頭のすくい上げ＝半音(−1)か全音(−2)下の音から入り、その高さを一瞬(約0.07拍)聴かせてから、目的の音へ上げる(ベンド・アップ)。ベンドの強い語法(1.6以上)は全音、ほかは半音。
+   ・フレーズ終わりの「フォール」(管楽器の常套)は付けない。以前は −1.6 半音までずり下げて途中で戻していて、音程が外れたように聞こえた。opt.gtrBendFree=true で従来。 */
+var GTR_BEND_STYLES = ["arena", "neo", "thrash", "death", "melodeath", "black"];
 function artiLead(notes, opt, rng, isSolo, prof) {
   prof = prof || VOICE_PROFILE.auto;
   notes.sort(function (a, b) { return a.t - b.t; });
@@ -16133,9 +16286,42 @@ function artiLead(notes, opt, rng, isSolo, prof) {
       ccRamp(extra, 1, n.t + n.d * 0.85, n.t + n.d, vdep, 0, "lin");
     }
     /* フレーズの入りをスライドで（ピッチベンドで半音下から） */
+    var scoopK = 0, gBn = GTR_BEND_STYLES.indexOf(opt.style) >= 0 && !opt.gtrBendFree;
     if (opt.expr && phraseTop && n.d >= 0.7 && rng.chance(prof.slide)) {
       var bd = Math.min(2, 0.9 * (prof.bend || 1));
-      bendRamp(extra, Math.max(0, n.t - 0.02), n.t + 0.16, -bd, 0, "out");
+      if (GTR_BEND_STYLES.indexOf(opt.style) >= 0 && !opt.gtrBendFree) {            /* ギター：半音／全音下から入って、目的の音へ(整数のベンド・アップ) */
+        var bk = ((prof.bend || 1) >= 1.6 && Math.round(n.t * 4) % 4 !== 3) ? 2 : 1;      /* 全音が多く、ときどき半音(拍の位置で決める＝乱数は使わない) */
+        scoopK = bk;
+        /* 時間は「秒」で決める(テンポが変わっても、ベンドの速さは人の指と同じ)：下の高さを約45ms聴かせ、半音は約120ms・全音は約155msで上げる。音の長さの半分までに収める */
+        var bsp = (CUR_TEMPO || 120) / 60, bDw = 0.045 * bsp, bRi = Math.min((0.085 + 0.035 * bk) * bsp, n.d * 0.5);
+        extra.push({ t: Math.max(0, n.t - 0.02), bend: -bk });
+        bendRamp(extra, n.t + bDw, n.t + bDw + bRi, -bk, 0, "out");
+      } else {                                                                      /* ギター以外(ジャズ・フラメンコなど)：半音／全音の整数、時間は秒で(下の高さ約30ms→上げる約100〜130ms) */
+        var bk2 = bd >= 1.5 ? 2 : 1, bsp2 = (CUR_TEMPO || 120) / 60, bDw2 = 0.03 * bsp2, bRi2 = Math.min((0.07 + 0.03 * bk2) * bsp2, n.d * 0.5);
+        extra.push({ t: Math.max(0, n.t - 0.02), bend: -bk2 });
+        bendRamp(extra, n.t + bDw2, n.t + bDw2 + bRi2, -bk2, 0, "out");
+      }
+    }
+    if (opt.expr && gBn) {
+      /* ①リリース：すくい上げた長い音を、目的の高さで保ってから、はじめの高さへ戻して終わる(整数のまま)。音のあとに間があるときだけ
+         ②チョーク：途中の音を、半音(か全音)だけ上げて戻す。上げた先が調の音(短調はナチュラル・マイナー＋ドリアンの6度)のときだけ */
+      if (scoopK && n.d >= 1.2 && gapAfter > 0.05 && rng.chance(0.45)) {
+        var rl = Math.min(0.14 * (CUR_TEMPO || 120) / 60, n.d * 0.2), rs0 = n.t + n.d - rl - 0.04 * (CUR_TEMPO || 120) / 60;        /* 約140msで戻し、音が切れる約40ms前に着く */
+        bendRamp(extra, rs0, rs0 + rl, 0, -scoopK, "lin");
+        extra.push({ t: n.t + n.d + 0.02, bend: 0 });
+      } else if (!scoopK && !phraseTop && n.d >= 0.5 && n.d <= 1.6 && rng.chance((opt.style === "arena" ? 0.035 : 0.018) * (prof.bend || 1))) {
+        var kset = {}, tn0 = (((opt.tonic || 0) % 12) + 12) % 12;
+        (opt.mode === "major" ? [0, 2, 4, 5, 7, 9, 10, 11] : [0, 2, 3, 5, 7, 8, 9, 10]).forEach(function (x) { kset[(x + tn0) % 12] = 1; });
+        var ck = kset[(n.p + 1) % 12] ? 1 : (kset[(n.p + 2) % 12] ? 2 : 0);
+        if (ck) {
+          var csp = (CUR_TEMPO || 120) / 60, cUp = (0.07 + 0.03 * ck) * csp, cDn = 0.16 * csp, cS = 0.04 * csp;           /* 上げる約100〜130ms・保つ・戻す約160ms(秒で決める) */
+          if (cS + cUp + cDn + 0.04 * csp <= n.d * 0.92) {
+            var cEnd = n.t + n.d - 0.04 * csp;
+            bendRamp(extra, n.t + cS, n.t + cS + cUp, 0, ck, "out");
+            bendRamp(extra, cEnd - cDn, cEnd, ck, 0, "in");
+          }
+        }
+      }
     }
   }
   /* 名手の吹き方・弾き方：
@@ -16160,9 +16346,11 @@ function artiLead(notes, opt, rng, isSolo, prof) {
       var n2 = notes[q];
       var endPhrase = (q === notes.length - 1) || (notes[q + 1].t - (n2.t + n2.d) > 0.8);
       if (endPhrase && n2.d >= 1 && rng.chance(0.24 * (prof && prof.slide ? Math.min(2, prof.slide * 3) : 1))) {
-        var tf = n2.t + n2.d * 0.8;
-        bendRamp(extra, tf, n2.t + n2.d * 0.97, 0, -1.6, "in");
-        extra.push({ t: n2.t + n2.d + 0.02, bend: 0 });
+        if (GTR_BEND_STYLES.indexOf(opt.style) < 0 || opt.gtrBendFree) {
+          var fsp = (CUR_TEMPO || 120) / 60, fk = n2.d >= 2 ? 2 : 1, fd = Math.min(0.2 * fsp, n2.d * 0.3), fe = n2.t + n2.d - 0.03 * fsp;      /* フォール：半音か全音、約200msで下げる(整数) */
+          bendRamp(extra, fe - fd, fe, 0, -fk, "in");
+          extra.push({ t: n2.t + n2.d + 0.02, bend: 0 });
+        }
       }
     }
   })();
@@ -21210,6 +21398,13 @@ function generateMain(opt) {
     var rkH = twinHarmony(mel, solo, sections, beats, opt, opt.tempo, absChords({ chords: chs, sections: sections, beats: beats, opt: opt }));
     if (rkH.length) stems.push({ id: "gtr3", name: "Guitar 3 (harmony)", jp: "3本目のギター（ハモリ：3度・6度・トライトーン・ディミニッシュ）", prog: 30, ch: 5, notes: rkH, extra: [] });
   }
+  if (opt.style === "arena" && sty.rockKind && opt.riffHarm !== false) {          /* ロックのリフのハモリ(ギター2のリフを、ギター4が、曲種の割合と音程でなぞる) */
+    var g2S = stems.filter(function (s0) { return s0.id === "gtr2"; })[0];
+    if (g2S && g2S.notes.length) {
+      var rhR = riffHarmony(g2S.notes, sections, beats, opt, absChords({ chords: chs, sections: sections, beats: beats, opt: opt }), drumWins.map(function (w) { return { a: w.a + barShiftAll, b: w.b + barShiftAll }; }), sty.rockKind);
+      if (rhR.length) stems.push({ id: "gtr4", name: "Guitar 4 (riff double / harmony)", jp: "4本目のギター（リフのダブル・ハモリ）", prog: 30, ch: 4, notes: rhR, extra: [] });
+    }
+  }
   if (["thrash", "death", "melodeath", "black", "neo"].indexOf(opt.style) >= 0 && opt.riffHarm !== false) {          /* 伴奏リフのハモリ（曲種の特性：RIFFHARM） */
     var cmpS = stems.filter(function (s0) { return s0.id === "comp"; })[0];
     if (cmpS) {
@@ -21563,14 +21758,15 @@ function trackChunk(events) {
 function cryGuitar(notes, tempo, rng) {
   var ex = [], bpsec = (tempo || 80) / 60, ns = notes.filter(function (n) { return !n.grace && !n.cm; }).sort(function (a, b) { return a.t - b.t; }), i, k;
   var per = Math.max(0.12, bpsec / 5.2), vstep = per / 4;                                  /* ビブラートの1周期（拍）と刻み（約5.2Hz） */
+  var bs = bpsec;                                                                           /* 1秒あたりの拍数(ベンドの時間は秒で決める) */
   function clamp(v) { return Math.max(-2, Math.min(2, v)); }
   for (i = 0; i < ns.length; i++) {
     var n = ns[i], end = n.t + n.d, nxt = ns[i + 1], room = nxt ? Math.min(end, nxt.t) : end;
     if (n.d >= 1.0 && rng.chance(0.85)) {
-      var kk = rng.chance(0.55) ? 2 : 1, rise = Math.min(0.5, n.d * 0.3);
+      var kk = rng.chance(0.55) ? 2 : 1, rise = Math.min((0.2 + 0.07 * kk) * bs, n.d * 0.3);          /* 上げる時間は約270〜340ms(泣きはゆっくり) */
       if (rng.chance(0.8)) {                                                                  /* チョーキング・アップ：-kk から 0 へ、少しためてから上げる */
         ex.push({ t: Math.max(0, n.t - 0.012), bend: -kk });
-        var hold = Math.min(0.18, rise * 0.4), steps = 6;
+        var hold = Math.min(0.08 * bs, rise * 0.4), steps = 6;
         for (k = 1; k <= steps; k++) ex.push({ t: n.t + hold + rise * k / steps, bend: clamp(-kk * (1 - k / steps)) });
       }
       var vs = n.t + Math.min(n.d * 0.45, 0.9), ve = room - Math.min(0.3, n.d * 0.25), amp = 0.12, vk = 0;   /* ビブラート：遅れて入り、だんだん深く */
@@ -21579,10 +21775,10 @@ function cryGuitar(notes, tempo, rng) {
         ex.push({ t: tt, bend: clamp(amp * (0.5 + 0.5 * Math.sin(vk * Math.PI / 2))) }); vk++;
       }
       if (n.d >= 1.5 && rng.chance(0.35)) {                                                    /* リリース：終わりで下げる */
-        var rs = room - 0.28;
-        for (k = 1; k <= 3; k++) ex.push({ t: rs + 0.28 * k / 3 - 0.02, bend: clamp(-0.5 * k) });
+        var rl2 = Math.min(0.2 * bs, n.d * 0.25), rs = room - rl2 - 0.05 * bs;                  /* リリース：はじめの高さ(-kk、整数)へ約200msで戻して終わる */
+        bendRamp(ex, rs, rs + rl2, 0, -kk, "lin");
       }
-      ex.push({ t: room - 0.004, bend: 0 });
+      ex.push({ t: nxt ? Math.min(room - 0.004, nxt.t - 0.032) : room - 0.004, bend: 0 });          /* 次の音の「下からの入り」(その0.012拍前)より前に、0へ戻す(以前は後で戻して、入りが打ち消されていた) */
     } else if (n.d >= 0.45 && rng.chance(0.45)) {                                              /* しゃくり：半音下から上げる */
       ex.push({ t: Math.max(0, n.t - 0.012), bend: -1 }, { t: n.t + 0.04, bend: -0.6 }, { t: n.t + 0.09, bend: -0.25 }, { t: n.t + 0.14, bend: 0 });
     }
@@ -22232,7 +22428,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 464;
+var BUILD_NO = 470;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 166;
 function r3(x) { return Math.round(x * 1000) / 1000; }
@@ -23968,7 +24164,8 @@ var KW_RULES = [
   [/ジプシー|gypsy|manouche|マヌーシュ|ジャンゴ|django|ホットクラブ|hot\s*club/i, { style: "gypsy" }, 10, "ジプシー・スウィング"],
   [/ビバップ|bebop|bop\b|チャーリー・?パーカー|charlie\s*parker/i, { style: "bebop" }, 10, "ビバップ"],
   [/バラード|ballad/i, { style: "ballad" }, 9, "バラード"],
-  [/ボサ(?:ノ?ヴァ|ノバ)?|bossa|ジョビン|jobim/i, { style: "bossa" }, 10, "ボサノヴァ"],
+  [/ボサ(?:ノ?ヴァ|ノバ)?|bossa/i, { style: "bossa" }, 10, "ボサノヴァ"],
+  [/ジョビン|jobim|イパネマ|ipanema/i, { style: "bossa", voice: "jobim" }, 11, "ボサノヴァ（ジョビンの語法）"],
   [/ハードバップ|hard\s*bop|ソウルジャズ|soul\s*jazz|ファンキー|funky|ブルース|blues/i, { style: "soul" }, 9, "ソウル・ジャズ／ハードバップ"],
   [/オルガン|organ|ハモンド|hammond/i, { style: "organjazz" }, 8, "オルガン・ジャズ"],
   [/フラメンコ|flamenco|スペイン|spanish|ブレリア|ソレア|タンゴス|ファンダンゴ|アレグリアス|ラスゲアード/i, { style: "flamenco" }, 10, "フラメンコ"],
@@ -24094,6 +24291,11 @@ var KW_RULES = [
   [/ポール・?ギルバート|paul\s*gilbert|レイサー\s*x|racer\s*x|ミスター・?ビッグ|mr\.?\s*big/i, { style: "neo", voice: "gilbert" }, 7, "語法：ポール・ギルバート"],
   [/マカルパイン|macalpine/i, { style: "neo", voice: "macalpine" }, 7, "語法：トニー・マカルパイン"],
   [/ジェフ・?ベック|jeff\s*beck/i, { voice: "beck" }, 6, "語法：ジェフ・ベック"],
+  [/フランク・?ザッパ|ザッパ|zappa|マザーズ・?オブ・?インヴェンション/i, { style: "rk_zappa" }, 8, "ロック（フランク・ザッパ）"],
+  [/ディープ・?パープル|deep\s*purple|ブラックモア|blackmore|スモーク・?オン/i, { style: "rk_purple" }, 8, "70年代ハード・ロック（ディープ・パープル）"],
+  [/ブラック・?サバス|black\s*sabbath|アイオミ|iommi|ドゥーム|doom/i, { style: "rk_sabbath" }, 8, "70年代ヘヴィ・ロック（ブラック・サバス）"],
+  [/アイアン・?メイデン|iron\s*maiden|ニュー・?ウェイヴ・?オブ|nwobhm|ブリティッシュ・?ヘヴィ/i, { style: "rk_maiden" }, 8, "NWOBHM（アイアン・メイデン）"],
+  [/ジミ・?ヘンドリックス|ヘンドリクス|hendrix|ジミヘン|サイケ/i, { style: "rk_hendrix" }, 8, "ブルース・ロック（ジミ・ヘンドリックス）"],
   [/x\s*japan|エックス・?ジャパン|yoshiki|ヨシキ|ジャパニーズ・?メタル|ヴィジュアル系|visual\s*kei/i, { style: "rk_xjapan" }, 8, "X JAPAN型（ジャパニーズ・メタル）"],
   [/ソナタ・?アークティカ|sonata\s*arctica|フィンランド|北欧メタル|パワー・?メタル|power\s*metal/i, { style: "rk_power" }, 7, "パワー・メタル（ソナタ・アークティカ）"],
   [/シンフォニー\s*[xX]|symphony\s*x|ロメオ|romeo/i, { style: "neo", voice: "romeo" }, 7, "語法：シンフォニーX（マイケル・ロメオ）"],
