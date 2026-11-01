@@ -21905,12 +21905,15 @@ function noteEvents(stem, song, marks) {
   if (song && song.drumOnly && song.drumOnly.length && stem.prog >= 16 && stem.prog <= 20 && chn !== 9) {
     song.drumOnly.forEach(function (w) { ev.push({ tick: Math.max(0, Math.round(Math.min(w.a + 0.5, (w.a + w.b) / 2) * PPQ)), pri: 2, data: [0xb0 | chn, 120, 0] }); });   /* 区間の頭の0.5拍後：短い自然な余韻は残す */
   }
+  /* メタルの歪みギター（GM 28〜30）は、Cubase で AmpliTube を何台も重ねると割れやすい。MIDI の強さ（ベロシティ）を一律に下げて入力を控えめにする。opt.gtrTrim＝倍率（既定0.82・1で無効） */
+  var gtrK = 1;
+  if (chn !== 9 && stem.prog >= 28 && stem.prog <= 30 && song && song.opt && /^(thrash|death|melodeath|black|djent)$/.test(song.opt.style || "")) gtrK = song.opt.gtrTrim == null ? 0.82 : Math.max(0.3, Math.min(1, +song.opt.gtrTrim || 1));
   for (i = 0; i < stem.notes.length; i++) {
     var n = stem.notes[i];
     var on = Math.round(n.t * PPQ), off = Math.max(on + 12, Math.round((n.t + n.d) * PPQ));
     if (n.pk && marks) { var pkb = str2bytes("HCG:pk" + (n.pk === 1 ? "D" : "U")); ev.push({ tick: on, pri: 0, data: [0xff, 0x01].concat(vlq(pkb.length), pkb) }); }      /* ピッキングの向き（D＝ダウン、U＝アップ）：速い所だけ。キースイッチ付き .mid にだけ入る */
     if (n.ar && marks) { var arb = str2bytes("HCG:ar" + n.ar); ev.push({ tick: on, pri: 0, data: [0xff, 0x01].concat(vlq(arb.length), arb) }); }      /* 奏法の印（1=ラスゲアードの爪、2=アパガード）：テキスト・イベント。キースイッチ用の別ファイル(marks)のときだけ書く。標準の .mid には入れない（MuseScore が譜面の文字として取り込むため） */
-    ev.push({ tick: on, pri: 4, data: [0x90 | chn, n.p & 127, Math.max(1, Math.min(127, n.v | 0))] });
+    ev.push({ tick: on, pri: 4, data: [0x90 | chn, n.p & 127, Math.max(1, Math.min(127, Math.round((n.v | 0) * gtrK)))] });
     ev.push({ tick: off, pri: 3, data: [0x80 | chn, n.p & 127, 0] });
   }
   return ev;
@@ -22229,7 +22232,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 455;
+var BUILD_NO = 457;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 166;
 function r3(x) { return Math.round(x * 1000) / 1000; }
