@@ -1,0 +1,74 @@
+{
+  "id": "2026-11-02_arena_arena_sep",
+  "date": "2026-11-02",
+  "style": "arena",
+  "styleShort": "ロック",
+  "styleLabel": "ロック（80年代の産業ロック：シンセのリフとパワー・コード・歌うギター／パワー・バラードも）",
+  "form": "arena_sep",
+  "formLabel": "セパレート・ウェイズ型：短調のアンセム（i → ♭VI → ♭III → ♭VII）16小節",
+  "title": "Rue Django (Em)",
+  "key": "Em",
+  "tempo": 156,
+  "tempoGenerated": 156,
+  "bars": 108,
+  "seed": 52693,
+  "gen": 166,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 29
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 29
+    },
+    {
+      "id": "comp",
+      "name": "Synth (riff/pad)",
+      "prog": 90
+    },
+    {
+      "id": "gtr2",
+      "name": "Guitar 2 (rhythm riff)",
+      "prog": 29
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "Em",
+    "Em",
+    "C",
+    "C",
+    "G",
+    "G",
+    "D",
+    "D",
+    "Em",
+    "Em",
+    "C",
+    "C",
+    "G",
+    "G",
+    "D",
+    "D"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 166). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-02_arena_arena_sep/2026-11-02_arena_arena_sep_midi-set.zip",
+    "midi": "demos/2026-11-02_arena_arena_sep/2026-11-02_arena_arena_sep_all.mid",
+    "info": "demos/2026-11-02_arena_arena_sep/info.md"
+  },
+  "audio": "demos/2026-11-02_arena_arena_sep/2026-11-02_arena_arena_sep.mp3"
+}
