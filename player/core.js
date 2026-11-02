@@ -2293,19 +2293,19 @@ var STYLES = {
   swing: {
     label: "スタンダード・スウィング", swing: 0.63, tempo: 152,
     comp: "green", bass: "walk4", drums: "swing", mel: "swing",
-    forms: ["standard32", "swingriff32", "blues12", "rhythm32", "cycle32", "giant16", "countdown16", "coolstd32", "mstd32", "mblues12", "mcycle32", "giant16m", "countdown16m", "auto32", "auto16", "auto32m"],
+    forms: ["monksnc12", "monkblues12", "standard32", "swingriff32", "blues12", "rhythm32", "cycle32", "giant16", "countdown16", "coolstd32", "mstd32", "mblues12", "mcycle32", "giant16m", "countdown16m", "auto32", "auto16", "auto32m"],
     voice: "christian", lead: 66, compProg: 26, feel: 8
   },
   bebop: {
     label: "ビバップ（速め・8分主体）", swing: 0.615, tempo: 232,
     comp: "piano", bass: "walk4", drums: "swing", mel: "bebop",
-    forms: ["bopblues12", "rhythm32", "cycle32", "coltrane16", "giant16", "countdown16", "hardbop32", "standard32", "mcycle32", "sym16", "mblues12", "mstd32", "giant16m", "countdown16m", "auto32", "auto16", "auto32m"],
+    forms: ["monksnc12", "monkblues12", "bopblues12", "rhythm32", "cycle32", "coltrane16", "giant16", "countdown16", "hardbop32", "standard32", "mcycle32", "sym16", "mblues12", "mstd32", "giant16m", "countdown16m", "auto32", "auto16", "auto32m"],
     voice: "christian", lead: 65, compProg: 0, feel: 8
   },
   ballad: {
     label: "バラード", swing: 0.6, tempo: 66,
     comp: "ballad", bass: "walk2", drums: "brush", mel: "ballad",
-    forms: ["ballad32", "coolstd32", "standard32", "bossa32", "mstd32", "minbossa32", "manouche32", "auto32", "auto32m"],
+    forms: ["monkmid32", "ballad32", "coolstd32", "standard32", "bossa32", "mstd32", "minbossa32", "manouche32", "auto32", "auto32m"],
     voice: "auto", lead: 57, compProg: 0, feel: 8
   },
   bossa: {
@@ -2324,7 +2324,7 @@ var STYLES = {
     fuFamily: "fusion", fuName: "モダン（ストレート8分）",
     label: "モダン／フュージョン（ストレート8分）", swing: 0.5, tempo: 138,
     comp: "quartal", bass: "even8", drums: "straight", mel: "bebop",
-    forms: ["pedal32", "susvamp16", "modal16", "chrom16", "coltrane16", "giant16", "countdown16", "standard32", "phryg16", "sym16", "mstd32", "mcycle32", "giant16m", "countdown16m", "auto32", "auto16", "auto32m"],
+    forms: ["monkblues12", "pedal32", "susvamp16", "modal16", "chrom16", "coltrane16", "giant16", "countdown16", "standard32", "phryg16", "sym16", "mstd32", "mcycle32", "giant16m", "countdown16m", "auto32", "auto16", "auto32m"],
     voice: "metheny", lead: 27, compProg: 4, feel: 16
   },
   odd: {
@@ -5091,6 +5091,7 @@ var VOICES = {
   christian: { label: "チャーリー・クリスチャン風（リフと歌うライン）" },
   wes:        { label: "ウェス・モンゴメリー風（単音→オクターヴ→ブロック）" },
   lowe:       { label: "マンデル・ロウ風（隙間のあるクールな歌）" },
+  monk:       { label: "セロニアス・モンク風（半音の歩み・同音の反復・半音階の上行と長い音・同じ形を上げて繰り返す・オクターヴ下への跳び・休みが長い）", nps: 5 },
   pass:       { label: "ジョー・パス風（休みなく流れるバップ）" },
   metheny:    { label: "パット・メセニー風（4度と広い跳躍・長いライン）" },
   holdsworth: { label: "アラン・ホールズワース風（レガートと変わった音階）" , nps: 14 },
@@ -5313,6 +5314,7 @@ var VOICE_PROFILE = {
   christian:  { reg: 0,  span: 0.85, dens: 0.95, leg: 0.58, stac: 0.58, ahead: -0.018, rest: 1.1, phr: [2, 2, 4],    slide: 0.14, vib: 0.8, land: "blue",   sc: "blues",     start: [-0.5, -0.5, 0], rep: 0.20, bend: 1.0 },
   wes:        { reg: -3, span: 0.90, dens: 0.90, leg: 0.82, stac: 0.76, ahead: 0.010,  rest: 1.0, phr: [4, 4, 6],    slide: 0.12, vib: 0.9, land: "six",    sc: "blues",     start: [0, 0.5], rep: 0.10, bend: 0.8 },
   lowe:       { reg: 0,  span: 0.75, dens: 0.60, leg: 0.86, stac: 0.82, ahead: 0.022,  rest: 1.9, phr: [2, 3],       slide: 0.20, vib: 1.4, land: "gt",     sc: "diatonic",  start: [1, 2, 0.5], rep: 0.03, bend: 1.0 },
+  monk:       { reg: 0,  span: 0.80, dens: 0.80, leg: 0.52, stac: 0.60, ahead: 0.000,  rest: 1.9, phr: [2, 2, 4],    slide: 0.04, vib: 0.2, land: "gt",     sc: "blues",     start: [0.5, 1.5, 0], rep: 0.30, bend: 0.2 },
   pass:       { reg: 0,  span: 1.00, dens: 1.25, leg: 0.80, stac: 0.70, ahead: 0.000,  rest: 0.5, phr: [4, 5, 6],    slide: 0.08, vib: 0.7, land: "third",  sc: "bebop",     start: [0, 0], rep: 0.03, bend: 0.7 },
   metheny:    { reg: 4,  span: 1.25, dens: 1.10, leg: 0.88, stac: 0.80, ahead: 0.004,  rest: 0.8, phr: [5, 6, 8],    slide: 0.26, vib: 0.7, land: "nine",   sc: "lydpenta",  start: [0.5, 1.5, 2.5], rep: 0.05, bend: 1.1 },
   holdsworth: { reg: 2,  span: 1.40, dens: 1.20, leg: 0.97, stac: 0.95, ahead: 0.006,  rest: 0.7, phr: [4, 6, 8],    slide: 0.04, vib: 0.5, land: "tension", sc: "melmin",   start: [0, 1, 2], rep: 0.01, bend: 1.6 },
@@ -5502,8 +5504,8 @@ function landPc(kind, ch) {
 /* 第114版：奏者の型を「スタイルにおまかせ」にしたとき、拍頭のコード音などの品質が近い型を曲ごとに混ぜる（専用の乱数）。
    ネオクラシカルは「イングヴェイ風」だけが和声への忠実さを保つので混ぜない（スイープの型の散らしで変える）。 */
 var VOICE_POOL = { bossa: ["jobim", "jobim", "jobim", "lowe"], tango: ["piazzolla"], gamelan: ["gamelan"], andean: ["andean"], arabic: ["arabic"], hawaiian: ["hawaiian"], balkan: ["balkan"], country: ["country"], afrobeat: ["afrobeat"], reggae: ["reggae"], celtic: ["celtic"], fusion: ["corea", "corea", "metheny", "pass", "mclaughlin", "martino", "mancuso"], mathrock: ["poitrine", "poitrine", "mclaughlin", "corea"],
-  gypsy: ["django", "django", "bireli", "rosenberg"], swing: ["christian", "christian", "burrell", "kessel", "wes"],
-  bebop: ["christian", "pass", "martino", "kessel"], soul: ["wes", "burrell", "kessel"], modern: ["metheny", "holdsworth", "mancuso", "martino"],
+  gypsy: ["django", "django", "bireli", "rosenberg"], swing: ["christian", "christian", "burrell", "kessel", "wes", "monk"],
+  bebop: ["christian", "pass", "martino", "kessel", "monk"], soul: ["wes", "burrell", "kessel"], modern: ["metheny", "holdsworth", "mancuso", "martino", "monk"],
   neo: ["yngwie", "yngwie", "becker", "takasaki", "vai", "impellitteri", "gilbert", "macalpine", "romeo", "romeo"], orchestra: ["bach", "bach", "paganini", "vivaldi", "mozart", "beethoven", "chopin", "haydn"], thrash: ["kirk", "slayer", "kirk"], death: ["steer", "vader", "steer"], melodeath: ["amott", "loomis", "amott"], black: ["ihsahn", "samoth", "ihsahn"], arena: ["schon", "vai", "zakk", "page", "beck"],
   flamenco: ["tradicional", "paco", "tomatito", "nino", "amigo", "nunez", "chicuelo"], classical: ["yamashita", "yamashita", "villalobos", "dyens", "barrios"],
   baroque: ["bach", "bach", "scarlatti"] };
@@ -6683,6 +6685,19 @@ FORMS.rk_hx2 = rockForm("ブルース・ロック(短調)：i 4小節 → iv →
 /* ジョビンの和音進行（第466版）：GP譜25曲の和音(analyze_jobim_chords.js)から、よく出る動きを、曲そのものではなく型として。
    ・Imaj7 → II7(V/V) の動き（4小節の動機の最多：Imaj7 Imaj7 II7 II7、14＋4回）／・Imaj7 → Im6（長→同主短調、12回）／・I6 → IVmaj7、i → iv（根音の4度上、20・16回）
    ・ii-V-I を全音ずつ下げる連鎖（Im7 → IV7 → ♭VIImaj7 型、6回ほか）／・トライトーン代理（dom7 → 半音下の maj7、12回）／・減7の経過（i7 → ♭ii°7 など） */
+/* モンクの和音進行(第471版)：Straight No Chaser／Blue Monk／Round Midnight のGP譜の和音から、曲そのものではなく型として */
+FORMS.monksnc12 = { label: "モンク型ブルース 12小節（Straight No Chaser 型：IV7、ii-V、3小節めの♭9のぶつかり、Ⅲm7♭5→Ⅵ7→ⅱm7→Ⅴ7）", bars: 12, minor: false, ts: [4, 4], sec: "AAA", tempo: 200,
+  ch: [T(0, "dom7"), T(5, "dom7"), T(0, "dom7"), T(7, "m7", 2), T(0, "dom7", 2), T(5, "dom7"), T(5, "dom7"), T(0, "dom7"), T(0, "dom7"),
+       T(11, "m7b5", 2), T(9, "dom7", 2), T(2, "m7"), T(7, "dom7"), T(0, "dom7")] };
+FORMS.monkblues12 = { label: "モンク型ブルース 12小節（Blue Monk 型：I7→IV7→♯Ⅳdim7、5小節めからⅣ、終わりはⅤ7）", bars: 12, minor: false, ts: [4, 4], sec: "AAA", tempo: 120,
+  ch: [T(0, "dom7"), T(5, "dom7"), T(0, "dom7"), T(0, "dom7", 2), T(7, "dom7", 2), T(5, "dom7"), T(6, "dim7"), T(0, "dom7"), T(0, "dom7"),
+       T(7, "dom7"), T(5, "dom7"), T(0, "dom7"), T(7, "dom7")] };
+FORMS.monkmid32 = { label: "モンク型バラード（短調）AABA 32小節（Round Midnight 型：i、iiø→V7♭9、i(maj7)→Ⅳ7、♭VIm7→♭II7、♭IIImaj7）", bars: 32, minor: true, ts: [4, 4], sec: "AABA", tempo: 66,
+  ch: (function () {
+    var A = [T(0, "m7"), T(2, "m7b5", 2), T(7, "dom7b9", 2), T(0, "mMaj7", 2), T(5, "dom7", 2), T(8, "dom7"), T(2, "m7b5", 2), T(7, "dom7b9", 2), T(0, "m7", 2), T(5, "dom7", 2), T(3, "maj7"), T(2, "m7b5", 2), T(7, "dom7b9", 2)];
+    var B = [T(5, "m7", 2), T(10, "dom7", 2), T(3, "maj7"), T(2, "m7b5", 2), T(7, "dom7b9", 2), T(0, "m7"), T(5, "m7", 2), T(10, "dom7", 2), T(3, "maj7"), T(2, "m7b5", 2), T(7, "dom7b9", 2), T(0, "mMaj7", 2), T(7, "dom7b9", 2)];
+    return A.concat(A, B, A);
+  })() };
 FORMS.jobim32 = { label: "ボサ ジョビン型 AABA 32小節（I→II7、ii-V、全音ずつ下がる連鎖のB）", bars: 32, minor: false, ts: [4, 4], sec: "AABA", tempo: 120,
   ch: (function () {
     var A = [T(0, "maj7"), T(0, "maj7"), T(2, "dom9"), T(2, "dom9"), T(2, "m7"), T(7, "dom7b9"), T(0, "maj6"), T(2, "m7", 2), T(7, "dom7b9", 2)];
@@ -9924,6 +9939,59 @@ function devSpaceLine(t0, beats, ch, cur, goal, lo, hi, rng) {
     ix = clampIdx(g, ix + rng.wpick([[1, 3], [-1, 3], [2, 2], [-2, 2], [0, 1]]));
   }
   return { notes: out, cur: g[clampIdx(g, ix)] };
+}
+/* ---- セロニアス・モンク風 ----
+   解析(GP譜4曲)：①半音階の上行(F-G-Ab-A-Bb)で和音の音へ着き、長く伸ばす ②同じ形を半音／全音上げて繰り返す(Straight No Chaser) ③同音の反復(3連)のあと下る
+   ④オクターヴ下へ跳ぶ(F4→F3) ⑤裏から入り、休みが長い。調外れに聞こえる半音も、着く音が和音の音ならモンクらしい。 */
+function devMonk(t0, beats, ch, cur, goal, lo, hi, rng) {
+  var out = [], i, kind = rng.wpick([["chrom", 4], ["seq", 4], ["rep", 2.5], ["octave", 1.6], ["stab", 2]]);
+  var land = inRange(nearest(chordPcs(ch), ch.root, cur), lo, hi), p, t;
+  var st = tStep(0.5);
+  if (kind === "chrom") {
+    /* 半音階の上行(まれに下行)を、着地の和音の音へ。最後を長く */
+    var n = rng.pick([4, 4, 5, 5, 6]), dir = rng.chance(0.8) ? 1 : -1, at = rng.pick([0, 0, 0.5, 1]);
+    for (i = 0; i < n; i++) {
+      p = land - dir * (n - 1 - i);
+      t = at + i * st; if (t >= beats - 0.5) break;
+      out.push({ t: t0 + t, d: st * 0.9, p: inRange(p, lo, hi), v: 84 + rng.i(10) - (i === 0 ? 4 : 0) });
+    }
+    t = at + n * st; if (t < beats - 0.4) out.push({ t: t0 + t, d: Math.min(beats - t, rng.pick([1.5, 2, 2.5])) * 0.92, p: inRange(land + (dir > 0 ? 0 : 0), lo, hi), v: 92 + rng.i(8) });
+    else if (out.length) out[out.length - 1].d = Math.max(out[out.length - 1].d, 1.0);
+  } else if (kind === "seq") {
+    /* 短い形(全音／半音の並び)を、半音か全音上げて(まれに下げて)もう一度。最後を長く */
+    var cell = rng.pick([[0, 2, 3, 4], [0, 1, 2, 3], [0, 2, 3], [0, 2, 4, 3], [0, 1, 3]]);
+    var shift = rng.pick([1, 2, 2, -3]), at2 = rng.pick([0, 0.5]), base = inRange(land - cell[cell.length - 1], lo, hi);
+    for (var r = 0; r < 2; r++) {
+      for (i = 0; i < cell.length; i++) {
+        t = at2 + (r * (cell.length + 1) + i) * st; if (t >= beats - 0.5) break;
+        out.push({ t: t0 + t, d: st * 0.9, p: inRange(base + cell[i] + (r ? shift : 0), lo, hi), v: (i === 0 ? 92 : 80) + rng.i(8) });
+      }
+    }
+    if (out.length) { var lastN = out[out.length - 1]; lastN.d = Math.max(lastN.d, Math.min(beats - (lastN.t - t0), 2) * 0.92); }
+  } else if (kind === "rep") {
+    /* 同音の反復(3連か8分)のあと、1〜2音下って伸ばす */
+    var rp = rng.chance(0.5) ? tStep(1 / 3) : st, k0 = rng.pick([3, 3, 4]), at3 = rng.pick([0, 0.5, 1]);
+    p = land;
+    for (i = 0; i < k0; i++) { t = at3 + i * rp; if (t >= beats - 0.6) break; out.push({ t: t0 + t, d: rp * 0.85, p: p, v: 80 + rng.i(10) + (i === 0 ? 8 : 0) }); }
+    t = at3 + k0 * rp; if (t < beats - 0.4) {
+      out.push({ t: t0 + t, d: rp * 0.9, p: inRange(p - rng.pick([1, 2]), lo, hi), v: 80 + rng.i(8) });
+      t += rp; if (t < beats - 0.4) out.push({ t: t0 + t, d: Math.min(beats - t, 2) * 0.92, p: inRange(p - rng.pick([2, 3, 4]), lo, hi), v: 90 + rng.i(8) });
+    }
+  } else if (kind === "octave") {
+    /* 高い音のあと、オクターヴ(か近く)下へ跳んで長く */
+    var hiP = inRange(land, lo + 12 > hi ? lo : lo + 12, hi), lw = hiP - 12 >= lo ? hiP - 12 : hiP;
+    var at4 = rng.pick([0, 0.5]);
+    out.push({ t: t0 + at4, d: 0.45, p: hiP, v: 94 + rng.i(8) });
+    out.push({ t: t0 + at4 + st, d: Math.min(beats - at4 - st, 2.5) * 0.92, p: lw + (rng.chance(0.3) ? 1 : 0), v: 88 + rng.i(8) });
+  } else {
+    /* 1音だけ裏から入って長く(または2つ叩いて止める) */
+    var at5 = rng.pick([0.5, 1, 1.5]);
+    out.push({ t: t0 + at5, d: rng.pick([1.5, 2, 2.5]) * 0.92, p: land, v: 90 + rng.i(10) });
+    if (rng.chance(0.4)) out.push({ t: t0 + at5 + rng.pick([2, 2.5]), d: 0.45, p: inRange(land + rng.pick([-1, 1]), lo, hi), v: 82 + rng.i(8) });
+  }
+  out = out.filter(function (n) { return n.t >= t0 && n.t < t0 + beats - 0.05; });
+  if (!out.length) out.push({ t: t0 + 0.5, d: 1.5, p: land, v: 88 });
+  return { notes: out, cur: out[out.length - 1].p };
 }
 /* フォール：伸ばした音のあと、半音で滑り落ちる */
 function devFall(t0, beats, ch, cur, lo, hi, rng) {
@@ -13252,6 +13320,9 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
       } else if (v === "jobim") {
         /* 解析（ジョビン33曲）：1小節の音数4.2（少ない）・同音13%・半音の歩み・オクターヴの跳躍17%・ハンマリング4%。休みの多い、歌うメロディ */
         mode = rng.wpick([["sparse", 5], ["chordmel", 3], ["chrom", last === "chrom" ? 0 : 2.5], ["hold", 2], ["lick", 1.5], ["bebop", 1]]);
+      } else if (v === "monk") {
+        /* 解析(モンク4曲)：半音の歩み36〜46%・同音の反復・半音階の上行＋長い音・同じ形を上げて繰り返す・オクターヴ下への跳び。休みが長い */
+        mode = rng.wpick([["monk", last === "monk" ? 5 : 9], ["sparse", 1], ["hold", 1.2], ["chrom", last === "chrom" ? 0 : 1.2], ["restate", 1], ["cluster", last === "cluster" ? 0 : 0.6]]);
       } else if (v === "lowe") {
         mode = rng.wpick([["sparse", 6], ["bebop", 3], ["hold", 2], ["lick", 2]]);
       } else if (v === "pass") {
@@ -13503,6 +13574,7 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
       if (mode === "whole") { push(devWholeTone(t0, beats, ch, cur, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "iivi") { push(devIIVI(t0, beats, chs, cur, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "changes") { push(devChanges(t0, beats, chs, cur, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
+      if (mode === "monk") { push(devMonk(t0, beats, ch, cur, goal, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "space") { push(devSpaceLine(t0, beats, ch, cur, goal, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "fall") { push(devFall(t0, beats, ch, cur, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
       if (mode === "restate") { push(devRestate(t0, beats, ch, cur, goal, lo, hi, rng)); prevBar = notes.slice(mark); continue; }
@@ -13912,7 +13984,40 @@ function arenaComp(chs, form, opt, rng, ctx) {
   });
   return out;
 }
+/* ---- セロニアス・モンク風の伴奏 ----
+   解析(Straight No Chaser の和音)：低い順に 根音-3度-7度-3度(上)-5度-根音 と積み、下を広く・上を詰める。拍頭に置いて小節いっぱい伸ばす。
+   モンクらしく、短2度の不協和(根音の半音上＝♭9を上に足す)を時々混ぜ、2拍目の裏・4拍目の裏の刺しと、何も弾かない小節も置く。 */
+function monkVoicing(ch, rng) {
+  var iv = QUAL[ch.q].iv, t3 = iv.indexOf(3) >= 0 ? 3 : (iv.indexOf(5) >= 0 ? 5 : 4);
+  var t7 = iv.indexOf(10) >= 0 ? 10 : (iv.indexOf(11) >= 0 ? 11 : 9);
+  var t5 = iv.indexOf(6) >= 0 ? 6 : (iv.indexOf(8) >= 0 ? 8 : 7);
+  var r = inRange(nearest([0], ch.root, 46), 40, 52), v = [r], rel = [t3, t7, t3 + 12, t5 + 12, 12 + (ch.q === "dom7b9" || ch.q === "dom7alt" ? 1 : 0)], i, last = r;
+  for (i = 0; i < rel.length; i++) { var p = ch.root + rel[i]; while (p <= last) p += 12; while (p - last > 12) p -= 12; if (p > last) { v.push(p); last = p; } }
+  if (rng.chance(0.3)) { var top = v[v.length - 1] + 1; if (top <= 72) v.push(top); }                    /* 上に半音(短2度)のぶつかり */
+  return v;
+}
+function monkComp(chs, form, sty, opt, rng, ctx) {
+  var beats = form.ts[0], bars = form.bars, notes = [], bar;
+  function hit(t, d, vel, thin) {
+    var ch = chordAt(chs, t), v = monkVoicing(ch, rng);
+    if (thin) v = [v[1], v[2], v[3]].filter(function (x) { return x != null; });
+    v.forEach(function (p, j) { notes.push({ t: t + j * 0.004, d: d, p: p, fx: 1, v: Math.max(28, Math.min(110, vel - j * 3 + rng.i(6))) }); });
+  }
+  for (bar = 0; bar < bars; bar++) {
+    var T0 = bar * beats, kind = bar === 0 ? "hold" : rng.wpick([["hold", 4], ["stab", 3.5], ["late", 2], ["rest", bar % 4 === 3 ? 1 : 2.2], ["two", 1.2]]);
+    var chA = chordAt(chs, T0), chB = chordAt(chs, T0 + beats / 2), changed = chA !== chB;
+    if (kind === "rest" && !changed) continue;
+    if (kind === "hold" || (kind === "rest" && changed)) {
+      if (changed) { hit(T0, beats / 2 * 0.97, 78); hit(T0 + beats / 2, beats / 2 * 0.97, 74); }
+      else hit(T0, beats * 0.97, 80 + rng.i(8));
+    } else if (kind === "stab") { hit(T0 + 0.5, 0.45, 76, true); hit(T0 + 2.5, 0.5, 72, true); }
+    else if (kind === "late") { hit(T0 + 1.5, 0.5, 80, true); hit(T0 + 3, 0.9, 74); }
+    else { hit(T0, 0.7, 84); hit(T0 + 2, 0.7, 76); }
+  }
+  return notes;
+}
 function genComp(chs, form, sty, opt, rng, ctx) {
+  if (voiceOf(opt, sty) === "monk" && /^(green|piano|quartal|organ|ballad)$/.test(sty.comp || "")) return monkComp(chs, form, sty, opt, rng, ctx);
   if (form.cafe) return cafeComp(chs, form, opt, rng, ctx);
   if (sty.comp === "arena") return arenaComp(chs, form, opt, rng, ctx);
   if (sty.comp === "rockgtr") return rockChordGtr(chs, form, sty, opt, rng, ctx);
@@ -17024,7 +17129,8 @@ function artiComp(notes, sty, rng) {
   notes.sort(function (a, b) { return a.t - b.t; });
   var i, j, groups = [], cur = [];
   for (i = 0; i < notes.length; i++) {
-    if (!cur.length || notes[i].t - cur[0].t < 0.05) cur.push(notes[i]);
+    /* 印(fx)つきの音(モンクの6音の和音など)は、ストラムで広がっても1つの和音として扱う */
+    if (!cur.length || notes[i].t - cur[0].t < 0.05 || (notes[i].fx && cur[cur.length - 1].fx && notes[i].t - cur[cur.length - 1].t < 0.06 && notes[i].t - cur[0].t < 0.3)) cur.push(notes[i]);
     else { groups.push(cur); cur = [notes[i]]; }
   }
   if (cur.length) groups.push(cur);
@@ -22534,7 +22640,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 485;
+var BUILD_NO = 486;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 173;
 function r3(x) { return Math.round(x * 1000) / 1000; }
@@ -24269,6 +24375,7 @@ var KW_RULES = [
   [/デフランチェスコ|デフランシスコ|defrancesco|チェンバース|dennis\s*chambers|オルガン・?トリオ|organ\s*trio/i, { style: "mcl_organtrio" }, 9, "マクラフリン風オルガン・トリオ（マクラフリン・デフランチェスコ・チェンバース）"],
   [/ジプシー|gypsy|manouche|マヌーシュ|ジャンゴ|django|ホットクラブ|hot\s*club/i, { style: "gypsy" }, 10, "ジプシー・スウィング"],
   [/ビバップ|bebop|bop\b|チャーリー・?パーカー|charlie\s*parker/i, { style: "bebop" }, 10, "ビバップ"],
+  [/セロニアス|モンク|thelonious|monk\b|ラウンド・?ミッドナイト|round\s*midnight|ストレート・?ノー・?チェイサー|straight\s*no\s*chaser/i, { style: "swing", voice: "monk" }, 11, "ジャズ（セロニアス・モンクの語法）"],
   [/バラード|ballad/i, { style: "ballad" }, 9, "バラード"],
   [/ボサ(?:ノ?ヴァ|ノバ)?|bossa/i, { style: "bossa" }, 10, "ボサノヴァ"],
   [/ジョビン|jobim|イパネマ|ipanema/i, { style: "bossa", voice: "jobim" }, 11, "ボサノヴァ（ジョビンの語法）"],
@@ -25622,7 +25729,7 @@ function spliceHints(style, tempo, tonic, minor) {
   return arr.map(function (h) { return { part: h[0], query: h[1] + tail, tip: h[2] }; });
 }
 
-var API = { gtrFinger: gtrFinger, gtrHardCount: gtrHardCount, gtrChordFix: gtrChordFix,
+var API = { monkComp: monkComp, gtrFinger: gtrFinger, gtrHardCount: gtrHardCount, gtrChordFix: gtrChordFix,
   melodyMetrics: melodyMetrics, matchVoices: matchVoices, MEL_METRIC_KEYS: MEL_METRIC_KEYS, spliceParse: spliceParse, SPLICE_PICKS: SPLICE_PICKS, spliceHints: spliceHints, loopermanFor: loopermanFor, splicePicksFor: splicePicksFor, sitesFor: sitesFor, loopBpm: loopBpm, loopBarCandidates: loopBarCandidates, audioToMidi: audioToMidi, audioToChords: audioToChords, chordsToMidi: chordsToMidi, estimateTempo: estimateTempo, analyzeNotesAndChords: analyzeNotesAndChords, melodyToText: melodyToText, textToMelody: textToMelody, notesToMidi: notesToMidi, pickFormFromText: pickFormFromText, applySectionGains: applySectionGains, sectionGainsPreset: sectionGainsPreset, suggestNextChords: suggestNextChords, splitMora: splitMora, assignLyrics: assignLyrics, parseLeadSheetXML: parseLeadSheetXML, parseIReal: parseIReal, settingsFromIReal: settingsFromIReal, readSettingsFile: readSettingsFile, irealUnscramble: irealUnscramble, leadSheetChordText: leadSheetChordText, settingsFromMidi: settingsFromMidi, progFromText: progFromText, melodyFromText: melodyFromText, coercePromptReply: coercePromptReply, parsePrompt: parsePrompt, resolvePromptTempo: resolvePromptTempo, promptSchemaText: promptSchemaText, sanitizePromptSet: sanitizePromptSet, KW_RULES: KW_RULES, meterList: meterList, songBarLens: songBarLens, barAtBeat: barAtBeat, songMetersForEditor: songMetersForEditor, songUnit: songUnit, barStartOf: barStartOf, barLen: barLen, posToBar: posToBar, sourceAnalysis: sourceAnalysis,
   RNG: RNG, FORMS: FORMS, STYLES: STYLES, QUAL: QUAL, VOICES: VOICES, EMOTION: EMOTION, INSTR: INSTR, MCHAR: MCHAR, resolveAuto: resolveAuto,
   BUILD: BUILD_NO, GEN: GEN_NO, packSong: packSong, unpackSong: unpackSong, codeOf: codeOf, optOfCode: optOfCode,
