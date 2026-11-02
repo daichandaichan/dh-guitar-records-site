@@ -1,5 +1,89 @@
 [
  {
+  "id": "2026-11-03_rk_zappa_rk_zp1",
+  "date": "2026-11-03",
+  "style": "rk_zappa",
+  "styleShort": "ロック：ザッパ型",
+  "styleLabel": "ロック：ザッパ型（フランク・ザッパ／変拍子・ユニゾンのリフ／ギター2本＋シンセ）",
+  "form": "rk_zp1",
+  "formLabel": "ザッパ型(4/4)：i IV ♭III のヴァンプ → ♭VI ♭VII 16小節",
+  "title": "Blues à Django (Cm)",
+  "key": "Cm",
+  "tempo": 112,
+  "tempoGenerated": 112,
+  "bars": 92,
+  "seed": 20261103,
+  "gen": 173,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 29
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 29
+   },
+   {
+    "id": "comp",
+    "name": "Synth (riff/pad)",
+    "prog": 80
+   },
+   {
+    "id": "gtr2",
+    "name": "Guitar 2 (rhythm riff)",
+    "prog": 30
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "gtr3",
+    "name": "Guitar 3 (harmony)",
+    "prog": 30
+   },
+   {
+    "id": "gtr4",
+    "name": "Guitar 4 (riff double / harmony)",
+    "prog": 30
+   }
+  ],
+  "chordsOneChorus": [
+   "Cm",
+   "Cm",
+   "F",
+   "D#",
+   "Cm",
+   "Cm",
+   "F",
+   "D#",
+   "G#",
+   "G#",
+   "A#",
+   "G",
+   "Cm",
+   "Cm",
+   "Cm7",
+   "Cm"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 173). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-03_rk_zappa_rk_zp1/2026-11-03_rk_zappa_rk_zp1_midi-set.zip",
+   "midi": "demos/2026-11-03_rk_zappa_rk_zp1/2026-11-03_rk_zappa_rk_zp1_all.mid",
+   "info": "demos/2026-11-03_rk_zappa_rk_zp1/info.md",
+   "song": "demos/2026-11-03_rk_zappa_rk_zp1/song.json"
+  }
+ },
+ {
   "id": "2026-11-02_reggae_rg_lovers",
   "date": "2026-11-02",
   "style": "reggae",
