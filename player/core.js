@@ -16232,6 +16232,7 @@ function stemExpression(id, notes, sections, opt, rng, beats, style, prof) {
 var GTR_BEND_STYLES = ["arena", "neo", "mathrock", "thrash", "death", "melodeath", "black", "djent", "bk_burzum", "bk_mayhem", "rk_la", "rk_hard", "rk_90", "rk_purple", "rk_sabbath", "rk_maiden", "rk_hendrix", "rk_zappa", "rk_heavy", "rk_power", "rk_xjapan", "pg_dt", "pg_kc", "pg_elp"];      /* ギターのベンドは整数(半音・全音)で、秒で決めた速さ。ロック・メタル系すべて */
 var KIME_CHOKE_P = { thrash: 0.3, death: 0.26, melodeath: 0.3, black: 0.24, djent: 0.2, neo: 0.3, mathrock: 0.3, arena: 0.34, bk_burzum: 0.2, bk_mayhem: 0.2 };      /* 合間のキメのチョーク：曲種ごとの確率(ロック系は既定 0.34) */
 function artiLead(notes, opt, rng, isSolo, prof) {
+  var yngLast = -99;      /* ユングヴェイの1音半チョークを入れた最後の位置(拍) */
   prof = prof || VOICE_PROFILE.auto;
   notes.sort(function (a, b) { return a.t - b.t; });
   var i, extra = [], grace = [];
@@ -16321,6 +16322,22 @@ function artiLead(notes, opt, rng, isSolo, prof) {
             bendRamp(extra, n.t + cS, n.t + cS + cUp, 0, ck, "out");
             bendRamp(extra, cEnd - cDn, cEnd, ck, 0, "in"); kdone = true;
           }
+        }
+      }
+    }
+    /* ユングヴェイの語法：高音域(1弦21フレット付近)の、2拍近い長さのフレーズ終わりの音を、1音半(3半音)チョーキング・アップして、ロングトーンで伸ばす(上げた先が調の音のときだけ)。
+       ピッチの安定：目的の高さは整数の3半音、約150ms待ってから約300msで上げ、上げ終わったら動かさず(ビブラートは CC1)、音が切れた約30ms後に戻す。12拍以上あけて、ここぞに少なく。opt.yngwieChoke=false で無効 */
+    if (opt.expr && gBn && opt.voice === "yngwie" && opt.yngwieChoke !== false && !scoopK && !kdone && phraseEnd && n.d >= 1.9 && n.p >= 74 && n.p <= 92 && n.t - yngLast >= 12) {
+      var ky = {}, tny = (((opt.tonic || 0) % 12) + 12) % 12;
+      (opt.mode === "major" ? [0, 2, 4, 5, 7, 9, 10, 11] : [0, 2, 3, 5, 7, 8, 9, 10]).forEach(function (x) { ky[(x + tny) % 12] = 1; });
+      if (ky[(n.p + 3) % 12] && rng.chance(0.5)) {
+        var ysp = (CUR_TEMPO || 120) / 60, yS = 0.15 * ysp, yUp = 0.30 * ysp;
+        if (yS + yUp + 0.3 * ysp <= n.d) {
+          bendRamp(extra, n.t + yS, n.t + yS + yUp, 0, 3, "out");
+          extra.push({ t: n.t + yS + yUp + 0.01, bend: 3 });
+          extra.push({ t: n.t + n.d + 0.03 * ysp, bend: 0 });
+          if (n.d >= 1.4) { extra.push({ t: n.t + yS + yUp, cc: 1, val: 0 }); ccRamp(extra, 1, n.t + yS + yUp + 0.15 * ysp, n.t + yS + yUp + 0.6 * ysp, 0, 70, "in"); ccRamp(extra, 1, n.t + n.d - 0.1 * ysp, n.t + n.d, 70, 0, "lin"); }
+          kdone = true; yngLast = n.t;
         }
       }
     }
@@ -22097,7 +22114,8 @@ function noteEvents(stem, song, marks) {
   ev.push({ tick: 0, pri: 2, data: [0xc0 | chn, stem.prog & 127] });
   if (chn !== 9) {
     /* 頭の初期値：ピッチベンド幅＝±2半音（RPN 0）、ベンドは中央、モジュレーション0、エクスプレッション100 */
-    [[101, 0], [100, 0], [6, 2], [38, 0], [101, 127], [100, 127], [1, 0], [11, 100]].forEach(function (c) {
+    var bR = 2; (stem.extra || []).forEach(function (e0) { if (e0.bend != null && Math.abs(e0.bend) > bR + 1e-6) bR = Math.min(12, Math.ceil(Math.abs(e0.bend) / 2 - 1e-6) * 2); });      /* 2半音を超えるベンド(ユングヴェイの1音半チョークなど)がある声部は、ベンド幅を広げる(偶数の半音＝4・6…。3半音のベンドなら ±4) */
+    [[101, 0], [100, 0], [6, bR], [38, 0], [101, 127], [100, 127], [1, 0], [11, 100]].forEach(function (c) {
       ev.push({ tick: 0, pri: 1, data: [0xb0 | chn, c[0], c[1]] });
     });
     ev.push({ tick: 0, pri: 1, data: [0xe0 | chn, 0, 64] });
@@ -22107,7 +22125,7 @@ function noteEvents(stem, song, marks) {
       var e = stem.extra[i], tk = Math.max(0, Math.round(e.t * PPQ));
       if (e.cc != null) ev.push({ tick: tk, pri: 2, data: [0xb0 | chn, e.cc & 127, Math.max(0, Math.min(127, e.val | 0))] });
       else if (e.bend != null) {
-        var bv = Math.round(8192 + e.bend / 2 * 8191);   /* ベンド幅は±2半音の前提 */
+        var bv = Math.round(8192 + e.bend / (bR || 2) * 8191);   /* ベンド幅は±2半音(2半音を超えるベンドがある声部は、その幅) */
         bv = Math.max(0, Math.min(16383, bv));
         ev.push({ tick: tk, pri: 2, data: [0xe0 | chn, bv & 127, (bv >> 7) & 127] });
       }
@@ -22444,9 +22462,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 481;
+var BUILD_NO = 483;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 170;
+var GEN_NO = 171;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
