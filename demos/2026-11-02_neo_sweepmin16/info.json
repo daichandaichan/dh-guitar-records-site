@@ -1,6 +1,6 @@
 {
-  "id": "2026-11-03_neo_sweepmin16",
-  "date": "2026-11-03",
+  "id": "2026-11-02_neo_sweepmin16",
+  "date": "2026-11-02",
   "style": "neo",
   "styleShort": "ネオクラシカル",
   "styleLabel": "ネオクラシカル（ハーモニック・マイナー）",
@@ -89,9 +89,9 @@
   "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 171). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
   "files": {
-    "zip": "demos/2026-11-03_neo_sweepmin16/2026-11-03_neo_sweepmin16_midi-set.zip",
-    "midi": "demos/2026-11-03_neo_sweepmin16/2026-11-03_neo_sweepmin16_all.mid",
-    "info": "demos/2026-11-03_neo_sweepmin16/info.md"
+    "zip": "demos/2026-11-02_neo_sweepmin16/2026-11-02_neo_sweepmin16_midi-set.zip",
+    "midi": "demos/2026-11-02_neo_sweepmin16/2026-11-02_neo_sweepmin16_all.mid",
+    "info": "demos/2026-11-02_neo_sweepmin16/info.md"
   },
-  "audio": "demos/2026-11-03_neo_sweepmin16/2026-11-03_neo_sweepmin16.mp3"
+  "audio": "demos/2026-11-02_neo_sweepmin16/2026-11-02_neo_sweepmin16.mp3"
 }
