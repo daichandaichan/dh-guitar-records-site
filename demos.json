@@ -168,6 +168,107 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-03_neo_neobaroque32",
+  "date": "2026-11-03",
+  "style": "neo",
+  "styleShort": "ネオクラシカル",
+  "styleLabel": "ネオクラシカル（ハーモニック・マイナー）",
+  "form": "neobaroque32",
+  "formLabel": "バロック循環 32小節（ネオクラシカル）",
+  "title": "Café de Paris (F#m)",
+  "key": "F#m",
+  "tempo": 168,
+  "tempoGenerated": 168,
+  "bars": 268,
+  "seed": 72031,
+  "gen": 168,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 30
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 30
+   },
+   {
+    "id": "comp",
+    "name": "Rhythm Gtr (power)",
+    "prog": 29
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "gtr3",
+    "name": "Guitar 3 (riff double / harmony)",
+    "prog": 30
+   },
+   {
+    "id": "gtr2",
+    "name": "Guitar 2 (twin harmony)",
+    "prog": 30
+   },
+   {
+    "id": "org",
+    "name": "Organ sustain (chords)",
+    "prog": 19
+   }
+  ],
+  "chordsOneChorus": [
+   "F#m",
+   "Bm",
+   "E",
+   "A",
+   "D",
+   "G#m7b5",
+   "C#(b9)",
+   "F#m",
+   "F#m",
+   "Bm",
+   "E",
+   "A",
+   "D",
+   "G#m7b5",
+   "C#(b9)",
+   "F#m6",
+   "A",
+   "C#m",
+   "F#m",
+   "Bm",
+   "E",
+   "D",
+   "G#m7b5",
+   "G#m7",
+   "C#9",
+   "F#m",
+   "Bm",
+   "E",
+   "A",
+   "D",
+   "G#m7b5",
+   "C#(b9)",
+   "F#m"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 168). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-03_neo_neobaroque32/2026-11-03_neo_neobaroque32_midi-set.zip",
+   "midi": "demos/2026-11-03_neo_neobaroque32/2026-11-03_neo_neobaroque32_all.mid",
+   "info": "demos/2026-11-03_neo_neobaroque32/info.md",
+   "song": "demos/2026-11-03_neo_neobaroque32/song.json"
+  }
+ },
+ {
   "id": "2026-11-02_reggae_rg_lovers",
   "date": "2026-11-02",
   "style": "reggae",
