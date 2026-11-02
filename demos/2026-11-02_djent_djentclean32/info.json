@@ -1,6 +1,6 @@
 {
-  "id": "2026-11-03_djent_djentclean32",
-  "date": "2026-11-03",
+  "id": "2026-11-02_djent_djentclean32",
+  "date": "2026-11-02",
   "style": "djent",
   "styleShort": "ジェント／テクニカル・メタル",
   "styleLabel": "ジェント／テクニカル・メタル（メシュガー型：奇数長のリフ×4拍子）",
@@ -63,9 +63,9 @@
   "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 171). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
   "files": {
-    "zip": "demos/2026-11-03_djent_djentclean32/2026-11-03_djent_djentclean32_midi-set.zip",
-    "midi": "demos/2026-11-03_djent_djentclean32/2026-11-03_djent_djentclean32_all.mid",
-    "info": "demos/2026-11-03_djent_djentclean32/info.md"
+    "zip": "demos/2026-11-02_djent_djentclean32/2026-11-02_djent_djentclean32_midi-set.zip",
+    "midi": "demos/2026-11-02_djent_djentclean32/2026-11-02_djent_djentclean32_all.mid",
+    "info": "demos/2026-11-02_djent_djentclean32/info.md"
   },
-  "audio": "demos/2026-11-03_djent_djentclean32/2026-11-03_djent_djentclean32.mp3"
+  "audio": "demos/2026-11-02_djent_djentclean32/2026-11-02_djent_djentclean32.mp3"
 }

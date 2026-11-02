@@ -91,6 +91,57 @@ function TG(deg, q, b) { var t = T(deg, q, b); t.lg = 1; return t; }
    ジャンルごとの「よくある2小節のまとまり」を積み上げて、毎回ちがう進行を作る。
    各まとまりは [度数, 種類, 拍数] の並び。最後は必ず終止で締める。 */
 var PROG = {
+  /* チック・コリア型（短調）：リードシート6曲の実測。根音は 4度上・半音下・短3度下、sus→maj7、♭II maj7♯11 の影、属7の半音の行き来 */
+  corea: {
+    cell: [
+      [2, [[0, "m11", 4], [2, "sus7", 4]]],
+      [2, [[3, "maj7", 4], [2, "dom7", 4]]],
+      [2, [[8, "maj7", 4], [7, "dom7alt", 4]]],
+      [2, [[0, "m7", 4], [3, "m7", 4]]],
+      [2, [[3, "maj7", 4], [6, "m7b5", 4]]],
+      [2, [[5, "m7", 4], [10, "dom7", 4]]],
+      [2, [[10, "maj7", 4], [9, "m7b5", 4]]],
+      [2, [[8, "dom7", 2], [9, "dom7", 2], [8, "dom7", 2], [9, "dom7", 2]]],
+      [2, [[1, "maj7s11", 4], [0, "m11", 4]]],
+      [2, [[2, "m7b5", 4], [7, "sus7", 4]]],
+      [4, [[0, "m7", 4], [8, "maj7", 4], [6, "m7b5", 4], [7, "dom7alt", 4]]],
+      [2, [[0, "m7", 4], [0, "m7", 4]]],
+      [2, [[0, "m11", 8]]],
+      [2, [[8, "maj7", 8]]],
+      [2, [[2, "sus7", 8]]]
+    ],
+    cad: [
+      [2, [[2, "m7b5", 4], [7, "dom7alt", 4]]],
+      [2, [[5, "m7", 2], [10, "dom7", 2], [0, "m9", 4]]],
+      [2, [[1, "maj7s11", 4], [0, "m11", 4]]],
+      [2, [[8, "maj7", 4], [7, "sus7", 2], [7, "dom7b9", 2]]]
+    ]
+  },
+  /* チック・コリア型（長調）：maj7 の半音下の連なり、ii–V、sus→解決、7th の短3度の動き */
+  coreaM: {
+    cell: [
+      [2, [[0, "maj7", 4], [11, "maj7", 4]]],
+      [2, [[3, "maj7", 4], [2, "maj7", 4]]],
+      [2, [[2, "m7", 4], [7, "dom9", 4]]],
+      [2, [[0, "maj7", 4], [9, "m7", 4]]],
+      [2, [[7, "sus7", 4], [7, "dom7", 4]]],
+      [2, [[4, "m7", 4], [9, "dom7b9", 4]]],
+      [2, [[11, "m7b5", 4], [4, "dom7alt", 4]]],
+      [2, [[5, "maj7", 4], [4, "m7", 4]]],
+      [2, [[6, "m7", 4], [11, "dom7", 4]]],
+      [2, [[10, "dom7", 2], [11, "dom7", 2], [10, "dom7", 2], [11, "dom7", 2]]],
+      [4, [[0, "maj7", 4], [8, "maj7", 4], [11, "m7", 4], [4, "dom7", 4]]],
+      [2, [[0, "maj7", 8]]],
+      [2, [[7, "sus7", 8]]],
+      [2, [[5, "maj7", 8]]]
+    ],
+    cad: [
+      [2, [[2, "m7", 2], [7, "dom7alt", 2], [0, "maj69", 4]]],
+      [2, [[5, "m7", 2], [10, "dom7", 2], [0, "maj7", 4]]],
+      [2, [[7, "sus7", 4], [0, "maj7s11", 4]]],
+      [2, [[2, "m7b5", 4], [7, "dom7alt", 4]]]
+    ]
+  },
   maj: {
     cell: [
       [2, [[2, "m7", 4], [7, "dom9", 4]]],
@@ -212,6 +263,7 @@ var PROG = {
 };
 function progFamily(styleKey, minor) {
   if (styleKey === "flamenco") return "flam";
+  if (styleKey === "fu_corea") return minor ? "corea" : "coreaM";
   if (styleKey === "modern" || styleKey === "odd") return "modal";
   if (styleKey === "latin") return minor ? "latin" : "latinM";
   if (styleKey === "bossa" || styleKey === "brazil") return minor ? "min" : "bossa";
@@ -2436,8 +2488,8 @@ var STYLES = {
   fu_corea: {
     fuFamily: "fusion", fuName: "チック・コリア型（スペイン・ラテン）",
     label: "フュージョン：チック・コリア型（スペイン・ラテンの8分／リターン・トゥ・フォーエヴァー）", fuBase: "fusion",
-    swing: 0.5, tempo: 176, comp: "rhodes", bass: "even8", drums: "latin", mel: "bebop",
-    forms: ["espana24", "rtfvamp16", "montuno16", "modal16", "susvamp16", "giant16", "rumble16", "auto16m"], voice: "corea", lead: 4, compProg: 4, feel: 16
+    swing: 0.5, tempo: 176, comp: "rhodes", bass: "corea", drums: "latin", mel: "bebop",
+    forms: ["espana24", "rtfvamp16", "montuno16", "modal16", "susvamp16", "giant16", "rumble16", "auto16m", "auto16", "auto32m", "auto32"], voice: "corea", lead: 4, compProg: 4, feel: 16
   },
   fu_weather: {
     fuFamily: "fusion", fuName: "ウェザー・リポート型（クロスオーバー）",
@@ -13676,7 +13728,9 @@ function leadVoicing(ch, prevV, lo, hi, kind) {
   t7 = iv.indexOf(10) >= 0 ? 10 : (iv.indexOf(11) >= 0 ? 11 : 9);
   t5 = iv.indexOf(6) >= 0 ? 6 : (iv.indexOf(8) >= 0 ? 8 : 7);
   t9 = (ch.q === "dom7b9" || ch.q === "dom7alt") ? 1 : 2;
-  if (kind === "quartal") {
+  if (kind === "quartal4") {                                                         /* チック・コリア：4度を3つ積んで、上に長3度(ソー・ホワット型)。7th・9th・11thを含む4声 */
+    sets.push([t7, t7 + 5, t7 + 10, t7 + 14], [t3, t3 + 5, t3 + 10, t3 + 14], [t9, t9 + 5, t9 + 10, t9 + 14]);
+  } else if (kind === "quartal") {
     sets.push([t3, t3 + 5, t3 + 10], [t7, t7 + 5, t7 + 10], [t9, t9 + 5, t9 + 10]);
   } else {
     sets.push([t3, t5, t7, t9 + 12]);                   /* Aフォーム */
@@ -14397,7 +14451,7 @@ function genComp(chs, form, sty, opt, rng, ctx) {
         if (Math.abs(hits[i][0] % 1) < 0.1 && rng.chance(0.45)) hits[i][0] += 0.5;   /* 頭を食う */
       }
       hits.sort(function (a, b) { return a[0] - b[0]; });
-      compKind = "quartal";
+      compKind = (opt.voice === "corea") ? "quartal4" : "quartal";
     } else if (style === "unison") {
       /* ここでは骨組みだけ。あとでテーマと同じ形に置き換える */
       var gaU = oddHeads(beats) || [0, Math.floor(beats / 2)], qu;
@@ -14782,7 +14836,7 @@ function genBass(chs, form, sty, opt, rng, ctx) {
     (opt.tempo >= 100) && rng.chance(0.3);
   var beats = form.ts[0], bars = form.bars, notes = [];
   var lo = 28, hi = 50;    /* ウッドベースの実音域。低めに寄せる */
-  var KEEP = { gamelan: 1, andean: 1, arabic: 1, hawaii: 1, balkan: 1, country: 1, celtic: 1, even8: 1, flamenco: 1, tumbao: 1, samba: 1, partido: 1, frevo: 1, choro: 1, baiao: 1 };
+  var KEEP = { corea: 1, gamelan: 1, andean: 1, arabic: 1, hawaii: 1, balkan: 1, country: 1, celtic: 1, even8: 1, flamenco: 1, tumbao: 1, samba: 1, partido: 1, frevo: 1, choro: 1, baiao: 1 };
   var style = (beats === 3 && !KEEP[sty.bass]) ? "waltz"
     : ((beats > 4 && !KEEP[sty.bass]) ? "walk4" : sty.bass);
   var solo = ctx && ctx.role === "solo";
@@ -15188,6 +15242,23 @@ function genBass(chs, form, sty, opt, rng, ctx) {
         if (rng.chance(0.3)) notes.push({ t: t0 + 3.75, d: 0.25, p: step(pickOf(cbz2, [10, 11], b2v)), v: vel(64) });
       }
       cur = b2v;
+    } else if (style === "corea" && beats === 4) {
+      /* チック・コリア型(実測：アイ・オブ・ザ・ビホルダー／ビュー・フロム・ジ・アウトサイド／スペイン)：16分の食い。強い位置は 0・0.75・1.5・2・2.75・3.5 拍、
+         音程の動きは 4度・5度が約35%、同音が約2割、8度跳躍が数%。小節の終わりの食いは、次の和音の根音を先取りする */
+      var cpc = chordAt(chs, t0 + 0.01), cnx = chordAt(chs, t0 + beats + 0.01), cah = (cnx !== cpc && rng.chance(0.8)) ? cnx : cpc;
+      var cPat = [[0, 0.75, 1.5, 2, 2.75, 3.5], [0.5, 1.5, 2, 2.75, 3.75], [0, 1.5, 2.75, 3.5], [0, 0.75, 2, 2.75, 3.5]][(bar + (bar >> 2)) % 4];
+      var cR = step(rootOf(cpc, cur)), cLast = cR, cj;
+      for (cj = 0; cj < cPat.length; cj++) {
+        var ct = cPat[cj], cp;
+        if (ct >= 3.4) cp = step(rootOf(cah, cLast));                                   /* 小節の終わりの食い：次の和音の根音 */
+        else if (cj === 0) cp = cR;                                                      /* 頭は根音 */
+        else if (ct === 2) cp = rng.chance(0.55) ? cR : step(pickOf(cpc, [7], cLast));  /* 3拍目は根音か5度 */
+        else { var rw = rng.f(); cp = rw < 0.22 ? cR : (rw < 0.52 ? step(pickOf(cpc, [7], cLast)) : (rw < 0.78 ? step(pickOf(cpc, [5], cLast)) : (rw < 0.88 ? inRange(cR + 12, lo, hi + 5) : step(pickOf(cpc, [10, 11], cLast))))); }
+        var cd = (cj < cPat.length - 1) ? Math.min(0.55, cPat[cj + 1] - ct - 0.1) : 0.45;
+        notes.push({ t: t0 + ct, d: Math.max(0.2, cd), p: cp, v: vel((ct % 1 === 0) ? 96 : 84) });
+        cLast = cp;
+      }
+      cur = cLast;
     } else { /* even8：8ビート系。拍のまとまりに合わせて刻む */
       var gg = groupsFor(form, beats, rng)[0], pos = 0, k;
       var rt = step(rootOf(ch, cur));
@@ -19863,6 +19934,7 @@ FORMS.mahav7 = { label: "マハヴィシュヌ型の7拍子（ドリアンのヴ
   ch: [{ deg: 0, q: "m7", b: 7 }, { deg: 0, q: "m7", b: 7 }, { deg: 0, q: "m7", b: 7 }, { deg: 0, q: "m7", b: 7 }, { deg: 3, q: "maj7", b: 7 }, { deg: 3, q: "maj7", b: 7 }, { deg: 10, q: "dom9", b: 7 }, { deg: 10, q: "dom9", b: 7 }, { deg: 0, q: "m7", b: 7 }, { deg: 0, q: "m7", b: 7 }, { deg: 0, q: "m7", b: 7 }, { deg: 0, q: "m7", b: 7 }, { deg: 8, q: "maj7", b: 7 }, { deg: 8, q: "maj7", b: 7 }, { deg: 7, q: "dom7alt", b: 7 }, { deg: 7, q: "dom7alt", b: 7 }] };
 /* 曲種のバリエーション（マクラフリン風・フュージョンの型）：基になる曲種（mclBase／fuBase）で作る。そのあいだだけ、基の曲種に
    バリエーションの伴奏・ベース・ドラム・テンポ・語法を重ねる。保存される曲種名はバリエーションの名前にする */
+var CUR_FU_KEY = null;      /* generate が基の曲種に切り替えている間、元の曲種(fu_corea など)を覚えておく */
 function generate(opt) {
   /* 呼び出し側が省いた数値の既定値（ツールやテストから呼ぶとき）：swing が無いと、拍の計算が NaN になって終わらなくなっていた */
   var S00 = STYLES[opt.style];
@@ -19887,8 +19959,8 @@ function generate(opt) {
     if (!opt.voice || opt.voice === "auto") opt.voice = RNG((((opt.seed || 1) * 83 + 5) % 2147483647) || 1).pick(VOICE_POOL.orchestra);
   } else if (S0.fuTone && !opt.toneOf) opt.toneOf = S0.fuTone;
   if (S0.orchBase && ORCH_COMPOSERS.indexOf(opt.voice) >= 0) { opt.style = key; return generateOrchestraComposer(opt, S0); }
-  STYLES[baseKey] = mix;
-  try { song = generateMain(opt); } finally { STYLES[baseKey] = saved; }
+  STYLES[baseKey] = mix; CUR_FU_KEY = key;
+  try { song = generateMain(opt); } finally { STYLES[baseKey] = saved; CUR_FU_KEY = null; }
   song.opt.style = key;
   if (S0.orchBase) { song.opt.voice = opt.voice; song.sty = S0; try { orchestrate(song, opt); } catch (eO) {} }
   if (S0.mclBase) song.opt.voice = opt.voice;
@@ -20119,11 +20191,11 @@ function generateMain(opt) {
     var barsG = form.bars, beatsG = form.ts[0];
     if (beatsG === 12) {
       /* コンパスものは 1コンパス＝1小節として、4拍単位で作ったものを3倍に伸ばす */
-      var base = genProgression(opt.style, form.minor, 8, rng), z;
+      var base = genProgression(CUR_FU_KEY === "fu_corea" ? CUR_FU_KEY : opt.style, form.minor, 8, rng), z;
       fg.ch = [];
       for (z = 0; z < base.length; z++) fg.ch.push(T(base[z].deg, base[z].q, base[z].b * 3));
     } else {
-      fg.ch = genProgression(opt.style, form.minor, barsG, rng);
+      fg.ch = genProgression(CUR_FU_KEY === "fu_corea" ? CUR_FU_KEY : opt.style, form.minor, barsG, rng);
     }
     form = fg;
   }
@@ -22462,9 +22534,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 483;
+var BUILD_NO = 485;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 171;
+var GEN_NO = 173;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
