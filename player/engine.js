@@ -3614,7 +3614,7 @@ function renderSongAudio(song, opts, progress) {
         }
         var rmsG = cnt ? Math.sqrt(ms / cnt) : 0, g = 0.89 / pk, tgtR = opts.rms || 0.14, capP = opts.pcap || 1.8;      /* 標準：実効値 約 −17dBFS・ピーク上限 1.8／大きめ・最大：尖った音をなだらかに抑えて、全体を持ち上げる */
         if (rmsG > 1e-5) g = Math.min(tgtR / rmsG, capP / pk);          /* 目標の実効値。ピークが大きい曲は上限で止める */
-        if (opts.asis) g = Math.min(1, 0.98 / pk);                      /* フェーダーのまま：音量そろえをしない（ピークが 0.98 を超えるときだけ、線形に下げる） */
+        if (opts.asis) g = Math.min(opts.mgain > 0 ? opts.mgain : 1, 0.98 / pk);                      /* フェーダーのまま：音量そろえをしない（ピークが 0.98 を超えるときだけ、線形に下げる） */
         if (opts.gain) g = opts.gain;                                   /* パートごとの書き出し：全体の音量の倍率をそのまま使う（パートの音量の関係を保つ） */
         var K = opts.asis ? 99 : 0.72;                                                  /* これを超える山は、なだらかに丸める（ソフトリミッター） */
         for (i = 0; i < N; i++) {

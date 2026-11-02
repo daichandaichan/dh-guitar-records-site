@@ -5,13 +5,13 @@
 - 形式: バロック循環 32小節（ネオクラシカル）
 - 調: Ebm
 - テンポ: 168 BPM（自動作曲の生成テンポ）
-- 種(seed): 98049／生成器: Hot Club Generator（第162版）
+- 種(seed): 98049／生成器: Hot Club Generator（第166版）
 
 ## 位置づけ
 自動作曲アプリによるデモ（MIDI 草稿）。後日 Cubase で音源・アレンジを整えて、デモアレンジとして再公開予定。
 
 ## 権利
-© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 162). MIDI draft — to be arranged in Cubase.
+© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 166). MIDI draft — to be arranged in Cubase.
 
 ## 曲の解説
 
@@ -51,7 +51,8 @@
 - メロディ（GM音色 30）: Ab3〜C#6／1小節あたり約1.2音
 - ソロ（GM音色 30）: Bb2〜D6／1小節あたり約5.4音
 - 伴奏（コード）（GM音色 29）: E2〜F#4／1小節あたり約8.5音
-- ベース（GM音色 33）: F1〜D3／1小節あたり約2.8音
-- ドラム（GM音色 0）: 3991打／1小節あたり約19.6打
-- Guitar 2 (twin harmony)（GM音色 30）: F#2〜Bb5／1小節あたり約1.4音
+- ベース（GM音色 33）: F1〜D3／1小節あたり約2.7音
+- ドラム（GM音色 0）: 3997打／1小節あたり約19.6打
+- Guitar 3 (riff double / harmony)（GM音色 30）: C2〜Ab4／1小節あたり約2.7音
+- Guitar 2 (twin harmony)（GM音色 30）: F#2〜B5／1小節あたり約1.4音
 - Organ sustain (chords)（GM音色 19）: C#2〜C#4／1小節あたり約4.1音

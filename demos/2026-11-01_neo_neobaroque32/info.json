@@ -12,7 +12,7 @@
   "tempoGenerated": 168,
   "bars": 204,
   "seed": 98049,
-  "gen": 162,
+  "gen": 166,
   "stems": [
     {
       "id": "mel",
@@ -38,6 +38,11 @@
       "id": "drums",
       "name": "Drums",
       "prog": 0
+    },
+    {
+      "id": "gtr3",
+      "name": "Guitar 3 (riff double / harmony)",
+      "prog": 30
     },
     {
       "id": "gtr2",
@@ -84,7 +89,7 @@
     "A#(b9)",
     "D#m"
   ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 162). MIDI draft — to be arranged in Cubase.",
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 166). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
   "files": {
     "zip": "demos/2026-11-01_neo_neobaroque32/2026-11-01_neo_neobaroque32_midi-set.zip",
