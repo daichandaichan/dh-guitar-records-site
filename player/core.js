@@ -6676,10 +6676,10 @@ function exoticHarm(p, ab, tt, tonic, kind, dir, finalLong, loose) {
   var q0 = QUAL[ab[0].q] || { iv: [0, 7] }, minor = !(q0.iv.indexOf(4) >= 0), set = {}, cq = QUAL[c.q] || { iv: [0, 7] };
   (minor ? [0, 2, 3, 5, 7, 8, 11] : [0, 2, 4, 5, 7, 9, 11]).forEach(function (x) { set[(x + tonic) % 12] = 1; });
   cq.iv.forEach(function (x) { set[(c.root + x) % 12] = 1; });
-  if (kind === "tri" && !loose && !(harmTension(c, tonic) || finalLong)) return null;
+  if (kind === "tri" && loose !== true && !(harmTension(c, tonic) || finalLong)) return null;
   var step = kind === "tri" ? 6 : 3, cand = [p + (dir >= 0 ? step : -step), p + (dir >= 0 ? -step : step)], k;
   for (k = 0; k < 2; k++) if (cand[k] >= 40 && cand[k] <= 88 && set[((cand[k] % 12) + 12) % 12]) return cand[k];
-  if (kind === "tri" && loose && set[((p % 12) + 12) % 12]) for (k = 0; k < 2; k++) if (cand[k] >= 40 && cand[k] <= 88) return cand[k];      /* 極端なメタル：調の音から、調の外のトライトーン(♭5・♯4)も付ける */
+  if (kind === "tri" && (loose === true || (loose === "tens" && harmTension(c, tonic))) && set[((p % 12) + 12) % 12]) for (k = 0; k < 2; k++) if (cand[k] >= 40 && cand[k] <= 88) return cand[k];      /* 極端なメタル：調の音から、調の外のトライトーン(♭5・♯4)も付ける */
   return null;
 }
 /* ---------- 伴奏リフのハモリ（第455版）----------
@@ -6744,7 +6744,7 @@ function riffHarmony(comp, sections, beats, opt, ab, wins, rkey) {
       for (z2 = 0; z2 < 2 && found == null; z2++) {
         var cp = cand[z2], pc = ((cp % 12) + 12) % 12;
         if (cp < 33 || cp > 80) continue;
-        if (base[pc] || ok[pc] || P.col.indexOf(D2.iv) >= 0) found = cp;
+        if (base[pc] || ok[pc] || (P.col.indexOf(D2.iv) >= 0 && (opt.harmOut === true || harmTension(c, tonic)))) found = cp;
       }
       if (found != null) q = found;
     } else if (D2.oct && !mute) q = p + 12;
@@ -6767,7 +6767,7 @@ function twinHarmony(mel, solo, sections, beats, opt, tempo, ab) {
       if (exo[key] == null) exo[key] = rx.wpick(xm ? [["tri", 2.6], ["dim", 2.4], ["none", 5]] : [["tri", 3], ["dim", 5], ["none", 2]]);
       if (exo[key] === "none") return null;
       var fin = ((((n.t - rg.a) % (2 * beats)) + 2 * beats) % (2 * beats) >= beats) && n.d >= 0.75;
-      return exoticHarm(n.p, ab, n.t, tonic, exo[key], dir, fin, xm);
+      return exoticHarm(n.p, ab, n.t, tonic, exo[key], dir, fin, xm ? (opt.harmOut === true ? true : "tens") : false);
     }
     rg.src.forEach(function (n) {
       if (n.t < rg.a - 1e-6 || n.t >= rg.z - 1e-6 || n.grace || n.d < 0.1) return;
@@ -16229,7 +16229,8 @@ function stemExpression(id, notes, sections, opt, rng, beats, style, prof) {
 /* ギター系のリード(ロック・メタル・ネオクラシカル)のピッチベンドは、ギターの弾き方に合わせて「整数の半音」だけにする(第468版)：
    ・フレーズ頭のすくい上げ＝半音(−1)か全音(−2)下の音から入り、その高さを一瞬(約0.07拍)聴かせてから、目的の音へ上げる(ベンド・アップ)。ベンドの強い語法(1.6以上)は全音、ほかは半音。
    ・フレーズ終わりの「フォール」(管楽器の常套)は付けない。以前は −1.6 半音までずり下げて途中で戻していて、音程が外れたように聞こえた。opt.gtrBendFree=true で従来。 */
-var GTR_BEND_STYLES = ["arena", "neo", "thrash", "death", "melodeath", "black"];
+var GTR_BEND_STYLES = ["arena", "neo", "mathrock", "thrash", "death", "melodeath", "black", "djent", "bk_burzum", "bk_mayhem", "rk_la", "rk_hard", "rk_90", "rk_purple", "rk_sabbath", "rk_maiden", "rk_hendrix", "rk_zappa", "rk_heavy", "rk_power", "rk_xjapan", "pg_dt", "pg_kc", "pg_elp"];      /* ギターのベンドは整数(半音・全音)で、秒で決めた速さ。ロック・メタル系すべて */
+var KIME_CHOKE_P = { thrash: 0.3, death: 0.26, melodeath: 0.3, black: 0.24, djent: 0.2, neo: 0.3, mathrock: 0.3, arena: 0.34, bk_burzum: 0.2, bk_mayhem: 0.2 };      /* 合間のキメのチョーク：曲種ごとの確率(ロック系は既定 0.34) */
 function artiLead(notes, opt, rng, isSolo, prof) {
   prof = prof || VOICE_PROFILE.auto;
   notes.sort(function (a, b) { return a.t - b.t; });
@@ -16286,7 +16287,7 @@ function artiLead(notes, opt, rng, isSolo, prof) {
       ccRamp(extra, 1, n.t + n.d * 0.85, n.t + n.d, vdep, 0, "lin");
     }
     /* フレーズの入りをスライドで（ピッチベンドで半音下から） */
-    var scoopK = 0, gBn = GTR_BEND_STYLES.indexOf(opt.style) >= 0 && !opt.gtrBendFree;
+    var scoopK = 0, kdone = false, gBn = GTR_BEND_STYLES.indexOf(opt.style) >= 0 && !opt.gtrBendFree;
     if (opt.expr && phraseTop && n.d >= 0.7 && rng.chance(prof.slide)) {
       var bd = Math.min(2, 0.9 * (prof.bend || 1));
       if (GTR_BEND_STYLES.indexOf(opt.style) >= 0 && !opt.gtrBendFree) {            /* ギター：半音／全音下から入って、目的の音へ(整数のベンド・アップ) */
@@ -16318,8 +16319,23 @@ function artiLead(notes, opt, rng, isSolo, prof) {
           if (cS + cUp + cDn + 0.04 * csp <= n.d * 0.92) {
             var cEnd = n.t + n.d - 0.04 * csp;
             bendRamp(extra, n.t + cS, n.t + cS + cUp, 0, ck, "out");
-            bendRamp(extra, cEnd - cDn, cEnd, ck, 0, "in");
+            bendRamp(extra, cEnd - cDn, cEnd, ck, 0, "in"); kdone = true;
           }
+        }
+      }
+    }
+    /* 合間のキメ：フレーズ終わりの、あとに間がある音を、半音か全音チョークして、音が終わるまで高さを保つ。上げた先が調の音のときだけ。
+       ピッチの安定：目的の高さは整数、上げる速さは秒で決める(半音 約100ms・全音 約130ms)、上げ終わったら動かさず、音が切れたあと(約30ms後)に戻す。ビブラートは重ねない */
+    if (opt.expr && gBn && opt.kimeChoke !== false && !scoopK && !kdone && phraseEnd && !phraseTop && n.d >= 0.45 && n.d <= 3 && gapAfter >= 0.75 && rng.chance(KIME_CHOKE_P[opt.style] != null ? KIME_CHOKE_P[opt.style] : 0.34)) {
+      var kset2 = {}, tn2 = (((opt.tonic || 0) % 12) + 12) % 12;
+      (opt.mode === "major" ? [0, 2, 4, 5, 7, 9, 10, 11] : [0, 2, 3, 5, 7, 8, 9, 10]).forEach(function (x) { kset2[(x + tn2) % 12] = 1; });
+      var kk = (n.d >= 0.9 && kset2[(n.p + 2) % 12]) ? 2 : (kset2[(n.p + 1) % 12] ? 1 : (kset2[(n.p + 2) % 12] ? 2 : 0));
+      if (kk) {
+        var ksp = (CUR_TEMPO || 120) / 60, kS = 0.03 * ksp, kUp = (0.07 + 0.03 * kk) * ksp;
+        if (kS + kUp + 0.04 * ksp <= n.d) {
+          bendRamp(extra, n.t + kS, n.t + kS + kUp, 0, kk, "out");
+          extra.push({ t: n.t + kS + kUp + 0.01, bend: kk });
+          extra.push({ t: n.t + n.d + 0.03 * ksp, bend: 0 });
         }
       }
     }
@@ -22428,9 +22444,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 471;
+var BUILD_NO = 481;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 166;
+var GEN_NO = 170;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
