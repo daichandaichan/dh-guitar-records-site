@@ -1,0 +1,70 @@
+{
+  "id": "2026-11-04_organjazz_blues12",
+  "date": "2026-11-04",
+  "style": "organjazz",
+  "styleShort": "オルガン・ジャズ",
+  "styleLabel": "オルガン・ジャズ（ジミー・スミス風）",
+  "form": "blues12",
+  "formLabel": "ジャズ・ブルース 12小節",
+  "title": "Valse du Nord (F)",
+  "key": "F",
+  "tempo": 132,
+  "tempoGenerated": 132,
+  "bars": 84,
+  "seed": 20261106,
+  "gen": 174,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 16
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 16
+    },
+    {
+      "id": "comp",
+      "name": "Organ",
+      "prog": 16
+    },
+    {
+      "id": "bass",
+      "name": "Organ bass (left hand)",
+      "prog": 16
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "B13",
+    "Fm7",
+    "A#7b9",
+    "F13",
+    "F7",
+    "A#7alt",
+    "A#7alt",
+    "Bdim7",
+    "Cm7",
+    "F9",
+    "D9",
+    "Gm7",
+    "C9",
+    "F7",
+    "D7b9",
+    "Gm7",
+    "C7alt"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 174). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-04_organjazz_blues12/2026-11-04_organjazz_blues12_midi-set.zip",
+    "midi": "demos/2026-11-04_organjazz_blues12/2026-11-04_organjazz_blues12_all.mid",
+    "info": "demos/2026-11-04_organjazz_blues12/info.md"
+  },
+  "audio": "demos/2026-11-04_organjazz_blues12/2026-11-04_organjazz_blues12.mp3"
+}
