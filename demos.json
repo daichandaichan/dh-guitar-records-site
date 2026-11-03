@@ -1,84 +1,5 @@
 [
  {
-  "id": "2026-11-04_brazil_bd_afro16",
-  "date": "2026-11-04",
-  "style": "brazil",
-  "styleShort": "ブラジル",
-  "styleLabel": "ブラジル（サンバ・ショーロ・フレヴォ）",
-  "form": "bd_afro16",
-  "formLabel": "バーデン型アフロ・サンバ(2/4・短調) 16小節（i → ♭III6 → II7 → ♭IImaj7 の半音下降、♭VII7 → ♭VI9 → V7）",
-  "title": "Violão de Novembro (Dm)",
-  "key": "Dm",
-  "tempo": 96,
-  "tempoGenerated": 96,
-  "bars": 92,
-  "seed": 20261105,
-  "gen": 174,
-  "stems": [
-   {
-    "id": "mel",
-    "name": "Melody",
-    "prog": 24
-   },
-   {
-    "id": "solo",
-    "name": "Solo",
-    "prog": 24
-   },
-   {
-    "id": "comp",
-    "name": "Piano",
-    "prog": 25
-   },
-   {
-    "id": "bass",
-    "name": "Bass",
-    "prog": 33
-   },
-   {
-    "id": "drums",
-    "name": "Drums",
-    "prog": 0
-   },
-   {
-    "id": "perc",
-    "name": "Percussion",
-    "prog": 0
-   }
-  ],
-  "chordsOneChorus": [
-   "Dm7",
-   "Dm",
-   "F6",
-   "E13",
-   "D#maj7",
-   "Dm",
-   "D5",
-   "Dm",
-   "C7",
-   "E7",
-   "A7",
-   "D#7",
-   "C7b9",
-   "A#9",
-   "A7b9",
-   "Dm"
-  ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 174). MIDI draft — to be arranged in Cubase.",
-  "status": "demo",
-  "files": {
-   "zip": "demos/2026-11-04_brazil_bd_afro16/2026-11-04_brazil_bd_afro16_midi-set.zip",
-   "midi": "demos/2026-11-04_brazil_bd_afro16/2026-11-04_brazil_bd_afro16_all.mid",
-   "info": "demos/2026-11-04_brazil_bd_afro16/info.md"
-  },
-  "audio": "demos/2026-11-04_brazil_bd_afro16/2026-11-04_brazil_bd_afro16.mp3",
-  "scorePages": [
-   "scores/2026-11-04_brazil_bd_afro16-1.png"
-  ],
-  "cover": "covers/2026-11-04_brazil_bd_afro16.jpg",
-  "coverKind": "generated"
- },
- {
   "id": "2026-11-04_organjazz_blues12",
   "date": "2026-11-04",
   "style": "organjazz",
@@ -229,6 +150,85 @@
    "scores/2026-11-04_odd_odd11-1.png"
   ],
   "cover": "covers/2026-11-04_odd_odd11.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-11-04_brazil_bd_afro16",
+  "date": "2026-11-04",
+  "style": "brazil",
+  "styleShort": "ブラジル",
+  "styleLabel": "ブラジル（サンバ・ショーロ・フレヴォ）",
+  "form": "bd_afro16",
+  "formLabel": "バーデン型アフロ・サンバ(2/4・短調) 16小節（i → ♭III6 → II7 → ♭IImaj7 の半音下降、♭VII7 → ♭VI9 → V7）",
+  "title": "Violão de Novembro (Dm)",
+  "key": "Dm",
+  "tempo": 96,
+  "tempoGenerated": 96,
+  "bars": 92,
+  "seed": 20261105,
+  "gen": 174,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 24
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 24
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 25
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "perc",
+    "name": "Percussion",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Dm7",
+   "Dm",
+   "F6",
+   "E13",
+   "D#maj7",
+   "Dm",
+   "D5",
+   "Dm",
+   "C7",
+   "E7",
+   "A7",
+   "D#7",
+   "C7b9",
+   "A#9",
+   "A7b9",
+   "Dm"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 174). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-04_brazil_bd_afro16/2026-11-04_brazil_bd_afro16_midi-set.zip",
+   "midi": "demos/2026-11-04_brazil_bd_afro16/2026-11-04_brazil_bd_afro16_all.mid",
+   "info": "demos/2026-11-04_brazil_bd_afro16/info.md"
+  },
+  "audio": "demos/2026-11-04_brazil_bd_afro16/2026-11-04_brazil_bd_afro16.mp3",
+  "scorePages": [
+   "scores/2026-11-04_brazil_bd_afro16-1.png"
+  ],
+  "cover": "covers/2026-11-04_brazil_bd_afro16.jpg",
   "coverKind": "generated"
  },
  {
