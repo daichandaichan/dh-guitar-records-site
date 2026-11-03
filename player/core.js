@@ -2345,7 +2345,7 @@ var STYLES = {
   brazil: {
     label: "ブラジル（サンバ・ショーロ・フレヴォ）", swing: 0.5, tempo: 190,
     comp: "samba", bass: "samba", drums: "samba", perc: "brazil", mel: "bossa",
-    forms: ["samba32", "partido16", "choro32", "frevo32", "baiao16", "xote16", "forro16", "sambajazz32", "bossa32", "auto32", "auto16", "auto32m"],
+    forms: ["samba32", "partido16", "choro32", "frevo32", "baiao16", "xote16", "forro16", "sambajazz32", "bossa32", "bd_afro16", "bd_afromaj16", "bd_valsa24", "bd_modal16", "gis_pal68", "gis_ost16", "gis_fado16", "gis_frevo16", "auto32", "auto16", "auto32m"],
     voice: "auto", lead: 24, compProg: 25, feel: 16
   },
   latin: {
@@ -5091,6 +5091,9 @@ var VOICES = {
   christian: { label: "チャーリー・クリスチャン風（リフと歌うライン）" },
   wes:        { label: "ウェス・モンゴメリー風（単音→オクターヴ→ブロック）" },
   lowe:       { label: "マンデル・ロウ風（隙間のあるクールな歌）" },
+  baden:      { label: "バーデン・パウエル風（アフロ・サンバ：同音の反復と半音・全音の歩み、8分と16分の細かい動き、ハンマリングとスライド、低音の持続の上で歌う）", nps: 7 },
+  gisfrevo:   { label: "ジスモンチ風フレヴォ（8分を切れ目なく並べ、2〜4度で動く。伴奏は頭で長く保つ）", nps: 8 },
+  gismonti:   { label: "エグベルト・ジスモンチ風（開放弦の流れる8分の上に、5度以上の跳躍と長い音で歌う）", nps: 5 },
   monk:       { label: "セロニアス・モンク風（半音の歩み・同音の反復・半音階の上行と長い音・同じ形を上げて繰り返す・オクターヴ下への跳び・休みが長い）", nps: 5 },
   pass:       { label: "ジョー・パス風（休みなく流れるバップ）" },
   metheny:    { label: "パット・メセニー風（4度と広い跳躍・長いライン）" },
@@ -5314,6 +5317,9 @@ var VOICE_PROFILE = {
   christian:  { reg: 0,  span: 0.85, dens: 0.95, leg: 0.58, stac: 0.58, ahead: -0.018, rest: 1.1, phr: [2, 2, 4],    slide: 0.14, vib: 0.8, land: "blue",   sc: "blues",     start: [-0.5, -0.5, 0], rep: 0.20, bend: 1.0 },
   wes:        { reg: -3, span: 0.90, dens: 0.90, leg: 0.82, stac: 0.76, ahead: 0.010,  rest: 1.0, phr: [4, 4, 6],    slide: 0.12, vib: 0.9, land: "six",    sc: "blues",     start: [0, 0.5], rep: 0.10, bend: 0.8 },
   lowe:       { reg: 0,  span: 0.75, dens: 0.60, leg: 0.86, stac: 0.82, ahead: 0.022,  rest: 1.9, phr: [2, 3],       slide: 0.20, vib: 1.4, land: "gt",     sc: "diatonic",  start: [1, 2, 0.5], rep: 0.03, bend: 1.0 },
+  baden:      { reg: 1,  span: 1.10, dens: 0.74, leg: 0.88, stac: 0.50, ahead: 0.010, rest: 1.2, phr: [2, 2, 4], slide: 0.24, vib: 0.3, land: "root", sc: "diatonic", start: [0, 0.5, 1], rep: 0.24, bend: 0.1, nps: 7 },
+  gisfrevo:   { reg: 1,  span: 1.20, dens: 1.00, leg: 0.55, stac: 0.30, ahead: 0.000, rest: 0.25, phr: [4, 4, 8], slide: 0.04, vib: 0.1, land: "root", sc: "diatonic", start: [0, 0.5, 1], rep: 0.12, bend: 0.05, nps: 8 },
+  gismonti:   { reg: 1,  span: 1.40, dens: 0.62, leg: 0.80, stac: 0.35, ahead: 0.000, rest: 1.0, phr: [2, 4, 4], slide: 0.06, vib: 0.35, land: "nine", sc: "diatonic", start: [0, 1.5, 0], rep: 0.21, bend: 0.1, nps: 5 },
   monk:       { reg: 0,  span: 0.80, dens: 0.80, leg: 0.52, stac: 0.60, ahead: 0.000,  rest: 1.9, phr: [2, 2, 4],    slide: 0.04, vib: 0.2, land: "gt",     sc: "blues",     start: [0.5, 1.5, 0], rep: 0.30, bend: 0.2 },
   pass:       { reg: 0,  span: 1.00, dens: 1.25, leg: 0.80, stac: 0.70, ahead: 0.000,  rest: 0.5, phr: [4, 5, 6],    slide: 0.08, vib: 0.7, land: "third",  sc: "bebop",     start: [0, 0], rep: 0.03, bend: 0.7 },
   metheny:    { reg: 4,  span: 1.25, dens: 1.10, leg: 0.88, stac: 0.80, ahead: 0.004,  rest: 0.8, phr: [5, 6, 8],    slide: 0.26, vib: 0.7, land: "nine",   sc: "lydpenta",  start: [0.5, 1.5, 2.5], rep: 0.05, bend: 1.1 },
@@ -5534,6 +5540,7 @@ var FLAM_VOICE = {
 };
 function voiceOf(opt, sty) {
   if (opt.voice && opt.voice !== "auto") return opt.voice;
+  var fv0 = opt.form && FORMS[opt.form] && FORMS[opt.form].voice; if (fv0) return fv0;       /* 形式が語法を決める（バーデン型・ジスモンチ型） */
   var pl = VOICE_POOL[opt.style];
   if (pl && opt.voiceMix !== false) return pl[RNG((((opt.seed || 1) * 443) + 19) % 2147483647).i(pl.length)];
   return sty.voice || "auto";
@@ -6685,6 +6692,45 @@ FORMS.rk_hx2 = rockForm("ブルース・ロック(短調)：i 4小節 → iv →
 /* ジョビンの和音進行（第466版）：GP譜25曲の和音(analyze_jobim_chords.js)から、よく出る動きを、曲そのものではなく型として。
    ・Imaj7 → II7(V/V) の動き（4小節の動機の最多：Imaj7 Imaj7 II7 II7、14＋4回）／・Imaj7 → Im6（長→同主短調、12回）／・I6 → IVmaj7、i → iv（根音の4度上、20・16回）
    ・ii-V-I を全音ずつ下げる連鎖（Im7 → IV7 → ♭VIImaj7 型、6回ほか）／・トライトーン代理（dom7 → 半音下の maj7、12回）／・減7の経過（i7 → ♭ii°7 など） */
+/* バーデン・パウエルの和音進行(第487版)：GPX90曲(analyze_baden.js)から、拍子ごとに多い動きを、曲そのものではなく型として。
+   2/4(27曲)：i → ♭III6 → II7 → ♭IImaj7 →(i)の半音下降（22回）、♭VII7 → ♭VI9 → V（12回）、V7 → I → V7 の往復／3/4(21曲)：i と i5 の持続、♭III7 → ♭VImaj7 → ♭VIm6 → im7、i → ivm7 → i
+   4/4(28曲)：im → imMaj7 → im7 → im6 の線、♭III6 → ♭II6 → ♭III6 の平行移動、i5 → V → i5。同じ和音を何小節も保つ（4小節の動機の最多）。 */
+FORMS.bd_afro16 = { label: "バーデン型アフロ・サンバ(2/4・短調) 16小節（i → ♭III6 → II7 → ♭IImaj7 の半音下降、♭VII7 → ♭VI9 → V7）", bars: 16, minor: true, ts: [2, 4], sec: "AA", tempo: 96, voice: "baden",
+  feel: { comp: "afrosamba", bass: "afrosamba", drums: "afrosamba", perc: "brazil" },
+  ch: [T(0, "min", 2), T(0, "min", 2), T(3, "maj6", 2), T(2, "dom7", 2), T(1, "maj7", 2), T(0, "min", 2), T(0, "fifth", 2), T(0, "min", 2),
+       T(10, "dom7", 2), T(8, "dom9", 2), T(7, "dom7", 2), T(7, "dom7", 2), T(10, "dom7", 2), T(8, "dom9", 2), T(7, "dom7", 2), T(0, "min", 2)] };
+FORMS.bd_afromaj16 = { label: "バーデン型アフロ・サンバ(2/4・長調) 16小節（I → V7 の往復、V7 → I6 → Im6 の色、ii-V-I）", bars: 16, minor: false, ts: [2, 4], sec: "AA", tempo: 100, voice: "baden",
+  feel: { comp: "afrosamba", bass: "afrosamba", drums: "afrosamba", perc: "brazil" },
+  ch: [T(0, "maj7", 2), T(0, "maj7", 2), T(7, "dom7", 2), T(7, "dom7", 2), T(0, "maj7", 2), T(0, "maj6", 2), T(7, "dom9", 2), T(7, "dom7", 2),
+       T(2, "m7", 2), T(7, "dom7", 2), T(0, "maj7", 2), T(0, "m6", 2), T(5, "maj7", 2), T(5, "m6", 2), T(0, "maj6", 2), T(7, "dom7", 2)] };
+FORMS.bd_valsa24 = { label: "バーデン型ヴァルサ(3/4・短調) 24小節 ABA（i と i5 の持続、♭III7 → ♭VImaj7 → ♭VIm6、i → ivm7 → i）", bars: 24, minor: true, ts: [3, 4], sec: "ABA", tempo: 108, voice: "baden",
+  feel: { comp: "afrosamba", bass: "afrosamba", drums: "afrosamba", perc: "brazil" },
+  ch: (function () {
+    var A = [T(0, "min", 3), T(0, "fifth", 3), T(0, "min", 3), T(5, "m7", 3), T(0, "min", 3), T(3, "dom7", 3), T(8, "maj7", 3), T(8, "m6", 3)];
+    var B = [T(0, "m7", 3), T(5, "dom7", 3), T(0, "m7", 3), T(10, "m7", 3), T(0, "min", 3), T(3, "dom7", 3), T(8, "maj7", 3), T(0, "m7", 3)];
+    return A.concat(B, A);
+  })() };
+FORMS.bd_modal16 = { label: "バーデン型モーダル(4/4・短調) 16小節（im → imMaj7 → im7 → im6 の線、♭III6 → ♭II6 の平行移動、V7 → i）", bars: 16, minor: true, ts: [4, 4], sec: "AA", tempo: 100, voice: "baden",
+  feel: { comp: "afrosamba", bass: "afrosamba", drums: "afrosamba", perc: "brazil" },
+  ch: [T(0, "min", 2), T(0, "mMaj7", 2), T(0, "m7", 2), T(0, "m6", 2), T(3, "maj6"), T(1, "maj6"), T(3, "maj6"), T(5, "min"),
+       T(3, "m6", 2), T(2, "m7", 2), T(7, "dom7"), T(0, "min"), T(7, "maj"), T(0, "fifth"), T(7, "dom7"), T(0, "min")] };
+/* ジスモンチの和音進行(第487版)：GP譜3曲(Palhaço／Memória e Fado／Água e Vinho)から。同じ和音を長く保ち、借用和音（♭VII、♭VI6、IV7(9)、ivm）が差す。 */
+FORMS.gis_frevo16 = { label: "ジスモンチ型フレヴォ(4/4) 16小節（テンポ180・8分の連続する旋律・伴奏は小節の頭で長く保つ。frevo.mid の型）", bars: 16, minor: false, ts: [4, 4], sec: "AA", tempo: 180, voice: "gisfrevo",
+  feel: { comp: "afrosamba", bass: "afrosamba", drums: "frevo", perc: "brazil" },
+  ch: [T(0, "maj7"), T(9, "m7"), T(2, "dom7"), T(7, "dom7"), T(0, "maj6"), T(5, "maj7"), T(5, "m6"), T(0, "maj6"),
+       T(4, "m7"), T(9, "dom7"), T(2, "m7"), T(7, "dom7"), T(0, "maj6"), T(10, "dom7"), T(5, "maj7"), T(7, "dom7")] };
+FORMS.gis_pal68 = { label: "ジスモンチ型(6/8) 16小節（長三和音＋9度を長く保ち、♭VII・IV9 が差す。Palhaço の型）", bars: 16, minor: false, ts: [6, 8], sec: "AA", tempo: 190, groups: [[3, 3]], voice: "gismonti",
+  feel: { comp: "gismonti", bass: "gismonti", drums: "gismonti", perc: "brazil" },
+  ch: [T(0, "maj69", 6), T(0, "maj69", 6), T(0, "maj69", 6), T(0, "maj69", 6), T(10, "maj", 6), T(10, "maj", 6), T(5, "dom9", 6), T(0, "maj69", 6),
+       T(0, "maj69", 6), T(0, "maj69", 6), T(3, "maj7", 6), T(5, "dom9", 6), T(2, "m7", 6), T(7, "dom7", 6), T(9, "m7", 6), T(0, "maj69", 6)] };
+FORMS.gis_ost16 = { label: "ジスモンチ型(4/4・短調・ゆっくり) 16小節（低い根音の持続の上に、♭VI6・ivm・♭VII7 が差す。Água e Vinho の型）", bars: 16, minor: true, ts: [4, 4], sec: "AA", tempo: 66, voice: "gismonti",
+  feel: { comp: "gismonti", bass: "gismonti", drums: "gismonti", perc: "brazil" },
+  ch: [T(0, "min"), T(0, "min"), T(8, "maj6"), T(8, "maj7"), T(5, "min"), T(5, "m6"), T(7, "dom7"), T(0, "min"),
+       T(0, "m6"), T(0, "min"), T(10, "dom7"), T(8, "maj7"), T(5, "m6"), T(7, "dom7"), T(0, "aug7"), T(0, "min")] };
+FORMS.gis_fado16 = { label: "ジスモンチ型(4/4) 16小節（5度の和音を4小節保つ → I6 → VII7(#5) → II7、♭VII6 → VIm7♭5。Memória e Fado の型）", bars: 16, minor: false, ts: [4, 4], sec: "AA", tempo: 112, voice: "gismonti",
+  feel: { comp: "gismonti", bass: "gismonti", drums: "gismonti", perc: "brazil" },
+  ch: [T(0, "fifth"), T(0, "fifth"), T(0, "fifth"), T(0, "fifth"), T(0, "maj", 2), T(0, "maj6", 2), T(11, "dom7", 2), T(11, "aug7", 2),
+       T(9, "fifth"), T(2, "dom7"), T(10, "maj6", 2), T(9, "m7b5", 2), T(2, "dom7"), T(10, "maj6", 2), T(9, "m7b5", 2), T(2, "dom7")] };
 /* モンクの和音進行(第471版)：Straight No Chaser／Blue Monk／Round Midnight のGP譜の和音から、曲そのものではなく型として */
 FORMS.monksnc12 = { label: "モンク型ブルース 12小節（Straight No Chaser 型：IV7、ii-V、3小節めの♭9のぶつかり、Ⅲm7♭5→Ⅵ7→ⅱm7→Ⅴ7）", bars: 12, minor: false, ts: [4, 4], sec: "AAA", tempo: 200,
   ch: [T(0, "dom7"), T(5, "dom7"), T(0, "dom7"), T(7, "m7", 2), T(0, "dom7", 2), T(5, "dom7"), T(5, "dom7"), T(0, "dom7"), T(0, "dom7"),
@@ -13320,6 +13366,15 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
       } else if (v === "jobim") {
         /* 解析（ジョビン33曲）：1小節の音数4.2（少ない）・同音13%・半音の歩み・オクターヴの跳躍17%・ハンマリング4%。休みの多い、歌うメロディ */
         mode = rng.wpick([["sparse", 5], ["chordmel", 3], ["chrom", last === "chrom" ? 0 : 2.5], ["hold", 2], ["lick", 1.5], ["bebop", 1]]);
+      } else if (v === "baden") {
+        /* 解析(バーデン90曲)：同音24%・半音〜全音39%・3度18%・5度以上の跳躍18%。8分45%・16分29%（細かい）。ハンマリング3.6%・スライド2.4%。和音の分散と順次の歩み */
+        mode = rng.wpick([["chordmel", 4], ["lick", 3], ["sparse", 1.5], ["hold", 1.5], ["chrom", last === "chrom" ? 0 : 1.5], ["bebop", 1]]);
+      } else if (v === "gisfrevo") {
+        /* 解析(frevo.mid)：ピアノの8分音符が75%（切れ目なく並ぶ）・音程は2度〜4度が中心 */
+        mode = rng.wpick([["bebop", 7], ["chordmel", 2], ["lick", 2], ["hold", 0.5]]);
+      } else if (v === "gismonti") {
+        /* 解析(ジスモンチ3曲)：8分63%・5度以上の跳躍32%・同音21%・3拍の長い音8%。開放弦の持続音の上で広く跳ぶ */
+        mode = rng.wpick([["wide", 4], ["hold", 3], ["chordmel", 3], ["sparse", 1.5], ["restate", 1.5]]);
       } else if (v === "monk") {
         /* 解析(モンク4曲)：半音の歩み36〜46%・同音の反復・半音階の上行＋長い音・同じ形を上げて繰り返す・オクターヴ下への跳び。休みが長い */
         mode = rng.wpick([["monk", last === "monk" ? 5 : 9], ["sparse", 1], ["hold", 1.2], ["chrom", last === "chrom" ? 0 : 1.2], ["restate", 1], ["cluster", last === "cluster" ? 0 : 0.6]]);
@@ -13758,7 +13813,7 @@ function voicing(ch, style, lo, hi) {
   var r = ch.root, q = ch.q, iv = QUAL[q].iv;
   var v = [];
   if (style === "power" || style === "riff" || style === "pompe" || style === "green" || style === "waltz" || style === "rasgueado" ||
-      style === "samba" || style === "partido" || style === "choro" || style === "frevo" || style === "baiao") {
+      style === "samba" || style === "partido" || style === "choro" || style === "frevo" || style === "baiao" || style === "afrosamba") {
     /* ギターの3〜4声（ルートは低め、上に3rd/7th/6th） */
     var third = iv.indexOf(3) >= 0 ? 3 : 4;
     var top = iv.indexOf(10) >= 0 ? 10 : (iv.indexOf(11) >= 0 ? 11 : 9);
@@ -14016,7 +14071,29 @@ function monkComp(chs, form, sty, opt, rng, ctx) {
   }
   return notes;
 }
+/* ジスモンチの伴奏(GP譜3曲)：低い根音と、開放弦の5度・9度を重ねたアルペジオを、8分で止めずに流す
+   （Palhaço＝G2 D3 A3 を6/8で2回、Memória e Fado＝B2 F#3 G3 C#4 E4 を上って下りる、Água e Vinho＝D2 A2 F3 A2）。同じ和音を長く保つ。 */
+function gismontiComp(chs, form, sty, opt, rng, ctx) {
+  var beats = form.ts[0], bars = form.bars, notes = [], eighth = (form.ts[1] === 8), stp = eighth ? 1 : 0.5, n = Math.round(beats / stp), bar, j;
+  for (bar = 0; bar < bars; bar++) {
+    var T0 = bar * beats, hush = (bar % 8 === 7) && rng.chance(0.5);
+    for (j = 0; j < n; j++) {
+      var t = T0 + j * stp, ch = chordAt(chs, t + 0.01), iv = QUAL[ch.q].iv;
+      var r = inRange(nearest([0], ch.root, 44), 38, 50), five = nearest([7], ch.root, r + 7), ninth = nearest([2], ch.root, r + 14);
+      var third = nearest([iv.indexOf(3) >= 0 ? 3 : 4], ch.root, r + 15), sev = nearest([iv.indexOf(10) >= 0 ? 10 : (iv.indexOf(11) >= 0 ? 11 : 9)], ch.root, r + 10);
+      var seq;
+      if (n === 6) seq = (bar % 4 === 3 && j >= 3) ? [r, five, third, r, five, third] : [r, five, ninth, r, five, ninth];                /* 6/8：根音・5度・9度を2回 */
+      else if (n === 8) seq = [r, five, sev, ninth, third + 12 > 79 ? third : third + 12, ninth, sev, five];                              /* 4/4：上って下りる */
+      else { seq = [r, five, ninth, five, third, five, sev, ninth]; }
+      var p = seq[j % seq.length]; if (hush && j % 2) continue;
+      var strong = (n === 6) ? (j % 3 === 0) : (j === 0 || j === n / 2);
+      notes.push({ t: t, d: stp * (strong ? 2.6 : 2.2), p: p, v: Math.max(30, Math.min(106, (strong ? 80 : 60) + rng.i(10) - 4)) });
+    }
+  }
+  return notes;
+}
 function genComp(chs, form, sty, opt, rng, ctx) {
+  if (sty.comp === "gismonti") return gismontiComp(chs, form, sty, opt, rng, ctx);
   if (voiceOf(opt, sty) === "monk" && /^(green|piano|quartal|organ|ballad)$/.test(sty.comp || "")) return monkComp(chs, form, sty, opt, rng, ctx);
   if (form.cafe) return cafeComp(chs, form, opt, rng, ctx);
   if (sty.comp === "arena") return arenaComp(chs, form, opt, rng, ctx);
@@ -14292,6 +14369,11 @@ function genComp(chs, form, sty, opt, rng, ctx) {
       /* ボサノヴァのコンピング：従来の2型に、ジョビンのGP譜(1217小節)で多かった2型を足す(0・1・2・2.5・3.5拍が172小節、0・0.5・1.5・2・2.5・3.5拍が123小節) */
       hits = rng.wpick([[[[0, 0.45, 74], [1.5, 0.45, 68], [2.5, 0.9, 72]], 2], [[[0, 0.9, 72], [1.5, 0.4, 66], [2.5, 0.4, 70], [3.5, 0.45, 64]], 2],
         [[[0, 0.9, 72], [1, 0.45, 64], [2, 0.45, 68], [2.5, 0.4, 66], [3.5, 0.45, 64]], 3], [[[0, 0.4, 72], [0.5, 0.3, 60], [1.5, 0.4, 66], [2, 0.4, 68], [2.5, 0.4, 64], [3.5, 0.45, 64]], 2.4]]);
+    } else if (style === "afrosamba") {
+      /* バーデン・パウエル(GPX90曲)の和音の打点：2/4＝頭だけ(1118)・頭と2拍目(307)・8分の刻み(166)・裏の2つ(100)、3/4＝頭だけ(706)・2拍目だけ(134)・頭と2拍(159)・頭と2・3拍(127)、4/4＝頭だけ(526)・頭と3拍(299)。ほとんどが頭の一打で、低音の持続に和音が乗る */
+      hits = beats <= 2 ? rng.wpick([[[[0, 1.7, 74]], 5.6], [[[0, 0.9, 74], [1, 0.8, 66]], 1.6], [[[0, 0.4, 74], [0.5, 0.4, 60], [1, 0.4, 68], [1.5, 0.4, 58]], 0.9], [[[0.5, 0.4, 72], [1.5, 0.4, 66]], 0.55]])
+        : (beats === 3 ? rng.wpick([[[[0, 2.8, 74]], 5], [[[1, 1.8, 68]], 1], [[[0, 1.0, 74], [1, 1.8, 64]], 1.2], [[[0, 0.9, 74], [1, 0.9, 64], [2, 0.9, 64]], 1]])
+        : rng.wpick([[[[0, 3.8, 74]], 3.2], [[[0, 1.9, 74], [2, 1.9, 66]], 3], [[[0, 0.9, 74], [1.5, 0.4, 66], [2.5, 0.9, 70]], 1.6]]));
     } else if (style === "samba" || style === "partido" || style === "frevo" ||
                style === "choro" || style === "baiao") {
       var hb = [];
@@ -14941,7 +15023,7 @@ function genBass(chs, form, sty, opt, rng, ctx) {
     (opt.tempo >= 100) && rng.chance(0.3);
   var beats = form.ts[0], bars = form.bars, notes = [];
   var lo = 28, hi = 50;    /* ウッドベースの実音域。低めに寄せる */
-  var KEEP = { corea: 1, gamelan: 1, andean: 1, arabic: 1, hawaii: 1, balkan: 1, country: 1, celtic: 1, even8: 1, flamenco: 1, tumbao: 1, samba: 1, partido: 1, frevo: 1, choro: 1, baiao: 1 };
+  var KEEP = { corea: 1, gamelan: 1, andean: 1, arabic: 1, hawaii: 1, balkan: 1, country: 1, celtic: 1, even8: 1, flamenco: 1, tumbao: 1, samba: 1, partido: 1, frevo: 1, choro: 1, baiao: 1, afrosamba: 1, gismonti: 1 };
   var style = (beats === 3 && !KEEP[sty.bass]) ? "waltz"
     : ((beats > 4 && !KEEP[sty.bass]) ? "walk4" : sty.bass);
   var solo = ctx && ctx.role === "solo";
@@ -15312,6 +15394,24 @@ function genBass(chs, form, sty, opt, rng, ctx) {
           cur = pp2; pf += gf[kf];
         }
       }
+    } else if (style === "afrosamba") {
+      /* バーデン(GPX90曲)のベースの打点(16分格子)：2/4＝頭だけ(920)・頭と2拍(480)・0,3(173)・0,2,3(144)・0,2(132)、3/4＝頭だけ(690)・0,2(145)・0,4(129)・0,4,8(106)、4/4＝0,8(285)・頭だけ(265)。根音の持続が主 */
+      var cA = chordAt(chs, t0), cA2 = chordAt(chs, t0 + beats / 2), ra = step(rootOf(cA, cur)), ra2 = step(rootOf(cA2, ra));
+      var cellA = beats <= 2 ? rng.wpick([["0", 920], ["0,1", 480], ["0,.75", 173], ["0,.5,.75", 144], ["0,.5", 132], ["0,.5,1", 96], ["0,1,1.75", 93]])
+        : (beats === 3 ? rng.wpick([["0", 690], ["0,.5", 145], ["0,1", 129], ["0,1,2", 106]]) : rng.wpick([["0", 265], ["0,2", 285], ["0,1.5,2", 140], ["0,.5,2,2.5", 100]]));
+      var tsA = cellA.split(",").map(parseFloat), jA;
+      for (jA = 0; jA < tsA.length; jA++) {
+        var ttA = tsA[jA], baseA = ttA >= beats / 2 ? ra2 : ra, pA = jA === 0 ? baseA : (rng.chance(0.55) ? step(pickOf(ttA >= beats / 2 ? cA2 : cA, [7], baseA)) : baseA);
+        var nxtA = jA + 1 < tsA.length ? tsA[jA + 1] : beats;
+        notes.push({ t: t0 + ttA, d: Math.max(0.2, (nxtA - ttA) * 0.9), p: pA, v: vel(jA === 0 ? 92 : 74) });
+      }
+      cur = ra2;
+    } else if (style === "gismonti") {
+      /* ジスモンチ：7弦の低い根音を長く（小節の頭）。半小節で和音が変わるときは、その根音。たまに5度 */
+      var cG = chordAt(chs, t0), cG2 = chordAt(chs, t0 + beats / 2), rg = step(rootOf(cG, cur)), rg2 = step(rootOf(cG2, rg));
+      notes.push({ t: t0, d: beats * 0.5 * 0.95, p: rg, v: vel(88) });
+      notes.push({ t: t0 + beats / 2, d: beats * 0.5 * 0.95, p: (cG2 === cG && rng.chance(0.4)) ? step(pickOf(cG, [7], rg)) : rg2, v: vel(78) });
+      cur = rg2;
     } else if (style === "samba" || style === "partido" || style === "frevo" ||
                style === "choro" || style === "baiao") {
       var cbz = chordAt(chs, t0), cbz2 = chordAt(chs, t0 + 2);
@@ -15510,7 +15610,7 @@ function genDrums(chs, form, sty, opt, rng, ctx) {
   var st = sty.drums;
   if (st === "none") return notes;
   var st3 = (st === "chaos") ? "chaos" : (st === "taiko") ? "taiko" : (st === "rock") ? "rock" : (st === "chambers") ? "chambers" : (st === "palmas" || st === "samba" || st === "partido" || st === "frevo" ||
-             st === "choro" || st === "baiao" || st === "latin" || st === "tango" || st === "celtic" || st === "reggae" || st === "afro" || st === "country" || st === "hawaii" || st === "balkan" || st === "arabic" || st === "andean" || st === "gamelan" || st.indexOf("kayo_") === 0) ? st
+             st === "choro" || st === "baiao" || st === "afrosamba" || st === "gismonti" || st === "latin" || st === "tango" || st === "celtic" || st === "reggae" || st === "afro" || st === "country" || st === "hawaii" || st === "balkan" || st === "arabic" || st === "andean" || st === "gamelan" || st.indexOf("kayo_") === 0) ? st
     : ((beats === 3 && st !== "bossa") ? "waltz" : (beats > 4 ? "odd" : st));
   var solo = ctx && ctx.role === "solo";
   var first = ctx && ctx.i === 0, lastCh = ctx && ctx.i === ctx.n - 1;
@@ -15572,6 +15672,23 @@ function genDrums(chs, form, sty, opt, rng, ctx) {
       if (rng.chance(0.35)) add(t0, D.kick, 50 + inten * 20);
       var f3 = rng.pick(COMP3);
       for (k = 0; k < f3.length; k++) add(t0 + f3[k], D.snare, 58 + inten * 26 + rng.i(10));
+
+    } else if (st3 === "afrosamba") {
+      /* アフロ・サンバ（2/4・3/4・4/4）：カイシャ(16分)＋スルド(2拍目)＋タンボリンの食い */
+      for (i = 0; i * 0.25 < beats; i++) { var fa2 = (i * 0.25) % 1; add(t0 + i * 0.25, D.hhC, (fa2 === 0 ? 58 : (fa2 === 0.5 ? 50 : 64)) + inten * 8 + rng.i(5)); }
+      if (beats <= 2) { add(t0 + 1, D.kick, 100 + inten * 10); if (rng.chance(0.5)) add(t0, D.kick, 62); }
+      else if (beats === 3) { add(t0, D.kick, 90 + inten * 8); add(t0 + 2, D.kick, 76); }
+      else { add(t0 + 1, D.kick, 96 + inten * 10); add(t0 + 3, D.kick, 100 + inten * 10); if (rng.chance(0.4)) add(t0 + 2.5, D.kick, 62); }
+      var tamA = beats <= 2 ? [0, 0.75, 1.5] : (beats === 3 ? [0, 0.75, 1.5, 2.25] : [0, 0.75, 1.5, 2.25, 3, 3.75]);
+      for (k = 0; k < tamA.length; k++) add(t0 + tamA[k], D.stick, 66 + inten * 12 + rng.i(8));
+      if (rng.chance(0.4)) add(t0 + beats - 0.25, D.ghost, 44 + rng.i(8));
+
+    } else if (st3 === "gismonti") {
+      /* ジスモンチ：軽く。6/8 は8分3つずつ(3+3)、4/4 は2拍ずつ */
+      var gpG = (beats % 3 === 0) ? 3 : 2, stG = (beats % 3 === 0) ? 1 : 0.5;
+      for (i = 0; i * stG < beats; i++) add(t0 + i * stG, D.hhC, ((i * stG) % gpG === 0 ? 56 : 38) + inten * 6 + rng.i(5));
+      add(t0, D.kick, 84 + inten * 8); if (beats > 3) add(t0 + beats / 2, D.kick, 74);
+      add(t0 + (beats % 3 === 0 ? 3 : 1), D.stick, 66 + rng.i(8)); if (beats === 4) add(t0 + 3, D.stick, 64 + rng.i(8));
 
     } else if (st3 === "samba" || st3 === "partido") {
       /* カイシャ（16分・裏にアクセント）とキック */
@@ -17136,7 +17253,7 @@ function artiComp(notes, sty, rng) {
   if (cur.length) groups.push(cur);
 
   var style = sty.comp, guitar = (style === "pompe" || style === "green" || style === "rasgueado" ||
-    style === "samba" || style === "partido" || style === "choro" || style === "frevo" || style === "baiao" ||
+    style === "samba" || style === "partido" || style === "choro" || style === "frevo" || style === "baiao" || style === "afrosamba" ||
     style === "bossa" || style === "waltz");
   var extra = [];
   for (i = 0; i < groups.length; i++) {
@@ -17505,6 +17622,17 @@ function genPerc(chs, form, sty, opt, rng, ctx) {
         for (i = 0; i * stC < beats; i++) add(t0 + i * stC, D.cowbell, (i % 2 ? 72 : 88) + rng.i(6));
       }
 
+    } else if (sty.drums === "afrosamba" || sty.drums === "gismonti") {
+      /* 小節の長さに合わせた軽い打楽器：ガンザ(拍の半分)・アゴゴ・スルド（2/4・3/4・6/8でも小節からはみ出さない） */
+      var shU = (form.ts[1] === 8) ? 1 : 0.5;
+      for (i = 0; i * shU < beats; i++) add(t0 + i * shU, D.cabasa, ((i % 2) ? 38 : 56) + rng.i(6));
+      if (sty.drums === "afrosamba") {
+        add(t0 + (beats <= 2 ? 1 : 1), D.surdo, 104 + inten * 8, 0.4);
+        if (beats >= 4) add(t0 + 3, D.surdo, 108 + inten * 8, 0.4);
+        add(t0, D.agogoL, 78 + rng.i(6)); add(t0 + 0.75, D.agogoH, 64 + rng.i(6)); if (beats >= 2) add(t0 + 1.5, D.agogoL, 70 + rng.i(6));
+      } else if (inten > 0.5) {
+        add(t0, D.agogoL, 66 + rng.i(6)); add(t0 + beats / 2, D.agogoH, 58 + rng.i(6));
+      }
     } else {
       /* ブラジル：スルド・タンボリン・ガンザ・アゴゴ・パンデイロ */
       add(t0 + 1, D.surdo, 104 + inten * 8, 0.4);
@@ -22640,9 +22768,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 486;
+var BUILD_NO = 488;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 173;
+var GEN_NO = 174;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
@@ -24379,6 +24507,8 @@ var KW_RULES = [
   [/バラード|ballad/i, { style: "ballad" }, 9, "バラード"],
   [/ボサ(?:ノ?ヴァ|ノバ)?|bossa/i, { style: "bossa" }, 10, "ボサノヴァ"],
   [/ジョビン|jobim|イパネマ|ipanema/i, { style: "bossa", voice: "jobim" }, 11, "ボサノヴァ（ジョビンの語法）"],
+  [/バーデン|baden|パウエル|powell|アフロ.?サンバ|afro.?samba|ベリンボウ|berimbau/i, { style: "brazil", voice: "baden", form: "bd_afro16" }, 11, "ブラジル（バーデン・パウエルの語法・アフロ・サンバ）"],
+  [/ジスモンチ|ギスモンチ|gismonti|エグベルト|egberto/i, { style: "brazil", voice: "gismonti", form: "gis_pal68" }, 11, "ブラジル（ジスモンチの語法）"],
   [/ハードバップ|hard\s*bop|ソウルジャズ|soul\s*jazz|ファンキー|funky|ブルース|blues/i, { style: "soul" }, 9, "ソウル・ジャズ／ハードバップ"],
   [/オルガン|organ|ハモンド|hammond/i, { style: "organjazz" }, 8, "オルガン・ジャズ"],
   [/フラメンコ|flamenco|スペイン|spanish|ブレリア|ソレア|タンゴス|ファンダンゴ|アレグリアス|ラスゲアード/i, { style: "flamenco" }, 10, "フラメンコ"],
@@ -24593,7 +24723,6 @@ var KW_RULES = [
   [/ハイライフ|highlife|ジュジュ|juju|キング・?サニー・?アデ/i, { style: "afrobeat", form: "afro_high" }, 9, "ハイライフ（西アフリカのギター音楽）"],
   /* ブラジル・ラテン・中南米 */
   [/ジョアン・?ジルベルト|joao\s*gilberto|ジルベルト/i, { style: "bossa", form: "bossa32" }, 8, "ジョアン・ジルベルト（ボサ）"],
-  [/バーデン・?パウエル|baden\s*powell/i, { style: "brazil", form: "sambajazz32" }, 8, "バーデン・パウエル（アフロ・サンバ）"],
   [/ジスモンチ|gismonti|エグベルト/i, { style: "fu_metheny" }, 6, "ジスモンチ（ブラジルの室内楽的フュージョンをメセニー型で近似）"],
   [/ピシンギーニャ|pixinguinha|ショーロ|choro/i, { style: "brazil", form: "choro32" }, 8, "ショーロ"],
   [/フレヴォ|frevo/i, { style: "brazil", form: "frevo32" }, 9, "フレヴォ"],

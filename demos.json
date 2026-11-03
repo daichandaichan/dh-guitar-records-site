@@ -1,5 +1,83 @@
 [
  {
+  "id": "2026-11-04_odd_odd11",
+  "date": "2026-11-04",
+  "style": "odd",
+  "styleShort": "変拍子",
+  "styleLabel": "変拍子（5・7・9・11・13・15拍子）",
+  "form": "odd11",
+  "formLabel": "11拍子（11/8）16小節・短調（2+2+3+2+2 のコパニツァ風・フリジアン・ドミナント）",
+  "title": "Café Bleue (Em)",
+  "key": "Em",
+  "tempo": 144,
+  "tempoGenerated": 144,
+  "bars": 76,
+  "seed": 20261104,
+  "gen": 174,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 27
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 27
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 4
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Em9",
+   "Fmaj7",
+   "B9",
+   "Em9",
+   "F#m7",
+   "B7",
+   "Am9",
+   "Fmaj7",
+   "B7b9",
+   "Em6",
+   "B7alt",
+   "Cmaj7",
+   "D7",
+   "Gmaj7",
+   "Cmaj7",
+   "Am9",
+   "Fmaj7(#11)",
+   "F#m7b5",
+   "B7b9",
+   "Em9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 174). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-04_odd_odd11/2026-11-04_odd_odd11_midi-set.zip",
+   "midi": "demos/2026-11-04_odd_odd11/2026-11-04_odd_odd11_all.mid",
+   "info": "demos/2026-11-04_odd_odd11/info.md"
+  },
+  "audio": "demos/2026-11-04_odd_odd11/2026-11-04_odd_odd11.mp3",
+  "scorePages": [
+   "scores/2026-11-04_odd_odd11-1.png"
+  ],
+  "cover": "covers/2026-11-04_odd_odd11.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-03_rk_zappa_rk_zp1",
   "date": "2026-11-03",
   "style": "rk_zappa",
