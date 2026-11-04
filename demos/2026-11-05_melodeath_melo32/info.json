@@ -1,0 +1,77 @@
+{
+  "id": "2026-11-05_melodeath_melo32",
+  "date": "2026-11-05",
+  "style": "melodeath",
+  "styleShort": "メロディック・デス",
+  "styleLabel": "メロディック・デス（アーチ・エネミー型：ハーモニック・マイナーのツイン・リードとギャロップ）",
+  "form": "melo32",
+  "formLabel": "メロデス 32小節（Aメロ16＋サビ16）",
+  "title": "Nuit Bleue (Fm)",
+  "key": "Fm",
+  "tempo": 258,
+  "tempoGenerated": 258,
+  "bars": 233,
+  "seed": 27459,
+  "gen": 174,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 30
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 30
+    },
+    {
+      "id": "comp",
+      "name": "Piano",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "gtr3",
+      "name": "Guitar 3 (riff double / harmony)",
+      "prog": 30
+    },
+    {
+      "id": "gtr2",
+      "name": "Guitar 2 (twin harmony)",
+      "prog": 30
+    }
+  ],
+  "chordsOneChorus": [
+    "F5",
+    "C#5",
+    "D#5",
+    "F5",
+    "A#5",
+    "C5",
+    "C#5",
+    "G#5",
+    "D#5",
+    "C5",
+    "F5",
+    "C#5",
+    "C5",
+    "F5"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 174). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-05_melodeath_melo32/2026-11-05_melodeath_melo32_midi-set.zip",
+    "midi": "demos/2026-11-05_melodeath_melo32/2026-11-05_melodeath_melo32_all.mid",
+    "info": "demos/2026-11-05_melodeath_melo32/info.md"
+  },
+  "audio": "demos/2026-11-05_melodeath_melo32/2026-11-05_melodeath_melo32.mp3"
+}
