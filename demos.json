@@ -683,108 +683,6 @@
   "coverKind": "generated"
  },
  {
-  "id": "2026-11-02_neo_sweepmin16",
-  "date": "2026-11-02",
-  "style": "neo",
-  "styleShort": "ネオクラシカル",
-  "styleLabel": "ネオクラシカル（ハーモニック・マイナー）",
-  "form": "sweepmin16",
-  "formLabel": "スウィープ進行 16小節（2拍ごとに和音・和声的短音階）",
-  "title": "Rue Bleue (Ebm)",
-  "key": "Ebm",
-  "tempo": 222,
-  "tempoGenerated": 222,
-  "bars": 140,
-  "seed": 72321,
-  "gen": 171,
-  "stems": [
-   {
-    "id": "mel",
-    "name": "Melody",
-    "prog": 30
-   },
-   {
-    "id": "solo",
-    "name": "Solo",
-    "prog": 30
-   },
-   {
-    "id": "comp",
-    "name": "Rhythm Gtr (power)",
-    "prog": 29
-   },
-   {
-    "id": "bass",
-    "name": "Bass",
-    "prog": 33
-   },
-   {
-    "id": "drums",
-    "name": "Drums",
-    "prog": 0
-   },
-   {
-    "id": "gtr3",
-    "name": "Guitar 3 (riff double / harmony)",
-    "prog": 30
-   },
-   {
-    "id": "gtr2",
-    "name": "Guitar 2 (twin harmony)",
-    "prog": 30
-   },
-   {
-    "id": "org",
-    "name": "Organ sustain (chords)",
-    "prog": 19
-   }
-  ],
-  "chordsOneChorus": [
-   "D#m",
-   "B",
-   "G#m",
-   "A#",
-   "D#m6",
-   "B",
-   "Fdim",
-   "A#",
-   "D#m",
-   "C#",
-   "B",
-   "A#",
-   "G#m6/9",
-   "Ddim7",
-   "A#",
-   "D#m",
-   "G#m",
-   "C#",
-   "F#",
-   "B",
-   "Fdim",
-   "A#",
-   "D#m",
-   "E",
-   "A#",
-   "Ddim7",
-   "D#m6",
-   "A#",
-   "D#m6"
-  ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 171). MIDI draft — to be arranged in Cubase.",
-  "status": "demo",
-  "files": {
-   "zip": "demos/2026-11-02_neo_sweepmin16/2026-11-02_neo_sweepmin16_midi-set.zip",
-   "midi": "demos/2026-11-02_neo_sweepmin16/2026-11-02_neo_sweepmin16_all.mid",
-   "info": "demos/2026-11-02_neo_sweepmin16/info.md"
-  },
-  "audio": "demos/2026-11-02_neo_sweepmin16/2026-11-02_neo_sweepmin16.mp3",
-  "scorePages": [
-   "scores/2026-11-02_neo_sweepmin16-1.png"
-  ],
-  "cover": "covers/2026-11-02_neo_sweepmin16.jpg",
-  "coverKind": "generated"
- },
- {
   "id": "2026-11-02_black_black32",
   "date": "2026-11-02",
   "style": "black",
@@ -950,6 +848,108 @@
    "scores/2026-11-02_thrash_thrash32-1.png"
   ],
   "cover": "covers/2026-11-02_thrash_thrash32.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-11-02_neo_sweepmin16",
+  "date": "2026-11-02",
+  "style": "neo",
+  "styleShort": "ネオクラシカル",
+  "styleLabel": "ネオクラシカル（ハーモニック・マイナー）",
+  "form": "sweepmin16",
+  "formLabel": "スウィープ進行 16小節（2拍ごとに和音・和声的短音階）",
+  "title": "Rue Bleue (Ebm)",
+  "key": "Ebm",
+  "tempo": 222,
+  "tempoGenerated": 222,
+  "bars": 140,
+  "seed": 72321,
+  "gen": 171,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 30
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 30
+   },
+   {
+    "id": "comp",
+    "name": "Rhythm Gtr (power)",
+    "prog": 29
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "gtr3",
+    "name": "Guitar 3 (riff double / harmony)",
+    "prog": 30
+   },
+   {
+    "id": "gtr2",
+    "name": "Guitar 2 (twin harmony)",
+    "prog": 30
+   },
+   {
+    "id": "org",
+    "name": "Organ sustain (chords)",
+    "prog": 19
+   }
+  ],
+  "chordsOneChorus": [
+   "D#m",
+   "B",
+   "G#m",
+   "A#",
+   "D#m6",
+   "B",
+   "Fdim",
+   "A#",
+   "D#m",
+   "C#",
+   "B",
+   "A#",
+   "G#m6/9",
+   "Ddim7",
+   "A#",
+   "D#m",
+   "G#m",
+   "C#",
+   "F#",
+   "B",
+   "Fdim",
+   "A#",
+   "D#m",
+   "E",
+   "A#",
+   "Ddim7",
+   "D#m6",
+   "A#",
+   "D#m6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 171). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-02_neo_sweepmin16/2026-11-02_neo_sweepmin16_midi-set.zip",
+   "midi": "demos/2026-11-02_neo_sweepmin16/2026-11-02_neo_sweepmin16_all.mid",
+   "info": "demos/2026-11-02_neo_sweepmin16/info.md"
+  },
+  "audio": "demos/2026-11-02_neo_sweepmin16/2026-11-02_neo_sweepmin16.mp3",
+  "scorePages": [
+   "scores/2026-11-02_neo_sweepmin16-1.png"
+  ],
+  "cover": "covers/2026-11-02_neo_sweepmin16.jpg",
   "coverKind": "generated"
  },
  {
