@@ -232,102 +232,6 @@
   "coverKind": "generated"
  },
  {
-  "id": "2026-11-03_fu_corea_auto32m",
-  "date": "2026-11-03",
-  "style": "fu_corea",
-  "styleShort": "フュージョン：チック・コリア型",
-  "styleLabel": "フュージョン：チック・コリア型（スペイン・ラテンの8分／リターン・トゥ・フォーエヴァー）",
-  "form": "auto32m",
-  "formLabel": "AABA 32小節・短調（毎回ちがう）",
-  "title": "Étoile Mineur (Bm)",
-  "key": "Bm",
-  "tempo": 300,
-  "tempoGenerated": 300,
-  "bars": 236,
-  "seed": 45569,
-  "gen": 173,
-  "stems": [
-   {
-    "id": "mel",
-    "name": "Melody",
-    "prog": 4
-   },
-   {
-    "id": "solo",
-    "name": "Solo",
-    "prog": 4
-   },
-   {
-    "id": "comp",
-    "name": "Rhodes",
-    "prog": 4
-   },
-   {
-    "id": "bass",
-    "name": "Bass",
-    "prog": 33
-   },
-   {
-    "id": "drums",
-    "name": "Timbales",
-    "prog": 0
-   }
-  ],
-  "chordsOneChorus": [
-   "Bm9",
-   "Bm9",
-   "Gmaj7",
-   "F#7alt",
-   "Em7",
-   "D#9",
-   "Cmaj7(#11)",
-   "Bm6",
-   "Bm7",
-   "Bm9",
-   "Gmaj7",
-   "C#m7",
-   "F#7",
-   "EmMaj7",
-   "A7b9",
-   "Cmaj7(#11)",
-   "Bm6",
-   "Em6",
-   "A7",
-   "C#9",
-   "G#7alt",
-   "C#9",
-   "G#7",
-   "Dmaj7",
-   "G#m7",
-   "C#7b9",
-   "Em7",
-   "A7",
-   "Bm9",
-   "Dmaj7(#11)",
-   "G13",
-   "Gmaj7",
-   "Amaj7",
-   "D#7b9",
-   "G#m7b5",
-   "Cmaj7(#11)",
-   "Bm6"
-  ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 173). MIDI draft — to be arranged in Cubase.",
-  "status": "demo",
-  "files": {
-   "zip": "demos/2026-11-03_fu_corea_auto32m/2026-11-03_fu_corea_auto32m_midi-set.zip",
-   "midi": "demos/2026-11-03_fu_corea_auto32m/2026-11-03_fu_corea_auto32m_all.mid",
-   "info": "demos/2026-11-03_fu_corea_auto32m/info.md"
-  },
-  "audio": "demos/2026-11-03_fu_corea_auto32m/2026-11-03_fu_corea_auto32m.mp3",
-  "scorePages": [
-   "scores/2026-11-03_fu_corea_auto32m-1.png"
-  ],
-  "cover": "covers/2026-11-03_fu_corea_auto32m.jpg",
-  "coverKind": "generated",
-  "youtube": "9uw5tkbaFCM"
- },
- {
   "id": "2026-11-03_rk_zappa_rk_zp1",
   "date": "2026-11-03",
   "style": "rk_zappa",
@@ -525,6 +429,101 @@
    "scores/2026-11-03_swing_swingriff32-1.png"
   ],
   "cover": "covers/2026-11-03_swing_swingriff32.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-11-03_fu_corea_auto32m",
+  "date": "2026-11-03",
+  "style": "fu_corea",
+  "styleShort": "フュージョン：チック・コリア型",
+  "styleLabel": "フュージョン：チック・コリア型（スペイン・ラテンの8分／リターン・トゥ・フォーエヴァー）",
+  "form": "auto32m",
+  "formLabel": "AABA 32小節・短調（毎回ちがう）",
+  "title": "Étoile Mineur (Bm)",
+  "key": "Bm",
+  "tempo": 300,
+  "tempoGenerated": 300,
+  "bars": 236,
+  "seed": 45569,
+  "gen": 173,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 4
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 4
+   },
+   {
+    "id": "comp",
+    "name": "Rhodes",
+    "prog": 4
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Timbales",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Bm9",
+   "Bm9",
+   "Gmaj7",
+   "F#7alt",
+   "Em7",
+   "D#9",
+   "Cmaj7(#11)",
+   "Bm6",
+   "Bm7",
+   "Bm9",
+   "Gmaj7",
+   "C#m7",
+   "F#7",
+   "EmMaj7",
+   "A7b9",
+   "Cmaj7(#11)",
+   "Bm6",
+   "Em6",
+   "A7",
+   "C#9",
+   "G#7alt",
+   "C#9",
+   "G#7",
+   "Dmaj7",
+   "G#m7",
+   "C#7b9",
+   "Em7",
+   "A7",
+   "Bm9",
+   "Dmaj7(#11)",
+   "G13",
+   "Gmaj7",
+   "Amaj7",
+   "D#7b9",
+   "G#m7b5",
+   "Cmaj7(#11)",
+   "Bm6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 173). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-03_fu_corea_auto32m/2026-11-03_fu_corea_auto32m_midi-set.zip",
+   "midi": "demos/2026-11-03_fu_corea_auto32m/2026-11-03_fu_corea_auto32m_all.mid",
+   "info": "demos/2026-11-03_fu_corea_auto32m/info.md"
+  },
+  "audio": "demos/2026-11-03_fu_corea_auto32m/2026-11-03_fu_corea_auto32m.mp3",
+  "scorePages": [
+   "scores/2026-11-03_fu_corea_auto32m-1.png"
+  ],
+  "cover": "covers/2026-11-03_fu_corea_auto32m.jpg",
   "coverKind": "generated"
  },
  {
