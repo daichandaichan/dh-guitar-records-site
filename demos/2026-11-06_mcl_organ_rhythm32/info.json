@@ -1,0 +1,112 @@
+{
+  "id": "2026-11-06_mcl_organ_rhythm32",
+  "date": "2026-11-06",
+  "style": "mcl_organ",
+  "styleShort": "マクラフリン風オルガンジャズ",
+  "styleLabel": "マクラフリン風オルガンジャズ（ライフタイム型：歪んだギターとオルガン・荒々しいブルース）",
+  "form": "rhythm32",
+  "formLabel": "リズムチェンジ型 32小節",
+  "title": "Manouche d'Automne (A)",
+  "key": "A",
+  "tempo": 148,
+  "tempoGenerated": 148,
+  "bars": 204,
+  "seed": 20261106,
+  "gen": 174,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 29
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 29
+    },
+    {
+      "id": "horn",
+      "name": "Organ solo (Larry Young)",
+      "prog": 16
+    },
+    {
+      "id": "comp",
+      "name": "Organ",
+      "prog": 16
+    },
+    {
+      "id": "bass",
+      "name": "Organ bass (left hand)",
+      "prog": 16
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "A6/9",
+    "F#m9",
+    "Bm7",
+    "C13",
+    "Fmaj7",
+    "G#7",
+    "C#maj7",
+    "E7alt",
+    "Amaj7",
+    "F#m7",
+    "Bm7",
+    "E7",
+    "Em7",
+    "A9",
+    "Dmaj7",
+    "Dm7",
+    "D#dim7",
+    "A6/9",
+    "E13",
+    "A6/9",
+    "F#m7",
+    "Bm7",
+    "E7b9",
+    "A6/9",
+    "F#m7",
+    "Bm7",
+    "E7",
+    "A7",
+    "Dmaj7",
+    "Dm7",
+    "D#dim7",
+    "A6/9",
+    "C#7",
+    "C#9",
+    "F#9",
+    "F#9",
+    "B7b9",
+    "B9",
+    "E7alt",
+    "E13",
+    "A6/9",
+    "F#m9",
+    "Bm7",
+    "E13",
+    "A6/9",
+    "F#m7",
+    "Bm7",
+    "E7",
+    "A7",
+    "Dmaj7",
+    "Dm7",
+    "D#dim7",
+    "A6/9",
+    "E7alt"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 174). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-06_mcl_organ_rhythm32/2026-11-06_mcl_organ_rhythm32_midi-set.zip",
+    "midi": "demos/2026-11-06_mcl_organ_rhythm32/2026-11-06_mcl_organ_rhythm32_all.mid",
+    "info": "demos/2026-11-06_mcl_organ_rhythm32/info.md"
+  },
+  "audio": "demos/2026-11-06_mcl_organ_rhythm32/2026-11-06_mcl_organ_rhythm32.mp3"
+}
