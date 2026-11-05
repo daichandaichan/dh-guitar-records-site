@@ -245,6 +245,13 @@ var TONE = {
   rk_sabbath: { bank: "electric", lp: [1300, 4200], nasal: 0, pick: 0.09, body: 0.07, det: 6, rel: 1.2, drive: 15, driveComp: 20, lvl: 0.62, lead: "pluck", comp: "pluck" },
   rk_maiden:  { bank: "electric", lp: [1900, 5800], nasal: 0, pick: 0.08, body: 0.05, det: 6, rel: 1.1, drive: 11, driveComp: 15, lvl: 0.66, lead: "pluck", comp: "pluck" },
   rk_hendrix: { bank: "electric", lp: [1700, 5200], nasal: 0, pick: 0.10, body: 0.06, det: 8, rel: 1.4, drive: 13, driveComp: 14, lvl: 0.66, lead: "pluck", comp: "pluck" },
+  rk_vaughan: { bank: "electric", lp: [1500, 4800], nasal: 0.1, pick: 0.12, body: 0.07, det: 8, rel: 1.5, drive: 9, driveComp: 10, lvl: 0.68, lead: "pluck", comp: "pluck" },
+  rk_wonder:  { bank: "electric", lp: [2400, 7000], nasal: 0.2, pick: 0.14, body: 0.05, det: 6, rel: 0.9, drive: 2, lvl: 0.74, lead: "pluck", comp: "synth", pad: 0 },
+  rk_jbrown:  { bank: "electric", lp: [2600, 7500], nasal: 0.1, pick: 0.16, body: 0.04, det: 4, rel: 0.5, drive: 3, lvl: 0.74, lead: "pluck", comp: "pluck" },
+  douyou: { bank: "nylon", lp: [1700, 4600], nasal: 0, pick: 0.09, body: 0.13, det: 0, rel: 1.0, lead: "pluck", comp: "pluck" },
+  folkworld: { bank: "nylon", lp: [1650, 4500], nasal: 0, pick: 0.09, body: 0.13, det: 0, rel: 1.0, lead: "pluck", comp: "pluck" },
+  dance: { bank: "electric", lp: [2600, 9000], nasal: 0, pick: 0.05, body: 0.02, det: 12, rel: 0.7, drive: 3, lvl: 0.76, lead: "synth", comp: "synth", pad: 0.2 },
+  rk_beatles: { bank: "electric", lp: [2200, 6500], nasal: 0.15, pick: 0.12, body: 0.06, det: 7, rel: 1.0, drive: 4, driveComp: 5, lvl: 0.70, lead: "pluck", comp: "pluck" },
   rk_zappa:   { bank: "electric", lp: [2000, 6000], nasal: 0, pick: 0.08, body: 0.04, det: 6, rel: 1.2, drive: 7, lvl: 0.72, lead: "pluck", comp: "synth", pad: 0 },
   rk_prog:  { bank: "electric", lp: [1700, 5400], nasal: 0, pick: 0.07, body: 0.05, det: 7, rel: 1.4, drive: 10, lvl: 0.74, lead: "pluck", comp: "synth", pad: 0 },
   rk_kc:    { bank: "electric", lp: [2000, 5800], nasal: 0, pick: 0.12, body: 0.03, det: 5, rel: 1.1, drive: 5, driveComp: 6, lvl: 0.70, lead: "pluck", comp: "pluck" },
@@ -253,6 +260,7 @@ var TONE = {
   /* マクラフリン風オルガン・トリオ：ベース奏者はいない＝オルガンの左手（足鍵盤）がベース */
   mcl_organtrio: { bank: "electric", lp: [1700, 6000], nasal: 0, pick: 0.07, body: 0.04, det: 8, rel: 1.9, drive: 9, lvl: 0.7, lead: "pluck", comp: "organ", bassOrgan: true },
   mclaughlin_f: { bank: "electric", lp: [1700, 6200], nasal: 0, pick: 0.07, body: 0.04, det: 8, rel: 1.9, drive: 9, lvl: 0.7, lead: "pluck", comp: "keys", pad: 0.08 },
+  mclaughlin_a: { bank: "steel", lp: [2300, 7200], nasal: 0, pick: 0.10, body: 0.08, det: 5, rel: 1.6, lvl: 0.74, lead: "pluck", comp: "keys", pad: 0.06 },
   mclaughlin_o: { bank: "electric", lp: [1700, 6000], nasal: 0, pick: 0.07, body: 0.04, det: 8, rel: 1.9, drive: 9, lvl: 0.7, lead: "pluck", comp: "organ", bassOrgan: true },
   /* フュージョンの型：歪みのある、伸びるリード・ギター（ラテン・ロック型） */
   fu_lead: { bank: "electric", lp: [1600, 5200], nasal: 0, pick: 0.05, body: 0.05, det: 6, rel: 2.1, drive: 7, lvl: 0.75, lead: "pluck", comp: "keys", pad: 0.06 },
@@ -2103,8 +2111,8 @@ var STEM_TRIM = {
   swing: { comp: 1.5 }, gypsy: { comp: 1.45 }, bebop: { comp: 1.5 }, ballad: { comp: 1.45 }, bossa: { comp: 1.15 }, soul: { comp: 0.9 },
   modern: { comp: 1.4 }, odd: { comp: 1.4 }, waltz: { comp: 1.5 }, organjazz: { comp: 0.9 }, fusion: { comp: 1.4 }, brazil: { comp: 1.15 }, latin: { comp: 1.2 },
   classical: { comp: 1.35 }, indian: { perc: 1.5, harp: 1.6 }, wa: { drums: 0.7 },
-  mcl_fusion: { comp: 1.4 }, mcl_organ: { comp: 0.9 }, mcl_mahav: { comp: 1.4 }, mcl_organtrio: { comp: 0.9, drums: 0.95 },
-  arena: { comp: 1.0 }, rk_la: { comp: 1.0 }, rk_hard: { comp: 1.0 }, rk_90: { comp: 1.0 }, rk_heavy: { comp: 1.0 }, rk_power: { comp: 1.0 }, rk_purple: { comp: 1.0 }, rk_sabbath: { comp: 1.0 }, rk_maiden: { comp: 1.0 }, rk_hendrix: { comp: 1.0 }, rk_zappa: { comp: 1.0 }, rk_prog: { comp: 1.0 }, rk_kc: { comp: 1.0 }, rk_elp: { comp: 1.0 },
+  mcl_fusion: { comp: 1.4 }, mcl_acoustic: { comp: 1.2 }, mcl_organ: { comp: 0.9 }, mcl_mahav: { comp: 1.4 }, mcl_organtrio: { comp: 0.9, drums: 0.95 },
+  arena: { comp: 1.0 }, rk_la: { comp: 1.0 }, rk_hard: { comp: 1.0 }, rk_90: { comp: 1.0 }, rk_heavy: { comp: 1.0 }, rk_power: { comp: 1.0 }, rk_purple: { comp: 1.0 }, rk_sabbath: { comp: 1.0 }, rk_maiden: { comp: 1.0 }, rk_hendrix: { comp: 1.0 }, dance: { comp: 1.0 }, douyou: { comp: 1.0 }, folkworld: { comp: 1.0 }, rk_beatles: { comp: 1.0 }, rk_vaughan: { comp: 1.0 }, rk_wonder: { comp: 1.0 }, rk_jbrown: { comp: 1.0 }, rk_zappa: { comp: 1.0 }, rk_prog: { comp: 1.0 }, rk_kc: { comp: 1.0 }, rk_elp: { comp: 1.0 },
   fu_corea: { comp: 1.4 }, fu_weather: { comp: 1.4 }, fu_metheny: { comp: 1.3 }, fu_funk: { comp: 1.4 }, fu_smooth: { comp: 1.4 }, fu_latin: { comp: 1.2 }, fu_prog: { comp: 1.4 },
   guitartrio: { mel: 1.2, gt3: 1.2 }       /* 測定：ギター1（旋律・ソロ）が、ギター2のラスゲアードより 7dB 小さかった */
 };
