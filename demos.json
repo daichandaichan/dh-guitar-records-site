@@ -269,6 +269,82 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-05_dance_dcg_classic",
+  "date": "2026-11-05",
+  "style": "dance",
+  "styleShort": "ダンス",
+  "styleLabel": "ダンス（DJ風：ハウス・トランス／歌メロつき）",
+  "form": "dcg_classic",
+  "formLabel": "トランス 138BPM × 世界の名歌（クラシック歌曲）（そのジャンルの統計から作る新しい旋律）",
+  "title": "Gravity Signal DJ Mix (Am)",
+  "key": "Am",
+  "tempo": 124,
+  "tempoGenerated": 124,
+  "bars": 97,
+  "seed": 38161,
+  "gen": 174,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Lead (saw)",
+    "prog": 81
+   },
+   {
+    "id": "vocal",
+    "name": "Vocal melody (for VoiSona)",
+    "prog": 54
+   },
+   {
+    "id": "comp",
+    "name": "Chord stabs",
+    "prog": 62
+   },
+   {
+    "id": "arp",
+    "name": "Arpeggio",
+    "prog": 80
+   },
+   {
+    "id": "pad",
+    "name": "Pad",
+    "prog": 89
+   },
+   {
+    "id": "bass",
+    "name": "Sub bass",
+    "prog": 38
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Am",
+   "Am",
+   "F",
+   "F",
+   "G",
+   "G",
+   "Em",
+   "Em"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 174). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-05_dance_dcg_classic/2026-11-05_dance_dcg_classic_midi-set.zip",
+   "midi": "demos/2026-11-05_dance_dcg_classic/2026-11-05_dance_dcg_classic_all.mid",
+   "info": "demos/2026-11-05_dance_dcg_classic/info.md"
+  },
+  "audio": "demos/2026-11-05_dance_dcg_classic/2026-11-05_dance_dcg_classic.mp3",
+  "scorePages": [
+   "scores/2026-11-05_dance_dcg_classic-1.png"
+  ],
+  "cover": "covers/2026-11-05_dance_dcg_classic.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-04_odd_odd11",
   "date": "2026-11-04",
   "style": "odd",
