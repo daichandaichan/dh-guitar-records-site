@@ -6569,8 +6569,72 @@ function rockScaleOk(p, ch, opt, form) {
   return p;
 }
 /* ギター2：リズムのリフ。16分の型に、根音のペダル・動く音・和音(根音＋5度＋オクターヴ＋3度)を、解析の割合で */
+/* ---------- ブルース・ロックの伴奏リフ（定番の型の組み合わせ） ---------- */
+var BLUES_RHY = [
+  ["8分", [0, 2, 4, 6, 8, 10, 12, 14], 3],
+  ["8分の食い", [0, 2, 4, 6, 8, 10, 12, 13], 1.2],
+  ["シャッフル", [0, 3, 4, 7, 8, 11, 12, 15], 3],
+  ["3+3+2", [0, 3, 6, 8, 11, 14], 2.2],
+  ["4分＋8分", [0, 4, 6, 8, 12, 14], 1.8],
+  ["スタブ", [0, 3, 8, 11], 1.4],
+  ["16分", [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], 0.7],
+  ["シンコペ", [0, 2, 3, 6, 8, 10, 11, 14], 1.4]
+];
+var BLUES_INT = [
+  ["根音", [0], 2.2],
+  ["ブギー 1-5-6-5", [0, 7, 9, 7], 3],
+  ["ブギー 1-5-6-♭7", [0, 7, 9, 10, 9, 7], 2.4],
+  ["ハンマリング ♭3→3", [0, 0, 3, 4], 2],
+  ["オクターヴ", [0, 12], 1.6],
+  ["ペンタの上行", [0, 3, 5, 7, 5, 3], 1.6],
+  ["1-♭7", [0, 10], 1.4],
+  ["1-5-♭7-5", [0, 7, 10, 7], 2],
+  ["♭3-3-4-♭5-5 の歩み", [0, 3, 4, 5, 6, 7], 1],
+  ["根音の連打に3度", [0, 0, 0, 4], 1]
+];
+var BLUES_MUTE = [["ほぼ全部ミュート（頭だけ開放）", 0.0, 0.15], ["ミュート＋拍の頭を開放", 0.22, 0.3], ["ミュート＋ゴースト", 0.1, 0.2]];
+function bluesPick(rr, tbl, only) {
+  var t = tbl.filter(function (x, i) { return !only || only.indexOf(i) >= 0; }), tot = 0, i;
+  for (i = 0; i < t.length; i++) tot += t[i][2];
+  var r = rr.f() * tot;
+  for (i = 0; i < t.length; i++) { r -= t[i][2]; if (r <= 0) return tbl.indexOf(t[i]); }
+  return tbl.indexOf(t[t.length - 1]);
+}
+function bluesChoice(opt, block, prevRef) {
+  var rr = RNG(((((opt.seed || 1) * 433 + block * 61 + 53) % 2147483647) + 2147483647) % 2147483647 || 1);
+  if (block > 0 && prevRef.v && rr.chance(0.5)) return prevRef.v;                         /* 半分くらいは、前の4小節を引き継ぐ */
+  var ri = bluesPick(rr, BLUES_RHY), name = BLUES_RHY[ri][0], only = null;
+  if (name === "スタブ") only = [0, 4, 6];                                                  /* 根音／オクターヴ／1-♭7 */
+  else if (name === "16分") only = [0, 3, 9];
+  else if (name === "3+3+2") only = [0, 3, 4, 6, 7, 9];
+  var ci = bluesPick(rr, BLUES_INT, only), mi = bluesPick(rr, BLUES_MUTE);
+  prevRef.v = { ri: ri, ci: ci, mi: mi };
+  return prevRef.v;
+}
+function bluesRockBar(chs, bar, t0, opt, form, rng, ch0) {
+  var out = [], c = ch0, R = BLUES_RHY[c.ri][1], C = BLUES_INT[c.ci][1], M = BLUES_MUTE[c.mi], k = 0, i, steps = R.slice();
+  steps.forEach(function (st, idx) {
+    var tt = t0 + st * 0.25, ch = chordAt(chs, tt), root = metalRootIn(ch.root, 40), minorCh = /^(min|m[^a])/.test(String(ch.q || "")) || ch.q === "m7" || ch.q === "m9" || ch.q === "m6";
+    var off = C[k % C.length]; k++;
+    if (minorCh && off === 4) off = 3;                                                       /* 短調の和音は、長3度を短3度に */
+    var next = idx + 1 < steps.length ? steps[idx + 1] : 16, gap = (next - st) * 0.25;
+    var accent = (st % 4 === 0), open = (st === 0 && (bar % 2 === 0 || rng.f() < 0.35)) || (accent && st !== 0 && st !== 8 && rng.f() < M[1]) || (st === 8 && rng.f() < M[2]);      /* 開放は、2小節の頭と、ときどき拍の頭だけ。ほかはミュート */
+    var d = open ? Math.max(0.2, Math.min(0.9, gap * 0.9)) : Math.min(0.16, Math.max(0.08, gap * 0.8));
+    var v = Math.max(34, Math.min(112, (open ? 92 : 64) + (accent ? 8 : 0) + rng.i(6)));
+    out.push({ t: tt, d: d, p: root + off, v: v, ar: open ? 0 : 2 });
+    if (open && off === 0 && rng.chance(0.5)) out.push({ t: tt + 0.004, d: d, p: root + 7, v: v - 5, ar: 0 });              /* 開放の根音には、5度を添えてパワーコード */
+  });
+  if (M[0] > 0 && R.length <= 8) {                                                           /* ゴースト：空いている16分に、ごく弱いミュートの音 */
+    for (i = 0; i < 16; i++) {
+      if (R.indexOf(i) >= 0 || rng.f() > M[0] * 0.55) continue;
+      var tg = t0 + i * 0.25, chg = chordAt(chs, tg);
+      out.push({ t: tg, d: 0.06, p: metalRootIn(chg.root, 40), v: 34 + rng.i(5), ar: 2 });
+    }
+  }
+  return out;
+}
 function rockRiffGtr(chs, form, sty, opt, rng, ctx) {
-  var kind = rockKindOf(sty), P = ROCK_PROF[kind], beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", bar, step = 0.25;
+  var kind = rockKindOf(sty), P = ROCK_PROF[kind], beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", bar, step = 0.25, bluesPrev = { v: null };
   if (form.arenaFeel === "ballad") return notes;
   for (bar = 0; bar < bars; bar++) {
     var t0 = bar * beats, s;
@@ -6581,6 +6645,16 @@ function rockRiffGtr(chs, form, sty, opt, rng, ctx) {
         if (head && !solo) { [0, 7, 12].forEach(function (iv, z) { notes.push({ t: t0 + tb + z * 0.004, d: 0.85, p: rb0 + iv, v: 102 + rng.i(8) - z * 3 }); }); continue; }
         var pb = rb0; if (!head && !solo && rng.chance(0.28)) pb = rockScaleOk(rb0 + metalWPick(rng, P.move), cb, opt, form);
         notes.push({ t: t0 + tb, d: 0.2, p: pb, v: 66 + (s % 2 === 0 ? 8 : 0) + rng.i(6) - (solo ? 10 : 0), ar: 2 });
+      }
+      continue;
+    }
+    if (kind === "hendrix" && !solo && opt.bluesRiff !== false) {                         /* ブルース・ロック：定番のリフ（ミュート気味）。4小節ごとに型を選ぶ */
+      var blk = Math.floor(bar / 4), chB = bluesChoice(opt, blk, bluesPrev);
+      notes = notes.concat(bluesRockBar(chs, bar, t0, opt, form, rng, chB));
+      if (bar % 4 === 3 && rng.chance(0.4)) {                                              /* 4小節の終わり：4拍目を、開放のパワーコードで止める */
+        var cEb = chordAt(chs, t0 + 3), rEb = metalRootIn(cEb.root, 40);
+        notes = notes.filter(function (n) { return !(n.t >= t0 + 3 - 1e-6 && n.t < t0 + 4 - 1e-6); });
+        [0, 7, 12].forEach(function (iv, z) { notes.push({ t: t0 + 3 + z * 0.004, d: 0.85, p: rEb + iv, v: 104 + rng.i(8) - z * 3 }); });
       }
       continue;
     }
@@ -6976,7 +7050,7 @@ function riffHarmony(comp, sections, beats, opt, ab, wins, rkey) {
     var sec = secAt(low.t); if (!sec || sec.kind === "solo" || sec.kind === "trade" || inWin(low.t)) continue;
     var ph = Math.floor((low.t - sec.at) / (4 * beats)), key = sec.at + ":" + ph;
     if (!dec[key]) {
-      var on = rh.chance(songRate), iv = on ? metalWPick(rh, tbl) : 0;
+      var on = rh.chance(sec.rt === "riffbreak" ? Math.min(0.92, songRate * 2.4 + 0.15) : songRate), iv = on ? metalWPick(rh, tbl) : 0;
       dec[key] = { on: on, iv: iv, up: rh.chance(0.7), oct: rh.chance(0.2), chg: rh.chance(P.chgP || 0) };
     }
     var D2 = dec[key], p = low.p, q = p, mute = low.ar === 2 || low.d < 0.3;
@@ -6999,7 +7073,8 @@ function twinHarmony(mel, solo, sections, beats, opt, tempo, ab) {
   var rx = RNG((((opt.seed || 1) * 89 + 5) % 2147483647) || 1), exo = {}, xm = ["thrash", "death", "melodeath", "black"].indexOf(opt.style) >= 0;       /* スラッシュ・デス・メロデス・ブラックは、増4度を多めに */
   sections.forEach(function (sec, i) {
     if (sec.kind === "head" || sec.kind === "shout") regs.push({ a: sec.at, z: sec.at + sec.beats, src: mel });
-    if (sec.kind === "solo" && sections.slice(i + 1).some(function (x) { return x.kind === "solo"; })) regs.push({ a: sec.at + sec.beats - 4 * beats, z: sec.at + sec.beats, src: solo });
+    if (sec.kind === "solo" && sec.rt === "twin") regs.push({ a: sec.at, z: sec.at + sec.beats, src: solo });          /* ハモリ入りのソロ：コーラス全体 */
+    else if (sec.kind === "solo" && sections.slice(i + 1).some(function (x) { return x.kind === "solo"; })) regs.push({ a: sec.at + sec.beats - 4 * beats, z: sec.at + sec.beats, src: solo });
   });
   regs.forEach(function (rg) {
     var dirs = {};
@@ -21188,7 +21263,7 @@ function generateMain(opt) {
     var iv = (o.inten == null ? 0.5 : o.inten);
     if (EMO) iv = Math.max(0.12, Math.min(1.15, 0.5 + (iv - 0.5) * emoArc * 1.05 + (emoArc - 1) * 0.12));
     plan.push({ kind: kind, bars: bars, from: from, inten: iv,
-      play: o.play || {}, stop: !!o.stop, tag: o.tag });
+      play: o.play || {}, stop: !!o.stop, tag: o.tag, rt: o.rt });
     order.push(kind);
   }
   var JAZZFAM = ["baroque", "flamenco", "classical", "wa", "mathrock", "epic", "game", "chip", "thrash", "death", "melodeath", "black"].indexOf(opt.style) < 0;
@@ -21196,7 +21271,21 @@ function generateMain(opt) {
   /* タグの位置：最後の主和音の着地の2小節前（ii-V）を繰り返し、3回目で着地する */
   var arriveBar = arrivalBar(chs, beats, barsPerChorus, opt.tonic, form.mel === "coltrane");
   var tagFrom = Math.max(0, arriveBar - 2);
+  /* メタル系：イントロとエンディングは「カッコいいリフ」を4小節か8小節。ソロが複数あるときは、コーラスごとに役を変える（lead／twin／riff） */
+  var METALV = useArr && ["thrash", "death", "melodeath", "black", "djent"].indexOf(opt.style) >= 0 && opt.metalVar !== false;
+  var rvM = RNG(((opt.seed || 1) * 211 + 17) % 2147483647);
+  var rbI = Math.min(METALV && barsPerChorus >= 16 && rvM.chance(0.5) ? 8 : 4, barsPerChorus), rbO = Math.min(METALV && barsPerChorus >= 16 && rvM.chance(0.5) ? 8 : 4, barsPerChorus);
+  var soloRoles = [], rvS = rvM.chance(0.5);
+  for (i = 0; i < opt.solos; i++) soloRoles.push("lead");
+  if (METALV && opt.solos >= 2) {
+    soloRoles[opt.solos - 1] = "twin";                                   /* 最後は、ハモリ入りの盛り上がり */
+    if (opt.solos >= 3) soloRoles[1] = rvS ? "riff" : "twin";            /* 2コーラス目：リフだけ／ハモリ入り */
+    if (opt.solos >= 3 && !soloRoles.some(function (x) { return x === "riff"; })) soloRoles[opt.solos - 2 > 1 ? opt.solos - 2 : 1] = "riff";
+    if (opt.solos >= 4) soloRoles[2] = (soloRoles[1] === "riff") ? "twin" : "riff";
+  }
   if (useArr) {
+    if (METALV) push("intro", rbI, 0, { inten: 0.8, play: { comp: 1, bass: 1, drums: 1, perc: 1 }, rt: "riffintro" });          /* 曲の頭のリフ（Aのリフ）を全員で */
+    else
     /* 起：イントロは終止の数小節を回し、その上でテーマの冒頭の動機をそっと提示する */
     push("intro", introBars, barsPerChorus - introBars,
       { inten: 0.25, play: { comp: 1, bass: 1, drums: 0.5, perc: 0.5, motif: opt.style !== "flamenco" ? 1 : 0 } });
@@ -21206,9 +21295,13 @@ function generateMain(opt) {
   /* 転：ソロで押し上げる */
   for (i = 0; i < opt.solos; i++) {
     var f2 = opt.solos > 1 ? i / (opt.solos - 1) : 0.5;
+    if (soloRoles[i] === "riff") {                                       /* リフだけのコーラス：リードは休み、リフと、そのハモリ */
+      push("head", barsPerChorus, 0, { inten: 0.6 + 0.35 * f2, play: { comp: 1, bass: 1, drums: 1, perc: 1 }, rt: "riffbreak" });
+      continue;
+    }
     push("solo", barsPerChorus, 0,
       { inten: 0.6 + 0.35 * f2, play: { solo: 1, comp: 1, bass: 1, drums: 1, perc: 1 },
-        stop: useArr && i === 0 && opt.solos > 1 && rng.chance(0.45) });
+        stop: useArr && i === 0 && opt.solos > 1 && rng.chance(0.45), rt: soloRoles[i] === "twin" ? "twin" : undefined });
   }
   var tradeOn = useArr && JAZZFAM && opt.useDrums && sty.drums !== "none" && opt.solos > 0 &&
     barsPerChorus % 4 === 0 && barsPerChorus >= 12 && (beats === 4 || beats === 3);
@@ -21228,6 +21321,9 @@ function generateMain(opt) {
     push("tag", 2, tagFrom, { inten: 0.45, play: { mel: 1, comp: 1, bass: 1, drums: 1, perc: 1 }, tag: "tag" });
     push("tag", Math.min(barsPerChorus - tagFrom, 3), tagFrom,
       { inten: 0.4, play: { mel: 1, comp: 1, bass: 1, drums: 0.8, perc: 0.8 }, tag: "tagEnd" });
+  } else if (useArr && METALV) {
+    /* メタル系のエンディング：後半のリフ（Bのリフ）を4小節か8小節。ドラムも全開 */
+    push("outro", rbO, (barsPerChorus >= 16 && rbO < barsPerChorus) ? Math.floor(barsPerChorus / 2) : 0, { inten: 0.8, play: { comp: 1, bass: 1, drums: 1, perc: 1 }, tag: "end", rt: "riffend" });
   } else if (useArr) push("outro", introBars, barsPerChorus - introBars,
     { inten: 0.4, play: { comp: 1, bass: 1, drums: 0.7, perc: 0.7 }, tag: "end" });
 
@@ -21283,7 +21379,7 @@ function generateMain(opt) {
     }
   }
   var mel = [], solo = [], comp = [], bass = [], drums = [], perc = [], horn = [], harp = [], timp = [], cello = [], gtrR = [];
-  var soloSeen = 0, soloTotal = opt.solos, headSeen = 0, secParts = [], twoFeelWins = [], tradeBlk = 0, drumWins = [];
+  var soloSeen = 0, soloTotal = METALV ? Math.max(1, plan.filter(function (q) { return q.kind === "solo"; }).length) : opt.solos, headSeen = 0, secParts = [], twoFeelWins = [], tradeBlk = 0, drumWins = [];
   var headNotes;
   DJENT = (opt.style === "djent") ? { A: makeDjentRiff(rng, false), B: makeDjentRiff(rng, false), C: makeDjentRiff(rng, true) } : null;
   if (opt.style === "djent") CHAOS_INFO = { order: [], events: [], modes: {} };
@@ -21410,7 +21506,7 @@ function generateMain(opt) {
     }
     secParts.push(part);
     var secBeats = P.bars * beats;
-    sections.push({ kind: P.kind, at: off, beats: secBeats, from: P.from || 0, orch: P.orch, tr: P.transpose || 0, pivot: P.pivot || null, bar0: Math.round(off / beats), inten: Math.round(P.inten * 100) / 100, tag: (P.tag === "turn" || P.tag === "voice") ? P.tag : undefined });
+    sections.push({ kind: P.kind, at: off, beats: secBeats, from: P.from || 0, orch: P.orch, tr: P.transpose || 0, pivot: P.pivot || null, bar0: Math.round(off / beats), inten: Math.round(P.inten * 100) / 100, tag: (P.tag === "turn" || P.tag === "voice") ? P.tag : undefined, rt: P.rt });
     var mine = [], hn = null, sn = null;
 
     if (P.play.mel) {
@@ -23481,9 +23577,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 507;
+var BUILD_NO = 509;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 174;
+var GEN_NO = 176;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
