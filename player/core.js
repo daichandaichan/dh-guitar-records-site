@@ -6960,6 +6960,7 @@ function harmTension(ch, tonic) {
 }
 /* kind: "tri"(6半音)／"dim"(3半音)。dir: 正＝上、負＝下。調の音(短調は和声的短音階・長調は長音階)＋その和音の音に収まる音だけ。
    dim は、色の2小節の間ずっと付ける。tri は、緊張する和音の上か、句の終わりの長い音(finalLong)だけ。 */
+var EXO_ACC = true;
 function exoticHarm(p, ab, tt, tonic, kind, dir, finalLong, loose) {
   if (!ab || !ab.length) return null;
   var c = ab[0], z; for (z = 0; z < ab.length; z++) { if (ab[z].t <= tt + 1e-6) c = ab[z]; else break; }
@@ -6967,6 +6968,10 @@ function exoticHarm(p, ab, tt, tonic, kind, dir, finalLong, loose) {
   (minor ? [0, 2, 3, 5, 7, 8, 11] : [0, 2, 4, 5, 7, 9, 11]).forEach(function (x) { set[(x + tonic) % 12] = 1; });
   cq.iv.forEach(function (x) { set[(c.root + x) % 12] = 1; });
   if (kind === "tri" && loose !== true && !(harmTension(c, tonic) || finalLong)) return null;
+  if (EXO_ACC) {                                              /* 旋律の音が、その和音の減7の4音に入るときだけ（属和音は導音から、ほかは根音から） */
+    var domC = cq.iv.indexOf(4) >= 0 && cq.iv.indexOf(10) >= 0, dbase = (domC ? c.root + 4 : c.root) % 12, drel = ((((p % 12) - dbase) % 12) + 12) % 12;
+    if (drel % 3 !== 0) return null;
+  }
   var step = kind === "tri" ? 6 : 3, cand = [p + (dir >= 0 ? step : -step), p + (dir >= 0 ? -step : step)], k;
   for (k = 0; k < 2; k++) if (cand[k] >= 40 && cand[k] <= 88 && set[((cand[k] % 12) + 12) % 12]) return cand[k];
   if (kind === "tri" && (loose === true || (loose === "tens" && harmTension(c, tonic))) && set[((p % 12) + 12) % 12]) for (k = 0; k < 2; k++) if (cand[k] >= 40 && cand[k] <= 88) return cand[k];      /* 極端なメタル：調の音から、調の外のトライトーン(♭5・♯4)も付ける */
@@ -7068,8 +7073,54 @@ function riffHarmony(comp, sections, beats, opt, ab, wins, rkey) {
   }
   return out;
 }
+/* ハモリの音が、その時の和音の音とぶつからないか（長い音のみ）：和音の音の半音上＝b9、長い音では半音下も */
+function twinSafe(n, q, ab) {
+  var fr = ((n.t % 1) + 1) % 1, onB = false;      /* 拍の頭・半拍の頭の音は、短くても調べる（速いテンポ） */
+  if (q == null || n.d < 1 || !ab || !ab.length) return true;
+  var c = ab[0], z; for (z = 0; z < ab.length; z++) { if (ab[z].t <= n.t + 1e-6) c = ab[z]; else break; }
+  var cq = QUAL[c.q] || { iv: [0, 7] }, qp = ((q % 12) + 12) % 12, k;
+  for (k = 0; k < cq.iv.length; k++) {
+    var d = (((qp - c.root - cq.iv[k]) % 12) + 12) % 12;
+    if (d === 0) return true;
+  }
+  for (k = 0; k < cq.iv.length; k++) {
+    var d2 = (((qp - c.root - cq.iv[k]) % 12) + 12) % 12;
+    if (d2 === 1 || (d2 === 11 && (n.d >= 0.5 || onB))) return false;
+  }
+  return true;
+}
+function twinFix(n, q, alts, ab, on, ref) {
+  if (!on || q == null || twinSafe(n, q, ab)) return q;
+  var k, best = null, bc = 1e9;                                    /* 安全な候補のうち、直前のハモリ音から旋律と同じだけ動いた高さ(ref)にいちばん近いもの。オクターヴ下(最後の候補)は最後の手段 */
+  for (k = 0; k < alts.length; k++) if (alts[k] != null && alts[k] >= 40 && alts[k] <= 88 && twinSafe(n, alts[k], ab)) {
+    var cost = (ref != null ? Math.abs(alts[k] - ref) : k) + (k === alts.length - 1 ? 100 : 0);
+    if (cost < bc) { bc = cost; best = alts[k]; }
+  }
+  return best != null ? best : q;
+}
+/* ハモリのパートに、リード(mel／solo)のピッチベンドを写す（ハモリの音が鳴っている間のものだけ）。 */
+function twinBendExtra(harm, stemsAll, opt) {
+  if (opt.harmBend === false || !harm.length) return [];
+  var src = [];
+  stemsAll.forEach(function (st) { if ((st.id === "mel" || st.id === "solo") && st.extra) st.extra.forEach(function (e) { if (e.bend != null) src.push(e); }); });
+  if (!src.length) return [];
+  src.sort(function (a, b) { return a.t - b.t; });
+  var out = [], seen = {}, i, j = 0;
+  for (i = 0; i < harm.length; i++) {
+    var h = harm[i], a = h.t - 0.05, z = h.t + h.d + 0.06, k;
+    while (j > 0 && src[j - 1].t >= a) j--;
+    for (k = j; k < src.length && src[k].t < z; k++) {
+      if (src[k].t < a) continue;
+      var key = src[k].t.toFixed(4) + ":" + src[k].bend;
+      if (!seen[key]) { seen[key] = 1; out.push({ t: src[k].t, bend: src[k].bend }); }
+    }
+  }
+  return out;
+}
 function twinHarmony(mel, solo, sections, beats, opt, tempo, ab) {
+  EXO_ACC = opt.harmAcc !== false;
   var out = [], tonic = ((opt.tonic || 0) % 12 + 12) % 12, rr = RNG((((opt.seed || 1) * 57 + 3) % 2147483647) || 1), regs = [];
+  var q0H = QUAL[ab && ab[0] && ab[0].q] || { iv: [0, 7] }, ACC = opt.harmAcc !== false, majK = !!opt.neoMajor || (ACC && q0H.iv.indexOf(4) >= 0 && q0H.iv.indexOf(3) < 0);       /* 長調か（最初の和音が長三和音） */
   var rx = RNG((((opt.seed || 1) * 89 + 5) % 2147483647) || 1), exo = {}, xm = ["thrash", "death", "melodeath", "black"].indexOf(opt.style) >= 0;       /* スラッシュ・デス・メロデス・ブラックは、増4度を多めに */
   sections.forEach(function (sec, i) {
     if (sec.kind === "head" || sec.kind === "shout") regs.push({ a: sec.at, z: sec.at + sec.beats, src: mel });
@@ -7077,9 +7128,15 @@ function twinHarmony(mel, solo, sections, beats, opt, tempo, ab) {
     else if (sec.kind === "solo" && sections.slice(i + 1).some(function (x) { return x.kind === "solo"; })) regs.push({ a: sec.at + sec.beats - 4 * beats, z: sec.at + sec.beats, src: solo });
   });
   regs.forEach(function (rg) {
-    var dirs = {};
+    var dirs = {}, pv = null;
+    function ref(n) { return (opt.harmAcc !== false && pv && n.t - pv.t <= 1.01) ? pv.q + (n.p - pv.p) : null; }          /* 直前のハモリ音から、旋律と同じだけ動いた高さ */
+    function gap(n) {                                                                                     /* 旋律が調の外の音のとき：直前の間隔を保つ（協和する間隔だけ） */
+      return null;   /* 調の外の音には付けない（経過音に無理に付けると変になる） */
+      var r = ref(n); if (r == null || r < 40 || r > 88) return null;
+      return ([0, 3, 4, 5, 7, 8, 9].indexOf(Math.abs(n.p - r) % 12) >= 0 && twinSafe(n, r, ab)) ? r : null;
+    }
     function xHarm(n, ph, dir) {                                    /* 2小節ごとの色(トライトーン／ディミニッシュ／なし)で、緊張する和音の上だけ */
-      if (opt.harmExotic === false || n.d < 0.2) return null;
+      if (opt.harmExotic === false || n.d < 0.5) return null;      /* 速い音には、トライトーン・ディミニッシュの色は付けない */
       var key = rg.a + ":" + ph;
       if (exo[key] == null) exo[key] = rx.wpick(xm ? [["tri", 2.6], ["dim", 2.4], ["none", 5]] : [["tri", 3], ["dim", 5], ["none", 2]]);
       if (exo[key] === "none") return null;
@@ -7091,25 +7148,30 @@ function twinHarmony(mel, solo, sections, beats, opt, tempo, ab) {
       var ph = Math.floor((n.t - rg.a) / (2 * beats));
       if (opt.style === "neo") {                                   /* ネオクラシカル：バロック風の6度・3度下の平行と、長い音・フレーズ終わりのオクターヴ重ね（スラッシュ／デスの「3度上の平行」とは違う動き） */
         if (dirs[ph] == null) dirs[ph] = rr.wpick([[-5, 4], [-2, 3], [0, 1.5], [2, 1]]);
-        var qn = n.d >= 1.5 ? n.p - 12 : (dirs[ph] === 0 ? n.p - 12 : twinPitch(n.p, tonic, dirs[ph], !!opt.neoMajor));
+        var qn = n.d >= 1.5 ? n.p - 12 : (dirs[ph] === 0 ? n.p - 12 : twinPitch(n.p, tonic, dirs[ph], majK));
+        if (qn == null) qn = gap(n);
         if (qn == null || qn < 40) return;
+        qn = twinFix(n, qn, [dirs[ph] ? twinPitch(n.p, tonic, -dirs[ph], majK) : null, twinPitch(n.p, tonic, 2, majK), twinPitch(n.p, tonic, -2, majK), n.p - 12], ab, ACC, ref(n));
         var xn = xHarm(n, ph, dirs[ph] || 1); if (xn != null) qn = xn;
-        out.push({ t: n.t + 0.004, d: n.d, p: qn, v: Math.max(30, n.v - 14) });
+        out.push({ t: n.t + 0.004, d: n.d, p: qn, v: Math.max(30, n.v - 14) }); pv = { t: n.t, p: n.p, q: qn };
         return;
       }
       if (opt.style === "black") {                                 /* ブラック：3度と6度を組み合わせる。2小節ごとに上下の向きを決め、前半は3度、後半（と長い音）は6度 */
         if (dirs[ph] == null) dirs[ph] = rr.wpick([[1, 5], [-1, 5]]);
-        var inLate = (((n.t - rg.a) % (2 * beats)) + 2 * beats) % (2 * beats) >= beats, useSixth = inLate || n.d >= 1.5;
-        var qb = twinPitch(n.p, tonic, dirs[ph] * (useSixth ? 5 : 2));
+        var inLate = (((n.t - rg.a) % (2 * beats)) + 2 * beats) % (2 * beats) >= beats, useSixth = ((Math.floor((n.t - rg.a) / (2 * beats)) + (opt.seed || 1)) % 2) === 1;          /* 3度か6度かは、2小節のまとまりごとに1つ（途中で飛ばない） */
+        var qb = twinPitch(n.p, tonic, dirs[ph] * (useSixth ? 5 : 2), majK);
+        if (qb == null) qb = gap(n);
         if (qb == null) return;
+        qb = twinFix(n, qb, [twinPitch(n.p, tonic, -dirs[ph] * (useSixth ? 5 : 2), majK), twinPitch(n.p, tonic, dirs[ph] * (useSixth ? 2 : 5), majK), twinPitch(n.p, tonic, -dirs[ph] * (useSixth ? 2 : 5), majK), twinPitch(n.p, tonic, 3, majK), twinPitch(n.p, tonic, -3, majK), n.p - 12], ab, ACC, ref(n));
         var xb = xHarm(n, ph, dirs[ph]); if (xb != null) qb = xb;
-        out.push({ t: n.t + 0.004, d: n.d, p: qb, v: Math.max(30, n.v - 10) });
+        out.push({ t: n.t + 0.004, d: n.d, p: qb, v: Math.max(30, n.v - 10) }); pv = { t: n.t, p: n.p, q: qb };
         return;
       }
       if (dirs[ph] == null) dirs[ph] = rr.chance(0.65) ? 2 : -2;
-      var q = twinPitch(n.p, tonic, dirs[ph]); if (q == null) return;
+      var q = twinPitch(n.p, tonic, dirs[ph], majK); if (q == null) q = gap(n); if (q == null) return;
+      q = twinFix(n, q, [twinPitch(n.p, tonic, -dirs[ph], majK), twinPitch(n.p, tonic, dirs[ph] > 0 ? 5 : -5, majK), twinPitch(n.p, tonic, dirs[ph] > 0 ? -5 : 5, majK), twinPitch(n.p, tonic, 3, majK), twinPitch(n.p, tonic, -3, majK), n.p - 12], ab, ACC, ref(n));
       var xq = xHarm(n, ph, dirs[ph]); if (xq != null) q = xq;
-      out.push({ t: n.t + 0.004, d: n.d, p: q, v: Math.max(30, n.v - 10) });
+      out.push({ t: n.t + 0.004, d: n.d, p: q, v: Math.max(30, n.v - 10) }); pv = { t: n.t, p: n.p, q: q };
     });
   });
   out.sort(function (a, b) { return a.t - b.t; });
@@ -22544,7 +22606,7 @@ function generateMain(opt) {
   }
   if (opt.style === "arena" && sty.rockKind && opt.twin !== 0 && opt.rockHarm !== false) {          /* ロック：ハモリのギター(3度・6度・トライトーン・ディミニッシュ)。ギター2はリフなので、ギター3として別に */
     var rkH = twinHarmony(mel, solo, sections, beats, opt, opt.tempo, absChords({ chords: chs, sections: sections, beats: beats, opt: opt }));
-    if (rkH.length) stems.push({ id: "gtr3", name: "Guitar 3 (harmony)", jp: "3本目のギター（ハモリ：3度・6度・トライトーン・ディミニッシュ）", prog: 30, ch: 5, notes: rkH, extra: [] });
+    if (rkH.length) stems.push({ id: "gtr3", name: "Guitar 3 (harmony)", jp: "3本目のギター（ハモリ：3度・6度・トライトーン・ディミニッシュ）", prog: 30, ch: 5, notes: rkH, extra: twinBendExtra(rkH, stems, opt) });
   }
   if (opt.style === "arena" && sty.rockKind && opt.riffHarm !== false) {          /* ロックのリフのハモリ(ギター2のリフを、ギター4が、曲種の割合と音程でなぞる) */
     var g2S = stems.filter(function (s0) { return s0.id === "gtr2"; })[0];
@@ -22562,7 +22624,7 @@ function generateMain(opt) {
   }
   if (["thrash", "death", "melodeath", "black", "neo"].indexOf(opt.style) >= 0 && opt.twin !== 0) {          /* ツイン・ギターの3度ハモリ（テーマ・山場・ソロの曲間） */
     var twinN = twinHarmony(mel, solo, sections, beats, opt, opt.tempo, absChords({ chords: chs, sections: sections, beats: beats, opt: opt }));
-    if (twinN.length) stems.push({ id: "gtr2", name: "Guitar 2 (twin harmony)", jp: "2本目のギター（ツイン・ハーモニー：3度・6度・トライトーン・ディミニッシュ）", prog: (leadProgM >= 24 && leadProgM <= 31) ? leadProgM : 30, ch: 6, notes: twinN, extra: [] });
+    if (twinN.length) stems.push({ id: "gtr2", name: "Guitar 2 (twin harmony)", jp: "2本目のギター（ツイン・ハーモニー：3度・6度・トライトーン・ディミニッシュ）", prog: (leadProgM >= 24 && leadProgM <= 31) ? leadProgM : 30, ch: 6, notes: twinN, extra: twinBendExtra(twinN, stems, opt) });
   }
   /* ネオクラシカル：オルガンのサスティン（コードを伸ばして鳴らす）。SINE Player などのオルガン音色を VST で割り当てる用。
      コードの変わり目ごとに和音（3〜4音）を弾き、次のコードまで保つ。声部は、前の和音から最短で動く。ドラムだけの区間（4バース）は鳴らさない。opt.orgSustain=false で外せる */
@@ -23577,9 +23639,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 509;
+var BUILD_NO = 513;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 176;
+var GEN_NO = 180;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
