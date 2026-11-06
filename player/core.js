@@ -606,6 +606,9 @@ var FORMS = {
   gm_boss: { gen: "game", scene: "boss", tempo: 150, label: "ボス戦（FF風：パイプオルガンと合唱・ロックのドラム・三全音で揺れる和声）", bars: 32, minor: true, ts: [4, 4], sec: "AABA", ch: [] },
   gm_jingle: { gen: "game", scene: "jingle", tempo: 112, label: "ジングル（勝利・レベルアップ・宿屋・全滅のどれかを毎回）", bars: 4, minor: false, ts: [4, 4], sec: "A", ch: [] },
   gm_battle: { gen: "game", scene: "battle", tempo: 160, label: "バトル（FF風：低音の8分・ロックのドラム・弦の16分・金管）", bars: 32, minor: true, ts: [4, 4], sec: "AABA", ch: [] },
+  gm_dqbattle: { gen: "game", scene: "battle", variant: "dq", tempo: 144, label: "バトル（ドラクエ風：短調・属七・低音は4分で刻む・金管の当て）", bars: 32, minor: true, ts: [4, 4], sec: "AABA", ch: [] },
+  gm_mines: { gen: "game", scene: "dungeon", variant: "mines", tempo: 115, label: "鉱山・洞窟（FF風：短調・m6と♭VI・低音の8分の反復）", bars: 32, minor: true, ts: [4, 4], sec: "AABA", ch: [] },
+  gm_chocobo: { gen: "game", scene: "town", variant: "choco", tempo: 145, label: "チョコボ（FF風：長調・弾む低音・軽快なリズム）", bars: 32, minor: false, ts: [4, 4], sec: "AABA", ch: [] },
   gm_emotion: { gen: "game", scene: "emotion", tempo: 72, label: "感動のテーマ（FF風：ピアノと弦・下がるベース・最後は全音上へ転調）", bars: 32, minor: false, ts: [4, 4], sec: "AABA", ch: [] },
   auto32: { gen: 1, label: "自動生成 AABA 32小節（毎回ちがう進行）", bars: 32, minor: false, ts: [4, 4], sec: "AABA", ch: [] },
   auto32m: { gen: 1, label: "自動生成 AABA 32小節・短調（毎回ちがう）", bars: 32, minor: true, ts: [4, 4], sec: "AABA", ch: [] },
@@ -2640,6 +2643,18 @@ var STYLES = {
     label: "ゲーム音楽（RPG風：ドラクエ風の序曲・お城・フィールド、FF風のプレリュード・バトル・感動）", swing: 0.5, tempo: 108,
     comp: "game", bass: "game", drums: "game", mel: "ballad",
     forms: ["gm_overture", "gm_minuet", "gm_field", "gm_town", "gm_prelude", "gm_jingle", "gm_battle", "gm_boss", "gm_dungeon", "gm_emotion"],
+    voice: "epic", lead: 48, compProg: 49, feel: 8
+  },
+  dq: {
+    label: "ドラクエ風（序曲・お城のメヌエット・フィールド・村・ダンジョン・ジングル：行進曲調、木管と弦、金管のファンファーレ）", swing: 0.5, tempo: 108,
+    comp: "game", bass: "game", drums: "game", mel: "ballad",
+    forms: ["gm_overture", "gm_minuet", "gm_field", "gm_town", "gm_dungeon", "gm_jingle", "gm_dqbattle"],
+    voice: "epic", lead: 48, compProg: 49, feel: 8
+  },
+  ff: {
+    label: "FF風（プレリュード・バトル・ボス戦・感動のテーマ：ハープの分散、低音の8分、ロックのドラム、弦と合唱）", swing: 0.5, tempo: 120,
+    comp: "game", bass: "game", drums: "game", mel: "ballad",
+    forms: ["gm_prelude", "gm_battle", "gm_boss", "gm_emotion", "gm_mines", "gm_chocobo"],
     voice: "epic", lead: 48, compProg: 49, feel: 8
   },
   chip: {
@@ -12188,6 +12203,11 @@ function gameBass(chs, form, opt, rng, ctx) {
       if (beats >= 4) out.push({ t: t0 + 2, d: 0.9, p: f5 > 47 ? f5 - 12 : f5, v: 84 });
     } else if (kind === "pizz") {
       [0, 1, 2, 3].forEach(function (b, k) { if (b < beats) out.push({ t: t0 + b, d: 0.35, p: [r, f5, r + 12 > 52 ? r : r + 12, f5][k], v: k === 0 ? 84 : 70 }); });
+    } else if (kind === "quarter") {                                                       /* ドラクエ風バトル：4分で根音を刻み、3拍目は5度 */
+      [0, 1, 2, 3].forEach(function (b, k) { if (b < beats) out.push({ t: t0 + b, d: 0.45, p: (k === 2 && f5 <= 47) ? f5 : r, v: k === 0 ? 100 : 86 }); });
+    } else if (kind === "bounce") {                                                        /* チョコボ：1拍目・3拍目（5度）・4拍目と4拍目の裏（オクターヴ） */
+      out.push({ t: t0, d: 0.4, p: r, v: 92 });
+      if (beats >= 4) { out.push({ t: t0 + 2, d: 0.4, p: f5 > 47 ? f5 - 12 : f5, v: 78 }); out.push({ t: t0 + 3, d: 0.4, p: r, v: 84 }); out.push({ t: t0 + 3.5, d: 0.35, p: r + 12 > 52 ? r : r + 12, v: 72 }); }
     } else if (kind === "cello") {
       out.push({ t: t0, d: beats - 0.1, p: r, v: 80 });
     } else if (kind === "elec") {
@@ -12224,6 +12244,14 @@ function gameDrums(chs, form, opt, rng, ctx) {
       add(t1 + 1, D.snare, 108); add(t1 + 3, D.snare, 110);
       if (i % 4 === 0) add(t1, D.crash, 108, 1.5);
       if (i % 8 === 7) { var fl = [D.snare, D.snare, D.tomH, D.tomH, D.tomM, D.tomM, D.tomL, D.tomL], z2; for (z2 = 0; z2 < 8; z2++) add(t1 + 2 + z2 * 0.25, fl[z2], 90 + z2 * 3); }
+    }
+  }
+  if (scene === "town" && form.variant === "choco") {                                      /* 軽快な2ビート：キック1・3拍、スネア2・4拍、ハイハットは8分 */
+    for (i = 0; i < bars; i++) {
+      var tc = i * beats, kc;
+      for (kc = 0; kc < 8; kc++) add(tc + kc * 0.5, D.hhC, kc % 2 === 0 ? 70 : 54);
+      add(tc, D.kick, 92); add(tc + 2, D.kick, 86); add(tc + 1, D.snare, 84); add(tc + 3, D.snare, 88);
+      if (i % 8 === 0) add(tc, D.crash, 90, 1.5);
     }
   }
   if (scene === "jingle" && (opt.jingle === "victory" || opt.jingle === "levelup")) {
@@ -12354,7 +12382,24 @@ var GAME_ALLOW = {
   battle: [["lament", "circle", "phryg", "mediant", "plagal"], ["neap", "medB", "dompedal", "seqB"]],
   dungeon: [["phryg", "pedal", "mediant", "cliche"], ["dompedal", "neap"]]
 };
-function genGameProgDeep(scene, minor, beats, rng) {
+function genGameProgDeep(scene, minor, beats, rng, variant) {
+  if (variant === "dq" || variant === "mines" || variant === "choco") {                    /* 参考 MIDI の集計から作った3つの場面の進行（1小節1和音、32小節） */
+    var VA = {
+      dq: ["0:min", "0:min", "8:maj", "7:dom7", "0:min", "5:min", "7:dom7", "0:min",
+           "0:min", "3:maj", "8:maj", "7:dom7", "0:min", "2:m7b5", "7:dom7", "7:dom7",
+           "5:min", "0:min", "2:m7b5", "7:dom7", "5:min", "10:dom7", "7:dom7", "7:dom7",
+           "0:min", "3:maj", "8:maj", "7:dom7", "0:min", "5:min", "7:dom7b9", "0:min"],
+      mines: ["0:min", "0:min", "0:m6", "0:m6", "8:maj", "8:maj", "7:sus7", "7:dom7",
+              "0:min", "0:min", "0:m6", "0:m6", "10:maj", "8:maj", "7:sus7", "0:min",
+              "5:min", "5:min", "0:min", "0:min", "8:maj", "7:dom7", "5:min", "7:dom7",
+              "0:min", "0:min", "0:m6", "0:m6", "10:maj", "8:maj", "7:sus7", "0:min"],
+      choco: ["0:maj", "0:maj", "5:maj", "0:maj", "0:maj", "5:maj", "7:dom7", "0:maj",
+              "0:maj", "9:min", "5:maj", "0:maj", "2:m7", "7:dom7", "0:maj", "7:dom7",
+              "5:maj", "5:maj", "0:maj", "0:maj", "2:dom7", "2:dom7", "7:dom7", "7:dom7",
+              "0:maj", "0:maj", "5:maj", "0:maj", "0:maj", "5:maj", "7:dom7", "0:maj"]
+    };
+    return barsToT(VA[variant], beats);
+  }
   if (scene === "jingle") return genJingleProg(rng, beats);
   if (scene === "prelude") {
     var fk = pickOf(rng, MAJ_FRONT, ["classic", "descend", "royal", "rise", "mixo"]), fk2 = pickOf(rng, MAJ_FRONT, ["classic", "descend", "royal", "rise", "mixo"]);
@@ -20469,7 +20514,11 @@ FORMS.mahav7 = { label: "マハヴィシュヌ型の7拍子（ドリアンのヴ
 /* 曲種のバリエーション（マクラフリン風・フュージョンの型）：基になる曲種（mclBase／fuBase）で作る。そのあいだだけ、基の曲種に
    バリエーションの伴奏・ベース・ドラム・テンポ・語法を重ねる。保存される曲種名はバリエーションの名前にする */
 var CUR_FU_KEY = null;      /* generate が基の曲種に切り替えている間、元の曲種(fu_corea など)を覚えておく */
-function generate(opt) {
+function generate(opt) {                                                                  /* dq／ff は game の場面を分けた曲種：中身は game で作り、出力の style だけ元に戻す */
+  if (opt && (opt.style === "dq" || opt.style === "ff")) { var fl0 = opt.style; opt.style = "game"; var sg0; try { sg0 = generate1(opt); } finally { opt.style = fl0; } if (sg0 && sg0.opt) sg0.opt.style = fl0; return sg0; }
+  return generate1(opt);
+}
+function generate1(opt) {
   /* 呼び出し側が省いた数値の既定値（ツールやテストから呼ぶとき）：swing が無いと、拍の計算が NaN になって終わらなくなっていた */
   var S00 = STYLES[opt.style];
   if (S00) {
@@ -21205,7 +21254,7 @@ function generateMain(opt) {
   if (form.gen === "game") {
     var fgg = {}, kg2;
     for (kg2 in form) fgg[kg2] = form[kg2];
-    fgg.ch = genGameProgDeep(form.scene, !!form.minor, form.ts[0], rng);
+    fgg.ch = genGameProgDeep(form.scene, !!form.minor, form.ts[0], rng, form.variant);
     form = fgg;
     /* 場面ごとの楽器：1回目のテーマを奏でる独奏、伴奏の型、低音の型 */
     var SCg = form.scene;
@@ -21216,6 +21265,9 @@ function generateMain(opt) {
     if (SCg === "town") { opt.epicSolo = (opt.leadInst === "piano") ? "piano" : "clarinet"; opt.orchComp = "town"; }
     if (SCg === "dungeon") { opt.epicSolo = (opt.leadInst === "piano") ? "piano" : "oboe"; opt.orchComp = "ostlow"; }
     if (SCg === "boss") { opt.epicSolo = "trumpet"; opt.orchComp = "organ"; opt.orchBass = "elec"; }
+    if (form.variant === "dq") opt.orchBass = "quarter";                                  /* 低音は4分で刻む */
+    if (form.variant === "mines") { opt.orchBass = "elec"; opt.epicSolo = (opt.leadInst === "piano") ? "piano" : "oboe"; }   /* 低音の8分の反復 */
+    if (form.variant === "choco") { opt.orchBass = "bounce"; opt.epicSolo = (opt.leadInst === "piano") ? "piano" : "flute"; }
     if (SCg === "jingle") {
       opt.jingle = PROG_INFO.jingle;
       opt.epicSolo = { victory: "trumpet", levelup: "trumpet", inn: "flute", gameover: "oboe" }[opt.jingle];
@@ -22745,7 +22797,7 @@ function generateMain(opt) {
     var SOLO_JP = { flute: "フルート", harmonica: "ハーモニカ", oboe: "オーボエ", violin: "独奏ヴァイオリン", piano: "ピアノ", guitar: "ギター", trumpet: "トランペット", clarinet: "クラリネット" };
     var CMP = { pad: ["Strings pad", "弦の和音", 49], prelude: ["Strings pad", "弦の和音", 49], hpsi: ["Harpsichord", "チェンバロ", 6], ostinato: ["Strings ostinato", "弦の刻み", 48],
       town: ["Pizzicato strings", "弦のピチカート（伴奏）", 45], ostlow: ["Low strings ostinato", "低弦の刻み", 48], guitar: ["Guitar (twang)", "ギター（分散）", 27], organ: ["Church organ", "パイプオルガン", 19] };
-    var BSS = { arco: ["Contrabass", "コントラバス", 43], tuba: ["Tuba", "チューバ", 58], cello: ["Cello", "チェロ", 42], pizz: ["Pizzicato strings", "弦のピチカート", 45], elec: ["Electric bass", "エレキベース", 33], pizz2: ["Pizzicato bass", "低音のピチカート", 45] };
+    var BSS = { arco: ["Contrabass", "コントラバス", 43], tuba: ["Tuba", "チューバ", 58], cello: ["Cello", "チェロ", 42], pizz: ["Pizzicato strings", "弦のピチカート", 45], elec: ["Electric bass", "エレキベース", 33], pizz2: ["Pizzicato bass", "低音のピチカート", 45], quarter: ["Electric bass", "エレキベース（4分）", 33], bounce: ["Pizzicato bass", "弾む低音（ピチカート）", 45] };
     var es = opt.epicSolo || "flute";
     stems.forEach(function (st) {
       if (st.id === "mel") { st.name = "Strings (theme)"; st.jp = "弦（テーマ）"; st.prog = 48; }
@@ -23639,9 +23691,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 513;
+var BUILD_NO = 515;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 180;
+var GEN_NO = 181;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */

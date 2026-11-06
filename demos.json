@@ -207,6 +207,110 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-07_game_gm_boss",
+  "date": "2026-11-07",
+  "style": "game",
+  "styleShort": "ゲーム音楽",
+  "styleLabel": "ゲーム音楽（RPG風：ドラクエ風の序曲・お城・フィールド、FF風のプレリュード・バトル・感動）",
+  "form": "gm_boss",
+  "formLabel": "ボス戦（FF風：パイプオルガンと合唱・ロックのドラム・三全音で揺れる和声）",
+  "title": "Nuit Rapide (Em)",
+  "key": "Em",
+  "tempo": 190,
+  "tempoGenerated": 190,
+  "bars": 137,
+  "seed": 33076,
+  "gen": 181,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Strings (theme)",
+    "prog": 48
+   },
+   {
+    "id": "solo",
+    "name": "Solo trumpet",
+    "prog": 56
+   },
+   {
+    "id": "comp",
+    "name": "Church organ",
+    "prog": 19
+   },
+   {
+    "id": "bass",
+    "name": "Electric bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "horn",
+    "name": "Choir",
+    "prog": 52
+   },
+   {
+    "id": "timp",
+    "name": "Timpani",
+    "prog": 47
+   }
+  ],
+  "chordsOneChorus": [
+   "Em",
+   "Gmaj7",
+   "Cmaj7(#11)",
+   "Fmaj7",
+   "Am7",
+   "B7sus4",
+   "Cmaj7",
+   "B7sus4",
+   "Em",
+   "Gmaj7(#11)",
+   "Cmaj7",
+   "C9",
+   "Fmaj7(#11)",
+   "Am7b5",
+   "B7sus4",
+   "Am7",
+   "Em",
+   "C",
+   "F",
+   "C",
+   "F#m7",
+   "B9",
+   "AmMaj7",
+   "A#",
+   "B7sus4",
+   "B9",
+   "Em",
+   "Gmaj7",
+   "Cmaj7",
+   "C7b9",
+   "Fmaj7(#11)",
+   "Am7",
+   "B7sus4",
+   "F#m7b5",
+   "B7b9",
+   "Em7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 181). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-07_game_gm_boss/2026-11-07_game_gm_boss_midi-set.zip",
+   "midi": "demos/2026-11-07_game_gm_boss/2026-11-07_game_gm_boss_all.mid",
+   "info": "demos/2026-11-07_game_gm_boss/info.md"
+  },
+  "audio": "demos/2026-11-07_game_gm_boss/2026-11-07_game_gm_boss.mp3",
+  "scorePages": [
+   "scores/2026-11-07_game_gm_boss-1.png"
+  ],
+  "cover": "covers/2026-11-07_game_gm_boss.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-06_mcl_organ_rhythm32",
   "date": "2026-11-06",
   "style": "mcl_organ",
