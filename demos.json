@@ -117,20 +117,20 @@
   "coverKind": "generated"
  },
  {
-  "id": "2026-11-06_rk_vaughan_rk_sv1",
+  "id": "2026-11-06_rk_vaughan_rk_sv3",
   "date": "2026-11-06",
   "style": "rk_vaughan",
   "styleShort": "ロック：ブルース・ロック",
   "styleLabel": "ロック：ブルース・ロック（スティーヴィー・レイ・ヴォーン型／ギター2本＋和音のギター）",
-  "form": "rk_sv1",
-  "formLabel": "ブルース・ロック：12小節ブルース(I7 4小節 → IV7 → I7 → V7 IV7 → I7)、テキサスのシャッフル(ヴォーン型)",
-  "title": "Nuit Bleue (E)",
+  "form": "rk_sv3",
+  "formLabel": "ブルース・ロック：12/8のシャッフル(3+3+3+3)・I7 → IV7 → I7 → V7(ヴォーン型) 12小節",
+  "title": "Nuit des Lilas (E)",
   "key": "E",
   "tempo": 118,
   "tempoGenerated": 118,
-  "bars": 108,
-  "seed": 50414,
-  "gen": 175,
+  "bars": 94,
+  "seed": 61547,
+  "gen": 176,
   "stems": [
    {
     "id": "mel",
@@ -174,33 +174,33 @@
    }
   ],
   "chordsOneChorus": [
+   "E7",
+   "E7alt",
    "Bm7",
    "E7b9",
-   "A#13",
-   "E7",
+   "A#9",
+   "A9",
+   "A7alt",
    "Bm7",
    "E7",
-   "A13",
-   "A7alt",
    "E7",
-   "E7b9",
-   "B7",
-   "A7alt",
+   "B9",
+   "A7",
    "E7alt",
    "E7alt"
   ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 175). MIDI draft — to be arranged in Cubase.",
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 176). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
   "files": {
-   "zip": "demos/2026-11-06_rk_vaughan_rk_sv1/2026-11-06_rk_vaughan_rk_sv1_midi-set.zip",
-   "midi": "demos/2026-11-06_rk_vaughan_rk_sv1/2026-11-06_rk_vaughan_rk_sv1_all.mid",
-   "info": "demos/2026-11-06_rk_vaughan_rk_sv1/info.md"
+   "zip": "demos/2026-11-06_rk_vaughan_rk_sv3/2026-11-06_rk_vaughan_rk_sv3_midi-set.zip",
+   "midi": "demos/2026-11-06_rk_vaughan_rk_sv3/2026-11-06_rk_vaughan_rk_sv3_all.mid",
+   "info": "demos/2026-11-06_rk_vaughan_rk_sv3/info.md"
   },
-  "audio": "demos/2026-11-06_rk_vaughan_rk_sv1/2026-11-06_rk_vaughan_rk_sv1.mp3",
+  "audio": "demos/2026-11-06_rk_vaughan_rk_sv3/2026-11-06_rk_vaughan_rk_sv3.mp3",
   "scorePages": [
-   "scores/2026-11-06_rk_vaughan_rk_sv1-1.png"
+   "scores/2026-11-06_rk_vaughan_rk_sv3-1.png"
   ],
-  "cover": "covers/2026-11-06_rk_vaughan_rk_sv1.jpg",
+  "cover": "covers/2026-11-06_rk_vaughan_rk_sv3.jpg",
   "coverKind": "generated"
  },
  {
