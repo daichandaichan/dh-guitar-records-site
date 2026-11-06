@@ -6,11 +6,11 @@
   "styleLabel": "演歌（ヨナ抜き短音階・こぶし・しゃくり、ストリングスの刺し、ズン・タのリズム：歌い上げる王道）",
   "form": "enka_ballad32",
   "formLabel": "演歌 32小節（A→A'→サビ→A'：Am→Dm→E7、サビはⅢ→Ⅳ→Ⅱm→Ⅴ7。最後は半音上へ転調）",
-  "title": "Rue Mineur (Em)",
+  "title": "Swing Rapide (Em)",
   "key": "Em",
   "tempo": 66,
   "tempoGenerated": 66,
-  "bars": 204,
+  "bars": 76,
   "seed": 20261107,
   "gen": 180,
   "stems": [
