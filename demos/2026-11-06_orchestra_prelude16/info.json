@@ -1,0 +1,99 @@
+{
+  "id": "2026-11-06_orchestra_prelude16",
+  "date": "2026-11-06",
+  "style": "orchestra",
+  "styleShort": "クラシック・オーケストラ",
+  "styleLabel": "クラシック・オーケストラ（バロック〜古典派：弦楽合奏＋木管・ホルン・トランペット・ティンパニ）",
+  "form": "prelude16",
+  "formLabel": "プレリュード 16小節（分散和音）",
+  "title": "Nuit Bleue (C)",
+  "key": "C",
+  "tempo": 122,
+  "tempoGenerated": 122,
+  "bars": 124,
+  "seed": 16653,
+  "gen": 176,
+  "stems": [
+    {
+      "id": "solo",
+      "name": "Violin II",
+      "prog": 40
+    },
+    {
+      "id": "comp",
+      "name": "Strings (viola ensemble)",
+      "prog": 48
+    },
+    {
+      "id": "bass",
+      "name": "Contrabass",
+      "prog": 43
+    },
+    {
+      "id": "mel",
+      "name": "Violin I",
+      "prog": 40
+    },
+    {
+      "id": "cello",
+      "name": "Cello",
+      "prog": 42
+    },
+    {
+      "id": "fl",
+      "name": "Flute",
+      "prog": 73
+    },
+    {
+      "id": "ob",
+      "name": "Oboe",
+      "prog": 68
+    },
+    {
+      "id": "bsn",
+      "name": "Bassoon",
+      "prog": 70
+    },
+    {
+      "id": "horn",
+      "name": "Horn",
+      "prog": 60
+    },
+    {
+      "id": "tpt",
+      "name": "Trumpet",
+      "prog": 56
+    },
+    {
+      "id": "timp",
+      "name": "Timpani",
+      "prog": 47
+    }
+  ],
+  "chordsOneChorus": [
+    "Cmaj7",
+    "Dm7",
+    "G13",
+    "C6/9",
+    "Am7",
+    "D13",
+    "Gmaj7",
+    "E9",
+    "Am7",
+    "Fmaj7",
+    "Bm7b5",
+    "E13",
+    "Am7",
+    "Dm7",
+    "G9",
+    "Cmaj7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 176). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-06_orchestra_prelude16/2026-11-06_orchestra_prelude16_midi-set.zip",
+    "midi": "demos/2026-11-06_orchestra_prelude16/2026-11-06_orchestra_prelude16_all.mid",
+    "info": "demos/2026-11-06_orchestra_prelude16/info.md"
+  },
+  "audio": "demos/2026-11-06_orchestra_prelude16/2026-11-06_orchestra_prelude16.mp3"
+}
