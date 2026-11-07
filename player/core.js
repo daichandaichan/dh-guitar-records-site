@@ -2018,6 +2018,41 @@ var FORMS = {
          T(0, "dom7"), T(5, "maj"), T(2, "min"), T(7, "dom7"),
          T(4, "min"), T(9, "min"), T(2, "min"), T(7, "dom7")]
   },
+  /* 古典派風（ソル・ジュリアーニ・カルッリ・アグアド）：長調、I・IV・V7 が中心の素直な進行と、属調への一時的な転調 */
+  sorstudy16: {
+    tempo: 92, label: "ソル風 練習曲 16小節（長調・アルベルティ型のアルペジオ）", bars: 16, minor: false, ts: [4, 4], pat: "alberti",
+    sec: "AA",
+    ch: [T(0, "maj"), T(0, "maj"), T(7, "dom7"), T(0, "maj"),
+         T(5, "maj"), T(0, "maj"), T(7, "dom7"), T(0, "maj"),
+         T(9, "min"), T(2, "min"), T(7, "dom7"), T(0, "maj"),
+         T(5, "maj"), T(2, "min"), T(7, "dom7"), T(0, "maj")]
+  },
+  giuliani16: {
+    tempo: 108, label: "ジュリアーニ風 アレグロ 16小節（長調・p-i-m-a の上行アルペジオ）", bars: 16, minor: false, ts: [4, 4], pat: "pima",
+    sec: "AA",
+    ch: [T(0, "maj"), T(7, "dom7"), T(0, "maj"), T(5, "maj"),
+         T(0, "maj"), T(7, "dom7"), T(0, "maj"), T(0, "maj"),
+         T(7, "maj"), T(2, "dom7"), T(7, "maj"), T(2, "dom7"),
+         T(7, "maj"), T(7, "dom7"), T(0, "maj"), T(0, "maj")]
+  },
+  carullivals24: {
+    tempo: 112, label: "カルッリ風 ワルツ 24小節（長調・3拍子）", bars: 24, minor: false, ts: [3, 4], pat: "pima3",
+    sec: "AAB",
+    ch: [T(0, "maj", 3), T(0, "maj", 3), T(7, "dom7", 3), T(0, "maj", 3),
+         T(5, "maj", 3), T(0, "maj", 3), T(7, "dom7", 3), T(0, "maj", 3),
+         T(0, "maj", 3), T(0, "maj", 3), T(7, "dom7", 3), T(0, "maj", 3),
+         T(5, "maj", 3), T(0, "maj", 3), T(7, "dom7", 3), T(0, "maj", 3),
+         T(9, "min", 3), T(2, "min", 3), T(7, "dom7", 3), T(0, "maj", 3),
+         T(5, "maj", 3), T(7, "dom7", 3), T(7, "dom7", 3), T(0, "maj", 3)]
+  },
+  aguado16: {
+    tempo: 76, label: "アグアド風 アンダンテ 16小節（長調・下行のアルペジオで歌う）", bars: 16, minor: false, ts: [4, 4], pat: "pami",
+    sec: "AA",
+    ch: [T(0, "maj"), T(0, "maj"), T(5, "maj"), T(0, "maj"),
+         T(7, "dom7"), T(0, "maj"), T(7, "dom7"), T(0, "maj"),
+         T(9, "min"), T(4, "min"), T(2, "min"), T(7, "dom7"),
+         T(0, "maj"), T(5, "maj"), T(7, "dom7"), T(0, "maj")]
+  },
   habanera16: {
     tempo: 92, label: "ハバネラ 16小節（中南米の古典）", bars: 16, minor: true, ts: [4, 4], pat: "habanera",
     sec: "AA",
@@ -2390,7 +2425,7 @@ var STYLES = {
   classical: {
     label: "クラシックギター（編曲もの）", swing: 0.5, tempo: 96,
     comp: "clasica", bass: "clasica", drums: "none", mel: "bossa",
-    forms: ["yamtrem_min", "yamtrem_maj", "yamtrem_phryg", "cafemin32", "cafemin32g", "tableau16", "romance24", "etude16", "habanera16", "valsa24", "tremolo16", "asturias16", "promenade10", "granporte16", "prelude16", "chaconne16", "sarabande24", "auto16m", "auto32m"],
+    forms: ["yamtrem_min", "yamtrem_maj", "yamtrem_phryg", "cafemin32", "cafemin32g", "tableau16", "romance24", "etude16", "sorstudy16", "giuliani16", "carullivals24", "aguado16", "habanera16", "valsa24", "tremolo16", "asturias16", "promenade10", "granporte16", "prelude16", "chaconne16", "sarabande24", "auto16m", "auto32m"],
     voice: "yamashita", lead: 24, compProg: 24, feel: 16
   },
   /* ロック（group:"ロック"）：80年代の産業ロック（アリーナ・AOR。ジャーニー・スティクス・ボストン・フォリナー・TOTO 系） */
@@ -3364,6 +3399,44 @@ var CELLS3 = [
 ];
 
 /* ---------- 動機の輪郭（音階の段数で持つ＝模進できる） ---------- */
+/* 旋律の大きな跳躍(8半音以上)をならす：跳んだ先から句の終わり(休み1拍以上の手前)までを、1オクターヴずらして7半音以内にする。クラシックギター用 */
+function smoothLeaps(ns, lo, hi, prob, rng) {
+  var a = ns.slice().sort(function (x, y) { return x.t - y.t; }), i, j, k, moved = 0;
+  for (i = 1; i < a.length; i++) {
+    var prev = a[i - 1], cur = a[i];
+    if (cur.t - (prev.t + prev.d) >= 1 - 1e-6) continue;
+    var iv = cur.p - prev.p;
+    if (Math.abs(iv) < 8 || !rng.chance(prob)) continue;
+    var sh = iv > 0 ? -12 : 12;
+    if (Math.abs(iv + sh) > 7) continue;
+    j = i; while (j + 1 < a.length && a[j + 1].t - (a[j].t + a[j].d) < 1 - 1e-6) j++;
+    var ok = true; for (k = i; k <= j; k++) { var pp = a[k].p + sh; if (pp < lo || pp > hi) { ok = false; break; } }
+    if (!ok) continue;
+    for (k = i; k <= j; k++) a[k].p += sh;
+    moved++;
+  }
+  return moved;
+}
+/* 同音の反復を、3〜5半音の動き(和音の構成音か9度・6度)に変える。ジャズ・バラード用 */
+function diversifyRepeats(ns, chs, lo, hi, prob, rng) {
+  var a = ns.slice().sort(function (x, y) { return x.t - y.t; }), i, changed = 0;
+  for (i = 1; i < a.length; i++) {
+    var prev = a[i - 1], cur = a[i], nx = a[i + 1];
+    if (cur.p !== prev.p || cur.grace || prev.grace) continue;
+    if (cur.t - (prev.t + prev.d) > 0.25 || cur.d >= 2.5) continue;
+    if (!rng.chance(prob)) continue;
+    var ch = chordAt(chs, cur.t), pcs = chordPcs(ch), dirPref = (i >= 2 && a[i - 2].p < prev.p) ? -1 : 1, best = null, bs = 1e9, d, sg;
+    for (d = 3; d <= 5; d++) for (sg = -1; sg <= 1; sg += 2) {
+      var p = prev.p + sg * d; if (p < lo || p > hi) continue;
+      var rel = ((p - ch.root) % 12 + 12) % 12; if (pcs.indexOf(rel) < 0 && rel !== 2 && rel !== 9) continue;
+      if (nx && Math.abs(nx.p - p) > 7) continue;
+      var sc = Math.abs(d - 3.5) + (sg === dirPref ? 0 : 0.6) + rng.f() * 0.3;
+      if (sc < bs) { bs = sc; best = p; }
+    }
+    if (best != null) { cur.p = best; changed++; }
+  }
+  return changed;
+}
 function makeShape(n, rng, span) {
   var s = [0], cur = 0, dir = rng.chance(0.5) ? 1 : -1, i;
   span = span || 5;
@@ -14304,6 +14377,11 @@ var CLASS_PAT = {
   tremolo:   { label: "トレモロ（p-a-m-i／高音の連打が動く）", m: 4, gen: function (b) { return patGen(b, [[0, 0], [0.25, 3], [0.5, 3], [0.75, 3], [1, 0], [1.25, 2], [1.5, 2], [1.75, 2]], 2); } },
   campanela: { label: "カンパネラ（響きを重ねる）", m: 4, gen: function (b) { return patGen(b, [[0, 0, 1], [0.5, 3, 1], [1, 1, 1], [1.5, 3, 1], [2, 2, 1], [2.5, 3, 1], [3, 1, 1], [3.5, 3, 1]], 4); } },
   barca:     { label: "3連の揺れ（舟歌型）", m: 4, gen: function (b) { return patGen(b, [[0, 0], [1 / 3, 1], [2 / 3, 2], [1, 3], [4 / 3, 2], [5 / 3, 1]], 2); } },
+  /* ブラジルの独奏ギター（参考：ジョビン・パウエル・ガロート・ヴィラ＝ロボス） */
+  bossavl:   { label: "ボサノヴァ（低音と和音／和音が2拍・3拍裏・4拍裏）", m: 4, only: true, gen: function (b) { return patGen(b, [[0, 0], [0, "c"], [1, "c"], [2, 0], [2.5, "c"], [3.5, "c"]], 4); } },
+  bossavl2:  { label: "ボサノヴァ（和音が裏から入る型）", m: 4, only: true, gen: function (b) { return patGen(b, [[0, 0], [0.5, "c"], [1.5, "c"], [2, 0], [2.5, "c"], [3.5, "c"]], 4); } },
+  choro16:   { label: "ショーロの16分の分散和音（p-i-m-a ×2）", m: 4, only: true, gen: function (b) { return patGen(b, [[0, 0], [0.25, 1], [0.5, 2], [0.75, 3], [1, 0], [1.25, 1], [1.5, 2], [1.75, 3]], 2); } },
+  choroX:    { label: "ショーロ（低音・単音・和音・単音）", m: 4, only: true, gen: function (b) { return patGen(b, [[0, 0], [0.5, 2], [1, "c"], [1.5, 2]], 2); } },
   /* 3拍子 */
   pima3:     { label: "3拍子の p-i-m-a-m-i", m: 3, gen: function (b) { return patGen(b, [[0, 0], [0.5, 1], [1, 2], [1.5, 3], [2, 2], [2.5, 1]], 3); } },
   waltz3:    { label: "ワルツ（低音・和音・和音）", m: 3, gen: function (b) { return patGen(b, [[0, 0], [1, "c"], [2, "c"]], 3); } },
@@ -14326,8 +14404,8 @@ function classVoice(ch) {
 function pickClassPat(beats, form, rng) {
   if (form && form.pat && CLASS_PAT[form.pat] && CLASS_PAT[form.pat].m === beats && rng.chance(0.7)) return form.pat;
   var pool = [], k;
-  for (k in CLASS_PAT) if (CLASS_PAT[k].m === beats) pool.push(k);
-  if (!pool.length) for (k in CLASS_PAT) if (CLASS_PAT[k].m === 4) pool.push(k);
+  for (k in CLASS_PAT) if (CLASS_PAT[k].m === beats && !CLASS_PAT[k].only) pool.push(k);
+  if (!pool.length) for (k in CLASS_PAT) if (CLASS_PAT[k].m === 4 && !CLASS_PAT[k].only) pool.push(k);
   return rng.pick(pool);
 }
 
@@ -15094,14 +15172,14 @@ function genComp(chs, form, sty, opt, rng, ctx) {
           : (role === "shout") ? ["tremolo", "block", "villa", "waltz3", "romance3"]
           : ["pima", "pami", "alberti", "block", "waltz3", "romance3", "sarab3", "habanera", "pima3"];
         var poolF = fam.filter(function (k) { return CLASS_PAT[k] && CLASS_PAT[k].m === beats; });
-        clsPat = (poolF.length && !(form.pat && rng.chance(0.5))) ? rng.pick(poolF) : pickClassPat(beats, form, rng);
+        clsPat = (form.patStrict && CLASS_PAT[form.pat] && CLASS_PAT[form.pat].m === beats && role !== "shout" && (form.patStrict === 2 || role === "head" || role === "intro" || role === "outro")) ? form.pat : ((poolF.length && !(form.pat && rng.chance(0.5))) ? rng.pick(poolF) : pickClassPat(beats, form, rng));
       }
       var patNow = clsPat;
       var ev = CLASS_PAT[patNow].gen(beats), ze;
       /* 旋律が歌っている間は控える：低音と、和音を1回だけ鳴らして伸ばす */
-      if (sing && role !== "shout") ev = (beats >= 4) ? [[0, 0], [0.02, "c", 1], [beats / 2, 0]] : [[0, 0], [0.02, "c", 1]];
+      if (sing && role !== "shout" && !form.patStrict) ev = (beats >= 4) ? [[0, 0], [0.02, "c", 1], [beats / 2, 0]] : [[0, 0], [0.02, "c", 1]];
       if (role === "shout" && bar % 2 === 1 && rng.chance(0.6)) ev = [[0, 0], [0, "c"], [beats / 2, "c"], [beats * 0.75, "c"]];
-      else if (bar % 8 === 7 && rng.chance(0.45) && !rest) ev = [[0, 0], [0, "c"], [beats / 2, "c"]];
+      else if (bar % 8 === 7 && !form.patStrict && rng.chance(0.45) && !rest) ev = [[0, 0], [0, "c"], [beats / 2, "c"]];
       /* ③親指の低音：前の低音から順次になるなら転回形、長い和音では経過音で次へ */
       var chB = chordAt(chs, t0), nxB = chordAt(chs, t0 + beats);
       var rootB = inRange(nearest([0], chB.root, clsBass || 45), 40, 52);
@@ -20518,6 +20596,21 @@ function generate(opt) {                                                        
   if (opt && (opt.style === "dq" || opt.style === "ff")) { var fl0 = opt.style; opt.style = "game"; var sg0; try { sg0 = generate1(opt); } finally { opt.style = fl0; } if (sg0 && sg0.opt) sg0.opt.style = fl0; return sg0; }
   return generate1(opt);
 }
+/* 曲の形(arc)を後から掛ける：build＝だんだん強く／fade＝だんだん弱く／wave＝山と谷。generateMain の中と同じ式（作曲家語法のオーケストラは generateMain を通らないので、ここで掛ける） */
+function arcPost(song, opt) {
+  var secs = song && song.sections;
+  if (!song || !opt || !opt.arc || opt.arc === "none" || !secs || secs.length < 2) return song;
+  var nSec = secs.length;
+  var fArc = function (si) { var x = si / (nSec - 1); return opt.arc === "build" ? 0.8 + 0.32 * x : (opt.arc === "fade" ? 1.12 - 0.38 * x : 0.9 + 0.2 * Math.sin(x * Math.PI * 3)); };
+  song.stems.forEach(function (st) {
+    st.notes.forEach(function (n) {
+      var si = 0, zq;
+      for (zq = 0; zq < nSec; zq++) if (secs[zq].at <= n.t + 1e-6) si = zq;
+      n.v = Math.max(20, Math.min(127, Math.round(n.v * fArc(si))));
+    });
+  });
+  return song;
+}
 function generate1(opt) {
   /* 呼び出し側が省いた数値の既定値（ツールやテストから呼ぶとき）：swing が無いと、拍の計算が NaN になって終わらなくなっていた */
   var S00 = STYLES[opt.style];
@@ -20541,7 +20634,7 @@ function generate1(opt) {
   } else if (S0.orchBase) {
     if (!opt.voice || opt.voice === "auto") opt.voice = RNG((((opt.seed || 1) * 83 + 5) % 2147483647) || 1).pick(VOICE_POOL.orchestra);
   } else if (S0.fuTone && !opt.toneOf) opt.toneOf = S0.fuTone;
-  if (S0.orchBase && ORCH_COMPOSERS.indexOf(opt.voice) >= 0) { opt.style = key; return generateOrchestraComposer(opt, S0); }
+  if (S0.orchBase && ORCH_COMPOSERS.indexOf(opt.voice) >= 0) { opt.style = key; return arcPost(generateOrchestraComposer(opt, S0), opt); }
   STYLES[baseKey] = mix; CUR_FU_KEY = key;
   try { song = generateMain(opt); } finally { STYLES[baseKey] = saved; CUR_FU_KEY = null; }
   song.opt.style = key;
@@ -21794,6 +21887,8 @@ function generateMain(opt) {
     if (opt.themeFx) headNotes = themeFxApply(headNotes, chs, beats, form.bars, opt);
   }
   else if (CUR_MC.push) pushAnticipate(headNotes, chs, beats, CUR_MC.push, RNG(((opt.seed || 1) * 389 + 71) % 2147483647), isJSTD);
+  if (opt.style === "ballad" && opt.repDiv !== false && !themeGiven) diversifyRepeats(headNotes, chs, opt.melLo != null ? opt.melLo : 55, (opt.melHi != null ? opt.melHi : 84) + 2, 0.5, RNG((((opt.seed || 1) * 467 + 37) % 2147483647) || 1));      /* バラードの旋律は同音の反復が参考の約2倍、3度・4〜5度が約半分だったので、同音の一部を3〜5半音の動きに変える */
+  if (opt.style === "classical" && opt.leapSmooth !== false && !themeGiven) smoothLeaps(headNotes, opt.melLo != null ? opt.melLo : 55, (opt.melHi != null ? opt.melHi : 84) + 3, 1.0, RNG((((opt.seed || 1) * 443 + 29) % 2147483647) || 1));      /* 旋律の跳躍は参考曲の約2倍だったので、ならす */
   var sheetNotes = (function () {
     var a2 = headNotes.slice().sort(function (x, y) { return x.t - y.t || y.p - x.p; }), o = [], j;
     for (j = 0; j < a2.length; j++) {
@@ -22760,6 +22855,13 @@ function generateMain(opt) {
   if (opt.style === "flamenco" && form.minor && FORMS[opt.form] && !FORMS[opt.form].gen) flamKeyGuard([mel, solo], chs, opt.tonic, sections, beats, barsPerChorus * beats);
   if (opt.style === "flamenco" && voiceOf(opt, sty) === "paco") {              /* パコ風：最高音を MIDI 77 までに（実際の運指の98%点が76）。超える音は1オクターヴ下げる */
     [mel, solo].forEach(function (arr) { arr.forEach(function (n) { if (n.p > 77 && n.p - 12 >= opt.melLo - 7) n.p -= 12; }); });
+  }
+  if (opt.style === "classical" && opt.leapSmooth !== false && !themeGiven) {            /* テーマ(head)以外の区間(変奏・山場・前奏・後奏)の跳躍もならす。テーマは譜面と合わせるため、上で済ませてある */
+    var rLS = RNG((((opt.seed || 1) * 457 + 31) % 2147483647) || 1), loLS = opt.melLo != null ? opt.melLo : 55, hiLS = (opt.melHi != null ? opt.melHi : 84) + 3;
+    [mel, solo].forEach(function (arr) {
+      var sub = arr.filter(function (n) { var sc = null, z; for (z = 0; z < sections.length; z++) if (sections[z].at <= n.t + 1e-6) sc = sections[z]; return sc && sc.kind !== "head"; });
+      smoothLeaps(sub, loLS, hiLS, 1.0, rLS);
+    });
   }
   var insFit = instrOfOpt(opt);
   if (insFit && insFit.lo != null && ["epic", "game", "chip", "flamenco", "wa", "classical", "baroque"].indexOf(opt.style) < 0) { mel = fitInstr(mel, insFit); solo = fitInstr(solo, insFit); }
@@ -23947,9 +24049,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 521;
+var BUILD_NO = 524;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 182;
+var GEN_NO = 185;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
@@ -27045,6 +27147,27 @@ function spliceHints(style, tempo, tonic, minor) {
   var tail = (tempo ? " " + tempo + " bpm" : "") + (tonic != null ? " " + NN[((tonic % 12) + 12) % 12] + (minor ? " minor" : " major") : "");
   return arr.map(function (h) { return { part: h[0], query: h[1] + tail, tip: h[2] }; });
 }
+
+/* ブラジルの独奏ギターの形：既存のボサ・ショーロの和音の進行をそのまま使い、右手の型だけ独奏ギター用にする */
+(function () {
+  function copyCh(k) { return FORMS[k].ch.map(function (c) { var o = {}, z; for (z in c) o[z] = c[z]; return o; }); }
+  FORMS.bossavl32 = { tempo: 112, label: "ボサノヴァ・ソロ・ギター（ジョビン風 AABA 32小節：低音と和音のコンピング＋旋律）", bars: 32, minor: false, ts: [4, 4], sec: "AABA", pat: "bossavl", patStrict: 2, ch: copyCh("jobim32") };
+  FORMS.bossavlmin32 = { tempo: 108, label: "ボサノヴァ・ソロ・ギター（ジョビン風 短調 AABA 32小節）", bars: 32, minor: true, ts: [4, 4], sec: "AABA", pat: "bossavl2", patStrict: 2, ch: copyCh("jobimmin32") };
+  FORMS.chorovl32 = { tempo: 96, label: "ショーロ・ソロ・ギター（短調→平行長調 AABA 32小節：低音・単音・和音・単音）", bars: 32, minor: true, ts: [4, 4], sec: "AABA", pat: "choroX", patStrict: 1, ch: copyCh("choro32") };
+  FORMS.chorovl16 = {
+    tempo: 92, label: "ショーロ・ソロ・ギター（長調 16小節：16分の分散和音、属調への経過）", bars: 16, minor: false, ts: [4, 4], sec: "AA", pat: "choroX", patStrict: 1,
+    ch: [T(0, "maj", 2), T(7, "dom7", 2), T(0, "maj"), T(5, "maj", 2), T(7, "dom7", 2), T(0, "maj"), T(9, "dom7", 2), T(2, "min", 2),
+         T(7, "dom7", 2), T(0, "maj", 2), T(2, "dom7", 2), T(7, "dom7", 2), T(0, "maj", 2), T(5, "min", 2), T(0, "maj", 2), T(7, "dom7", 2),
+         T(0, "maj", 2), T(9, "dom7", 2), T(2, "min", 2), T(7, "dom7", 2), T(0, "maj", 2), T(7, "dom7", 2), T(0, "maj"), T(0, "maj")]
+  };
+  FORMS.valsabr24 = {
+    tempo: 120, label: "ブラジル・ワルツ ソロ・ギター（ラウロ風 長調 3拍子 24小節：低音のあと8分の分散和音）", bars: 24, minor: false, ts: [3, 4], sec: "AAB", pat: "pima3", patStrict: 1,
+    ch: [T(0, "maj", 3), T(0, "maj", 3), T(7, "dom7", 3), T(0, "maj", 3), T(5, "maj", 3), T(0, "maj", 3), T(7, "dom7", 3), T(0, "maj", 3),
+         T(0, "maj", 3), T(0, "dom7", 3), T(5, "maj", 3), T(5, "min", 3), T(0, "maj", 3), T(7, "dom7", 3), T(0, "maj", 3), T(0, "maj", 3),
+         T(9, "min", 3), T(9, "min", 3), T(2, "dom7", 3), T(7, "dom7", 3), T(0, "maj", 3), T(5, "maj", 3), T(7, "dom7", 3), T(0, "maj", 3)]
+  };
+  STYLES.classical.forms = STYLES.classical.forms.concat(["bossavl32", "bossavlmin32", "chorovl32", "chorovl16", "valsabr24"]);
+})();
 
 var API = { songDrumOnlyWins: songDrumOnlyWins, setDrumOnlyCC: setDrumOnlyCC, songVocalNotes: songVocalNotes, songLyricsLa: songLyricsLa, songLyricInfo: songLyricInfo, songLyricsApply: songLyricsApply, songLyricsAuto: songLyricsAuto, songLyricPrompt: songLyricPrompt, parseLyricReply: parseLyricReply, lyricFit: lyricFit, songMelody: songMelody, buildVocalXml: buildVocalXml, generateDance: generateDance, monkComp: monkComp, gtrFinger: gtrFinger, gtrHardCount: gtrHardCount, gtrChordFix: gtrChordFix,
   melodyMetrics: melodyMetrics, matchVoices: matchVoices, MEL_METRIC_KEYS: MEL_METRIC_KEYS, spliceParse: spliceParse, SPLICE_PICKS: SPLICE_PICKS, spliceHints: spliceHints, loopermanFor: loopermanFor, splicePicksFor: splicePicksFor, sitesFor: sitesFor, loopBpm: loopBpm, loopBarCandidates: loopBarCandidates, audioToMidi: audioToMidi, audioToChords: audioToChords, chordsToMidi: chordsToMidi, estimateTempo: estimateTempo, analyzeNotesAndChords: analyzeNotesAndChords, melodyToText: melodyToText, textToMelody: textToMelody, notesToMidi: notesToMidi, pickFormFromText: pickFormFromText, applySectionGains: applySectionGains, sectionGainsPreset: sectionGainsPreset, suggestNextChords: suggestNextChords, splitMora: splitMora, assignLyrics: assignLyrics, parseLeadSheetXML: parseLeadSheetXML, parseIReal: parseIReal, settingsFromIReal: settingsFromIReal, readSettingsFile: readSettingsFile, irealUnscramble: irealUnscramble, leadSheetChordText: leadSheetChordText, settingsFromMidi: settingsFromMidi, progFromText: progFromText, melodyFromText: melodyFromText, coercePromptReply: coercePromptReply, parsePrompt: parsePrompt, resolvePromptTempo: resolvePromptTempo, promptSchemaText: promptSchemaText, sanitizePromptSet: sanitizePromptSet, KW_RULES: KW_RULES, meterList: meterList, songBarLens: songBarLens, barAtBeat: barAtBeat, songMetersForEditor: songMetersForEditor, songUnit: songUnit, barStartOf: barStartOf, barLen: barLen, posToBar: posToBar, sourceAnalysis: sourceAnalysis,
