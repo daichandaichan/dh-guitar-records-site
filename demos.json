@@ -1,5 +1,89 @@
 [
  {
+  "id": "2026-11-08_bossa_jobimmin32",
+  "date": "2026-11-08",
+  "style": "bossa",
+  "styleShort": "ボサノヴァ",
+  "styleLabel": "ボサノヴァ",
+  "form": "jobimmin32",
+  "formLabel": "ボサ ジョビン型（短調）AABA 32小節（i6、iim7♭5-V7♭9、iv、♭VII7→♭IIImaj7）",
+  "title": "Tempo Bleue (Am)",
+  "key": "Am",
+  "tempo": 116,
+  "tempoGenerated": 116,
+  "bars": 140,
+  "seed": 20261108,
+  "gen": 182,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 24
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 24
+   },
+   {
+    "id": "comp",
+    "name": "Nylon Gtr",
+    "prog": 24
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Am6",
+   "Bm7b5",
+   "E7",
+   "Am6",
+   "Dm7",
+   "G7",
+   "Cmaj7",
+   "E7b9",
+   "Am6",
+   "Bm7b5",
+   "E7b9",
+   "Am6",
+   "Dm7",
+   "C#13",
+   "Cmaj7",
+   "Dm7",
+   "G9",
+   "Cmaj7",
+   "Bm7b5",
+   "E13",
+   "Am6",
+   "E9",
+   "Am6",
+   "F#7b9",
+   "Bm7b5",
+   "Bm7",
+   "E7b9",
+   "Am7",
+   "Dm7",
+   "G7",
+   "Cmaj7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 182). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-08_bossa_jobimmin32/2026-11-08_bossa_jobimmin32_midi-set.zip",
+   "midi": "demos/2026-11-08_bossa_jobimmin32/2026-11-08_bossa_jobimmin32_all.mid",
+   "info": "demos/2026-11-08_bossa_jobimmin32/info.md"
+  },
+  "audio": "demos/2026-11-08_bossa_jobimmin32/2026-11-08_bossa_jobimmin32.mp3"
+ },
+ {
   "id": "2026-11-07_mcl_organtrio_standard32",
   "date": "2026-11-07",
   "style": "mcl_organtrio",

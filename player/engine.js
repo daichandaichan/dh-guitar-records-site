@@ -3554,10 +3554,33 @@ function renderSongAudio(song, opts, progress) {
       if (opts.loop && opts.loop.vst && opts.loop.replace) evsAll = evsAll.filter(function (ev) { return opts.loop.replace.indexOf(ev.k) < 0; });   /* VST の音で置き換えたパートは、内蔵の音を入れない */
       var L = new Float32Array(N), R = new Float32Array(N), starts = [], st;
       for (st = 0; st < secs; st += W) starts.push(st);
+      var vocalDone = false;
+      /* 歌声(WAV)を重ねる：帯域の実効値(RMS)に合わせた大きさ × 音量(gain)。startSec＝曲の頭からの位置(負なら歌声の頭を削る) */
+      var addVocal = function (done) {
+        try {
+          var v = opts.vocal, vb = v.buf, vl = vb.getChannelData(0), vr = vb.getChannelData(vb.numberOfChannels > 1 ? 1 : 0), vsr = vb.sampleRate;
+          var rmsOf = function (a, b, sr) {
+            var fr = Math.round(sr * 0.05), nf = Math.floor(a.length / fr), ms = 0, cnt = 0, q, z;
+            for (q = 0; q < nf; q++) { var s2 = 0; for (z = 0; z < fr; z += 3) { var xa = a[q * fr + z], xb = b[q * fr + z]; s2 += xa * xa + xb * xb; } s2 /= (2 * (fr / 3)); if (s2 > 1e-6) { ms += s2; cnt++; } }
+            return cnt ? Math.sqrt(ms / cnt) : 0;
+          };
+          var rb = rmsOf(L, R, SR), rv = rmsOf(vl, vr, vsr);
+          var sc = (rb > 1e-6 && rv > 1e-6) ? Math.min(12, rb / rv) : 1; sc *= (v.gain == null ? 1 : v.gain);
+          var off3 = new OfflineAudioContext(2, N, SR), g3 = off3.createGain(), src3 = off3.createBufferSource(), st3 = v.startSec || 0;
+          g3.gain.value = sc; g3.connect(off3.destination); src3.buffer = vb; src3.connect(g3);
+          if (st3 >= 0) src3.start(st3); else src3.start(0, Math.min(vb.duration - 0.001, -st3));
+          off3.startRendering().then(function (lb3) {
+            var a3 = lb3.getChannelData(0), b3 = lb3.getChannelData(lb3.numberOfChannels > 1 ? 1 : 0), i3;
+            for (i3 = 0; i3 < N && i3 < a3.length; i3++) { L[i3] += a3[i3]; R[i3] += b3[i3]; }
+            done();
+          }, function () { done(); });
+        } catch (ex) { done(); }
+      };
       var wi = 0;
       var step = function () {
         if (wi >= starts.length) {
           restore();
+          if (opts.vocal && opts.vocal.buf && !vocalDone) { vocalDone = true; addVocal(step); return; }
           if (opts.loop && opts.loop.buf) {
             var lp = opts.loop, lb = lp.bars * lp.bpb, sec = lb * spb, rate = lp.buf.duration / sec;
             var off2 = new OfflineAudioContext(2, N, SR), g2 = off2.createGain();

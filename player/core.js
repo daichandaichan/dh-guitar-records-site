@@ -21056,33 +21056,248 @@ function generateDance(opt) {
   out.form = { label: (gform.label || "") + " ＋ DJミックス", ts: [4, 4], bars: base.form ? base.form.bars : 8, minor: base.form ? base.form.minor : minor0 };
   return out;
 }
+/* ---------- DJ風のバリエーション（毎回の「型」）と、歌メロの歌詞 ---------- */
+var DJ_STRUCTS = [
+  { id: "classic", w: 26, label: "定番", s: [["intro", 8], ["build", 8], ["drop", 16], ["break", 8], ["build", 8], ["drop", 16], ["outro", 8]] },
+  { id: "longintro", w: 14, label: "長いイントロ・アウトロ", s: [["intro", 16], ["build", 8], ["drop", 16], ["break", 8], ["build", 8], ["drop", 16], ["outro", 16]] },
+  { id: "threedrop", w: 12, label: "ドロップ3回", s: [["intro", 8], ["build", 8], ["drop", 16], ["break", 8], ["build", 8], ["drop", 16], ["break", 8], ["build", 8], ["drop", 16], ["outro", 8]] },
+  { id: "longbreak", w: 14, label: "長いブレイク", s: [["intro", 8], ["build", 8], ["drop", 16], ["break", 16], ["build", 8], ["drop", 16], ["outro", 8]] },
+  { id: "bigdrop", w: 12, label: "大きなドロップ", s: [["intro", 8], ["build", 8], ["drop", 32], ["break", 8], ["build", 8], ["drop", 16], ["outro", 8]] },
+  { id: "shortout", w: 10, label: "短いイントロ・アウトロ", s: [["intro", 4], ["build", 8], ["drop", 16], ["break", 8], ["build", 8], ["drop", 16], ["outro", 4]] },
+  { id: "longbuild", w: 12, label: "長いビルド", s: [["intro", 8], ["build", 16], ["drop", 16], ["break", 8], ["build", 8], ["drop", 16], ["outro", 8]] }
+];
+var DJ_GROOVES = { four: "4つ打ち", prog: "4つ打ち（クラップなし・ミニマル）", bounce: "4つ打ち（跳ねるハット）", broken: "ブレイクビーツ", garage: "2ステップ（ガラージ）", half: "ハーフタイム" };
+var DJ_BASSES = ["裏の8分", "裏の16分", "オクターヴで跳ねる", "転がる16分", "長い音で押す", "3-3-2のシンコペ", "アシッド風"];
+var DJ_LEADS = [[81, "ノコギリ波"], [80, "矩形波"], [82, "カリオペ"], [84, "チャランゴ風シンセ"], [87, "ベース＋リード"]];
+var DJ_ARPS = [[80, "矩形波"], [81, "ノコギリ波"], [98, "クリスタル"], [100, "ブライトネス"], [102, "エコー"]];
+var DJ_PADS = [[89, "ウォーム"], [88, "ニューエイジ"], [90, "ポリシンセ"], [91, "合唱"], [94, "ハロー"]];
+var DJ_LOOPS_MIN = [[[0, "min"], [10, "maj"], [8, "maj"], [10, "maj"]], [[0, "min"], [5, "min"], [8, "maj"], [7, "maj"]], [[0, "min"], [3, "maj"], [10, "maj"], [5, "min"]],
+  [[0, "min"], [0, "min"], [8, "maj"], [10, "maj"]], [[0, "min"], [7, "min"], [8, "maj"], [5, "min"]], [[0, "min"], [1, "maj"], [0, "min"], [10, "maj"]]];
+var DJ_LOOPS_MAJ = [[[9, "min"], [5, "maj"], [0, "maj"], [7, "maj"]], [[0, "maj"], [9, "min"], [5, "maj"], [7, "maj"]], [[5, "maj"], [0, "maj"], [7, "maj"], [9, "min"]],
+  [[0, "maj"], [5, "maj"], [9, "min"], [7, "maj"]], [[0, "maj"], [4, "min"], [5, "maj"], [7, "maj"]], [[0, "maj"], [7, "maj"], [9, "min"], [5, "maj"]]];
+function djTempo(opt, gform) {
+  var base = Math.max(100, Math.min(160, Math.round(opt.tempo || gform.tempo || 124)));
+  if (opt.danceVar === false || opt.tempoFixed || opt.structOv) return base;
+  var r = RNG((((opt.seed || 1) * 4421) + 29) % 2147483647), j = r.pick([-4, -2, 0, 0, 2, 4, 6]);
+  return Math.max(100, Math.min(160, base + j));
+}
+function danceProfile(opt, gform, seed, minorKey, isPd, tonic) {
+  var PF = { on: opt.danceVar !== false, groove: "four", std: true, sc: true, bass: null, struct: null, chords: null, lead: DJ_LEADS[0], arp: DJ_ARPS[0], pad: DJ_PADS[0], names: {} };
+  if (!PF.on) return PF;
+  var r = RNG((((seed || 1) * 6271) + 53) % 2147483647), tr = (gform.tempo || 124) >= 134;
+  PF.groove = r.wpick(tr ? [["four", 6], ["prog", 2], ["broken", 1.2], ["bounce", 1]] : [["four", 4], ["bounce", 2.2], ["prog", 1.6], ["broken", 1.6], ["garage", 1.2], ["half", 0.9]]);
+  PF.std = (PF.groove === "four" || PF.groove === "prog" || PF.groove === "bounce"); PF.sc = PF.std;
+  PF.bass = r.wpick([[0, 4], [1, 1.2], [2, 1.2], [3, 1.4], [4, 1.2], [5, 1.2], [6, 1]]);
+  if (!gform.struct && !opt.structOv) {
+    var pool = DJ_STRUCTS, st = r.wpick(pool.map(function (x) { return [x, x.w]; }));
+    PF.struct = st.s; PF.names.struct = st.label;
+  }
+  if (!isPd && r.chance(0.55)) {
+    var L = r.pick(minorKey ? DJ_LOOPS_MIN : DJ_LOOPS_MAJ), CHs = [], i;
+    for (i = 0; i < 8; i++) { var c = L[i % 4]; CHs.push({ root: ((tonic % 12) + 12 + c[0]) % 12, q: c[1], at: i * 4, b: 4, bar: i }); }
+    if (r.chance(0.5)) CHs[7] = { root: ((tonic % 12) + 12 + 7) % 12, q: "maj", at: 28, b: 4, bar: 7 };       /* 2周目の終わりを属和音にして、次へつなぐ */
+    PF.chords = CHs; PF.names.chords = "入れ替え";
+  }
+  PF.lead = r.pick(DJ_LEADS); PF.arp = r.pick(DJ_ARPS); PF.pad = r.pick(DJ_PADS);
+  return PF;
+}
+/* ---- 歌詞（日本語・ひらがな）：音符1つに1文字（「きゃ」などは1つ）。原曲の歌詞ではなく、言葉の部品から新しく組む ---- */
+function kanaUnits(str) { return String(str).match(/[ぁ-ゖ][ゃゅょぁぃぅぇぉ]?/g) || []; }
+var LY_N = ["よぞら", "ひかり", "ゆめ", "まち", "かぜ", "こころ", "ほし", "そら", "うみ", "あめ", "きみ", "あなた", "ふたり", "こえ", "うた", "おと", "かげ", "ゆうひ", "みらい", "ことば", "ねがい", "あした", "きおく", "ひみつ", "きせき", "ひとり", "なみ", "はな", "つき", "ゆき", "みち", "とびら", "ひとみ", "いのち", "てのひら", "ともしび", "ゆうやけ", "まどべ", "あさひ", "はるかぜ"];
+var LY_N_MIN = ["なみだ", "よる", "さよなら", "まよい", "ゆうぐれ", "ためいき", "ふゆ", "くらやみ", "わすれもの", "あのひ"];
+var LY_N_MAJ = ["はる", "なつ", "えがお", "ひだまり", "にじ", "あさ", "たびだち", "やくそく", "ひまわり", "はれ"];
+var LY_A = ["あおい", "とおい", "まぶしい", "やさしい", "はかない", "ふるい", "あつい", "せつない", "あたらしい", "やわらかい", "かがやく", "しずかな", "ささやかな"];
+var LY_V = ["かがやく", "ながれる", "ひびく", "さがす", "わらう", "もえる", "おどる", "うたう", "ふるえる", "めざめる", "つつむ", "とどける", "かんじる", "ゆれている", "あるいてく", "はしりだす", "つながる", "とけてゆく", "ひろがる", "かさなる", "ゆきすぎる", "よびかける"];
+var LY_E = ["ああ", "さあ", "ねえ", "いま", "ここで", "いつでも", "どこまでも", "いつまでも", "もういちど", "このまま"];
+var LY_P = ["の", "が", "を", "に", "で", "と", "へ", "は"];
+var LY_T = [["N", "g", "V"], ["A", "N", "o", "V"], ["N", "n", "N"], ["E", "N", "g", "V"], ["N", "t", "N", "g", "V"], ["A", "N"], ["V", "N"], ["N", "d", "V"], ["E", "V"], ["N", "n", "N", "o", "V"], ["E", "A", "N"], ["N", "ni", "V"], ["A", "N", "n", "N"], ["N"], ["V"], ["E", "N"], ["N", "g", "V", "N"]];
+var LY_PM = { g: ["が", "は"], o: ["を"], n: ["の"], t: ["と"], d: ["で"], ni: ["に", "へ"] };
+var LY_STYLE = { enka: ["みなと", "ふるさと", "みれん", "おんな", "かもめ", "しぐれ", "さいはて", "わかれ", "こがらし", "えにし", "あのひと", "ゆきぐに", "なみだざけ", "よあけ"], kayo: ["ネオン", "よこがお", "みれん", "くちべに", "わかれ", "ためいき", "あのひと", "こいごころ", "よわせ"], rock: ["ほのお", "いかり", "ちかい", "つばさ", "こどう", "せかい", "いなずま", "あらし"], folk: ["ふるさと", "はたけ", "やま", "かわ", "むかし", "あきまつり", "たびびと", "もり"] };
+function lyStyleNouns(style) { var s = String(style || ""); return /enka/.test(s) ? LY_STYLE.enka : /kayo/.test(s) ? LY_STYLE.kayo : /^rk_|rock|arena|metal|thrash|death|heavy|power|^pg_/.test(s) ? LY_STYLE.rock : /folk|celtic|andean|balkan|arabic|country|hawaii|douyou|gamelan/.test(s) ? LY_STYLE.folk : []; }
+function lyricPhrase(n, r, minor, extra) {                                             /* n 音ぶんの歌詞（n 個の文字）を作る */
+  var NS = LY_N.concat(minor ? LY_N_MIN : LY_N_MAJ, extra || [], extra || []), tries, best = null, pickW = function (role) { return role === "N" ? r.pick(NS) : role === "A" ? r.pick(LY_A) : role === "V" ? r.pick(LY_V) : role === "E" ? r.pick(LY_E) : r.pick(LY_PM[role] || LY_P); };
+  var VOW = { あ: "あ", い: "い", う: "う", え: "え", お: "お" }, ROW = "あかさたなはまやらわがざだばぱぁゃ", ROWI = "いきしちにひみりぎじぢびぴぃ", ROWU = "うくすつぬふむゆるぐずづぶぷぅゅ", ROWE = "えけせてねへめれげぜでべぺぇ", ROWO = "おこそとのほもよろをごぞどぼぽぉょ";
+  function vowelOf(u) { var c = String(u).charAt(0); return ROWI.indexOf(c) >= 0 ? "い" : ROWU.indexOf(c) >= 0 ? "う" : ROWE.indexOf(c) >= 0 ? "え" : ROWO.indexOf(c) >= 0 ? "お" : c === "ん" ? "ん" : "あ"; }
+  for (tries = 0; tries < 300; tries++) {
+    var tp = LY_T[r.i(LY_T.length)], ws = tp.map(pickW), u = kanaUnits(ws.join(""));
+    if (u.length === n) return u;
+    if (u.length < n && n - u.length <= 2 && (!best || u.length > best.length)) best = u;          /* あと1〜2音なら、最後の母音をのばして埋める（歌では自然） */
+  }
+  if (best) { var v = vowelOf(best[best.length - 1]); if (v === "ん") v = "あ"; while (best.length < n) best = best.concat([v]); return best; }
+  var base = [];
+  for (tries = 0; tries < 60 && base.length < n; tries++) { var w = kanaUnits(r.pick(LY_N)); if (base.length + w.length <= n) base = base.concat(w); }
+  while (base.length < n) base.push(vowelOf(base[base.length - 1] || "あ") === "ん" ? "あ" : vowelOf(base[base.length - 1] || "あ"));
+  return base.slice(0, n);
+}
+function djPhrases(notes, minLen) {                                              /* 旋律を区切る（長い音で終わるところ・離れたところ・2小節ごと。minLen 未満は次とつなぎ、12音を超えたら等分） */
+  var ph = [], cur = [], i, out = [], ML = minLen || 3;
+  notes.forEach(function (n, idx) {
+    cur.push(n); var nx = notes[idx + 1];
+    if (n.d >= 1.0 || !nx || nx.t - (n.t + n.d) >= 1.5 || (cur.length >= 6 && Math.floor(nx.t / 8 + 1e-6) !== Math.floor(n.t / 8 + 1e-6))) { ph.push(cur); cur = []; }
+  });
+  if (cur.length) ph.push(cur);
+  for (i = 0; i < ph.length - 1; i++) if (ph[i] && ph[i].length < ML && ph[i].length + ph[i + 1].length <= 12) { ph[i + 1] = ph[i].concat(ph[i + 1]); ph[i] = null; }
+  ph = ph.filter(function (x) { return x; });
+  for (i = ph.length - 1; i >= 1; i--) if (ph[i].length < 3) { ph[i - 1] = ph[i - 1].concat(ph[i]); ph.splice(i, 1); }       /* 1〜2音だけ残ったフレーズは前につなぐ */
+  ph.forEach(function (p) { var k = Math.ceil(p.length / 12), sz = Math.ceil(p.length / k), j; for (j = 0; j < p.length; j += sz) out.push(p.slice(j, j + sz)); });
+  return out;
+}
+function lyVowelOf(u) { var ch = String(u).charAt(0); return "いきしちにひみりぎじぢびぴぃ".indexOf(ch) >= 0 ? "い" : "うくすつぬふむゆるぐずづぶぷぅゅ".indexOf(ch) >= 0 ? "う" : "えけせてねへめれげぜでべぺぇ".indexOf(ch) >= 0 ? "え" : "おこそとのほもよろをごぞどぼぽぉょ".indexOf(ch) >= 0 ? "お" : "あ"; }
+function lyricFit(text, n) {                                                     /* 入力の文字列を n 音ぶんのかなにする。カタカナ→ひらがな、「ー」は直前の母音、「っ」は除く。足りなければ最後の母音をのばし、多ければ切る */
+  var t = String(text || "").replace(/[\s　、。，．,.!！?？「」『』（）()・…~〜-]/g, "").replace(/[ァ-ヶ]/g, function (m) { return String.fromCharCode(m.charCodeAt(0) - 0x60); }).replace(/[っ]/g, "");
+  var u = [], i;
+  for (i = 0; i < t.length; ) { var m = t.slice(i).match(/^[ぁ-ゖ][ゃゅょぁぃぅぇぉ]?/); if (m) { u.push(m[0]); i += m[0].length; } else if (t.charAt(i) === "ー") { u.push(lyVowelOf(u[u.length - 1] || "あ")); i++; } else i++; }
+  var found = u.length;
+  while (u.length < n) u.push(lyVowelOf(u[u.length - 1] || "あ"));
+  return { units: u.slice(0, n), found: found, need: n, kanjiLeft: /[一-鿿]/.test(String(text || "")) };
+}
+function djAssignLyrics(notes, rng, minor) {                                       /* 旋律を区切り、区切りごとに歌詞を付ける。返り値：歌詞の行 */
+  var lines = [];
+  djPhrases(notes).forEach(function (p) { var u = lyricPhrase(p.length, rng, minor); p.forEach(function (n, j) { n.ly = u[j]; }); lines.push(u.join("")); });
+  return lines;
+}
+function songVocalNotes(song) {                                                   /* 歌メロにする旋律：テーマ区間の mel のうち、飾りの音（短い・装飾音）と重なりを除いたもの */
+  var mel = (song.stems || []).filter(function (s) { return s.id === "mel"; })[0]; if (!mel) return [];
+  var heads = (song.sections || []).filter(function (x) { return x.kind === "head"; }), out = [], last = -9;
+  mel.notes.slice().sort(function (a, b) { return a.t - b.t || b.p - a.p; }).forEach(function (n) {
+    if (n.grace || n.d < 0.25) return;
+    if (heads.length && !heads.some(function (x) { return n.t >= x.at - 1e-6 && n.t < x.at + x.beats - 1e-6; })) return;
+    if (n.t - last < 0.05) return;                       /* 同時に鳴る音（オクターヴ重ねなど）は1つだけ */
+    out.push(n); last = n.t;
+  });
+  return out;
+}
+function songLyricInfo(song) {                                                    /* 歌詞の欄に出す情報。ダンス＝サビ・Aメロ、ほか＝テーマの旋律をフレーズに区切ったもの */
+  if (!song) return null;
+  var d = song.dance, f = function (ps) { return ps.map(function (p) { return { n: p.length, text: p.map(function (n) { return n.ly || "ら"; }).join("") }; }); };
+  if (d) { if (!d.hook || !d.verse || d.pd || d.mix) return null; return { kind: "dance", hook: f(djPhrases(d.hook)), verse: f(djPhrases(d.verse)) }; }
+  var vn = songVocalNotes(song); if (vn.length < 8 || song.imported) return null;
+  return { kind: "song", lines: f(djPhrases(vn, 6)), beats: song.beats || 4, xmlOk: (song.beats || 4) === 4 };
+}
+function songLyricsApply(song, parsed) {                                          /* 歌詞（parsed＝{hook,verse} または {lines}）を音符に付け直し、VoiSona 用 MusicXML を作り直す。返り値：{ok, warn[]} */
+  var info = songLyricInfo(song), warn = [], d = song && song.dance;
+  if (!info) return { ok: false, warn: ["この曲には歌詞を付けられません"] };
+  function put(ps, lines, label) {
+    ps.forEach(function (p, i) {
+      if (lines && lines[i] != null && String(lines[i]).trim() !== "") {
+        var f = lyricFit(lines[i], p.length);
+        if (f.found !== p.length) warn.push(label + (i + 1) + "行目：" + p.length + "音なのに " + f.found + "文字（" + (f.found < p.length ? "最後の母音でのばしました" : "余りを切りました") + "）");
+        if (f.kanjiLeft) warn.push(label + (i + 1) + "行目：漢字は読めないので除きました（ひらがなにしてください）");
+        p.forEach(function (n, j) { n.ly = f.units[j]; });
+      }
+    });
+  }
+  if (info.kind === "dance") {
+    put(djPhrases(d.hook), parsed.hook, "サビ"); put(djPhrases(d.verse), parsed.verse, "Aメロ");
+    var vs = (song.stems || []).filter(function (s) { return s.id === "vocal"; })[0];
+    if (vs) {
+      vs.notes.forEach(function (n) {
+        var S = null; (song.sections || []).forEach(function (x) { if (n.t >= x.at - 1e-6 && n.t < x.at + x.beats - 1e-6) S = x; });
+        if (!S || (S.kind !== "drop" && S.kind !== "break")) return;
+        var src = S.kind === "drop" ? d.hook : d.verse, rel = (n.t - S.at) % 32, k;
+        for (k = 0; k < src.length; k++) if (Math.abs(src[k].t - rel) < 0.02) { n.ly = src[k].ly; break; }
+      });
+      d.vocalXml = buildVocalXml(song, vs.notes, song.title, null);
+    }
+    d.lyricsText = "サビ：" + djPhrases(d.hook).map(function (p) { return p.map(function (n) { return n.ly; }).join(""); }).join("／") + "　Aメロ：" + djPhrases(d.verse).map(function (p) { return p.map(function (n) { return n.ly; }).join(""); }).join("／");
+  } else {
+    var vn = songVocalNotes(song);
+    put(djPhrases(vn, 6), parsed.lines, "");
+    song.vocalNotes = vn; song.vocalXml = info.xmlOk ? buildVocalXml(song, vn, song.title, null) : "";
+    song.lyricsText = djPhrases(vn, 6).map(function (p) { return p.map(function (n) { return n.ly || "ら"; }).join(""); }).join("／");
+  }
+  return { ok: true, warn: warn };
+}
+function songLyricsAuto(song, seed) {                                             /* おまかせ：言葉の部品で付け直す（曲種ごとの言葉も混ぜる） */
+  var info = songLyricInfo(song); if (!info) return { ok: false, warn: ["この曲には歌詞を付けられません"] };
+  var minor = !!(song.form && song.form.minor), extra = lyStyleNouns(song.opt && song.opt.style), r = RNG((((seed || 1) * 7907) + 31) % 2147483647), d = song.dance;
+  var mk = function (ps) { return ps.map(function (p) { return lyricPhrase(p.length, r, minor, extra).join(""); }); };
+  if (info.kind === "dance") return songLyricsApply(song, { hook: mk(djPhrases(d.hook)), verse: mk(djPhrases(d.verse)) });
+  return songLyricsApply(song, { lines: mk(djPhrases(songVocalNotes(song), 6)) });
+}
+function songLyricsLa(song, syl) {                                               /* 「ラ、ラ、ラ」で歌う：全部の音に同じ1音（既定「ら」）を付ける。syl に複数文字を渡すと、順にくり返す（例「らるらる」） */
+  var info = songLyricInfo(song); if (!info) return { ok: false, warn: ["この曲には歌詞を付けられません"] };
+  var s0 = String(syl || "ら").replace(/[ァ-ヶ]/g, function (m) { return String.fromCharCode(m.charCodeAt(0) - 0x60); }), u = kanaUnits(s0); if (!u.length) u = ["ら"];
+  var k = 0, la = function (ps) { return ps.map(function (p) { return p.map(function () { return u[(k++) % u.length]; }).join(""); }); };
+  var d = song.dance;
+  if (info.kind === "dance") return songLyricsApply(song, { hook: la(djPhrases(d.hook)), verse: la(djPhrases(d.verse)) });
+  return songLyricsApply(song, { lines: la(djPhrases(songVocalNotes(song), 6)) });
+}
+function songLyricPrompt(song, instruction) {                                      /* Claude に渡す指示文（歌詞の指令つき）。返事は JSON */
+  var info = songLyricInfo(song); if (!info) return "";
+  var NN = ["C", "C♯", "D", "E♭", "E", "F", "F♯", "G", "A♭", "A", "B♭", "B"], minor = !!(song.form && song.form.minor), ton = NN[((song.opt.tonic % 12) + 12) % 12];
+  var ln = function (arr) { return arr.map(function (p, i) { return "  " + (i + 1) + "行目：" + p.n + "音"; }).join("\n"); };
+  var want = String(instruction || "").trim(), sty = (H0().STYLES[song.opt.style] ? String(H0().STYLES[song.opt.style].label).split("（")[0] : "") || "";
+  var head = "あなたは作詞家です。次の曲の歌メロに、日本語の歌詞をつけてください。歌うのは歌声合成ソフト VoiSona です。\n\n" +
+    "【曲】" + ton + (minor ? "短調" : "長調") + "・♩=" + song.opt.tempo + "・ジャンル：" + (sty || "ポピュラー") + "\n" +
+    "【歌詞の指令】" + (want ? want : "おまかせ（曲の調子に合う、情景の浮かぶ歌詞に。ひとつの短い物語か、ひとつの気持ちを軸にしてください）") + "\n\n";
+  var rules = "\n\n【厳守するルール】\n- 各行は、指定の音数と同じ数の文字にする（「きゃ」「しゅ」などの小さい ゃゅょ は前の文字といっしょに1音と数える）。\n- 全部ひらがな。漢字・カタカナ・英字・記号・空白は使わない。小さい「っ」と伸ばす「ー」も使わない（のばすときは母音を重ねる：例「おおぞら」）。\n- 実在の歌の歌詞や、特定の作品のフレーズは使わない。新しく書く。\n- 1行は意味のまとまりで切れるようにする。曲の山（サビにあたるところ）は言葉も盛り上げる。\n\n";
+  if (info.kind === "dance")
+    return head + "【サビ】のフレーズと、それぞれの音数（音符の数）\n" + ln(info.hook) + "\n【Aメロ】のフレーズと、それぞれの音数\n" + ln(info.verse) + rules + "【返事の形式】次の JSON だけを返す（説明は書かない）。\n{\"title\":\"曲名（短く）\",\"hook\":[\"サビ1行目\",...],\"verse\":[\"Aメロ1行目\",...]}\nhook は " + info.hook.length + " 行、verse は " + info.verse.length + " 行。";
+  return head + "歌メロのフレーズと、それぞれの音数（音符の数）。上から順に歌います。\n" + ln(info.lines) + rules + "【返事の形式】次の JSON だけを返す（説明は書かない）。\n{\"title\":\"曲名（短く）\",\"lines\":[\"1行目\",\"2行目\",...]}\nlines は " + info.lines.length + " 行。";
+}
+function H0() { return { STYLES: STYLES }; }
+function parseLyricReply(text) {                                                    /* Claude の返事（JSON、または行）から {title, hook[], verse[], lines[]} を取り出す */
+  var s = String(text || ""), m = s.match(/\{[\s\S]*\}/), o = null;
+  if (m) { try { o = JSON.parse(m[0]); } catch (e) { o = null; } }
+  if (o && (o.hook || o.verse || o.lines)) return { title: o.title || "", hook: (o.hook || []).map(String), verse: (o.verse || []).map(String), lines: (o.lines || []).map(String) };
+  var hook = [], verse = [], lines = [], cur = null;
+  s.split(/\r?\n/).forEach(function (l) {
+    var t = l.trim(); if (!t) return;
+    if (/^【?(サビ|hook)/i.test(t)) { cur = hook; t = t.replace(/^【?(サビ|hook)】?[:：]?\s*/i, ""); }
+    else if (/^【?(Aメロ|verse|Ａメロ)/i.test(t)) { cur = verse; t = t.replace(/^【?(Aメロ|verse|Ａメロ)】?[:：]?\s*/i, ""); }
+    if (t) t.split(/[／\/]/).forEach(function (x) { if (x.trim()) (cur || lines).push(x.trim()); });
+  });
+  return { title: "", hook: hook, verse: verse, lines: lines };
+}
 function generateDance1(opt) {
   var optIn = JSON.parse(JSON.stringify(opt)), gform = FORMS[opt.form] || FORMS.dc_house, coreKey = (opt.form || "dc_house") + "__core", kk;
   if (!FORMS[coreKey]) { var cf = {}; for (kk in gform) if (kk !== "gen") cf[kk] = gform[kk]; FORMS[coreKey] = cf; }
   var seed0 = opt.seed || 1, pdm = gform.pd ? pdPick(gform.pd, seed0) : null, stModel = (!pdm && gform.melody && SONGMEL_ST) ? SONGMEL_ST[gform.melody.style] : null;
   var edmM = (!pdm && !stModel && SONGMEL_ST && SONGMEL_ST.edm && gform.edm && (gform.edm === 1 || seed0 % gform.edm === 0)) ? SONGMEL_ST.edm : null; if (edmM) stModel = edmM;
-  var minorKey = pdm ? !!pdm[6] : !!gform.minor, tonic = (opt.tonic != null) ? opt.tonic : (pdm ? pdm[5] : (minorKey ? 9 : 0)), tempo = Math.max(100, Math.min(160, Math.round(opt.tempo || gform.tempo || 124))), seed = opt.seed || 1;
+  var minorKey = pdm ? !!pdm[6] : !!gform.minor, tonic = (opt.tonic != null) ? opt.tonic : (pdm ? pdm[5] : (minorKey ? 9 : 0)), tempo = djTempo(opt, gform), seed = opt.seed || 1;
   var A = generate({ style: "fusion", form: coreKey, tonic: tonic, tempo: tempo, tempoFixed: true, seed: seed, solos: 0, outhead: false, arrange: false, useDrums: false, expr: false, swing: 0.5, reharm: 0, motif: 0.5,
     voice: "auto", emotion: "none", mchar: "std", leadInst: "auto", themeMode: "classic", mode: minorKey ? "minor" : "major", melLo: 55, melHi: 80, thin: false });
-  var R = RNG((((seed) * 9173) + 17) % 2147483647), tonicPc = ((tonic % 12) + 12) % 12, hookBars = pdm ? 16 : 8, center = opt.vocalCenter || 67;
+  var PF = danceProfile(opt, gform, seed, minorKey, !!pdm, tonic), R = RNG((((seed) * 9173) + 17) % 2147483647), tonicPc = ((tonic % 12) + 12) % 12, hookBars = pdm ? 16 : 8, center = opt.vocalCenter || 67;
   var PDHOOK = pdm ? pdMelody(pdm, tonicPc, center, 16) : null, CH = pdm ? dcHarmonize(PDHOOK, tonicPc, minorKey, 16) : ((gform.learn && (seed % 4 !== 0)) ? (danceLearnCH(gform.learn, minorKey, tonicPc, seed) || A.chords) : A.chords), loop = CH.length;
   function chAtBar(b) { return CH[((b % loop) + loop) % loop]; }
-  var struct = opt.structOv || gform.struct || [["intro", 8], ["build", 8], ["drop", 16], ["break", 8], ["build", 8], ["drop", 16], ["outro", 8]];
+  if (PF.chords) { CH = PF.chords; loop = CH.length; }
+  var struct = opt.structOv || gform.struct || PF.struct || [["intro", 8], ["build", 8], ["drop", 16], ["break", 8], ["build", 8], ["drop", 16], ["outro", 8]];
   var INT = { intro: 0.3, build: 0.65, drop: 1, "break": 0.4, outro: 0.35 }, secs = [], at = 0, bar0 = 0;
   struct.forEach(function (s) { secs.push({ kind: s[0], at: at, beats: s[1] * 4, from: 0, tr: 0, pivot: null, bar0: bar0, inten: INT[s[0]] || 0.5 }); at += s[1] * 4; bar0 += s[1]; });
   var totalBars = bar0, K = [], BS = [], CP = [], AR = [], PD = [], LD = [], VC = [], xBS = [], xCP = [], xAR = [], xPD = [];
   function dr(t, p, v, d) { K.push({ t: t, d: d || 0.1, p: p, v: Math.max(20, Math.min(127, Math.round(v))) }); }
   function vj(v, a) { return Math.max(24, Math.min(122, Math.round(v + (R.f() - 0.5) * (a || 6)))); }
   function fold(p, lo, hi) { while (p > hi) p -= 12; while (p < lo) p += 12; return p; }
+  function grooveBar(g, kickOn, clapOn, hatOn, t0, k, kind) {                              /* 4つ打ち以外のノリ：キック・スネア(クラップ)・ハットを1小節ぶん置く */
+    var i2;
+    if (g === "broken") {
+      if (kickOn) { dr(t0, D.kick, 116, 0.2); dr(t0 + 1.5, D.kick, 100, 0.2); dr(t0 + 2.75, D.kick, 98, 0.2); if (k % 4 === 3) dr(t0 + 3.5, D.kick, 92, 0.2); }
+      if (clapOn) { [1, 3].forEach(function (b2) { dr(t0 + b2, D.snare, 108 + R.i(5), 0.15); dr(t0 + b2, D.clap, 86 + R.i(6), 0.2); }); if (k % 2 === 1) dr(t0 + 3.75, D.snare, 48, 0.1); }
+      if (hatOn) for (i2 = 0; i2 < 8; i2++) dr(t0 + i2 * 0.5, i2 === 7 ? D.hhO : D.hhC, i2 % 2 === 0 ? 80 : 60, i2 === 7 ? 0.3 : 0.08);
+    } else if (g === "garage") {
+      if (kickOn) { dr(t0, D.kick, 116, 0.2); dr(t0 + 2.5, D.kick, 104, 0.2); if (k % 2 === 1) dr(t0 + 1.75, D.kick, 88, 0.2); }
+      if (clapOn) { [1, 3].forEach(function (b2) { dr(t0 + b2, D.snare, 106 + R.i(5), 0.15); dr(t0 + b2, D.clap, 90 + R.i(6), 0.2); }); dr(t0 + 2.75, D.snare, 50, 0.1); }
+      if (hatOn) for (i2 = 0; i2 < 8; i2++) { dr(t0 + i2 * 0.5 + (i2 % 2 ? 0.08 : 0), i2 % 2 ? D.hhO : D.hhC, i2 % 2 ? 66 : 76, i2 % 2 ? 0.2 : 0.08); if (i2 % 2 === 0) dr(t0 + i2 * 0.5 + 0.25, D.hhC, 44, 0.05); }
+    } else if (g === "half") {
+      if (kickOn) { dr(t0, D.kick, 118, 0.25); dr(t0 + 2.5, D.kick, 104, 0.2); if (k % 4 === 3) dr(t0 + 1.5, D.kick, 90, 0.2); }
+      if (clapOn) { dr(t0 + 2, D.snare, 114 + R.i(5), 0.2); dr(t0 + 2, D.clap, 100 + R.i(6), 0.25); }
+      if (hatOn) for (i2 = 0; i2 < 16; i2++) dr(t0 + i2 / 4, (i2 % 8 === 6) ? D.hhO : D.hhC, i2 % 4 === 0 ? 70 : 46 + R.i(8), (i2 % 8 === 6) ? 0.3 : 0.06);
+    } else if (g === "prog") {
+      if (clapOn && kind === "drop") [1, 3].forEach(function (b2) { dr(t0 + b2, D.snare, 58 + R.i(6), 0.12); });
+    }
+  }
   function tonesOf(ch) { var iv = (QUAL[ch.q] && QUAL[ch.q].iv) || [0, 4, 7]; return iv.slice(0, 4).map(function (x) { return ch.root + x; }); }
   /* 歌メロ：サビ(hook)8小節と、Aメロ(verse)8小節。ドロップではサビ、ブレイクではAメロ */
   var chordAtFn = function (abs) { return chAtBar(abs); };
   var mk = function (o2) { if (pdm) return { notes: [], hits: 0, tries: 0 }; if (stModel) { o2.model = stModel; return { notes: songMelody(o2), hits: 0, tries: 1 }; } return songMelodySafe(o2); };
   var HOOKR = pdm ? { notes: PDHOOK, hits: 0, tries: 0 } : mk({ rng: RNG((seed * 7919 + 101) % 2147483647), bars: 8, startBar: 0, tonic: tonicPc, minor: minorKey, role: "hook", center: center, chordAt: chordAtFn });
   var HOOK = HOOKR.notes, VERSER = pdm ? { notes: PDHOOK.filter(function (n) { return n.t < 32; }), hits: 0, tries: 0 } : mk({ rng: RNG((seed * 6151 + 203) % 2147483647), bars: 8, startBar: 0, tonic: tonicPc, minor: minorKey, role: "verse", center: center - 2, chordAt: chordAtFn }), VERSE = VERSER.notes;
+  var LYR = { hook: [], verse: [] };
+  if (!pdm && opt.lyrics !== false) { LYR.hook = djAssignLyrics(HOOK, RNG((seed * 3331 + 71) % 2147483647), minorKey); LYR.verse = djAssignLyrics(VERSE, RNG((seed * 4457 + 83) % 2147483647), minorKey); }
   function placeMel(arr, src, atBeat, vscale, octUp) { src.forEach(function (n) { arr.push({ t: atBeat + n.t, d: n.d, p: n.p + (octUp || 0), v: Math.max(30, Math.min(120, Math.round(n.v * (vscale || 1)))), ly: n.ly }); }); }
   var VN = (opt.varNo | 0), ARPORD = [[0, 1, 2, 3, 2, 1, 0, 1, 2, 3, 2, 1, 3, 2, 1, 2], [0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3, 0, 2, 1, 3], [3, 2, 1, 0, 1, 2, 3, 2, 3, 2, 1, 0, 1, 2, 3, 1], [0, 0, 1, 1, 2, 2, 3, 3, 2, 2, 1, 1, 0, 0, 1, 1], [0, 1, 2, 1, 0, 1, 2, 1, 3, 2, 1, 2, 3, 2, 1, 0]];
-  var arpOrd = ARPORD[(seed + VN * 2) % ARPORD.length], arpGate = ((seed + VN) % 3 === 1), arpUp = ((seed + VN * 3) % 4 === 2), bassV = (VN === 0 && !opt.varAll) ? ((seed % 5 === 0) ? 1 : 0) : ((seed + VN) % 3);
+  var arpOrd = ARPORD[(seed + VN * 2) % ARPORD.length], arpGate = ((seed + VN) % 3 === 1), arpUp = ((seed + VN * 3) % 4 === 2), bassV = (PF.on && PF.bass != null && !(VN > 0 && !opt.varAll && false)) ? PF.bass : ((VN === 0 && !opt.varAll) ? ((seed % 5 === 0) ? 1 : 0) : ((seed + VN) % 3));
   var vocalAll = [], dropNo = 0;
   secs.forEach(function (S) {
     var nB = Math.round(S.beats / 4), k, kind = S.kind;
@@ -21091,10 +21306,11 @@ function generateDance1(opt) {
       var kickOn = (kind === "drop") || (kind === "build") || (kind === "intro" && k >= 2) || (kind === "outro" && k < nB - 2);
       var clapOn = (kind === "drop") || (kind === "build") || (kind === "intro" && k >= 4) || (kind === "outro" && k < nB - 2);
       var hatOn = kind !== "break" || k >= nB - 2;
-      if (kickOn) for (b = 0; b < 4; b++) { if (kind === "build" && last && b === 3) continue; dr(t0 + b, D.kick, 118 + R.i(6) - 3, 0.2); }
-      if (clapOn) for (b = 1; b < 4; b += 2) { if (kind === "build" && last && b === 3) continue; dr(t0 + b, D.clap, 104 + R.i(8) - 4, 0.2); dr(t0 + b, D.snare, 70 + R.i(8), 0.15); }
-      if (hatOn) for (s16 = 0; s16 < 16; s16++) {
-        var tt = t0 + s16 / 4, off8 = (s16 % 4 === 2), acc = (s16 % 4 === 0) ? 58 : (off8 ? 0 : 46);
+      grooveBar(PF.groove, kickOn, clapOn, hatOn, t0, k, kind);
+      if (kickOn && PF.std) for (b = 0; b < 4; b++) { if (kind === "build" && last && b === 3) continue; dr(t0 + b, D.kick, 118 + R.i(6) - 3, 0.2); }
+      if (clapOn && PF.groove !== "prog" && PF.std) for (b = 1; b < 4; b += 2) { if (kind === "build" && last && b === 3) continue; dr(t0 + b, D.clap, 104 + R.i(8) - 4, 0.2); dr(t0 + b, D.snare, 70 + R.i(8), 0.15); }
+      if (hatOn && PF.std) for (s16 = 0; s16 < 16; s16++) {
+        var tt = t0 + s16 / 4 + ((PF.groove === "bounce" && s16 % 2 === 1) ? 0.06 : 0), off8 = (s16 % 4 === 2), acc = (s16 % 4 === 0) ? 58 : (off8 ? 0 : 46);
         if (off8 && (kind === "drop" || kind === "outro" || (kind === "build" && k >= 2))) dr(tt, D.hhO, 88 + R.i(8), 0.3);
         else if (off8) dr(tt, D.hhC, 66 + R.i(6), 0.08);
         else dr(tt, D.hhC, acc + R.i(8), 0.06);
@@ -21111,6 +21327,10 @@ function generateDance1(opt) {
         var bp = 28 + (((ch.root - 28) % 12) + 12) % 12, bv = kind === "drop" ? 108 : kind === "build" ? 90 : 74;
         if (bassV === 1) { for (var q16 = 0; q16 < 16; q16++) { if (q16 % 4 === 0) continue; BS.push({ t: t0 + q16 / 4, d: 0.2, p: bp + ((q16 % 4 === 3) ? 12 : 0), v: vj(bv - (q16 % 4 === 2 ? 0 : 14), 6) }); } }
         else if (bassV === 2) { for (b = 0; b < 4; b++) { BS.push({ t: t0 + b + 0.5, d: 0.42, p: bp + ((b % 2) ? 12 : 0), v: vj(bv, 6) }); BS.push({ t: t0 + b + 0.75, d: 0.2, p: bp + 7, v: vj(bv - 22, 5) }); } }
+        else if (bassV === 3) { for (var q3 = 0; q3 < 16; q3++) { if (q3 % 4 === 0) continue; BS.push({ t: t0 + q3 / 4, d: 0.18, p: bp + ((q3 === 6 || q3 === 10 || q3 === 14) ? 12 : 0), v: vj(bv - (q3 % 4 === 2 ? 4 : 18), 6) }); } }
+        else if (bassV === 4) { BS.push({ t: t0 + 0.5, d: 1.6, p: bp, v: vj(bv, 5) }); BS.push({ t: t0 + 2.5, d: 1.4, p: bp + ((k % 2) ? 7 : 0), v: vj(bv - 6, 5) }); }
+        else if (bassV === 5) { [[0, 0], [0.75, 0], [1.5, 12], [2, 0], [2.75, 7], [3.5, 0]].forEach(function (e) { BS.push({ t: t0 + e[0], d: 0.4, p: bp + e[1], v: vj(bv - (e[0] === 0 ? 14 : 0), 6) }); }); }
+        else if (bassV === 6) { var AC = [0, 0, 12, 0, 7, 0, 10, 12]; for (var q6 = 0; q6 < 16; q6++) { if ((q6 * 7 + k) % 5 === 0) continue; BS.push({ t: t0 + q6 / 4, d: 0.2, p: bp + AC[q6 % 8], v: vj(bv - (q6 % 4 === 0 ? 14 : 8), 6) }); } }
         else {
           for (b = 0; b < 4; b++) { BS.push({ t: t0 + b + 0.5, d: 0.42, p: bp + ((b === 3 && R.chance(0.35)) ? 12 : 0), v: vj(bv, 6) }); if (kind === "drop" && b === 0 && k % 2 === 0) BS.push({ t: t0, d: 0.4, p: bp, v: vj(bv - 18, 4) }); }
         }
@@ -21134,7 +21354,7 @@ function generateDance1(opt) {
         tones.slice(0, 3).forEach(function (tn) { PD.push({ t: t0, d: (kind === "drop" ? 3.8 : 7.8), p: fold(pb + (tn - ch.root), 48, 72), v: vj(kind === "break" ? 66 : kind === "drop" ? 50 : 56, 4) }); });
       }
       /* サイドチェイン風：キックの拍で音量(CC11)を下げ、拍の終わりに戻す（ベース・スタブ・アルペジオ・パッド） */
-      if (kickOn) for (b = 0; b < 4; b++) {
+      if (kickOn && PF.sc) for (b = 0; b < 4; b++) {
         if (kind === "build" && last && b === 3) continue;
         [xBS, xCP, xAR, xPD].forEach(function (x, xi) { var depth = xi === 0 ? 38 : xi === 3 ? 56 : 48; x.push({ t: t0 + b, cc: 11, val: depth }); x.push({ t: t0 + b + 0.12, cc: 11, val: Math.round(depth + (127 - depth) * 0.45) }); x.push({ t: t0 + b + 0.4, cc: 11, val: 124 }); });
       }
@@ -21147,7 +21367,7 @@ function generateDance1(opt) {
         var tOff = secAt + k * 4; placeMel(LD, HOOK, tOff, 1, 0); placeMel(VC, HOOK, tOff, 1, 0);
         if (dropNo >= 2 && k >= hookBars) placeMel(LD, HOOK.filter(function (n) { return n.t >= hookBars * 2; }), tOff, 0.8, 12);
       }
-    } else if (kind === "break") { placeMel(VC, VERSE, secAt, 1, 0); placeMel(LD, VERSE, secAt, 0.55, 0); }
+    } else if (kind === "break") { for (k = 0; k < nB; k += 8) { placeMel(VC, VERSE, secAt + k * 4, 1, 0); placeMel(LD, VERSE, secAt + k * 4, 0.55, 0); } }
   });
   /* 終わり：最後の小節の頭にクラッシュと主和音 */
   var endT = totalBars * 4; dr(endT, D.crash, 118, 3); dr(endT, D.kick, 120, 0.3);
@@ -21160,10 +21380,10 @@ function generateDance1(opt) {
   song.barsPerChorus = loop; song.beats = 4; song.totalBeats = endT + 4;
   var vocalOn = (opt.vocal !== false), vocalNotes = vocalOn ? srt(VC) : [];
   song.stems = [
-    { id: "mel", name: "Lead (saw)", jp: "リード（歌メロのシンセ）", prog: 81, ch: 0, notes: srt(LD), extra: [] },
+    { id: "mel", name: "Lead (saw)", jp: "リード（歌メロのシンセ）", prog: PF.lead[0], ch: 0, notes: srt(LD), extra: [] },
     { id: "comp", name: "Chord stabs", jp: "コードのスタブ（裏打ち）", prog: 62, ch: 1, notes: srt(CP), extra: xCP },
-    { id: "arp", name: "Arpeggio", jp: "アルペジオ（16分）", prog: 80, ch: 2, notes: srt(AR), extra: xAR },
-    { id: "pad", name: "Pad", jp: "パッド", prog: 89, ch: 4, notes: srt(PD), extra: xPD },
+    { id: "arp", name: "Arpeggio", jp: "アルペジオ（16分）", prog: PF.arp[0], ch: 2, notes: srt(AR), extra: xAR },
+    { id: "pad", name: "Pad", jp: "パッド", prog: PF.pad[0], ch: 4, notes: srt(PD), extra: xPD },
     { id: "bass", name: "Sub bass", jp: "サブベース（裏の8分）", prog: 38, ch: 3, notes: srt(BS), extra: xBS },
     { id: "drums", name: "Drums", jp: "ドラム（4つ打ち）", prog: 0, ch: 9, notes: srt(K), extra: [] }
   ];
@@ -21180,6 +21400,9 @@ function generateDance1(opt) {
     "【音源のおすすめ】リード・アルペジオ・スタブ・ベース＝Retrologue、パッド＝Padshop、ドラム＝MODO DRUM(音色を選んでいなければ標準のキット)、仕上げ＝OTT。歌声＝VoiSona。"
   ];
   song.chordText = A.chordText;
+  if (PF.on) song.explain.unshift("【今回の型】ノリ＝" + DJ_GROOVES[PF.groove] + "／ベース＝" + DJ_BASSES[PF.bass] + "／構成＝" + (PF.names.struct || "形式どおり") + "／進行＝" + (PF.chords ? "入れ替え" : "形式どおり") + "／リード＝" + PF.lead[1] + "・アルペジオ＝" + PF.arp[1] + "・パッド＝" + PF.pad[1] + "（毎回ちがう）");
+  if (LYR.hook.length) song.explain.push("【歌詞】サビ：" + LYR.hook.join("／") + "　Aメロ：" + LYR.verse.join("／") + "（日本語・ひらがな。VoiSona に取り込む MusicXML と .mid に入る。原曲の歌詞ではなく、言葉の部品から新しく組んだもの）");
+  song.dance && 0;
   if (!pdm && CH !== A.chords) {
     song.chords = CH; song.barsPerChorus = loop;
     song.chordText = "[tempo:" + tempo + "] " + CH.map(function (c) { return chordSym(c, false); }).join(" | ");
@@ -23338,6 +23561,39 @@ function metaEvents(song, withTempo, name) {
   return ev;
 }
 
+/* ドラムだけになる区間：ドラム以外の全パートが休む区間(0.95小節以上)を曲データから拾い、①掛け合い(Trade)の中の休み／②Solo・Shout の中の、
+   4.5小節以下で、セクションの先頭から4小節の区切りで終わる休み(アドリブ前のブレイク)だけを返す。イントロ・テーマ・エンディングの休みは対象外。
+   tools/trade_mute_midi.js と同じ規則。返り値：[{a,b,why}]（拍。a＝ドラム以外の最後の音の終わり、b＝次の音の頭） */
+var DRUMONLY_CC = true;
+function setDrumOnlyCC(on) { DRUMONLY_CC = !!on; }
+function songDrumOnlyWins(song) {
+  if (!song || !song.stems || !song.sections) return [];
+  if (song._dow && song._dowKey === song.stems.length + ":" + song.totalBeats) return song._dow;
+  var beats = song.beats || 4, iv = [], out = [];
+  song.stems.forEach(function (st) {
+    if ((st.ch & 15) === 9) return;
+    (st.notes || []).forEach(function (n) { if (n && n.d > 0) iv.push([n.t, n.t + n.d]); });
+  });
+  iv.sort(function (x, y) { return x[0] - y[0]; });
+  var mg = [];
+  iv.forEach(function (x) { var l = mg[mg.length - 1]; if (l && x[0] <= l[1] + 1e-6) l[1] = Math.max(l[1], x[1]); else mg.push([x[0], x[1]]); });
+  var secs = song.sections.slice().sort(function (x, y) { return x.at - y.at; });
+  secs.forEach(function (sc, i) { sc._end = i + 1 < secs.length ? secs[i + 1].at : song.totalBeats; });
+  var secAt = function (t) { var r = null; secs.forEach(function (sc) { if (t >= sc.at - 1e-6 && t < sc._end - 1e-6) r = sc; }); return r; };
+  for (var i = 0; i + 1 < mg.length; i++) {
+    var a = mg[i][1], b = mg[i + 1][0], bars = (b - a) / beats;
+    if (bars < 0.95) continue;
+    var sc = secAt(a + 0.01); if (!sc) continue;
+    if (sc.kind === "trade") { out.push({ a: a, b: b, why: "trade" }); continue; }
+    if (sc.kind === "solo" || sc.kind === "shout") {
+      var endBars = (b - sc.at) / beats, r = endBars / 4;
+      if (bars <= 4.5 && Math.abs(r - Math.round(r)) * 4 < 0.3) out.push({ a: a, b: b, why: "break" });
+    }
+  }
+  secs.forEach(function (sc) { delete sc._end; });
+  song._dow = out; song._dowKey = song.stems.length + ":" + song.totalBeats;
+  return out;
+}
 function noteEvents(stem, song, marks) {
   var ev = [], i, chn = stem.ch & 15;
   ev.push({ tick: 0, pri: 2, data: [0xc0 | chn, stem.prog & 127] });
@@ -23361,8 +23617,8 @@ function noteEvents(stem, song, marks) {
     }
   }
   /* ドラムだけの区間の頭で、オルガン(GM 16〜20)の余韻を切る：CC120（オール・サウンド・オフ）。音源の余韻（リリース）が長いと、ドラムソロ中も鳴り続けるため。CC11 は触らない */
-  if (song && song.drumOnly && song.drumOnly.length && stem.prog >= 16 && stem.prog <= 20 && chn !== 9) {
-    song.drumOnly.forEach(function (w) { ev.push({ tick: Math.max(0, Math.round(Math.min(w.a + 0.5, (w.a + w.b) / 2) * PPQ)), pri: 2, data: [0xb0 | chn, 120, 0] }); });   /* 区間の頭の0.5拍後：短い自然な余韻は残す */
+  if (DRUMONLY_CC && song && stem.prog >= 16 && stem.prog <= 20 && chn !== 9) {
+    songDrumOnlyWins(song).forEach(function (w) { ev.push({ tick: Math.max(0, Math.round(Math.min(w.a + 0.5, w.b - 1 / PPQ) * PPQ)), pri: 2, data: [0xb0 | chn, 120, 0] }); });   /* 区間の頭の0.5拍後：短い自然な余韻は残す */
   }
   /* メタルの歪みギター（GM 28〜30）は、Cubase で AmpliTube を何台も重ねると割れやすい。MIDI の強さ（ベロシティ）を一律に下げて入力を控えめにする。opt.gtrTrim＝倍率（既定0.82・1で無効） */
   var gtrK = 1;
@@ -23691,9 +23947,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 515;
+var BUILD_NO = 521;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 181;
+var GEN_NO = 182;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
@@ -25418,6 +25674,8 @@ function notesToMidi(notes, bpm, bpb, meters, u8, ext) {
    Claude に解釈させる方式（HTML/JSX の「Claude に解釈させる」）の結果も、同じ sanitizePromptSet を通して設定へ。
    返り値：{ set:{…}, hits:[{kw,desc}], rest:"解釈できなかった部分", tempoMul, tempoAbs } */
 var KW_RULES = [
+  [/短調|マイナー(?:キー|調|で|に)|minor\s*key/i, { mode: "minor" }, 8, "短調"],
+  [/長調|メジャー(?:キー|調|で)|major\s*key/i, { mode: "major" }, 8, "長調"],
   /* スタイル（重み 10。具体的なものほど先に） */
   [/8\s*-?\s*bit|8ビット|ファミコン|ファミリーコンピュータ|チップチューン|chip\s*tune|ドット絵|レトロゲーム/i, { style: "chip" }, 11, "ファミコン風の音（矩形波・三角波）"],
   [/ゲーム|game|rpg|ボス戦|ダンジョン|フィールド曲|ステージ/i, { style: "game" }, 10, "ゲーム音楽"],
@@ -26788,7 +27046,7 @@ function spliceHints(style, tempo, tonic, minor) {
   return arr.map(function (h) { return { part: h[0], query: h[1] + tail, tip: h[2] }; });
 }
 
-var API = { songMelody: songMelody, buildVocalXml: buildVocalXml, generateDance: generateDance, monkComp: monkComp, gtrFinger: gtrFinger, gtrHardCount: gtrHardCount, gtrChordFix: gtrChordFix,
+var API = { songDrumOnlyWins: songDrumOnlyWins, setDrumOnlyCC: setDrumOnlyCC, songVocalNotes: songVocalNotes, songLyricsLa: songLyricsLa, songLyricInfo: songLyricInfo, songLyricsApply: songLyricsApply, songLyricsAuto: songLyricsAuto, songLyricPrompt: songLyricPrompt, parseLyricReply: parseLyricReply, lyricFit: lyricFit, songMelody: songMelody, buildVocalXml: buildVocalXml, generateDance: generateDance, monkComp: monkComp, gtrFinger: gtrFinger, gtrHardCount: gtrHardCount, gtrChordFix: gtrChordFix,
   melodyMetrics: melodyMetrics, matchVoices: matchVoices, MEL_METRIC_KEYS: MEL_METRIC_KEYS, spliceParse: spliceParse, SPLICE_PICKS: SPLICE_PICKS, spliceHints: spliceHints, loopermanFor: loopermanFor, splicePicksFor: splicePicksFor, sitesFor: sitesFor, loopBpm: loopBpm, loopBarCandidates: loopBarCandidates, audioToMidi: audioToMidi, audioToChords: audioToChords, chordsToMidi: chordsToMidi, estimateTempo: estimateTempo, analyzeNotesAndChords: analyzeNotesAndChords, melodyToText: melodyToText, textToMelody: textToMelody, notesToMidi: notesToMidi, pickFormFromText: pickFormFromText, applySectionGains: applySectionGains, sectionGainsPreset: sectionGainsPreset, suggestNextChords: suggestNextChords, splitMora: splitMora, assignLyrics: assignLyrics, parseLeadSheetXML: parseLeadSheetXML, parseIReal: parseIReal, settingsFromIReal: settingsFromIReal, readSettingsFile: readSettingsFile, irealUnscramble: irealUnscramble, leadSheetChordText: leadSheetChordText, settingsFromMidi: settingsFromMidi, progFromText: progFromText, melodyFromText: melodyFromText, coercePromptReply: coercePromptReply, parsePrompt: parsePrompt, resolvePromptTempo: resolvePromptTempo, promptSchemaText: promptSchemaText, sanitizePromptSet: sanitizePromptSet, KW_RULES: KW_RULES, meterList: meterList, songBarLens: songBarLens, barAtBeat: barAtBeat, songMetersForEditor: songMetersForEditor, songUnit: songUnit, barStartOf: barStartOf, barLen: barLen, posToBar: posToBar, sourceAnalysis: sourceAnalysis,
   RNG: RNG, FORMS: FORMS, STYLES: STYLES, QUAL: QUAL, VOICES: VOICES, EMOTION: EMOTION, INSTR: INSTR, MCHAR: MCHAR, resolveAuto: resolveAuto,
   BUILD: BUILD_NO, GEN: GEN_NO, packSong: packSong, unpackSong: unpackSong, codeOf: codeOf, optOfCode: optOfCode,
