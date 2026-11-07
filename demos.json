@@ -81,7 +81,12 @@
    "midi": "demos/2026-11-08_bossa_jobimmin32/2026-11-08_bossa_jobimmin32_all.mid",
    "info": "demos/2026-11-08_bossa_jobimmin32/info.md"
   },
-  "audio": "demos/2026-11-08_bossa_jobimmin32/2026-11-08_bossa_jobimmin32.mp3"
+  "audio": "demos/2026-11-08_bossa_jobimmin32/2026-11-08_bossa_jobimmin32.mp3",
+  "scorePages": [
+   "scores/2026-11-08_bossa_jobimmin32-1.png"
+  ],
+  "cover": "covers/2026-11-08_bossa_jobimmin32.jpg",
+  "coverKind": "generated"
  },
  {
   "id": "2026-11-07_mcl_organtrio_standard32",
