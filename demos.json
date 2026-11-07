@@ -89,6 +89,94 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-08_celtic_jig_c",
+  "date": "2026-11-08",
+  "style": "celtic",
+  "styleShort": "ケルト／アイリッシュ",
+  "styleLabel": "ケルト／アイリッシュ（リール・ホーンパイプ・エア：ドローンの上の装飾された8分の旋律）",
+  "form": "jig_c",
+  "formLabel": "ジグ（6/8）32小節（3 + 3 の弾む8分・I → V → IV）",
+  "title": "The Rover (D)",
+  "key": "D",
+  "tempo": 150,
+  "tempoGenerated": 150,
+  "bars": 140,
+  "seed": 20261108,
+  "gen": 182,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 73
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 73
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 25
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "D",
+   "D",
+   "A",
+   "D",
+   "D",
+   "G",
+   "A",
+   "D",
+   "D",
+   "D",
+   "A",
+   "D",
+   "D",
+   "G",
+   "A",
+   "D",
+   "G",
+   "D",
+   "A",
+   "D",
+   "G",
+   "D",
+   "A",
+   "D",
+   "G",
+   "D",
+   "A",
+   "D",
+   "G",
+   "D",
+   "A",
+   "D"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 182). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-08_celtic_jig_c/2026-11-08_celtic_jig_c_midi-set.zip",
+   "midi": "demos/2026-11-08_celtic_jig_c/2026-11-08_celtic_jig_c_all.mid",
+   "info": "demos/2026-11-08_celtic_jig_c/info.md"
+  },
+  "audio": "demos/2026-11-08_celtic_jig_c/2026-11-08_celtic_jig_c.mp3",
+  "scorePages": [
+   "scores/2026-11-08_celtic_jig_c-1.png"
+  ]
+ },
+ {
   "id": "2026-11-07_mcl_organtrio_standard32",
   "date": "2026-11-07",
   "style": "mcl_organtrio",
