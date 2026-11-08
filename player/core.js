@@ -7068,6 +7068,44 @@ FORMS.mn24m = { gen: "folk", styleKey: "folkworld", folk: { group: "minyo", mete
 FORMS.mn68 = { gen: "folk", styleKey: "folkworld", folk: { group: "minyo", meter: "6/8", mode: "maj", region: "ヨーロッパ", bars: 16 }, label: "世界の民謡 6/8拍子・長調（ギターのアルペジオ。16小節）", bars: 8, minor: false, ts: [6, 8], sec: "AA", tempo: 80, ch: [T(0, "maj", 6), T(0, "maj", 6), T(5, "maj", 6), T(5, "maj", 6), T(7, "maj", 6), T(7, "maj", 6), T(0, "maj", 6), T(0, "maj", 6)] };
 FORMS.rk_aor1 = rockForm("AOR：vi → IV → I → V → V vi IV I → IV I → I ♭VII(サバイバー・ジャーニー型) 16小節", false, 112, [[9, "min", 1], [5, "maj", 1], [0, "maj", 1], [7, "maj", 1], [7, "maj", 1], [9, "min", 1], [5, "maj", 1], [0, "maj", 1], [5, "maj", 2], [0, "maj", 2], [0, "maj", 2], [10, "maj", 2]]);
 FORMS.rk_aor2 = rockForm("AOR(短調)：♭VI IV ♭VII → i ♭VI → IV V i(ジャーニー型) 16小節", true, 110, [[8, "maj", 2], [5, "maj", 1], [10, "maj", 1], [0, "min", 2], [8, "maj", 2], [5, "maj", 1], [7, "maj", 1], [0, "min", 2], [0, "min", 2], [10, "maj", 2]]);
+/* ---------- スウィングのテーマの「ハモリ」（サックス・セクション／ブラス／弦／混成）----------
+   各音に、その時の和音の構成音(＋9度・13度・6度・11度)で、3〜8半音下に3声を積む(2声目以降も3半音以上離す)。旋律が和音の外の音のときは、3半音ずつのディミニッシュの積み(経過音の処理)。
+   長さ・リズムは旋律と同じ(セクションのソリ)。強さは旋律の86%。 */
+var HORN_SETS = {
+  sax:     { lead: 65, progs: [65, 66, 67], names: ["Alto Sax 2", "Tenor Sax", "Bari Sax"], jp: ["アルト・サックス2（ハモリ）", "テナー・サックス（ハモリ）", "バリトン・サックス（ハモリ）"], leadJp: "サックス・セクションの旋律（アルト）" },
+  brass:   { lead: 56, progs: [56, 57, 57], names: ["Trumpet 2", "Trombone", "Trombone 2"], jp: ["トランペット2（ハモリ）", "トロンボーン（ハモリ）", "トロンボーン2（ハモリ）"], leadJp: "ブラス・セクションの旋律（トランペット）" },
+  strings: { lead: 40, progs: [40, 41, 42], names: ["Violin 2", "Viola", "Cello"], jp: ["ヴァイオリン2（ハモリ）", "ヴィオラ（ハモリ）", "チェロ（ハモリ）"], leadJp: "弦の旋律（ヴァイオリン）" },
+  mix:     { lead: 65, progs: [56, 57, 66], names: ["Trumpet", "Trombone", "Tenor Sax"], jp: ["トランペット（ハモリ）", "トロンボーン（ハモリ）", "テナー・サックス（ハモリ）"], leadJp: "管の混成の旋律（アルト・サックス）" }
+};
+var HORN_CH = [10, 12, 14], HORN_AUTO = { swing: 0.4, bebop: 0.3, ballad: 0.35 }, HORN_STY = ["swing", "bebop", "ballad", "soul", "organjazz", "modern", "fusion", "gypsy", "bossa", "waltz"];
+function hornKindOf(opt) {
+  var v = opt.hornHarm;
+  if (v === "off") return null;
+  if (HORN_SETS[v]) return HORN_STY.indexOf(opt.style) >= 0 ? v : null;
+  if (!HORN_AUTO[opt.style]) return null;
+  var r = RNG((((opt.seed || 1) * 271 + 19) % 2147483647) || 1);
+  if (r.f() >= HORN_AUTO[opt.style]) return null;
+  var r2 = RNG((((opt.seed || 1) * 331 + 41) % 2147483647) || 1).f();
+  if (opt.style === "ballad") return r2 < 0.7 ? "strings" : "sax";
+  return r2 < 0.45 ? "sax" : (r2 < 0.7 ? "brass" : (r2 < 0.85 ? "strings" : "mix"));
+}
+function hornHarmony(mel, abs, nV) {
+  var out = [], k, i; for (k = 0; k < nV; k++) out.push([]);
+  mel.filter(function (n) { return typeof n.p === "number" && !n.grace; }).sort(function (a, b) { return a.t - b.t; }).forEach(function (n) {
+    var c = abs[0] || { root: 0, q: "maj7" }, z; for (z = 0; z < abs.length; z++) { if (abs[z].t <= n.t + 1e-6) c = abs[z]; else break; }
+    var q = QUAL[c.q] || { iv: [0, 4, 7] }, S = {}, dom = q.iv.indexOf(4) >= 0 && q.iv.indexOf(10) >= 0, maj = q.iv.indexOf(4) >= 0, mn = q.iv.indexOf(3) >= 0;
+    q.iv.forEach(function (x) { S[(c.root + x) % 12] = 1; });
+    if (dom) { S[(c.root + 2) % 12] = 1; S[(c.root + 9) % 12] = 1; } else if (maj) { S[(c.root + 9) % 12] = 1; S[(c.root + 2) % 12] = 1; } else if (mn) { S[(c.root + 2) % 12] = 1; S[(c.root + 5) % 12] = 1; }
+    var lead = n.p, ok = !!S[((lead % 12) + 12) % 12], prev = lead;
+    for (k = 0; k < nV; k++) {
+      var p2 = null, d;
+      if (ok) for (d = 3; d <= 8; d++) { var cand = prev - d; if (S[((cand % 12) + 12) % 12]) { p2 = cand; break; } }
+      if (p2 == null) p2 = prev - 3;
+      prev = p2; if (p2 >= 40) out[k].push({ t: n.t, d: n.d, p: p2, v: Math.max(30, Math.round(n.v * 0.86)), sw: n.sw });
+    }
+  });
+  return out;
+}
 /* ---------- ツイン・ギターの3度ハモリ（スラッシュ／デス／メロデス／ブラック）----------
    2本目のギター(gtr2)が、旋律に3度の平行（上か下）を付ける。入れる場所：テーマ(head)と山場(shout)、および、ソロとソロの間(最初のソロの終わり4小節＝ソロの曲間)。
    音は、短調（導音は和声的短音階）の音階の上で2つ上(3度上)か2つ下(3度下＝6度上)に移す。音階の外の半音は、付けない。2小節ごとに向きを決める(上65%・下35%)。 */
@@ -23189,6 +23227,12 @@ function generateMain(opt) {
     pnoN = clearUnderLead(pnoN, mel.concat(solo.filter(function (n) { return !n.cm; })), 45);
     if (pnoN.length) stems.push({ id: "pno", name: "Piano comp", jp: "ピアノ（伴奏・追加）" + ((opt.style === "gypsy" || opt.style === "flamenco") ? "【消音中・必要なら「鳴る」に】" : ""), prog: 0, ch: 8, notes: pnoN, extra: [], defaultMute: opt.style === "gypsy" || opt.style === "flamenco" });      /* ジプシーのピアノは、基本は消音（MIDI・譜面には入る） */
   }
+  var hornK = hornKindOf(opt);
+  if (hornK && mel.length) {                                                                 /* スウィング系：テーマを管・弦のハモリに（opt.hornHarm） */
+    var HS = HORN_SETS[hornK], hv = hornHarmony(mel, absChords({ chords: chs, sections: sections, beats: beats, opt: opt }), 3), hq;
+    hv.forEach(function (arr, hi) { if (arr.length) stems.push({ id: "hrm" + (hi + 1), name: HS.names[hi], jp: HS.jp[hi], prog: HS.progs[hi], ch: HORN_CH[hi], notes: arr, extra: [] }); });
+    if (!opt.leadInst || opt.leadInst === "auto") for (hq = 0; hq < stems.length; hq++) if (stems[hq].id === "mel") { stems[hq].prog = HS.lead; stems[hq].jp = HS.leadJp; }
+  }
   if (opt.style === "arena" && sty.rockKind && opt.twin !== 0 && opt.rockHarm !== false) {          /* ロック：ハモリのギター(3度・6度・トライトーン・ディミニッシュ)。ギター2はリフなので、ギター3として別に */
     var rkH = twinHarmony(mel, solo, sections, beats, opt, opt.tempo, absChords({ chords: chs, sections: sections, beats: beats, opt: opt }));
     if (rkH.length) stems.push({ id: "gtr3", name: "Guitar 3 (harmony)", jp: "3本目のギター（ハモリ：3度・6度・トライトーン・ディミニッシュ）", prog: 30, ch: 5, notes: rkH, extra: twinBendExtra(rkH, stems, opt) });
@@ -24293,9 +24337,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 540;
+var BUILD_NO = 542;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 201;
+var GEN_NO = 203;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
@@ -26294,6 +26338,10 @@ var KW_RULES = [
   [/サバ旋法|マカーム[\s・]*サバ|maqam\s*saba|(?:^|[^a-z])saba(?![a-z])/i, { style: "arabic", form: "ar_saba", mode: "minor" }, 12, "サバ（2度が半フラット）"],
   [/クルド旋法|マカーム[\s・]*クルド|maqam\s*kurd|(?:^|[^a-z])kurd(?![a-z])/i, { style: "arabic", form: "ar_kurd", mode: "minor" }, 12, "クルド"],
   [/ヒジャーズ?カール|ヒジャズカール|hijazkar|hicazkar/i, { style: "arabic", form: "ar_hijazkar", mode: "major" }, 13, "ヒジャーズカール"],
+  [/サックス・?(セクション|ソリ)|sax\s*(section|soli)|サックスでハモ/i, { hornHarm: "sax" }, 9, "サックス・セクションのハモリ"],
+  [/ホーン・?セクション|ブラス・?セクション|ブラスでハモ|horn\s*section|brass\s*section/i, { hornHarm: "brass" }, 9, "ブラス・セクションのハモリ"],
+  [/弦でハモ|ストリングス(の)?ハモ|弦楽(四重奏)?風|string\s*(quartet|section)|弦のセクション/i, { hornHarm: "strings" }, 9, "弦のハモリ"],
+  [/管(楽器)?でハモ|テーマ(を)?ハモ|ソリ(?!スト)|soli\b|ハーモナイズ|ハモリ(の)?テーマ/i, { hornHarm: "mix" }, 8, "テーマのハモリ（管の混成）"],
   [/ソフヤン|sofyan|ヒジャーズ・?ホマーユン|hicaz|hijaz\s*humayun|トルコの(?:民謡|舞曲)|トルコ音楽|バーラマ|baglama|saz\b|ネヴァ|オスマン|ottoman/i, { style: "arabic", form: "tr_hicaz", mode: "major" }, 12, "トルコ：ヒジャーズ（ソフヤン）"],
   [/ウシャク|[uü][sş]{1,2}ak/i, { style: "arabic", form: "tr_ussak", mode: "minor" }, 12, "トルコ：ウシャク"],
   [/マクスーム|maqsum/i, { style: "arabic", form: "ar_maqsum" }, 12, "マクスーム"],
@@ -26618,6 +26666,35 @@ function melodyFromText(text, bpb) {
   return { notes: notes, bars: Math.ceil(t / bpb - 1e-9) };
 }
 /* 相対テンポ（ゆっくり・速い）を、スタイル／形式の標準テンポから決める */
+/* ---------- ジャンル別の典型像（MidiCaps 約16.8万曲）：キーワード作曲で、テンポ・長短・テーマの楽器の既定に使う ---------- */
+var GENRE_PROF = {
+  jazz:       { t: [118, 170], minor: 0.37, lead: [["trumpet", 22], ["sax", 22], ["trombone", 8], ["piano", 18], ["guitar", 30]] },
+  latin:      { t: [120, 180], minor: 0.41, lead: [["trumpet", 30], ["piano", 25], ["sax", 20], ["flute", 15], ["guitar", 10]] },
+  reggae:     { t: [90, 138], minor: 0.29, lead: null },
+  rock:       { t: [105, 148], minor: 0.44, lead: null },
+  classical:  { t: [84, 125], minor: 0.34, lead: [["flute", 30], ["oboe", 20], ["horn", 15], ["clarinet", 15], ["piano", 20]] },
+  folk:       { t: [115, 163], minor: 0.15, lead: [["flute", 30], ["clarinet", 25], ["guitar", 30], ["piano", 15]] },
+  pop:        { t: [90, 126], minor: 0.25, lead: [["piano", 45], ["guitar", 35], ["sax", 10], ["flute", 10]] },
+  electronic: { t: [100, 135], minor: 0.40, lead: null },
+  soundtrack: { t: [90, 130], minor: 0.38, lead: [["piano", 35], ["horn", 20], ["flute", 20], ["oboe", 10], ["trumpet", 15]] },
+  world:      { t: [105, 160], minor: 0.42, lead: [["trumpet", 25], ["flute", 25], ["clarinet", 20], ["sax", 15], ["guitar", 15]] }
+};
+var GENRE_OF = { swing: "jazz", bebop: "jazz", soul: "jazz", organjazz: "jazz", modern: "jazz", gypsy: "jazz", fusion: "jazz", ballad: "jazz", bossa: "latin", brazil: "latin", latin: "latin", tango: "latin", reggae: "reggae",
+  arena: "rock", neo: "rock", mathrock: "rock", classical: "classical", baroque: "classical", orchestra: "classical", celtic: "folk", country: "folk", folkworld: "folk", kayo: "pop", douyou: "pop", dance: "electronic",
+  game: "soundtrack", dq: "soundtrack", ff: "soundtrack", chip: "soundtrack", epic: "soundtrack", arabic: "world", balkan: "world", andean: "world", afrobeat: "world", indian: "world", gamelan: "world", hawaiian: "world" };
+function genreProfile(style) { var k = GENRE_OF[style] || (/^(rk_|mcl_|fu_)/.test(style || "") ? (/^rk_/.test(style) ? "rock" : "jazz") : null); return k && GENRE_PROF[k] ? { genre: k, t: GENRE_PROF[k].t, minor: GENRE_PROF[k].minor, lead: GENRE_PROF[k].lead } : null; }
+/* ジャンルの幅と、曲種・形式の標準テンポの0.8〜1.25倍が重なる範囲から、rnd(0〜1)で選ぶ。重ならなければ null（標準のまま） */
+function genreTempoPick(style, form, rnd) {
+  var gp = genreProfile(style); if (!gp) return null;
+  var base = (form && FORMS[form] && FORMS[form].tempo) || (STYLES[style] && STYLES[style].tempo) || 0; if (!base) return null;
+  var lo = Math.max(gp.t[0], Math.round(base * 0.8)), hi = Math.min(gp.t[1], Math.round(base * 1.25)); if (hi < lo) return null;
+  return Math.round(lo + (hi - lo) * Math.max(0, Math.min(1, rnd)));
+}
+function genreModePick(style, rnd) { var gp = genreProfile(style); return gp ? (rnd < gp.minor ? "minor" : "major") : null; }
+function genreLeadPick(style, rnd) {
+  var gp = genreProfile(style); if (!gp || !gp.lead) return null; var tot = 0, i; for (i = 0; i < gp.lead.length; i++) tot += gp.lead[i][1];
+  var x = Math.max(0, Math.min(0.9999, rnd)) * tot; for (i = 0; i < gp.lead.length; i++) { if (x < gp.lead[i][1]) return gp.lead[i][0]; x -= gp.lead[i][1]; } return null;
+}
 function resolvePromptTempo(r, styleKey, formKey) {
   if (r.tempoAbs) return r.tempoAbs;
   if (r.tempoMul === null || r.tempoMul === undefined) return null;
@@ -27418,7 +27495,7 @@ function spliceHints(style, tempo, tonic, minor) {
   STYLES.classical.forms = STYLES.classical.forms.concat(["bossavl32", "bossavlmin32", "chorovl32", "chorovl16", "valsabr24"]);
 })();
 
-var API = { songDrumOnlyWins: songDrumOnlyWins, setDrumOnlyCC: setDrumOnlyCC, songVocalNotes: songVocalNotes, songLyricsLa: songLyricsLa, songLyricInfo: songLyricInfo, songLyricsApply: songLyricsApply, songLyricsAuto: songLyricsAuto, songLyricPrompt: songLyricPrompt, parseLyricReply: parseLyricReply, lyricFit: lyricFit, songMelody: songMelody, buildVocalXml: buildVocalXml, generateDance: generateDance, monkComp: monkComp, gtrFinger: gtrFinger, gtrHardCount: gtrHardCount, gtrChordFix: gtrChordFix,
+var API = { genreProfile: genreProfile, genreTempoPick: genreTempoPick, genreModePick: genreModePick, genreLeadPick: genreLeadPick, songDrumOnlyWins: songDrumOnlyWins, setDrumOnlyCC: setDrumOnlyCC, songVocalNotes: songVocalNotes, songLyricsLa: songLyricsLa, songLyricInfo: songLyricInfo, songLyricsApply: songLyricsApply, songLyricsAuto: songLyricsAuto, songLyricPrompt: songLyricPrompt, parseLyricReply: parseLyricReply, lyricFit: lyricFit, songMelody: songMelody, buildVocalXml: buildVocalXml, generateDance: generateDance, monkComp: monkComp, gtrFinger: gtrFinger, gtrHardCount: gtrHardCount, gtrChordFix: gtrChordFix,
   melodyMetrics: melodyMetrics, matchVoices: matchVoices, MEL_METRIC_KEYS: MEL_METRIC_KEYS, spliceParse: spliceParse, SPLICE_PICKS: SPLICE_PICKS, spliceHints: spliceHints, loopermanFor: loopermanFor, splicePicksFor: splicePicksFor, sitesFor: sitesFor, loopBpm: loopBpm, loopBarCandidates: loopBarCandidates, audioToMidi: audioToMidi, audioToChords: audioToChords, chordsToMidi: chordsToMidi, estimateTempo: estimateTempo, analyzeNotesAndChords: analyzeNotesAndChords, melodyToText: melodyToText, textToMelody: textToMelody, notesToMidi: notesToMidi, pickFormFromText: pickFormFromText, applySectionGains: applySectionGains, sectionGainsPreset: sectionGainsPreset, suggestNextChords: suggestNextChords, splitMora: splitMora, assignLyrics: assignLyrics, parseLeadSheetXML: parseLeadSheetXML, parseIReal: parseIReal, settingsFromIReal: settingsFromIReal, readSettingsFile: readSettingsFile, irealUnscramble: irealUnscramble, leadSheetChordText: leadSheetChordText, settingsFromMidi: settingsFromMidi, progFromText: progFromText, melodyFromText: melodyFromText, coercePromptReply: coercePromptReply, parsePrompt: parsePrompt, resolvePromptTempo: resolvePromptTempo, promptSchemaText: promptSchemaText, sanitizePromptSet: sanitizePromptSet, KW_RULES: KW_RULES, meterList: meterList, songBarLens: songBarLens, barAtBeat: barAtBeat, songMetersForEditor: songMetersForEditor, songUnit: songUnit, barStartOf: barStartOf, barLen: barLen, posToBar: posToBar, sourceAnalysis: sourceAnalysis,
   RNG: RNG, FORMS: FORMS, STYLES: STYLES, QUAL: QUAL, VOICES: VOICES, EMOTION: EMOTION, INSTR: INSTR, MCHAR: MCHAR, resolveAuto: resolveAuto,
   BUILD: BUILD_NO, GEN: GEN_NO, packSong: packSong, unpackSong: unpackSong, codeOf: codeOf, optOfCode: optOfCode,
