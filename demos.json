@@ -1,81 +1,5 @@
 [
  {
-  "id": "2026-11-09_arabic_ar_nahawand",
-  "date": "2026-11-09",
-  "style": "arabic",
-  "styleShort": "アラビア／中東",
-  "styleLabel": "アラビア／中東（マカームのヒジャーズ、マクスームとサイディのリズム、ウードとダルブッカ、ドローン）",
-  "form": "ar_nahawand",
-  "formLabel": "ナハワンド（トルコのニハヴェント）16小節（短調に近い・導音あり）",
-  "title": "Taqsim Maqam (Dm)",
-  "key": "Dm",
-  "tempo": 100,
-  "tempoGenerated": 100,
-  "bars": 108,
-  "seed": 20261109,
-  "gen": 203,
-  "stems": [
-   {
-    "id": "mel",
-    "name": "Melody",
-    "prog": 24
-   },
-   {
-    "id": "solo",
-    "name": "Solo",
-    "prog": 24
-   },
-   {
-    "id": "comp",
-    "name": "Piano",
-    "prog": 105
-   },
-   {
-    "id": "bass",
-    "name": "Bass",
-    "prog": 33
-   },
-   {
-    "id": "drums",
-    "name": "Drums",
-    "prog": 0
-   }
-  ],
-  "chordsOneChorus": [
-   "Dm",
-   "Dm",
-   "C",
-   "Dm",
-   "Gm",
-   "Gm",
-   "Em7",
-   "A7b9",
-   "Dm",
-   "Dm",
-   "Dm",
-   "A#",
-   "C",
-   "Gm",
-   "Em7",
-   "A7",
-   "Dm",
-   "Dm"
-  ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 203). MIDI draft — to be arranged in Cubase.",
-  "status": "demo",
-  "files": {
-   "zip": "demos/2026-11-09_arabic_ar_nahawand/2026-11-09_arabic_ar_nahawand_midi-set.zip",
-   "midi": "demos/2026-11-09_arabic_ar_nahawand/2026-11-09_arabic_ar_nahawand_all.mid",
-   "info": "demos/2026-11-09_arabic_ar_nahawand/info.md"
-  },
-  "audio": "demos/2026-11-09_arabic_ar_nahawand/2026-11-09_arabic_ar_nahawand.mp3",
-  "scorePages": [
-   "scores/2026-11-09_arabic_ar_nahawand-1.png"
-  ],
-  "cover": "covers/2026-11-09_arabic_ar_nahawand.jpg",
-  "coverKind": "generated"
- },
- {
   "id": "2026-11-08_bossa_jobimmin32",
   "date": "2026-11-08",
   "style": "bossa",
@@ -548,7 +472,8 @@
    "scores/2026-11-08_swing_giant16-1.png"
   ],
   "cover": "covers/2026-11-08_swing_giant16.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "youtube": "sVNiu0ce1DQ"
  },
  {
   "id": "2026-11-07_mcl_organtrio_standard32",
