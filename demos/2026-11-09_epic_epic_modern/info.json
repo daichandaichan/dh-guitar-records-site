@@ -1,0 +1,126 @@
+{
+  "id": "2026-11-09_epic_epic_modern",
+  "date": "2026-11-09",
+  "style": "epic",
+  "styleShort": "エピック",
+  "styleLabel": "エピック（映画音楽・マンシーニ路線：弦・独奏・ハープ・ホルン・ティンパニ）",
+  "form": "epic_modern",
+  "formLabel": "モダン・エピック（ジマー路線：弦の16分の刻み・低い金管と打楽器・i→♭VI→♭III→♭VII）",
+  "title": "Tempo du Nord (Cm)",
+  "key": "Cm",
+  "tempo": 60,
+  "tempoGenerated": 60,
+  "bars": 157,
+  "seed": 69872,
+  "gen": 201,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Strings (theme)",
+      "prog": 48
+    },
+    {
+      "id": "solo",
+      "name": "Solo violin",
+      "prog": 40
+    },
+    {
+      "id": "comp",
+      "name": "Strings ostinato",
+      "prog": 48
+    },
+    {
+      "id": "bass",
+      "name": "Contrabass",
+      "prog": 43
+    },
+    {
+      "id": "drums",
+      "name": "Low drums",
+      "prog": 0
+    },
+    {
+      "id": "horn",
+      "name": "French Horn",
+      "prog": 60
+    },
+    {
+      "id": "timp",
+      "name": "Timpani",
+      "prog": 47
+    },
+    {
+      "id": "fl",
+      "name": "Flutes",
+      "prog": 73
+    },
+    {
+      "id": "cl",
+      "name": "Clarinets",
+      "prog": 71
+    },
+    {
+      "id": "bsn",
+      "name": "Bassoons",
+      "prog": 70
+    },
+    {
+      "id": "tpt",
+      "name": "Trumpets",
+      "prog": 56
+    },
+    {
+      "id": "trb",
+      "name": "Trombones",
+      "prog": 57
+    },
+    {
+      "id": "tuba",
+      "name": "Tuba",
+      "prog": 58
+    }
+  ],
+  "chordsOneChorus": [
+    "Cm",
+    "A#",
+    "G#6/9",
+    "G7b9",
+    "Cm6/9",
+    "Fm7",
+    "G#",
+    "A#",
+    "Cm6/9",
+    "A#",
+    "G#maj7",
+    "G7",
+    "Cm",
+    "Fm7",
+    "A#",
+    "Cm",
+    "G#maj7",
+    "D#6/9",
+    "A#9",
+    "F",
+    "G#maj7",
+    "C#maj7",
+    "D9",
+    "G7sus4",
+    "G7b9",
+    "Cm",
+    "A#",
+    "G#6/9",
+    "G7",
+    "Cm7",
+    "Fm7",
+    "A#",
+    "Cm"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 201). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-09_epic_epic_modern/2026-11-09_epic_epic_modern_midi-set.zip",
+    "midi": "demos/2026-11-09_epic_epic_modern/2026-11-09_epic_epic_modern_all.mid",
+    "info": "demos/2026-11-09_epic_epic_modern/info.md"
+  },
+  "audio": "demos/2026-11-09_epic_epic_modern/2026-11-09_epic_epic_modern.mp3"
+}

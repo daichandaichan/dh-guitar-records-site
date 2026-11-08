@@ -197,9 +197,14 @@
   "files": {
    "zip": "demos/2026-11-09_epic_epic_modern/2026-11-09_epic_epic_modern_midi-set.zip",
    "midi": "demos/2026-11-09_epic_epic_modern/2026-11-09_epic_epic_modern_all.mid",
-   "info": "demos/2026-11-09_epic_epic_modern/info.md",
-   "song": "demos/2026-11-09_epic_epic_modern/song.json"
-  }
+   "info": "demos/2026-11-09_epic_epic_modern/info.md"
+  },
+  "audio": "demos/2026-11-09_epic_epic_modern/2026-11-09_epic_epic_modern.mp3",
+  "scorePages": [
+   "scores/2026-11-09_epic_epic_modern-1.png"
+  ],
+  "cover": "covers/2026-11-09_epic_epic_modern.jpg",
+  "coverKind": "generated"
  },
  {
   "id": "2026-11-08_bossa_jobimmin32",
