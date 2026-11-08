@@ -6858,7 +6858,7 @@ function rockBass(chs, form, sty, opt, rng, ctx) {
     idx.forEach(function (st, k) {
       var tt = t0 + st * step, ch = chordAt(chs, tt), p = metalRootIn(ch.root, 28), nxt = k + 1 < idx.length ? idx[k + 1] : 16, gap = (nxt - st) * step;
       if (st >= 12 && st === idx[idx.length - 1] && chN !== ch && chN.root !== ch.root && rb.chance(0.3)) p = metalRootIn(chN.root + 11, 28);     /* 次の和音への経過音 */
-      else if (opt.rockBassMove !== false && !solo && rb.chance((ROCK_BMOVE[kind] != null ? ROCK_BMOVE[kind] : 0.3) * (st % 4 === 0 ? 0.4 : 1.4))) {     /* 動き：オクターブ・5度・♭7・隣の音（Lakh の実曲に合わせる） */
+      else if (opt.rockBassMove !== false && !solo && rb.chance((opt.bassMoveP != null ? opt.bassMoveP : (ROCK_BMOVE[kind] != null ? ROCK_BMOVE[kind] : 0.3)) * (st % 4 === 0 ? 0.4 : 1.4))) {     /* 動き：オクターブ・5度・♭7・隣の音（Lakh の実曲に合わせる） */
         var mv = rb.wpick([["oct", 1.1], ["fifth", 2.2], ["third", 1.6], ["nb", 3.6]]), pm = p;
         if (mv === "oct") pm = p + 12; else if (mv === "fifth") pm = p + (rb.chance(0.7) ? 7 : 5); else if (mv === "third") pm = p + (rb.chance(0.5) ? 3 : 4); else pm = p + (rb.chance(0.5) ? 2 : -2) + (rb.chance(0.3) ? 1 : 0);
         p = (pm > 56) ? pm - 12 : (pm < 26 ? pm + 12 : pm); }
@@ -6867,6 +6867,11 @@ function rockBass(chs, form, sty, opt, rng, ctx) {
     });
   }
   return notes;
+}
+/* キックの型の重みを、「キックのうち 16分の裏(拍の頭以外)の割合」が目標に近い型へ寄せる（キーワード作曲：手元の MIDI の特徴） */
+function kickBySync(rng, tbl, target) {
+  var t2 = tbl.map(function (e) { var p = e[0], n = 0, sy = 0, i; for (i = 0; i < p.length; i++) if (p.charAt(i) === "K") { n++; if (i % 4 !== 0) sy++; } var sv = n ? sy / n : 0; return [p, e[1] * Math.exp(-3 * Math.abs(sv - target))]; });
+  return metalWPick(rng, t2);
 }
 function rockDrums(chs, form, sty, opt, rng, ctx) {
   var kind = rockKindOf(sty), beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", bar, s, step = beats / 16, ballad = form.arenaFeel === "ballad", DR = ROCK_DR[kind];
@@ -6877,7 +6882,7 @@ function rockDrums(chs, form, sty, opt, rng, ctx) {
     var t0 = bar * beats, w = Math.floor(bar / 2), pos = bar % 4, last = (bar === bars - 1);
     if (!cache[w]) {
       var rg = RNG(((((opt.seed || 1) * 61 + w * 193 + ROCK_SEED[kind]) % 2147483647) + 2147483647) % 2147483647 || 1);
-      cache[w] = { k: metalWPick(rg, DR.kick), s: metalWPick(rg, DR.snare), rideOn: rg.chance(DR.ride * (chorus ? 2.2 : 1)), rg: rg };
+      cache[w] = { k: (opt.kickSync != null ? kickBySync(rg, DR.kick, opt.kickSync) : metalWPick(rg, DR.kick)), s: metalWPick(rg, DR.snare), rideOn: rg.chance(DR.ride * (chorus ? 2.2 : 1)), rg: rg };
     }
     var C = cache[w], kk = C.k, sn = C.s, rg2 = C.rg;
     if (beats !== 4 || ballad || solo) { kk = ballad ? "K.......K.......".replace("K.......K", "K.......K") : "K.......K......."; sn = "....S.......S..."; }
@@ -23975,7 +23980,16 @@ function songDrumOnlyWins(song) {
   return out;
 }
 var SAMEPITCH_CAP = true;
-function noteEvents(stem, song, marks) {
+/* 一般的な定位（CC10：0＝左いっぱい、64＝中央、127＝右いっぱい）。リード・ベース・ソロは中央〜わずかに右、リズムは左右に振り分け（メタル／ロックは、ダブルを左右いっぱいに）、鍵盤・管・パーカッションは左右にばらす */
+var PAN_METAL = { thrash: 1, death: 1, melodeath: 1, black: 1, djent: 1, djentf: 1, neo: 1 };
+var PAN_BASE = { mel: 64, solo: 72, bass: 64, cante: 64, comp: 40, gtr2: 88, gtr3: 88, gtr4: 40, gt3: 96, gtrg: 64, pno: 88, org: 40, kbd: 96, horn: 48, wfl: 80, wsx: 84, tpt: 84, trb: 44, tuba: 52, cello: 76, harp: 84, timp: 70, fl: 82, ob: 70, cl: 56, bsn: 74, jaleo: 52, perc: 100, perc2: 28, perc3: 76 };
+function midiPanOf(stem, song) {
+  var st = song && song.opt && song.opt.style || "", id = stem.id, rock = /^rk_|^arena$/.test(st);
+  if (PAN_METAL[st]) { var M = { comp: 14, gtr3: 114, gtr2: 90, gtr4: 40, mel: 64, solo: 70 }; if (M[id] != null) return M[id]; }
+  else if (rock) { var R = { comp: 24, gtr2: 104, gtr3: 88, gtr4: 40, mel: 64, solo: 72 }; if (R[id] != null) return R[id]; }
+  return PAN_BASE[id] != null ? PAN_BASE[id] : null;
+}
+function noteEvents(stem, song, marks, noPan) {
   var ev = [], i, chn = stem.ch & 15;
   ev.push({ tick: 0, pri: 2, data: [0xc0 | chn, stem.prog & 127] });
   if (chn !== 9) {
@@ -23985,6 +23999,9 @@ function noteEvents(stem, song, marks) {
       ev.push({ tick: 0, pri: 1, data: [0xb0 | chn, c[0], c[1]] });
     });
     ev.push({ tick: 0, pri: 1, data: [0xe0 | chn, 0, 64] });
+    if (!noPan && !(song && song.opt && song.opt.midiPan === false) && !(stem.extra || []).some(function (x) { return x.cc === 10; })) {          /* 一般的な定位 */
+      var pn = midiPanOf(stem, song); if (pn != null) ev.push({ tick: 0, pri: 1, data: [0xb0 | chn, 10, pn] });
+    }
   }
   if (stem.extra) {
     for (i = 0; i < stem.extra.length; i++) {
@@ -24025,20 +24042,20 @@ function noteEvents(stem, song, marks) {
 }
 
 /* ステム1本＝フォーマット0（Cubaseで1トラックとして読める） */
-function midiStem(song, stem, marks) {
-  var ev = metaEvents(song, true, stem.name).concat(noteEvents(stem, song, marks));
+function midiStem(song, stem, marks, noPan) {
+  var ev = metaEvents(song, true, stem.name).concat(noteEvents(stem, song, marks, noPan));
   var head = [0x4d, 0x54, 0x68, 0x64].concat(u32(6), u16(0), u16(1), u16(divOf(song)));
   return new Uint8Array(head.concat(trackChunk(ev)));
 }
 
 /* 全ステム＝フォーマット1（テンポトラック＋各パート） */
-function midiAll(song, marks) {
+function midiAll(song, marks, noPan) {
   var chunks = [], i;
   var tempoTrk = trackChunk(metaEvents(song, true, song.title));
   chunks.push(tempoTrk);
   for (i = 0; i < song.stems.length; i++) {
     var s = song.stems[i];
-    chunks.push(trackChunk(metaEvents(song, false, s.name).concat(noteEvents(s, song, marks))));
+    chunks.push(trackChunk(metaEvents(song, false, s.name).concat(noteEvents(s, song, marks, noPan))));
   }
   var head = [0x4d, 0x54, 0x68, 0x64].concat(u32(6), u16(1), u16(chunks.length), u16(divOf(song))), tot = head.length, k, pos;
   for (i = 0; i < chunks.length; i++) tot += chunks[i].length;
@@ -24337,9 +24354,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 542;
+var BUILD_NO = 546;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 203;
+var GEN_NO = 204;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
