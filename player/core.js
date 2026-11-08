@@ -729,6 +729,38 @@ var FORMS = {
     ch: [T(0, "maj"), T(0, "maj"), T(10, "maj"), T(0, "maj"), T(0, "maj"), T(0, "maj"), T(10, "maj"), T(0, "maj"),
          T(5, "maj"), T(5, "maj"), T(10, "maj"), T(0, "maj"), T(5, "maj"), T(10, "maj"), T(7, "dom7"), T(0, "maj")]
   },
+  ar_samai10: {
+    label: "サマーイ・サキール（10/8 = 3+2+2+3）16小節（ヒジャーズ・アラブ古典の器楽曲）", bars: 16, minor: false, ts: [10, 8], tempo: 120, sec: "AA", grp: [3, 2, 2, 3], maqam: "hijaz",
+    feel: { comp: "balkan", bass: "balkan", drums: "balkan" },
+    ch: [T(0, "maj", 10), T(0, "maj", 10), T(1, "maj", 10), T(0, "maj", 10), T(0, "maj", 10), T(0, "maj", 10), T(1, "maj", 10), T(0, "maj", 10),
+         T(0, "maj", 10), T(10, "min", 10), T(1, "maj", 10), T(0, "maj", 10), T(5, "min", 10), T(1, "maj", 10), T(7, "dom7", 10), T(0, "maj", 10)]
+  },
+  tr_karsilama9: {
+    label: "トルコ：カルシラマ（9/8 = 2+2+2+3）16小節（ヒジャーズ・舞曲）", bars: 16, minor: false, ts: [9, 8], tempo: 126, sec: "AA", grp: [2, 2, 2, 3], maqam: "hijaz",
+    feel: { comp: "balkan", bass: "balkan", drums: "balkan" },
+    ch: [T(0, "maj", 9), T(0, "maj", 9), T(1, "maj", 9), T(0, "maj", 9), T(0, "maj", 9), T(10, "min", 9), T(7, "dom7", 9), T(0, "maj", 9),
+         T(0, "maj", 9), T(0, "maj", 9), T(1, "maj", 9), T(0, "maj", 9), T(5, "min", 9), T(1, "maj", 9), T(7, "dom7", 9), T(0, "maj", 9)]
+  },
+  ar_nahawand: {
+    label: "ナハワンド（トルコのニハヴェント）16小節（短調に近い・導音あり）", bars: 16, minor: true, ts: [4, 4], tempo: 100, sec: "AA", maqam: "nahawand",
+    ch: [T(0, "min"), T(0, "min"), T(10, "maj"), T(0, "min"), T(5, "min"), T(5, "min"), T(7, "dom7"), T(0, "min"), T(0, "min"), T(0, "min"), T(8, "maj"), T(10, "maj"), T(5, "min"), T(7, "dom7"), T(0, "min"), T(0, "min")]
+  },
+  ar_huseyni: {
+    label: "ヒュセイニ（3度が半フラット・ドリア寄り）16小節", bars: 16, minor: true, ts: [4, 4], tempo: 96, sec: "AA", maqam: "huseyni",
+    ch: [T(0, "min"), T(0, "min"), T(0, "min"), T(0, "min"), T(5, "maj"), T(5, "maj"), T(0, "min"), T(0, "min"), T(0, "min"), T(0, "min"), T(5, "maj"), T(0, "min"), T(10, "maj"), T(5, "maj"), T(0, "min"), T(0, "min")]
+  },
+  ar_saba: {
+    label: "サバ（2度が半フラット・悲しみの旋法）16小節（ゆっくり）", bars: 16, minor: true, ts: [4, 4], tempo: 76, sec: "AA", maqam: "saba",
+    ch: [T(0, "min"), T(0, "min"), T(0, "min"), T(0, "min"), T(8, "maj"), T(8, "maj"), T(0, "min"), T(0, "min"), T(0, "min"), T(0, "min"), T(3, "maj"), T(8, "maj"), T(10, "maj"), T(8, "maj"), T(0, "min"), T(0, "min")]
+  },
+  ar_kurd: {
+    label: "クルド（フリジア寄り・2度が半音）16小節", bars: 16, minor: true, ts: [4, 4], tempo: 104, sec: "AA", maqam: "kurd",
+    ch: [T(0, "min"), T(0, "min"), T(1, "maj"), T(0, "min"), T(0, "min"), T(10, "maj"), T(1, "maj"), T(0, "min"), T(0, "min"), T(0, "min"), T(1, "maj"), T(10, "maj"), T(8, "maj"), T(1, "maj"), T(0, "min"), T(0, "min")]
+  },
+  ar_hijazkar: {
+    label: "ヒジャーズカール（ヒジャーズの上にもう一つ・導音あり）16小節", bars: 16, minor: false, ts: [4, 4], tempo: 108, sec: "AA", maqam: "hijazkar",
+    ch: [T(0, "maj"), T(0, "maj"), T(1, "maj"), T(0, "maj"), T(0, "maj"), T(0, "maj"), T(1, "maj"), T(0, "maj"), T(0, "maj"), T(10, "min"), T(1, "maj"), T(0, "maj"), T(5, "min"), T(1, "maj"), T(7, "dom7"), T(0, "maj")]
+  },
   ar_taqsim: {
     label: "タクシーム風 16小節（ゆっくり・ドローンの上の即興的な旋律）", bars: 16, minor: false, ts: [4, 4], tempo: 66, sec: "AA",
     ch: [T(0, "maj"), T(0, "maj"), T(0, "maj"), T(0, "maj"), T(1, "maj"), T(1, "maj"), T(0, "maj"), T(0, "maj"),
@@ -2775,7 +2807,7 @@ var STYLES = {
   arabic: {
     label: "アラビア／中東（マカームのヒジャーズ、マクスームとサイディのリズム、ウードとダルブッカ、ドローン）", swing: 0.5, tempo: 100,
     comp: "arabic", bass: "arabic", drums: "arabic", mel: "bossa",
-    forms: ["ar_maqsum", "ar_saidi", "ar_rast", "ar_bayati", "ar_taqsim", "tr_hicaz", "tr_ussak"],
+    forms: ["ar_maqsum", "ar_saidi", "ar_rast", "ar_bayati", "ar_taqsim", "tr_hicaz", "tr_ussak", "ar_samai10", "tr_karsilama9", "ar_nahawand", "ar_huseyni", "ar_saba", "ar_kurd", "ar_hijazkar"],
     voice: "auto", lead: 24, compProg: 105, feel: 16
   },
   hawaiian: {
@@ -3248,8 +3280,9 @@ var ODD_PRE = null;     /* 9/8〜15/8：曲の初めに決めた拍の割り方�
 var CUR_GRP = null, AFRO_POLY = false, CUR_MAQAM = "hijaz", CUR_GSCALE = [0, 2, 5, 7, 9];
 var GAMELAN_PCS = { slendro: [0, 2, 5, 7, 9], pelog: [0, 1, 3, 7, 8] };   /* スレンドロ（ほぼ等間隔の5音を、平均律の近い音で近似）／ペロッグ（不等間隔の7音から5音を選ぶ）*/
 /* マカームの音階（ヒジャーズ／ラスト／バヤーティ）と、四分音（半フラット＝−50 セント）にあたる音階内の位置 */
-var MAQAM_PCS = { hijaz: [0, 1, 4, 5, 7, 8, 10], rast: [0, 2, 4, 5, 7, 9, 10], bayati: [0, 2, 3, 5, 7, 8, 10] };
-var MAQAM_MICRO = { hijaz: [], rast: [4, 10], bayati: [2] };
+var MAQAM_PCS = { hijaz: [0, 1, 4, 5, 7, 8, 10], rast: [0, 2, 4, 5, 7, 9, 10], bayati: [0, 2, 3, 5, 7, 8, 10],
+  nahawand: [0, 2, 3, 5, 7, 8, 10], huseyni: [0, 2, 3, 5, 7, 9, 10], saba: [0, 2, 3, 4, 7, 8, 10], kurd: [0, 1, 3, 5, 7, 8, 10], hijazkar: [0, 1, 4, 5, 7, 8, 11] };
+var MAQAM_MICRO = { hijaz: [], rast: [4, 10], bayati: [2], nahawand: [], huseyni: [3], saba: [2], kurd: [], hijazkar: [] };
 /* 四分音：該当の音の直前にピッチベンド −0.5 半音を入れ、音のあとで戻す（ベンド幅 ±2 半音の前提） */
 function arabicMicro(notes, opt, form) {
   var mc = (form && form.maqam) ? MAQAM_MICRO[form.maqam] : null, out = [], i;
@@ -5212,6 +5245,8 @@ function tangoSeason(form) {
   var l = String((form && form.label) || "");
   return /夏風/.test(l) ? "natsu" : /春風/.test(l) ? "haru" : /秋風/.test(l) ? "aki" : /冬風/.test(l) ? "fuyu" : "";
 }
+/* 低音を 3-3-2 にする小節の割合（形ごと）。参考のピアソラ22曲：リベルタンゴ 76%、ほかは 0〜29% */
+function tangoW332(opt) { var f = opt && opt.form; return f === "libertango" ? 0.8 : (/^(muerte_angel|fugata_t|tango_clasico)$/.test(f || "") ? 0.3 : 0.1); }
 /* タンゴ：3-3-2 の位置（0・1.5・3）の音を強く、それ以外を少し弱くして、リズムの骨格を出す（音の位置は変えない） */
 function tangoAccent(notes, beats) {
   if (beats !== 4) return;
@@ -6801,6 +6836,7 @@ function rockChordGtr(chs, form, sty, opt, rng, ctx) {
   notes.sort(function (a, b) { return a.t - b.t || a.p - b.p; });
   return notes;
 }
+var ROCK_BMOVE = { aor: 0.32, la: 0.3, hard: 0.34, x90: 0.32, prog: 0.4, kc: 0.4, elp: 0.4, purple: 0.34, hendrix: 0.4, zappa: 0.32, vaughan: 0.4, wonder: 0.4, jbrown: 0.4, beatles: 0.4, heavy: 0.16, power: 0.15, sabbath: 0.15, maiden: 0.18, xj: 0.18 };
 function rockBass(chs, form, sty, opt, rng, ctx) {
   var kind = rockKindOf(sty), beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", bar, s, step = 0.25, ballad = form.arenaFeel === "ballad";
   for (bar = 0; bar < bars; bar++) {
@@ -6822,6 +6858,10 @@ function rockBass(chs, form, sty, opt, rng, ctx) {
     idx.forEach(function (st, k) {
       var tt = t0 + st * step, ch = chordAt(chs, tt), p = metalRootIn(ch.root, 28), nxt = k + 1 < idx.length ? idx[k + 1] : 16, gap = (nxt - st) * step;
       if (st >= 12 && st === idx[idx.length - 1] && chN !== ch && chN.root !== ch.root && rb.chance(0.3)) p = metalRootIn(chN.root + 11, 28);     /* 次の和音への経過音 */
+      else if (opt.rockBassMove !== false && !solo && rb.chance((ROCK_BMOVE[kind] != null ? ROCK_BMOVE[kind] : 0.3) * (st % 4 === 0 ? 0.4 : 1.4))) {     /* 動き：オクターブ・5度・♭7・隣の音（Lakh の実曲に合わせる） */
+        var mv = rb.wpick([["oct", 1.1], ["fifth", 2.2], ["third", 1.6], ["nb", 3.6]]), pm = p;
+        if (mv === "oct") pm = p + 12; else if (mv === "fifth") pm = p + (rb.chance(0.7) ? 7 : 5); else if (mv === "third") pm = p + (rb.chance(0.5) ? 3 : 4); else pm = p + (rb.chance(0.5) ? 2 : -2) + (rb.chance(0.3) ? 1 : 0);
+        p = (pm > 56) ? pm - 12 : (pm < 26 ? pm + 12 : pm); }
       else if (st % 4 === 2 && kind !== "aor" && rb.chance(0.06)) p += 12;                                                                                                    /* オクターヴ移動(約4〜7%) */
       notes.push({ t: tt, d: Math.max(0.12, Math.min(1.8, gap * 0.88)), p: p, v: 90 + (st % 4 === 0 ? 8 : 0) + rb.i(6) - (solo ? 8 : 0) });
     });
@@ -9117,6 +9157,9 @@ function devCeltic(t0, beats, ch, cur, goal, lo, hi, rng, kind) {
   if (kind === "arp") offs = [0, 2, 4, 2, 0, 2, 4, 5];
   else if (kind === "skip") offs = [0, 2, 1, 3, 2, 4, 3, 2];
   else if (kind === "roll") offs = [0, 0, 1, 0, -1, 0, 1, 0];
+  else if (kind === "rep") offs = [0, 0, 1, 1, 2, 2, 1, 0];                       /* 同音を2つずつ（実曲は同音の反復が12%） */
+  else if (kind === "pedal") offs = [0, 3, 0, 4, 0, 3, 2, 0];                     /* 根音に戻りながら4度・5度へ跳ぶ */
+  else if (kind === "triad") offs = [0, 2, 4, 2, 4, 2, 0, 2];
   else offs = null;
   var base = ix, prevP = null;
   for (i = 0; i < n8; i++) {
@@ -9149,7 +9192,9 @@ function genCelticMel(chs, form, sty, opt, rng) {
       var ga = arpGrid(scalePcs(ch), ch.root, lo, hi), ia = idxOf(ga, pa);
       bl = [{ t: t0, d: 1.9, p: pa, v: 84 }, { t: t0 + 2, d: 0.9, p: ga[clampIdx(ga, ia + rng.pick([-1, 1, 2]))], v: 76 }, { t: t0 + 3, d: 0.9, p: ga[clampIdx(ga, ia + rng.pick([0, -1]))], v: 72 }];
     } else {
-      var kind = bar % 2 === 1 ? "run" : rng.wpick([["run", 4], ["arp", 3], ["skip", 2.5], ["roll", 2.5]]);
+      var kind = opt.celMel !== false
+        ? (bar % 2 === 1 ? rng.wpick([["run", 4], ["rep", 0.9], ["pedal", 2], ["skip", 2]]) : rng.wpick([["run", 3], ["arp", 2.5], ["skip", 2.5], ["roll", 0.8], ["rep", 0.9], ["pedal", 2.5], ["triad", 2]]))
+        : (bar % 2 === 1 ? "run" : rng.wpick([["run", 4], ["arp", 3], ["skip", 2.5], ["roll", 2.5]]));
       var goal = bar % 2 === 1 ? cur - 4 : cur + (rng.chance(0.5) ? 4 : -2);
       var r = devCeltic(t0, beats, ch, cur, goal, lo, hi, rng, kind);
       bl = r.notes;
@@ -9366,11 +9411,26 @@ function genBalkanMel(chs, form, sty, opt, rng) {
   return notes;
 }
 /* アラビア：ヒジャーズ（0,1,4,5,7,8,10）の音階。phrase=リズムの型に乗った句、orn=長い音のあとにトリル、desc=降りて主音に着地、hold=長い音（タクシーム） */
+var CUR_ARCELL = true;
 function devArabic(t0, beats, ch, cur, goal, lo, hi, rng, kind) {
   var g = arpGrid(MAQAM_PCS[CUR_MAQAM] || MAQAM_PCS.hijaz, ch.root, lo, hi), out = [], k;
   var p0 = inRange(nearest(chordPcs(ch), ch.root, cur), lo, hi), ix = idxOf(g, p0);
   function pk(n) { return g[clampIdx(g, ix + n)]; }
   if (kind === "hold") { out.push({ t: t0, d: beats * 0.92, p: p0, v: 88, g: -1, gd: 0.25 }); return { notes: out, cur: p0 }; }
+  if (beats > 4 && CUR_GRP && CUR_GRP.length > 1) {              /* 変拍子(9/8・10/8など)：拍の割り方ごとに、8分の連なり／最後を長く／まとまりを1音 */
+    var oPos = 0, oDir = goal >= cur ? 1 : -1, oAt = 0;
+    CUR_GRP.forEach(function (gl, gi) {
+      var shape = rng.wpick([["run", 6], ["tail", 2.5], ["one", 1.2]]);
+      var lens = shape === "run" ? Array.apply(null, Array(gl)).map(function () { return 1; }) : shape === "tail" ? (gl > 2 ? [1, gl - 1] : [1, 1]) : [gl];
+      lens.forEach(function (ln, j) {
+        if (out.length) oPos += oDir * (rng.chance(0.18) ? 2 : 1);
+        if (oPos > 4) oDir = -1; else if (oPos < -3) oDir = 1;
+        out.push({ t: t0 + oAt, d: ln * 0.9, p: pk(oPos), v: (j === 0 ? 92 : 76) + rng.i(6) });
+        oAt += ln;
+      });
+    });
+    return { notes: out, cur: out[out.length - 1].p };
+  }
   if (kind === "orn") {                                          /* 長い音 → 隣の音との細かいトリル → 着地 */
     out.push({ t: t0, d: 1.5, p: p0, v: 92 });
     var up = pk(1);
@@ -9383,7 +9443,14 @@ function devArabic(t0, beats, ch, cur, goal, lo, hi, rng, kind) {
     seq.forEach(function (n, j) { out.push({ t: t0 + rts[j], d: j === 4 ? Math.max(1, beats - 2) * 0.9 : 0.46, p: pk(n), v: (j === 0 ? 92 : 78) + rng.i(6) }); });
     return { notes: out, cur: out[out.length - 1].p };
   }
-  var cell = rng.pick([[[0, 1], [1, 0.5], [1.5, 0.5], [2, 1], [3, 1]], [[0, 0.5], [0.5, 0.5], [1, 1], [2, 0.5], [2.5, 0.5], [3, 1]], [[0, 1.5], [1.5, 0.5], [2, 1], [3, 0.5], [3.5, 0.5]]]);
+  var cellL = [[[0, 1], [1, 0.5], [1.5, 0.5], [2, 1], [3, 1]], [[0, 0.5], [0.5, 0.5], [1, 1], [2, 0.5], [2.5, 0.5], [3, 1]], [[0, 1.5], [1.5, 0.5], [2, 1], [3, 0.5], [3.5, 0.5]]];
+  if (CUR_ARCELL !== false && beats === 4) {                       /* 参考に合わせた細かい型：8分の連なり／8分に16分を混ぜる */
+    cellL.push([[0, 0.5], [0.5, 0.5], [1, 0.5], [1.5, 0.5], [2, 0.5], [2.5, 0.5], [3, 0.5], [3.5, 0.5]],
+               [[0, 0.5], [0.5, 0.25], [0.75, 0.25], [1, 0.5], [1.5, 0.5], [2, 0.5], [2.5, 0.25], [2.75, 0.25], [3, 1]],
+               [[0, 0.5], [0.5, 0.5], [1, 0.25], [1.25, 0.25], [1.5, 0.5], [2, 0.5], [2.5, 0.5], [3, 0.25], [3.25, 0.25], [3.5, 0.5]]);
+    cellL.push(cellL[3], cellL[4]);
+  }
+  var cell = rng.pick(cellL);
   var dir = goal >= cur ? 1 : -1, pos = 0;
   cell.forEach(function (c2, j) {
     if (j > 0) pos += dir * (rng.chance(0.2) ? 2 : 1);
@@ -9393,6 +9460,7 @@ function devArabic(t0, beats, ch, cur, goal, lo, hi, rng, kind) {
   return { notes: out, cur: out[out.length - 1].p };
 }
 function genArabicMel(chs, form, sty, opt, rng) {
+  CUR_ARCELL = opt.arCells !== false;
   var beats = form.ts[0], bars = form.bars, notes = [], byBar = [], bar;
   var lo = Math.max(55, opt.melLo || 57), hi = Math.min(86, (opt.melHi || 82)), cur = (lo + hi) / 2, taq = /タクシーム/.test(String(form.label || ""));
   for (bar = 0; bar < bars; bar++) {
@@ -9400,9 +9468,10 @@ function genArabicMel(chs, form, sty, opt, rng) {
     if (bar % 8 >= 4 && byBar[bar - 4] && bar % 4 !== 3 && rng.chance(0.55) && !taq) {
       bl = byBar[bar - 4].map(function (n) { var o = { t: n.t + 4 * beats, d: n.d, p: n.p, v: n.v }; if (n.g) { o.g = n.g; o.gd = n.gd; } return o; });
     } else {
-      var kind = bar % 4 === 3 ? rng.wpick([["desc", 5], ["hold", 2]])
+      var arc = opt.arCells !== false;
+      var kind = bar % 4 === 3 ? (arc && !taq ? rng.wpick([["desc", 4], ["hold", 1], ["phrase", 3]]) : rng.wpick([["desc", 5], ["hold", 2]]))
         : taq ? rng.wpick([["hold", 4], ["orn", 4], ["desc", 2], ["phrase", 1]])
-        : rng.wpick([["phrase", 5], ["orn", 2.5], ["desc", 1.5]]);
+        : (arc ? rng.wpick([["phrase", 8], ["orn", 1.5], ["desc", 0.5]]) : rng.wpick([["phrase", 5], ["orn", 2.5], ["desc", 1.5]]));
       bl = devArabic(t0, beats, ch, cur, cur + (rng.chance(0.5) ? 4 : -4), lo, hi, rng, kind).notes;
     }
     byBar[bar] = bl; cur = bl[bl.length - 1].p; notes = notes.concat(bl);
@@ -15458,9 +15527,16 @@ function genBass(chs, form, sty, opt, rng, ctx) {
         else p = pickOf(cb, scalePcs(cb), goal + (rng.chance(0.5) ? 2 : -2));
         kind = "lead";
       } else {
-        p = pickOf(cb, rng.chance(0.6) ? chordPcs(cb) : scalePcs(cb), cur + (rng.chance(0.5) ? 2 : -2));
+        if (opt.bassWjd !== false && rng.chance(0.13)) {                 /* 同音の反復（WJD：17〜22%） */
+          p = cur;
+        } else if (opt.bassWjd !== false && rng.chance(0.12) && (cur + 12 <= hi || cur - 12 >= lo)) {      /* オクターブの跳び（WJD：8半音以上が12%）。音域の中で上か下へ */
+          p = (cur + 12 > hi) ? cur - 12 : ((cur - 12 < lo) ? cur + 12 : (rng.chance(0.5) ? cur + 12 : cur - 12)); kind = "oct";
+        } else if (opt.bassJump !== false && rng.chance(opt.bassWjd !== false ? 0.42 : 0.6)) {            /* 4〜5度の動き：和音の構成音を、前の音から5〜7半音離れたところで選ぶ */
+          var jd = cur > 40 ? -1 : (cur < 33 ? 1 : (rng.chance(0.5) ? 1 : -1));
+          p = pickOf(cb, chordPcs(cb), cur + jd * (rng.chance(0.55) ? 7 : 5));
+        } else p = pickOf(cb, rng.chance(0.6) ? chordPcs(cb) : scalePcs(cb), cur + (rng.chance(0.5) ? 2 : -2));
       }
-      p = step(p); seq.push(p); kinds.push(kind); cur = p;
+      p = (kind === "oct" || p === cur) ? inRange(p, lo, hi) : step(p); seq.push(p); kinds.push(kind); cur = p;
     }
     for (b = 0; b < seq.length; b++) {
       notes.push({ t: t0 + b, d: 0.94, p: seq[b], v: vel(b === 0 ? 94 : (b % 2 ? 82 : 87)) });
@@ -15643,11 +15719,14 @@ function genBass(chs, form, sty, opt, rng, ctx) {
       if (beats === 3) { notes.push({ t: t0, d: 0.9, p: rK1, v: vel(96) }); notes.push({ t: t0 + 1.5, d: 0.5, p: fK, v: vel(76) }); }
       else {
         notes.push({ t: t0, d: 0.9, p: rK1, v: vel(96) });
-        notes.push({ t: t0 + 2, d: 0.9, p: fK, v: vel(88) });
+        notes.push({ t: t0 + 2, d: 0.9, p: (opt.cnBass !== false && rng.chance(0.3)) ? rK1 : fK, v: vel(88) });          /* 根音の反復も混ぜる（Lakh：同音27%） */
         if (nxK !== cK1) {                                                          /* コードが変わる前は音階で歩いて入る */
-          var tgtK = step(rootOf(nxK, rK1));
-          notes.push({ t: t0 + 3, d: 0.45, p: tgtK + (tgtK > rK1 ? -2 : 2), v: vel(80) });
-          notes.push({ t: t0 + 3.5, d: 0.45, p: tgtK + (tgtK > rK1 ? -1 : 1), v: vel(84) });
+          var tgtK = step(rootOf(nxK, rK1)), wk = opt.cnBass === false ? 0 : rng.wpick([[0, 3.5], [1, 4.5], [2, 2]]);      /* Lakh のカントリー：同音27%・2度まで21%・5〜7半音37%。歩みは毎回ではない */
+          if (opt.cnBass === false || wk === 2) {
+            notes.push({ t: t0 + 3, d: 0.45, p: tgtK + (tgtK > rK1 ? -2 : 2), v: vel(80) });
+            notes.push({ t: t0 + 3.5, d: 0.45, p: tgtK + (tgtK > rK1 ? -1 : 1), v: vel(84) });
+          } else if (wk === 1) { notes.push({ t: t0 + 3, d: 0.9, p: rK1, v: vel(80) }); notes.push({ t: t0 + 3.5, d: 0.45, p: tgtK + (tgtK > rK1 ? -1 : 1), v: vel(84) }); }
+          else notes.push({ t: t0 + 3, d: 0.9, p: rK1, v: vel(80) });
         } else notes.push({ t: t0 + 3, d: 0.9, p: rK1, v: vel(80) });
       }
       cur = rK1;
@@ -15664,6 +15743,16 @@ function genBass(chs, form, sty, opt, rng, ctx) {
       } else if (dubB) {
         notes.push({ t: t0 + 2, d: 1.6, p: rR, v: vel(100) });
         if (bar % 2) notes.push({ t: t0 + 3.5, d: 0.4, p: fR, v: vel(76) });
+      } else if (opt.rgBassVar !== false && !rng.chance(0.3)) {                              /* 参考(Dubroom)：根音の反復が多く、音は短め */
+        var rgV = rng.chance(0.57) ? 1 : 2, nR = (nxR !== cR1) ? step(rootOf(nxR, rR)) : rR;
+        if (bar % 4 !== 0) notes.push({ t: t0, d: 0.5, p: rR, v: vel(86) });
+        if (rgV === 1) {                                                                         /* 根音を叩く */
+          notes.push({ t: t0 + 1.5, d: 0.4, p: rR, v: vel(72) }, { t: t0 + 2, d: 0.7, p: rR, v: vel(100) });
+          if (rng.chance(0.6)) notes.push({ t: t0 + 3, d: 0.4, p: rR, v: vel(74) });
+        } else {                                                                                 /* 3度か5度を1つ挟む */
+          notes.push({ t: t0 + 1.5, d: 0.4, p: rR, v: vel(72) }, { t: t0 + 2, d: 0.6, p: rR, v: vel(100) }, { t: t0 + 2.5, d: 0.4, p: step(pickOf(cR1, [3, 4, 7], rR)), v: vel(74) });
+        }
+        notes.push({ t: t0 + 3.5, d: 0.4, p: nR, v: vel(80) });
       } else {
         if (bar % 4 !== 0) notes.push({ t: t0, d: 0.9, p: rR, v: vel(86) });                      /* 頭は空ける（ワン・ドロップ） */
         notes.push({ t: t0 + 1.5, d: 0.4, p: fR, v: vel(72) });
@@ -15725,6 +15814,7 @@ function genBass(chs, form, sty, opt, rng, ctx) {
       var rT = step(rootOf(cT1, cur)), fT = step(pickOf(cT1, [7], rT));
       var marcB = (bar % 4 === 3) || (solo && bar % 2 === 1);
       var seaB = tangoSeason(form);
+      var altT = beats === 4 && rng.chance(1 - tangoW332(opt)), altK = altT ? rng.wpick(opt.tangoClasico !== false && /^(tango_clasico|vals_tango)$/.test(String(opt.form || "")) ? [["syn", 0.5], ["lilt", 1.5], ["half", 2], ["quarter", 5]] : [["syn", 1], ["lilt", 5], ["half", 2], ["quarter", 0.5]]) : "";      /* クラシック・タンゴ(GitHub IAARhub/Pantaleon の525曲)：低音は4分音符のマルカートが中心(拍の頭78%) */
       if (seaB === "aki" && beats === 4) {                      /* 秋：長い根音だけ、ときどき 4 拍目に 5 度 */
         notes.push({ t: t0, d: 3.4, p: rT, v: vel(84) });
         if (rng.chance(0.4)) notes.push({ t: t0 + 3, d: 0.8, p: step(pickOf(nxT, [7], rT)), v: vel(66) });
@@ -15748,6 +15838,37 @@ function genBass(chs, form, sty, opt, rng, ctx) {
         var apT = (nxT !== cT2) ? step(rootOf(nxT, rT2)) : step(pickOf(cT2, [7], rT2));
         notes.push({ t: t0 + 3, d: 0.8, p: apT, v: vel(88) });
         cur = apT;
+      } else if (altK === "syn") {                              /* シンコペ：0・1・1.5・2・3・3.5（裏の8分を含む） */
+        var rS2 = step(rootOf(cT2, rT)), pS = (nxT !== cT2) ? step(rootOf(nxT, rS2)) : step(pickOf(cT2, [7], rS2));
+        notes.push({ t: t0, d: 0.9, p: rT, v: vel(100) });
+        notes.push({ t: t0 + 1, d: 0.45, p: fT, v: vel(80) });
+        notes.push({ t: t0 + 1.5, d: 0.45, p: rT, v: vel(74) });
+        notes.push({ t: t0 + 2, d: 0.9, p: rS2, v: vel(92) });
+        notes.push({ t: t0 + 3, d: 0.45, p: step(pickOf(cT2, [7], rS2)), v: vel(80) });
+        notes.push({ t: t0 + 3.5, d: 0.4, p: pS, v: vel(72) });
+        cur = pS;
+      } else if (altK === "lilt") {                             /* 裏の8分で揺らす：0・0.5・1・2・2.5・3 */
+        var rL2 = step(rootOf(cT2, rT)), pL = (nxT !== cT2) ? step(rootOf(nxT, rL2)) : step(pickOf(cT2, [7], rL2));
+        notes.push({ t: t0, d: 0.45, p: rT, v: vel(100) });
+        notes.push({ t: t0 + 0.5, d: 0.45, p: fT, v: vel(72) });
+        notes.push({ t: t0 + 1, d: 0.9, p: rT, v: vel(88) });
+        notes.push({ t: t0 + 2, d: 0.45, p: rL2, v: vel(94) });
+        notes.push({ t: t0 + 2.5, d: 0.45, p: step(pickOf(cT2, [7], rL2)), v: vel(72) });
+        notes.push({ t: t0 + 3, d: 0.9, p: pL, v: vel(86) });
+        cur = pL;
+      } else if (altK === "half") {                             /* 2分の流れ：0・2・3.5（次の和音の先取り） */
+        var rH2 = step(rootOf(cT2, rT)), pH = step(rootOf(nxT, rH2));
+        notes.push({ t: t0, d: 1.8, p: rT, v: vel(100) });
+        notes.push({ t: t0 + 2, d: 1.3, p: rH2, v: vel(90) });
+        notes.push({ t: t0 + 3.5, d: 0.45, p: pH, v: vel(80) });
+        cur = pH;
+      } else if (altK === "quarter") {                          /* 4分の歩み：0・1・2・3 */
+        var rQ2 = step(rootOf(cT2, rT)), pQ = (nxT !== cT2) ? step(rootOf(nxT, rQ2)) : step(pickOf(cT2, [7], rQ2));
+        notes.push({ t: t0, d: 0.85, p: rT, v: vel(100) });
+        notes.push({ t: t0 + 1, d: 0.8, p: (opt.tangoClasico !== false && /^(tango_clasico|vals_tango)$/.test(String(opt.form || "")) && rng.chance(0.7)) ? step(pickOf(cT2, [3, 4], rQ2)) : fT, v: vel(82) });      /* 3度も使う(実曲：3〜4半音が21%) */
+        notes.push({ t: t0 + 2, d: 0.85, p: rQ2, v: vel(92) });
+        notes.push({ t: t0 + 3, d: 0.8, p: pQ, v: vel(84) });
+        cur = pQ;
       } else {                                                  /* 3 + 3 + 2：0 と 1.5 と 3 */
         notes.push({ t: t0, d: 1.3, p: rT, v: vel(100) });
         notes.push({ t: t0 + 1.5, d: 1.3, p: (rng.chance(0.55) ? fT : rT), v: vel(90) });
@@ -16182,7 +16303,11 @@ function genDrums(chs, form, sty, opt, rng, ctx) {
       if (skaD) {                                                                                      /* スカ：4 つ打ち＋裏のスネア */
         [0, 1, 2, 3].forEach(function (a) { add(t0 + a, D.kick, 84); add(t0 + a + 0.5, D.snare, 80); });
       } else {                                                                                         /* ワン・ドロップ：3 拍目だけにキック＋リム */
-        add(t0 + 2, D.kick, 100); add(t0 + 2, D.stick, 96);
+        add(t0 + 2, D.stick, 96);
+        if (opt.rgDrumVar !== false) {                                                                 /* 参考(Dubroom・Lakh のレゲエ)：キックは1拍目 0.8・3拍目 0.72・2/4拍目 0.33(ロッカーズ寄りの小節が3割) */
+          if (rng.chance(0.3)) { add(t0, D.kick, 90); add(t0 + 1, D.kick, 74); add(t0 + 2, D.kick, 100); add(t0 + 3, D.kick, 76); add(t0 + 1, D.stick, 60); add(t0 + 3, D.stick, 62); }
+          else { if (rng.chance(0.78)) add(t0 + 2, D.kick, 100); if (rng.chance(0.6)) add(t0, D.kick, 82); }
+        } else add(t0 + 2, D.kick, 100);
         if (bar % 4 === 3 && rng.chance(0.5)) { add(t0 + 3.5, D.snare, 56); add(t0 + 3.75, D.snare, 64); }
         if (rng.chance(0.25)) add(t0 + 3.5, D.stick, 56);
       }
@@ -16230,7 +16355,10 @@ function genDrums(chs, form, sty, opt, rng, ctx) {
         if (phraseEnd && !last) { add(t0 + 0.96, D.snare, 82); add(t0 + 1.38, D.snare, 70); add(t0 + 1.9, D.snare, 90); add(t0 + 2.96, D.snare, 96); add(t0 + 3.94, D.snare, 104); if (secEnd) { add(t0 + 3.25, D.tomH, 84); add(t0 + 3.5, D.tomM, 90); add(t0 + 3.75, D.tomL, 96); } }
       } else {
         /* 演歌：ズン・タ。キック 1 と3拍目の裏、リム 2・4、ハイハットはごく軽く。8小節の終わりは小さなタムの返し */
-        add(t0, D.kick, 90); add(t0 + 2.5, D.kick, 72);
+        /* RWC 2.0 の演歌3曲(ビート補正)：キックは1拍目 0.95・3拍目 0.82・2拍目の裏寄り 0.25・3拍目の裏は 0.04。お手元の enka20 は3拍目の裏。→ 3拍目の頭(55%)と裏(45%)を混ぜ、2拍目の終わりに軽いキックを時々 */
+        add(t0, D.kick, 90);
+        if (opt.enkaDrum !== false) { if (rng.chance(0.55)) add(t0 + 2, D.kick, 84); else add(t0 + 2.5, D.kick, 72); if (rng.chance(0.25)) add(t0 + 1.75, D.kick, 64); }
+        else add(t0 + 2.5, D.kick, 72);
         add(t0 + 1, D.stick, 62); add(t0 + 3, D.stick, 66);
         for (i = 0; i < 8; i++) add(t0 + i * 0.5, D.hhC, i % 2 ? 24 : 34);
         if (secEnd && !last) { add(t0 + 3, D.tomH, 60); add(t0 + 3.5, D.tomM, 66); add(t0 + 3.75, D.tomL, 74); }
@@ -16420,6 +16548,17 @@ function genDrums(chs, form, sty, opt, rng, ctx) {
       }
       if (bar % 8 === 0) add(t0, D.crash, 98 + inten * 14, 0.9);
       if (bar % 8 === 4 && rng.chance(0.5)) add(t0, D.crash, 84, 0.9);
+    } else if (st3 === "rock" && (/^(funkvamp16|funkblues12|susvamp16|cliche16)$/.test(String(opt.form || "")) || (opt.style === "fusion" && opt.form === "auto16m")) && opt.funkDrum !== false) {
+      /* ファンク：キックは頭に必ず・ほかは16分の位置にまばらに／スネアは2・4拍目とゴースト／ハイハットは8分 */
+      /* 参考(Groove MIDI の実演奏 funk 53本)：キックは頭(0.77)と「1の裏・1のア」(0.4)・「3の裏」(0.59)・「2のア」(0.31)、3拍目の頭は少なめ(0.23)。スネアは2・4拍目＋弱いゴースト(率39%)が16分の裏に。ハイハットは8分＋16分の裏(0.22〜0.35) */
+      var fkP = [[0, 0.9, 104], [2, 0.4, 78], [3, 0.4, 76], [7, 0.3, 80], [8, 0.25, 90], [10, 0.6, 88], [11, 0.2, 74], [5, 0.16, 70], [9, 0.17, 70], [13, 0.18, 72], [15, 0.1, 70]];
+      fkP.forEach(function (kp) { if (rng.chance(kp[1])) add(t0 + kp[0] * 0.25, D.kick, kp[2] + inten * 6 + rng.i(5) - 2); });
+      for (i = 0; i * 0.5 < beats; i++) add(t0 + i * 0.5, D.hhC, (i % 2 ? 56 : 72) + inten * 8 + rng.i(6));
+      for (i = 0; i < beats * 4; i++) if (i % 2 && rng.chance(0.28)) add(t0 + i * 0.25, D.hhC, 40 + rng.i(10));      /* 16分の裏の弱いハイハット */
+      add(t0 + 1, D.snare, 104 + inten * 10); add(t0 + 3, D.snare, 106 + inten * 10);
+      [[1, 0.4], [5, 0.3], [7, 0.55], [9, 0.5], [13, 0.33], [15, 0.55], [2, 0.12], [10, 0.12]].forEach(function (g) { if (rng.chance(g[1])) add(t0 + g[0] * 0.25, D.snare, 34 + rng.i(14)); });
+      if (bar % 4 === 3 && rng.chance(0.4)) add(t0 + 3.5, D.hhO, 76);
+      if (bar % 8 === 0) add(t0, D.crash, 96 + inten * 12, 0.8);
     } else if (st3 === "rock") {
       /* ネオクラシカルのツインペダル：曲ごとに使うか決める（opt.twinPedal＝true／false で固定。ふだんは50%）。使う曲は、キックを16分で連打（右足36・左足35を交互に） */
       var twN = opt.style === "neo" && (opt.twinPedal != null ? !!opt.twinPedal : RNG((((opt.seed || 1) * 91 + 7) % 2147483647) || 1).f() < 0.5);
@@ -23696,6 +23835,7 @@ function songDrumOnlyWins(song) {
   song._dow = out; song._dowKey = song.stems.length + ":" + song.totalBeats;
   return out;
 }
+var SAMEPITCH_CAP = true;
 function noteEvents(stem, song, marks) {
   var ev = [], i, chn = stem.ch & 15;
   ev.push({ tick: 0, pri: 2, data: [0xc0 | chn, stem.prog & 127] });
@@ -23725,9 +23865,18 @@ function noteEvents(stem, song, marks) {
   /* メタルの歪みギター（GM 28〜30）は、Cubase で AmpliTube を何台も重ねると割れやすい。MIDI の強さ（ベロシティ）を一律に下げて入力を控えめにする。opt.gtrTrim＝倍率（既定0.82・1で無効） */
   var gtrK = 1;
   if (chn !== 9 && stem.prog >= 28 && stem.prog <= 30 && song && song.opt && /^(thrash|death|melodeath|black|djent)$/.test(song.opt.style || "")) gtrK = song.opt.gtrTrim == null ? 0.82 : Math.max(0.3, Math.min(1, +song.opt.gtrTrim || 1));
+  /* 同じ高さの音の重なりを取る：次に同じ高さが鳴る1ティック前までにノート・オフを収める（音源が2つ目を切るのを防ぐ） */
+  var capOff = null;
+  if (chn !== 9 && SAMEPITCH_CAP) {
+    capOff = {}; var byP = {};
+    for (i = 0; i < stem.notes.length; i++) { var q = stem.notes[i], qp = q.p & 127; (byP[qp] = byP[qp] || []).push({ i: i, on: Math.round(q.t * PPQ) }); }
+    Object.keys(byP).forEach(function (pk2) { var a2 = byP[pk2].sort(function (x, y) { return x.on - y.on; }), j2;
+      for (j2 = 0; j2 + 1 < a2.length; j2++) if (a2[j2 + 1].on > a2[j2].on) capOff[a2[j2].i] = a2[j2 + 1].on - 1; });
+  }
   for (i = 0; i < stem.notes.length; i++) {
     var n = stem.notes[i];
     var on = Math.round(n.t * PPQ), off = Math.max(on + 12, Math.round((n.t + n.d) * PPQ));
+    if (capOff && capOff[i] != null && off > capOff[i]) off = Math.max(on + 3, capOff[i]);
     if (n.pk && marks) { var pkb = str2bytes("HCG:pk" + (n.pk === 1 ? "D" : "U")); ev.push({ tick: on, pri: 0, data: [0xff, 0x01].concat(vlq(pkb.length), pkb) }); }      /* ピッキングの向き（D＝ダウン、U＝アップ）：速い所だけ。キースイッチ付き .mid にだけ入る */
     if (n.ar && marks) { var arb = str2bytes("HCG:ar" + n.ar); ev.push({ tick: on, pri: 0, data: [0xff, 0x01].concat(vlq(arb.length), arb) }); }      /* 奏法の印（1=ラスゲアードの爪、2=アパガード）：テキスト・イベント。キースイッチ用の別ファイル(marks)のときだけ書く。標準の .mid には入れない（MuseScore が譜面の文字として取り込むため） */
     ev.push({ tick: on, pri: 4, data: [0x90 | chn, n.p & 127, Math.max(1, Math.min(127, Math.round((n.v | 0) * gtrK)))] });
@@ -24049,9 +24198,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 524;
+var BUILD_NO = 537;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 185;
+var GEN_NO = 198;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
@@ -26045,6 +26194,11 @@ var KW_RULES = [
   [/アラビア|アラブ|arab|中東|マカーム|maqam|ウード|oud\b|ダルブッカ|darbuka|ベリーダンス|belly\s*dance|エジプト|egypt|ヒジャーズ|hijaz|トルコ|turk|レバノン|ファイルーズ|ウム・?クルスーム|ダブケ|dabke|砂漠|desert|オアシス|キャラバン|シルクロード|silks*road|アラビアン/i, { style: "arabic", mode: "major" }, 11, "アラビア／中東"],
   [/ラスト旋法|マカーム[\s・]*ラスト|maqam\s*rast|(?:^|[^a-z])rast(?![a-z])|四分音|quarter\s*tone|微分音/i, { style: "arabic", form: "ar_rast", mode: "major" }, 12, "ラスト（四分音）"],
   [/バヤーティ|バヤティ|bayati|bayyati/i, { style: "arabic", form: "ar_bayati", mode: "minor" }, 12, "バヤーティ（四分音）"],
+  [/ナハワンド|ニハヴェント|ニハベント|nahawand|nihavent/i, { style: "arabic", form: "ar_nahawand", mode: "minor" }, 12, "ナハワンド（ニハヴェント）"],
+  [/ヒュセイニ|フセイニ|huseyni|hussaini|husayni/i, { style: "arabic", form: "ar_huseyni", mode: "minor" }, 12, "ヒュセイニ"],
+  [/サバ旋法|マカーム[\s・]*サバ|maqam\s*saba|(?:^|[^a-z])saba(?![a-z])/i, { style: "arabic", form: "ar_saba", mode: "minor" }, 12, "サバ（2度が半フラット）"],
+  [/クルド旋法|マカーム[\s・]*クルド|maqam\s*kurd|(?:^|[^a-z])kurd(?![a-z])/i, { style: "arabic", form: "ar_kurd", mode: "minor" }, 12, "クルド"],
+  [/ヒジャーズ?カール|ヒジャズカール|hijazkar|hicazkar/i, { style: "arabic", form: "ar_hijazkar", mode: "major" }, 13, "ヒジャーズカール"],
   [/ソフヤン|sofyan|ヒジャーズ・?ホマーユン|hicaz|hijaz\s*humayun|トルコの(?:民謡|舞曲)|トルコ音楽|バーラマ|baglama|saz\b|ネヴァ|オスマン|ottoman/i, { style: "arabic", form: "tr_hicaz", mode: "major" }, 12, "トルコ：ヒジャーズ（ソフヤン）"],
   [/ウシャク|[uü][sş]{1,2}ak/i, { style: "arabic", form: "tr_ussak", mode: "minor" }, 12, "トルコ：ウシャク"],
   [/マクスーム|maqsum/i, { style: "arabic", form: "ar_maqsum" }, 12, "マクスーム"],

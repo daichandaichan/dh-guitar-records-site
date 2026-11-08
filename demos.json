@@ -283,6 +283,107 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-08_enka_enka_ballad32",
+  "date": "2026-11-08",
+  "style": "enka",
+  "styleShort": "演歌",
+  "styleLabel": "演歌（ヨナ抜き短音階・こぶし・しゃくり、ストリングスの刺し、ズン・タのリズム：歌い上げる王道）",
+  "form": "enka_ballad32",
+  "formLabel": "演歌 32小節（A→A'→サビ→A'：Am→Dm→E7、サビはⅢ→Ⅳ→Ⅱm→Ⅴ7。最後は半音上へ転調）",
+  "title": "Manouche Bleue (Dm)",
+  "key": "Dm",
+  "tempo": 80,
+  "tempoGenerated": 80,
+  "bars": 172,
+  "seed": 12396,
+  "gen": 197,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 65
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 29
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 48
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "gtr",
+    "name": "Guitar (long tones + ghost notes)",
+    "prog": 25
+   },
+   {
+    "id": "tpt",
+    "name": "Trumpet (answers)",
+    "prog": 56
+   }
+  ],
+  "chordsOneChorus": [
+   "Dm",
+   "Dm",
+   "Gm",
+   "Dm6",
+   "A#",
+   "Gm",
+   "A7alt",
+   "A7",
+   "Dm",
+   "Dm",
+   "Gm",
+   "Dm6",
+   "A#",
+   "Gm7",
+   "A13",
+   "Dm",
+   "F",
+   "G",
+   "Em7b5",
+   "Em7",
+   "A9",
+   "Dm7",
+   "Gm6",
+   "A7",
+   "A7",
+   "Dm",
+   "Dm",
+   "Gm",
+   "Dm",
+   "A#",
+   "Gm",
+   "A7",
+   "Dm"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 197). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-08_enka_enka_ballad32/2026-11-08_enka_enka_ballad32_midi-set.zip",
+   "midi": "demos/2026-11-08_enka_enka_ballad32/2026-11-08_enka_enka_ballad32_all.mid",
+   "info": "demos/2026-11-08_enka_enka_ballad32/info.md"
+  },
+  "audio": "demos/2026-11-08_enka_enka_ballad32/2026-11-08_enka_enka_ballad32.mp3",
+  "scorePages": [
+   "scores/2026-11-08_enka_enka_ballad32-1.png"
+  ],
+  "cover": "covers/2026-11-08_enka_enka_ballad32.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-07_mcl_organtrio_standard32",
   "date": "2026-11-07",
   "style": "mcl_organtrio",
