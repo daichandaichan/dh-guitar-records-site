@@ -1,0 +1,86 @@
+{
+  "id": "2026-11-08_swing_giant16",
+  "date": "2026-11-08",
+  "style": "swing",
+  "styleShort": "スタンダード・スウィング",
+  "styleLabel": "スタンダード・スウィング",
+  "form": "giant16",
+  "formLabel": "長3度の循環 16小節（ジャイアント・ステップス型）",
+  "title": "Manouche Sans Fin (C)",
+  "key": "C",
+  "tempo": 304,
+  "tempoGenerated": 304,
+  "bars": 140,
+  "seed": 65953,
+  "gen": 201,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 66
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 66
+    },
+    {
+      "id": "comp",
+      "name": "Rhythm Gtr",
+      "prog": 26
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 32
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "pno",
+      "name": "Piano comp",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "Cmaj7",
+    "D#13",
+    "G#maj7",
+    "F9",
+    "E6/9",
+    "F7b9",
+    "A#m7",
+    "A7",
+    "G#maj7",
+    "F9",
+    "E6/9",
+    "G7",
+    "Cmaj7",
+    "F#m7",
+    "F13",
+    "Emaj7",
+    "A#m7",
+    "D#9",
+    "G#maj7",
+    "A9",
+    "Dm9",
+    "G9",
+    "C6/9",
+    "F#m7",
+    "B9",
+    "E6/9",
+    "Dm7",
+    "G7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 201). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-08_swing_giant16/2026-11-08_swing_giant16_midi-set.zip",
+    "midi": "demos/2026-11-08_swing_giant16/2026-11-08_swing_giant16_all.mid",
+    "info": "demos/2026-11-08_swing_giant16/info.md"
+  },
+  "audio": "demos/2026-11-08_swing_giant16/2026-11-08_swing_giant16.mp3"
+}

@@ -7917,6 +7917,61 @@ var LICKS = [
   { fn: "dom", r: [.5, .5, .5, .5, .5, .5, 1], p: [8, 11, 13, 16, 13, 11, 8] },          /* 上部構造（♭13上の三和音） */
   { fn: "min", r: [1 / 3, 1 / 3, 1 / 3, 1 / 3, 1 / 3, 1 / 3, 1, 1], p: [0, 3, 7, 10, 14, 17, 14, 10] }
 ];
+/* ギター譜14本（Jazz_Guitar_Licks：ジョー・パス、ケニー・バレル、ウェス、グラント・グリーン、ジョージ・ベンソン、バーニー・ケッセル、スコフィールドなど）の1小節のフレーズ52個。コードの根音からの半音数（analyze_licks.js）。opt.gpLicks=false で使わない */
+var LICKS_GP = [
+  { fn: "maj", r: [.5, 1 / 3, 1 / 3, 1 / 3, 1 / 3, 1 / 3, 1 / 3, .5, .5], p: [4, 1, -1, -4, -6, -8, -11, -13, -11] },
+  { fn: "maj", r: [.5, 1 / 3, 1 / 3, 1 / 3, 1 / 3, 1 / 3, 1 / 3, 1 / 3, 1 / 3, 1 / 3], p: [7, 6, 4, 1, -1, -4, -6, -8, -11, -13] },
+  { fn: "dom", r: [1, 1, .5, 1, .5], p: [1, 8, 8, 8, 8] },
+  { fn: "dom", r: [1.5, 1, .5, 1 / 3, 1 / 3, 1 / 3], p: [1, 8, 1, 5, 8, 10] },
+  { fn: "dom", r: [1, 1, .5, .5, .5, .5], p: [1, -11, -8, -6, -7, -11] },
+  { fn: "maj", r: [.5, .5, .5, .5, .5, .5, .5, .5], p: [11, 8, 6, -1, 6, 4, -1, -4] },
+  { fn: "maj", r: [.5, 1, 1.5, 1], p: [6, -1, 4, 3] },
+  { fn: "maj", r: [.5, .5, .5, 2], p: [11, 6, 8, 9] },
+  { fn: "min", r: [.5, .25, .25, .5, .5, .5, 1.5], p: [6, 8, 6, 5, 6, 14, 15] },
+  { fn: "maj", r: [.5, .25, .25, .5, .5, .5, 1.5], p: [4, 4, 6, 3, 4, 12, 13] },
+  { fn: "maj", r: [.5, .25, .25, .5, .5, .5, 1.5], p: [3, 4, 3, 2, 3, 10, 11] },
+  { fn: "dom", r: [1, 1 / 3, 1 / 3, 1 / 3, .5, 1.5], p: [1, 1, 1, 1, 1, 1] },
+  { fn: "maj", r: [1, 1 / 3, 1 / 3, 1 / 3, .5, 1.5], p: [2, 2, 2, 2, 2, 2] },
+  { fn: "maj", r: [1, .5, .5, 1, .5, .5], p: [9, 9, 9, 6, 6, 6] },
+  { fn: "maj", r: [1, .5, .5, 1, .5, .5], p: [4, 4, 4, 2, 2, 2] },
+  { fn: "maj", r: [.5, .5, .5, .5, .5, .5, 1], p: [11, 14, 11, 9, 6, 4, 2] },
+  { fn: "maj", r: [.5, .5, .5, 2], p: [6, 1, 3, 4] },
+  { fn: "min", r: [.5, .5, .5, .5, 1 / 3, 1 / 3, 1 / 3, .5, .5], p: [2, -7, -4, -2, -1, 1, -1, -2, -4] },
+  { fn: "dom", r: [1 / 6, 1 / 6, 1 / 6, .5, .5, 1.5, 1 / 6, 1 / 6, 1 / 6, .5], p: [8, 10, 8, 6, 3, 6, 8, 10, 8, 6] },
+  { fn: "min", r: [.5, .5, .5, .5, .5, .5, .5, .5], p: [3, 2, 3, 5, 6, 8, 10, 1] },
+  { fn: "min", r: [.25, .25, .5, .5, .5, .5, .5, .5], p: [8, 6, 5, 3, 2, -1, -2, -4] },
+  { fn: "min", r: [.5, .25, .25, .5, .5, 1 / 3, 1 / 3, 1 / 3, .5, .5], p: [5, 6, 7, 8, 5, 6, 10, 14, 17, 15] },
+  { fn: "min", r: [.5, .5, .5, .5, .5, .5, .5, .5], p: [10, 8, 5, 3, 2, -1, -2, -4] },
+  { fn: "maj", r: [.25, .25, .25, .25, .5, 2], p: [0, 1, -3, -5, -3, -5] },
+  { fn: "min", r: [.5, .5, .5, .5, 1, .5, .5], p: [6, 3, 6, 3, 9, 6, 3] },
+  { fn: "min", r: [.5, 1, 1, 1, .5], p: [5, 8, 10, 8, -4] },
+  { fn: "maj", r: [.5, .5, .5, 1, .5, 1], p: [0, 4, 7, 9, 7, 9] },
+  { fn: "min", r: [.5, .5, .5, .5, .5, .5, 1], p: [3, 1, 3, 1, 3, 1, -2] },
+  { fn: "maj", r: [.5, .5, .5, .5, .5, .5, .5], p: [1, -1, 1, 2, 4, 5, 9] },
+  { fn: "maj", r: [.5, .5, .5, .5, .5, .5, .5, .5], p: [0, 4, 3, -1, -4, -8, -12, -4] },
+  { fn: "maj", r: [.5, .5, .5, .5, .5, .5, 1], p: [4, -1, -2, 1, 4, 7, 6] },
+  { fn: "min", r: [.5, .5, .5, 2], p: [5, 0, -4, -2] },
+  { fn: "maj", r: [.5, .5, .5, 2], p: [0, -7, -4, 0] },
+  { fn: "maj", r: [.5, .5, .5, .5, .25, .25, .5, .5], p: [7, 9, 7, 10, 9, 7, 4, 9] },
+  { fn: "maj", r: [1, .5, .5, .5, .5, .5, .5], p: [7, 4, 2, 2, 4, 7, 4] },
+  { fn: "maj", r: [.5, .5, .5, .5, .25, .25, .5, .5], p: [7, 9, 7, 10, 9, 7, 4, 7] },
+  { fn: "maj", r: [.5, 1, 1 / 6, 1 / 6, 1 / 6, .5, .5, .5, .5], p: [4, 4, 4, 3, 2, -1, -2, -3, -5] },
+  { fn: "maj", r: [.5, .5, .5, .5, 1 / 3, 1 / 3, 1 / 3, 1], p: [4, 2, -1, 7, 2, 3, 4, -5] },
+  { fn: "min", r: [.5, .5, .5, .5, .5, .5, .5, .5], p: [8, 7, 6, 10, 5, 3, 1, -2] },
+  { fn: "min", r: [.5, .5, .5, .5, .5, 1.5], p: [6, 3, 8, 5, 6, 3] },
+  { fn: "min", r: [.5, .5, .5, .5, 1 / 6, 1 / 6, 1 / 6, .5, .5, .5], p: [3, 1, 0, -2, -4, -2, -4, -7, -6, -4] },
+  { fn: "min", r: [.5, .5, .5, .5, .5, .5, .5, .5], p: [5, 4, 3, 2, 1, -2, -6, -9] },
+  { fn: "min", r: [1 / 3, 1 / 3, 1 / 3, .5, .5, .5, .5, .5, .5], p: [0, 3, 6, 10, 13, 17, 17, 13, 10] },
+  { fn: "min", r: [.5, .5, .5, .5, 2], p: [5, 5, 1, -2, 5] },
+  { fn: "maj", r: [1, .5, .5, .5, .5, .5, .5], p: [11, 11, 18, 17, 18, 25, 23] },
+  { fn: "maj", r: [.5, .5, .5, .5, 1, 1], p: [9, 6, 2, -1, -2, -3] },
+  { fn: "dom", r: [2, .5, .5, .5], p: [6, 3, 4, 1] },
+  { fn: "maj", r: [.5, .5, .5, .5, .5, .5, .5, .5], p: [6, 3, 0, -2, -5, -4, -3, 0] },
+  { fn: "min", r: [.5, .5, .5, 1, 1], p: [5, 6, 8, 5, 3] },
+  { fn: "min", r: [.5, .5, .5, .5, .5, .5, .5, .5], p: [10, 1, 5, 8, 7, 3, 1, -2] },
+  { fn: "maj", r: [.5, .5, .5, .5, .5, .5, .5, .5], p: [2, 0, -1, 2, -1, -3, -6, -5] },
+  { fn: "min", r: [1 / 3, 1 / 3, 1 / 3, .5, .5, .5, .5, .5, .5], p: [1, 5, 8, 12, 10, 15, 13, 12, 10] }
+];
 function lickFn(ch) {
   if (isDom(ch.q) || ch.q === "phryg") return "dom";
   if (isMin(ch.q) || ch.q === "m7b5" || ch.q === "dim7") return "min";
@@ -7925,7 +7980,9 @@ function lickFn(ch) {
 function renderLick(t0, beats, ch, cur, lo, hi, rng, startOff) {
   var fn = lickFn(ch), pool = [], i;
   for (i = 0; i < LICKS.length; i++) if (LICKS[i].fn === fn || LICKS[i].fn === "any") pool.push(LICKS[i]);
-  var L = rng.pick(pool);
+  var gpP = [];
+  for (i = 0; i < LICKS_GP.length; i++) if (LICKS_GP[i].fn === fn) gpP.push(LICKS_GP[i]);
+  var L = (gpP.length && rng.chance(0.5)) ? rng.pick(gpP) : rng.pick(pool);
   var base = ((ch.root % 12) + 12) % 12;
   var first = base + L.p[0];
   while (first < cur - 7) first += 12;
@@ -15814,7 +15871,7 @@ function genBass(chs, form, sty, opt, rng, ctx) {
       var rT = step(rootOf(cT1, cur)), fT = step(pickOf(cT1, [7], rT));
       var marcB = (bar % 4 === 3) || (solo && bar % 2 === 1);
       var seaB = tangoSeason(form);
-      var altT = beats === 4 && rng.chance(1 - tangoW332(opt)), altK = altT ? rng.wpick(opt.tangoClasico !== false && /^(tango_clasico|vals_tango)$/.test(String(opt.form || "")) ? [["syn", 0.5], ["lilt", 1.5], ["half", 2], ["quarter", 5]] : [["syn", 1], ["lilt", 5], ["half", 2], ["quarter", 0.5]]) : "";      /* クラシック・タンゴ(GitHub IAARhub/Pantaleon の525曲)：低音は4分音符のマルカートが中心(拍の頭78%) */
+      var altT = beats === 4 && rng.chance(1 - tangoW332(opt)), altK = altT ? rng.wpick(opt.tangoClasico !== false && /^(tango_clasico|vals_tango)$/.test(String(opt.form || "")) ? [["syn", 0.5], ["lilt", 1.5], ["half", 2], ["quarter", 5]] : (opt.tangoNew !== false ? [["syn", 0.8], ["lilt", 1.2], ["half", 2], ["quarter", 3.5], ["m6", 3], ["whole", 1.2]] : [["syn", 1], ["lilt", 5], ["half", 2], ["quarter", 0.5]])) : "";      /* クラシック・タンゴ(GitHub IAARhub/Pantaleon の525曲)：低音は4分音符のマルカートが中心(拍の頭78%) */
       if (seaB === "aki" && beats === 4) {                      /* 秋：長い根音だけ、ときどき 4 拍目に 5 度 */
         notes.push({ t: t0, d: 3.4, p: rT, v: vel(84) });
         if (rng.chance(0.4)) notes.push({ t: t0 + 3, d: 0.8, p: step(pickOf(nxT, [7], rT)), v: vel(66) });
@@ -15862,6 +15919,18 @@ function genBass(chs, form, sty, opt, rng, ctx) {
         notes.push({ t: t0 + 2, d: 1.3, p: rH2, v: vel(90) });
         notes.push({ t: t0 + 3.5, d: 0.45, p: pH, v: vel(80) });
         cur = pH;
+      } else if (altK === "m6") {                               /* 0・1.5・2・3拍（実物 15%） */
+        var rM = step(rootOf(cT2, rT)), pM = (nxT !== cT2) ? step(rootOf(nxT, rM)) : step(pickOf(cT2, [7], rM));
+        notes.push({ t: t0, d: 1.3, p: rT, v: vel(100) });
+        notes.push({ t: t0 + 1.5, d: 0.45, p: fT, v: vel(78) });
+        notes.push({ t: t0 + 2, d: 0.9, p: rM, v: vel(92) });
+        notes.push({ t: t0 + 3, d: 0.8, p: pM, v: vel(84) });
+        cur = pM;
+      } else if (altK === "whole") {                            /* 全音符（実物 7%）。和音が変わる小節は、最後に次の根音へ */
+        var pW = (nxT !== cT2) ? step(rootOf(nxT, rT)) : rT;
+        notes.push({ t: t0, d: (nxT !== cT2) ? 2.9 : 3.8, p: rT, v: vel(98) });
+        if (nxT !== cT2) notes.push({ t: t0 + 3, d: 0.8, p: pW + (pW > rT ? -1 : 1), v: vel(80) });
+        cur = (nxT !== cT2) ? pW : rT;
       } else if (altK === "quarter") {                          /* 4分の歩み：0・1・2・3 */
         var rQ2 = step(rootOf(cT2, rT)), pQ = (nxT !== cT2) ? step(rootOf(nxT, rQ2)) : step(pickOf(cT2, [7], rQ2));
         notes.push({ t: t0, d: 0.85, p: rT, v: vel(100) });
@@ -23148,6 +23217,13 @@ function generateMain(opt) {
     var orgN = orgSustainNotes(absChords({ chords: chs, sections: sections, beats: beats, opt: opt }), totalBeats, drumWins.map(function (w) { return { a: w.a + barShiftAll, b: w.b + barShiftAll }; }), RNG(((opt.seed || 1) * 389 + 41) % 2147483647));
     if (orgN.length) stems.push({ id: "org", name: "Organ sustain (chords)", jp: "オルガン（コードのサスティン）", prog: 19, ch: 7, notes: orgN, extra: [] });
   }
+  if (opt.style === "black" && opt.blackKeys !== false) {          /* ブラック・メタルのキーボード（リフをなぞるストリングス） */
+    var cmpK = stems.filter(function (s0) { return s0.id === "comp"; })[0];
+    if (cmpK && cmpK.notes.length) {
+      var kbN = blackKeysLine(cmpK.notes, totalBeats, drumWins.map(function (w) { return { a: w.a + barShiftAll, b: w.b + barShiftAll }; }), RNG(((opt.seed || 1) * 523 + 59) % 2147483647));
+      if (kbN.length) stems.push({ id: "kbd", name: "Keyboards (symphonic line)", jp: "キーボード（リフをなぞる16分のストリングス）", prog: 48, ch: 8, notes: kbN, extra: [] });
+    }
+  }
   if (opt.style === "enka" && opt.enkaGtr !== false) {          /* 演歌：ギター（ロングトーン＋ゴーストノート） */
     var egN = enkaGuitar(absChords({ chords: chs, sections: sections, beats: beats, opt: opt }), sections, beats, opt.tempo, drumWins.map(function (w) { return { a: w.a + barShiftAll, b: w.b + barShiftAll }; }), totalBeats, RNG(((opt.seed || 1) * 331 + 53) % 2147483647));
     if (egN.length) stems.push({ id: "gtr", name: "Guitar (long tones + ghost notes)", jp: "ギター（ロングトーン＋ゴーストノート）", prog: 25, ch: 6, notes: egN, extra: [] });
@@ -23642,6 +23718,25 @@ function enkaGuitar(ab, sections, beats, tempo, wins, totalBeats, rng) {
   return out;
 }
 /* オルガンのサスティン用：コードごとに、根音・3度・5度（あれば7度）の和音を、前の和音から最短で動く転回で。低い根音（ペダル）を足す。ドラムだけの区間は、音を切る／入れない */
+/* ブラック・メタルのキーボード（エンペラーの譜42曲のキーボード／シンセ27トラック：同時に1音が約88%、16分が約半分、同じ音の反復が最多、和音は5度・オクターヴ・4度）。
+   リフ(comp)の「各16分の最低音」を、E4〜E6あたりに上げて16分でなぞる。4小節のまとまりごとに、42%で入る。拍の頭で25%、5度を足す。ドラムだけの区間では鳴らさない。opt.blackKeys=false で外せる */
+function blackKeysLine(comp, totalBeats, wins, rng) {
+  var out = [], byT = {}, g, i, w, active = {};
+  comp.forEach(function (n) { var k = Math.round(n.t * 4) / 4; if (!byT[k] || n.p < byT[k].p) byT[k] = n; });
+  var ts = Object.keys(byT).map(Number).sort(function (a, b) { return a - b; });
+  for (g = 0; g * 16 < totalBeats + 16; g++) active[g] = rng.chance(0.42);
+  for (i = 0; i < ts.length; i++) {
+    var t = ts[i], dead = false;
+    if (!active[Math.floor(t / 16)]) continue;
+    for (w = 0; w < wins.length; w++) if (t >= wins[w].a && t < wins[w].b) { dead = true; break; }
+    if (dead) continue;
+    var p = byT[t].p; while (p < 64) p += 12; while (p > 88) p -= 12;
+    var nx = i + 1 < ts.length ? ts[i + 1] : t + 1, d = Math.max(0.2, Math.min(nx - t, 0.5)) * 0.95, v = 62 + Math.round(rng.f() * 10) + (t % 1 === 0 ? 6 : 0);
+    out.push({ t: t, d: d, p: p, v: v });
+    if (t % 1 === 0 && rng.chance(0.25)) out.push({ t: t, d: d, p: p + 7, v: v - 8 });
+  }
+  return out;
+}
 function orgSustainNotes(ab, totalBeats, wins, rng) {
   var out = [], prev = null, i, k;
   for (i = 0; i < ab.length; i++) {
@@ -24198,9 +24293,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 537;
+var BUILD_NO = 540;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 198;
+var GEN_NO = 201;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
