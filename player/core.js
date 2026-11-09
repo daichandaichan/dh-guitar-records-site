@@ -2225,6 +2225,60 @@ var FORMS = {
     ch: [T(0, "min"), T(8, "maj7"), T(3, "maj"), T(10, "maj"), T(0, "min"), T(8, "maj7"), T(7, "dom7"), T(0, "min"),
          T(0, "min"), T(5, "min"), T(8, "maj"), T(10, "maj"), T(3, "maj"), T(8, "maj7"), T(7, "dom7"), T(0, "min")]
   },
+  jpop_oudou16: {
+    tempo: 108, label: "90年代J-POP 16小節（王道進行：Ⅳ△7→Ⅴ→Ⅲm7→Ⅵm7 とⅡm7→Ⅴ7のサビ）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_city", bass: "kayo_city", drums: "kayo_city", perc: "none" },
+    ch: [T(5, "maj7"), T(7, "dom7"), T(4, "m7"), T(9, "m7"), T(5, "maj7"), T(7, "dom7"), T(4, "m7"), T(9, "m7"),
+         T(2, "m7"), T(7, "dom7"), T(0, "maj7"), T(9, "m7"), T(5, "maj7"), T(2, "m7"), T(7, "dom7"), T(0, "maj7")]
+  },
+  jpop_komuro16: {
+    tempo: 120, label: "90年代J-POP 16小節（小室系：Ⅵm→Ⅳ→Ⅴ→Ⅰ の反復、シンセと16ビート）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_idol", bass: "kayo_idol", drums: "kayo_idol", perc: "none" },
+    ch: [T(9, "min"), T(5, "maj"), T(7, "maj"), T(0, "maj"), T(9, "min"), T(5, "maj"), T(7, "maj"), T(0, "maj"),
+         T(9, "min"), T(5, "maj7"), T(7, "dom7"), T(0, "maj"), T(5, "maj"), T(7, "maj"), T(9, "min"), T(0, "maj")]
+  },
+  jpop_being16: {
+    tempo: 112, label: "90年代J-POP 16小節（ビーイング系：短調 Ⅰm7→Ⅳm7→♭ⅥM7→Ⅴ7、ハードなギターのポップス）", bars: 16, minor: true, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_gs", bass: "kayo_gs", drums: "kayo_gs", perc: "none" },
+    ch: [T(0, "m7"), T(5, "m7"), T(8, "maj7"), T(7, "dom7"), T(0, "m7"), T(5, "m7"), T(8, "maj7"), T(7, "dom7"),
+         T(3, "maj7"), T(8, "maj7"), T(5, "m7"), T(7, "dom7"), T(0, "m7"), T(8, "maj7"), T(7, "dom7"), T(0, "m7")]
+  },
+  jpop_shibuya16: {
+    tempo: 104, label: "90年代J-POP 16小節（渋谷系：Ⅰ△7→Ⅵm7→Ⅱm7→Ⅴ7 のおしゃれな循環）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_city", bass: "kayo_city", drums: "kayo_city", perc: "none" },
+    ch: [T(0, "maj7"), T(9, "m7"), T(2, "m7"), T(7, "dom7"), T(0, "maj7"), T(9, "m7"), T(2, "m7"), T(7, "dom7"),
+         T(5, "maj7"), T(4, "m7"), T(9, "m7"), T(2, "dom7"), T(2, "m7"), T(7, "dom7"), T(0, "maj7"), T(0, "maj7")]
+  },
+  jpop_ballad16: {
+    tempo: 72, label: "90年代J-POP 16小節（バラード：Ⅰ△7→Ⅵm7→Ⅳ△7→Ⅴ の歌い上げ）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_mood", bass: "kayo_mood", drums: "kayo_mood", perc: "none" },
+    ch: [T(0, "maj7"), T(9, "m7"), T(5, "maj7"), T(7, "dom7"), T(0, "maj7"), T(9, "m7"), T(5, "maj7"), T(7, "dom7"),
+         T(4, "m7"), T(9, "m7"), T(5, "maj7"), T(0, "maj7"), T(2, "m7"), T(7, "dom7"), T(0, "maj7"), T(0, "maj7")]
+  },
+  na_maj16: {
+    tempo: 66, label: "ニューエイジ 16小節（長調：Ⅰ△7→Ⅳ△7→Ⅵm7→Ⅴsus の静かな循環）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_folk", bass: "kayo_folk", drums: "none", perc: "none" },
+    ch: [T(0, "maj7"), T(0, "maj7"), T(5, "maj7"), T(5, "maj7"), T(9, "m7"), T(9, "m7"), T(7, "dom7"), T(7, "dom7"),
+         T(0, "maj7"), T(4, "m7"), T(5, "maj7"), T(5, "maj7"), T(9, "m7"), T(2, "m7"), T(7, "dom7"), T(0, "maj7")]
+  },
+  na_minor16: {
+    tempo: 62, label: "ニューエイジ 16小節（短調：Ⅰm7→♭ⅥM7→♭ⅦM7→♭ⅢM7 の浮遊感）", bars: 16, minor: true, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_folk", bass: "kayo_folk", drums: "none", perc: "none" },
+    ch: [T(0, "m7"), T(0, "m7"), T(8, "maj7"), T(8, "maj7"), T(10, "maj7"), T(10, "maj7"), T(3, "maj7"), T(3, "maj7"),
+         T(0, "m7"), T(5, "m7"), T(8, "maj7"), T(10, "maj7"), T(3, "maj7"), T(8, "maj7"), T(7, "dom7"), T(0, "m7")]
+  },
+  ragtime_a: {
+    tempo: 100, label: "ラグタイム 16小節（Ⅰ→Ⅴ7→Ⅰ→Ⅳ のあと、Ⅲ7→Ⅵ7→Ⅱ7→Ⅴ7 の連続属和音）", bars: 16, minor: false, ts: [4, 4], sec: "AB",
+    feel: { comp: "country", bass: "country", drums: "none", perc: "none" },
+    ch: [T(0, "maj"), T(7, "dom7"), T(0, "maj"), T(0, "maj"), T(5, "maj"), T(5, "maj"), T(0, "maj"), T(7, "dom7"),
+         T(4, "dom7"), T(4, "dom7"), T(9, "dom7"), T(9, "dom7"), T(2, "dom7"), T(7, "dom7"), T(0, "maj"), T(0, "maj")]
+  },
+  ragtime_b: {
+    tempo: 96, label: "ラグタイム 16小節（Ⅰ→Ⅰ7→Ⅳ→Ⅳm→Ⅰ、Ⅵ7→Ⅱ7→Ⅴ7 で戻る）", bars: 16, minor: false, ts: [4, 4], sec: "AB",
+    feel: { comp: "country", bass: "country", drums: "none", perc: "none" },
+    ch: [T(0, "maj"), T(0, "dom7"), T(5, "maj"), T(5, "min"), T(0, "maj"), T(7, "dom7"), T(0, "maj"), T(0, "maj"),
+         T(9, "dom7"), T(9, "dom7"), T(2, "dom7"), T(2, "dom7"), T(7, "dom7"), T(7, "dom7"), T(0, "maj"), T(0, "maj")]
+  },
   kayo_idol16: {
     tempo: 124, label: "アイドル歌謡 16小節（筒美京平風：王道進行 Ⅳ△7→Ⅴ7→Ⅲm7→Ⅵm7 とⅡ-Ⅴの明るい歌）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
     feel: { comp: "kayo_idol", bass: "kayo_idol", drums: "kayo_idol", perc: "none" },
@@ -2926,6 +2980,52 @@ var STYLES = {
     comp: "piano", bass: "even8", drums: "rock", mel: "ballad",
     forms: ["ng_major16", "ng_major7_16", "ng_minor16"],
     voice: "auto", lead: 0, compProg: 0, feel: 8
+  },
+  jpop90: {
+    label: "90年代J-POP（王道進行・小室系・ビーイング系・渋谷系・バラード：7thの和音と16ビート、歌えるメロディ）", swing: 0.5, tempo: 108,
+    comp: "piano", bass: "even8", drums: "rock", mel: "ballad",
+    forms: ["jpop_oudou16", "jpop_komuro16", "jpop_being16", "jpop_shibuya16", "jpop_ballad16"],
+    voice: "auto", lead: 27, compProg: 4, feel: 16
+  },
+  punk: {
+    fuFamily: "rock", fuName: "パンク／ポップ・パンク（速い8分のパワー・コード）", rockKind: "hard",
+    label: "ロック：パンク／ポップ・パンク（速い8分のパワー・コード・単純で勢いのある進行／ギター2本）", fuBase: "arena", fuTone: "rk_hard",
+    swing: 0.5, tempo: 172, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["punk_a", "punk_b"], voice: "auto", lead: 30, compProg: 30, feel: 16
+  },
+  surf: {
+    fuFamily: "rock", fuName: "サーフ／インスト・ギター（ベンチャーズ・シャドウズ型：トレモロ・ピッキングと歌うライン）", rockKind: "beatles",
+    label: "ロック：サーフ／インスト・ギター（ベンチャーズ型：短調のリフとトレモロ・ピッキング／ギター2本）", fuBase: "arena", fuTone: "rk_beatles",
+    swing: 0.5, tempo: 148, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["surf_a", "surf_b"], voice: "auto", lead: 27, compProg: 27, feel: 16
+  },
+  rockabilly: {
+    fuFamily: "rock", fuName: "ロカビリー／ロックンロール（50年代：シャッフルの12小節とドゥーワップ進行）", rockKind: "beatles",
+    label: "ロック：ロカビリー／ロックンロール（チャック・ベリー／バディ・ホリー型：シャッフルの12小節・ドゥーワップ／ギター2本）", fuBase: "arena", fuTone: "rk_beatles",
+    swing: 0.58, tempo: 156, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["rb_blues12", "rb_doowop"], voice: "auto", lead: 26, compProg: 26, feel: 16
+  },
+  newage: {
+    label: "ニューエイジ（アンビエント：ゆったりしたアルペジオと7thの響き、静かに広がる）", swing: 0.5, tempo: 66,
+    comp: "piano", bass: "even8", drums: "rock", mel: "ballad",
+    forms: ["na_maj16", "na_minor16"], voice: "auto", lead: 88, compProg: 88, feel: 8
+  },
+  blues: {
+    fuFamily: "rock", fuName: "ブルース（シャッフルの12小節：Ⅰ7・Ⅳ7・Ⅴ7、ブルース・スケールのギター）", rockKind: "vaughan",
+    label: "ブルース（シャッフルの12小節・マイナー・ジャズ・ブルース：ブルース・スケールのギターとシャッフルのリズム）", fuBase: "arena", fuTone: "rk_vaughan",
+    swing: 0.62, tempo: 108, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["blues_shuffle12", "blues_minor12", "blues_jazz12"], voice: "auto", lead: 26, compProg: 26, feel: 16
+  },
+  ragtime: {
+    label: "ラグタイム（ジョプリン型：ベースと和音の交互の左手と、シンコペの旋律／近似）", swing: 0.5, tempo: 100,
+    comp: "country", bass: "country", drums: "country", mel: "bossa",
+    forms: ["ragtime_a", "ragtime_b"], voice: "auto", lead: 0, compProg: 0, feel: 8
+  },
+  hiphop: {
+    fuFamily: "rock", fuName: "ヒップホップ（ブーム・バップ：短調のループとファンクのドラム／近似）", rockKind: "jbrown",
+    label: "ヒップホップ（ブーム・バップ：短調の短いループ・間のあるベースとファンクのドラム／近似）", fuBase: "arena", fuTone: "rk_jbrown",
+    swing: 0.58, tempo: 90, comp: "rockgtr", bass: "rockbass", drums: "rockdr", mel: "ballad",
+    forms: ["hh_loop2", "hh_loop4"], voice: "auto", lead: 4, compProg: 4, feel: 16
   },
   enka: {
     label: "演歌（ヨナ抜き短音階・こぶし・しゃくり、ストリングスの刺し、ズン・タのリズム：歌い上げる王道）", swing: 0.5, tempo: 80,
@@ -7106,6 +7206,17 @@ FORMS.rk_wd2 = rockForm("ソウル：ii V I I → iii IV ii V(ワンダー型) 1
 FORMS.rk_wd3 = rockForm("ソウル(短調)：i → ♭VII → ♭VI → V7 の循環(ワンダー型) 16小節", true, 100, [[0, "m7", 2], [10, "maj", 2], [8, "maj7", 2], [7, "dom7", 2], [0, "m7", 2], [10, "maj", 2], [8, "maj7", 2], [7, "dom7", 2]]);
 FORMS.rk_jb1 = rockForm("ファンク・ロック：I9 のワン・コード(8小節) → IV9 → I9(ジェームス・ブラウン型) 16小節", false, 112, [[0, "dom9", 8], [5, "dom9", 4], [0, "dom9", 4]]);
 FORMS.rk_jb2 = rockForm("ファンク・ロック：12小節ブルース(I7 4小節 → IV7 → I7 → V7 IV7 → I7)、I Feel Good 型", false, 138, [[0, "dom7", 4], [5, "dom7", 2], [0, "dom7", 2], [7, "dom7", 2], [5, "dom7", 1], [0, "dom7", 1]]);
+FORMS.punk_a = rockForm("パンク：I → V → vi → IV の反復(ポップ・パンク型) 16小節", false, 176, [[0, "maj", 2], [7, "maj", 2], [9, "min", 2], [5, "maj", 2], [0, "maj", 2], [7, "maj", 2], [9, "min", 2], [5, "maj", 2]]);
+FORMS.punk_b = rockForm("パンク(短調)：i → ♭VI → ♭III → ♭VII の反復 16小節", true, 168, [[0, "min", 2], [8, "maj", 2], [3, "maj", 2], [10, "maj", 2], [0, "min", 2], [8, "maj", 2], [3, "maj", 2], [10, "maj", 2]]);
+FORMS.surf_a = rockForm("サーフ(短調)：i → iv → i → V7 の反復(ベンチャーズ型) 16小節", true, 150, [[0, "min", 4], [5, "min", 2], [0, "min", 2], [7, "dom7", 2], [0, "min", 2], [5, "min", 2], [7, "dom7", 2]]);
+FORMS.surf_b = rockForm("サーフ(長調)：I → vi → IV → V の循環(ベンチャーズ型) 16小節", false, 144, [[0, "maj", 2], [9, "min", 2], [5, "maj", 2], [7, "maj", 2], [0, "maj", 2], [9, "min", 2], [5, "maj", 1], [7, "dom7", 1], [0, "maj", 2]]);
+FORMS.rb_blues12 = rockForm("ロカビリー：12小節ブルース(I7 4小節 → IV7 2 → I7 2 → V7 IV7 → I7 V7)", false, 160, [[0, "dom7", 4], [5, "dom7", 2], [0, "dom7", 2], [7, "dom7", 1], [5, "dom7", 1], [0, "dom7", 1], [7, "dom7", 1]]);
+FORMS.rb_doowop = rockForm("ロカビリー：ドゥーワップ I → vi → IV → V の循環 16小節(50年代)", false, 152, [[0, "maj", 1], [9, "min", 1], [5, "maj", 1], [7, "maj", 1], [0, "maj", 1], [9, "min", 1], [5, "maj", 1], [7, "maj", 1], [0, "maj", 1], [9, "min", 1], [5, "maj", 1], [7, "maj", 1], [0, "maj", 1], [5, "maj", 1], [7, "dom7", 1], [0, "maj", 1]]);
+FORMS.blues_shuffle12 = rockForm("ブルース：12小節のシャッフル(Ⅰ7 4小節 → Ⅳ7 2 → Ⅰ7 2 → Ⅴ7 Ⅳ7 Ⅰ7 Ⅴ7)を2回 24小節", false, 108, [[0, "dom7", 4], [5, "dom7", 2], [0, "dom7", 2], [7, "dom7", 1], [5, "dom7", 1], [0, "dom7", 1], [7, "dom7", 1], [0, "dom7", 4], [5, "dom7", 2], [0, "dom7", 2], [7, "dom7", 1], [5, "dom7", 1], [0, "dom7", 1], [7, "dom7", 1]]);
+FORMS.blues_minor12 = rockForm("ブルース(短調)：12小節(Ⅰm7 4小節 → Ⅳm7 2 → Ⅰm7 2 → ♭ⅥM7 Ⅴ7 Ⅰm7 Ⅴ7)を2回 24小節", true, 96, [[0, "m7", 4], [5, "m7", 2], [0, "m7", 2], [8, "maj7", 1], [7, "dom7", 1], [0, "m7", 1], [7, "dom7", 1], [0, "m7", 4], [5, "m7", 2], [0, "m7", 2], [8, "maj7", 1], [7, "dom7", 1], [0, "m7", 1], [7, "dom7", 1]]);
+FORMS.blues_jazz12 = rockForm("ジャズ・ブルース：12小節(Ⅰ7 Ⅳ7 Ⅰ7 → Ⅳ7 Ⅳ7 Ⅰ7 → Ⅲm7 Ⅵ7 Ⅱm7 Ⅴ7 のターンアラウンド)を2回 24小節", false, 120, [[0, "dom7", 1], [5, "dom7", 1], [0, "dom7", 2], [5, "dom7", 2], [0, "dom7", 2], [4, "m7", 1], [9, "dom7", 1], [2, "m7", 1], [7, "dom7", 1], [0, "dom7", 1], [5, "dom7", 1], [0, "dom7", 2], [5, "dom7", 2], [0, "dom7", 2], [4, "m7", 1], [9, "dom7", 1], [2, "m7", 1], [7, "dom7", 1]]);
+FORMS.hh_loop2 = rockForm("ヒップホップ：i 3小節 ♭VII 1小節の2コード・ループ(ブーム・バップ) 16小節", true, 90, [[0, "m7", 3], [10, "maj", 1], [0, "m7", 3], [10, "maj", 1], [0, "m7", 3], [10, "maj", 1], [0, "m7", 3], [10, "maj", 1]]);
+FORMS.hh_loop4 = rockForm("ヒップホップ：i → ♭VI → ♭III → ♭VII の4コード・ループ(ゆったり) 16小節", true, 84, [[0, "m7", 2], [8, "maj7", 2], [3, "maj7", 2], [10, "maj", 2], [0, "m7", 2], [8, "maj7", 2], [3, "maj7", 2], [10, "maj", 2]]);
 FORMS.rk_bt1 = rockForm("ブリティッシュ・ビート：I → IV → I → V の往復(ビートルズ型) 16小節", false, 120, [[0, "maj", 2], [5, "maj", 1], [0, "maj", 1], [7, "maj", 2], [5, "maj", 1], [0, "maj", 1], [0, "maj", 2], [5, "maj", 2], [0, "maj", 2], [7, "maj", 1], [0, "maj", 1]]);
 FORMS.rk_bt2 = rockForm("ブリティッシュ・ビート(短調)：i のペダル → ♭VII → IV → i → ♭VI → V7(ビートルズ型) 16小節", true, 112, [[0, "min", 4], [10, "maj", 2], [5, "maj", 2], [0, "min", 4], [8, "maj", 2], [7, "dom7", 2]]);
 FORMS.rk_bt3 = rockForm("ブリティッシュ・ビート：I vi IV V の循環(ビートルズ型) 16小節", false, 116, [[0, "maj", 1], [9, "min", 1], [5, "maj", 1], [7, "maj", 1], [0, "maj", 1], [9, "min", 1], [5, "maj", 1], [7, "maj", 1], [0, "maj", 1], [9, "min", 1], [5, "maj", 1], [7, "maj", 1], [5, "maj", 1], [7, "maj", 1], [0, "maj", 2]]);
@@ -24068,7 +24179,7 @@ function noteEvents(stem, song, marks, noPan) {
       ev.push({ tick: 0, pri: 1, data: [0xb0 | chn, c[0], c[1]] });
     });
     ev.push({ tick: 0, pri: 1, data: [0xe0 | chn, 0, 64] });
-    if (!noPan && !(song && song.opt && song.opt.midiPan === false) && !(stem.extra || []).some(function (x) { return x.cc === 10; })) {          /* 一般的な定位 */
+    if (!noPan && song && song.opt && song.opt.midiPan === true && !(stem.extra || []).some(function (x) { return x.cc === 10; })) {          /* 一般的な定位 */
       var pn = midiPanOf(stem, song); if (pn != null) ev.push({ tick: 0, pri: 1, data: [0xb0 | chn, 10, pn] });
     }
   }
@@ -24423,9 +24534,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 549;
+var BUILD_NO = 552;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 206;
+var GEN_NO = 209;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
@@ -26440,6 +26551,7 @@ var KW_RULES = [
   [/ハパ・?ハオレ|hapa/i, { style: "hawaiian", form: "hw_waltz24", mode: "major" }, 11, "ハパ・ハオレのワルツ"],
   [/ポリリズム|polyrhythm|3対4|三対四/i, { style: "afrobeat", form: "afro_poly", mode: "minor" }, 11, "ポリリズム（アフロビート）"],
   [/クレズマー|klezmer/i, { style: "gypsy", mode: "minor" }, 7, "クレズマー（ジプシー系の短調で近似）"],
+  [/90年代(?:の)?(?:j-?pop|jポップ|ポップス)|j-?pop|jポップ|ジェイポップ|小室|ビーイング|being系|渋谷系|trf|globe|ミスチル|mr\.?\s*children|スピッツ|b'z|ドリカム|dreams?\s*come\s*true/i, { style: "jpop90", form: "jpop_oudou16", mode: "major" }, 12, "90年代J-POP"],
   [/昭和歌謡|歌謡曲|昭和の(?:曲|歌|ヒット)|昭和レトロ|昭和風|昭和ポップ|kayokyoku|showa/i, { style: "kayo" }, 12, "昭和歌謡曲"],
   [/アイドル歌謡|筒美京平|70年代アイドル|80年代アイドル|松田聖子|山口百恵|キャンディーズ|ピンク・?レディー/i, { style: "kayo", form: "kayo_idol16", mode: "major" }, 13, "アイドル歌謡（筒美京平風）"],
   [/ムード歌謡|ムードギター|ナイトクラブ|キャバレー|クール・?ファイブ|前川清|石原裕次郎|ブルー・?シャトウ/i, { style: "kayo", form: "kayo_mood16", mode: "minor" }, 13, "ムード歌謡"],
@@ -26453,6 +26565,13 @@ var KW_RULES = [
   [/リール(?!\s*[A-Za-z])|reel\b|リール・?ダンス/i, { style: "celtic", form: "reel_dor", mode: "minor" }, 9, "リール（ドリアン）"],
   [/ミクソリディアン|mixolydian/i, { style: "celtic", form: "reel_mix", mode: "major" }, 7, "リール（ミクソリディアン）"],
   [/ノンジャンル|ジャンル不問|ジャンルを問わ|ジャンルなし|non-?genre|genre-?less/i, { style: "nongenre", form: "ng_major16", mode: "major" }, 11, "ノンジャンル"],
+  [/ブルース|blues|シャッフル|ビー・?ビー・?キング|b\.?b\.?\s*king|マディ・?ウォーターズ|muddy\s*waters|ロバート・?ジョンソン|robert\s*johnson|12小節/i, { style: "blues", form: "blues_shuffle12", mode: "major" }, 11, "ブルース"],
+  [/ラグタイム|ragtime|ジョプリン|joplin|メイプル・?リーフ|エンターテイナー/i, { style: "ragtime", form: "ragtime_a", mode: "major" }, 11, "ラグタイム"],
+  [/ヒップホップ|hip\s*-?hop|ラップ|rap\b|ブーム・?バップ|boom\s*bap|トラップ|ローファイ|lo-?fi/i, { style: "hiphop", form: "hh_loop2", mode: "minor" }, 11, "ヒップホップ"],
+  [/パンク|punk|ポップ・?パンク|ブリンク|blink|グリーン・?デイ|green\s*day|オフスプリング|ラモーンズ|ramones|ハイスタ/i, { style: "punk", form: "punk_a", mode: "major" }, 10, "パンク"],
+  [/サーフ|surf|ベンチャーズ|ventures|シャドウズ|shadows|ディック・?デイル|dick\s*dale|寺内タケシ|エレキ・?インスト/i, { style: "surf", form: "surf_a", mode: "minor" }, 10, "サーフ／エレキ・インスト"],
+  [/ロカビリー|rockabilly|ロックンロール|rock\s*'?n'?\s*roll|チャック・?ベリー|chuck\s*berry|バディ・?ホリー|buddy\s*holly|エルヴィス|elvis|ストレイ・?キャッツ/i, { style: "rockabilly", form: "rb_blues12", mode: "major" }, 10, "ロカビリー／ロックンロール"],
+  [/ニューエイジ|new\s*age|アンビエント|ambient|ヒーリング|癒し|環境音楽|エンヤ|enya|ジョージ・?ウィンストン|george\s*winston/i, { style: "newage", form: "na_maj16", mode: "major" }, 10, "ニューエイジ"],
   [/賛美歌|讃美歌|聖歌|コラール|chorale|hymn|ゴスペル|gospel|アメイジング・?グレイス|礼拝|教会/i, { style: "hymn", form: "hymn_chorale16", mode: "major" }, 11, "賛美歌・ゴスペル"],
   [/フォークギター|弾き語り|フォークソング(?!.*昭和)|アコースティック・?フォーク|ボブ・?ディラン|bob\s*dylan|サイモン・?&?・?ガーファンクル|ジョーン・?バエズ|ピーター・?ポール|folk\s*(?:song|guitar)/i, { style: "folk", form: "folk_strum16", mode: "major" }, 11, "フォーク"],
   [/カントリー|country|ブルーグラス|bluegrass|フラットピッキング|flat\s*pick|ナッシュビル|nashville|チェット・?アトキンス|chet\s*atkins|マール・?トラヴィス|merle\s*travis|トニー・?ライス|tony\s*rice|ドク・?ワトソン|doc\s*watson|ジェームス・?バートン|james\s*burton|ブラッド・?ペイズリー|brad\s*paisley/i, { style: "country", mode: "major" }, 10, "カントリー／ブルーグラス"],
@@ -26769,7 +26888,7 @@ var GENRE_PROF = {
   world:      { t: [105, 160], minor: 0.42, lead: [["trumpet", 25], ["flute", 25], ["clarinet", 20], ["sax", 15], ["guitar", 15]] }
 };
 var GENRE_OF = { swing: "jazz", bebop: "jazz", soul: "jazz", organjazz: "jazz", modern: "jazz", gypsy: "jazz", fusion: "jazz", ballad: "jazz", bossa: "latin", brazil: "latin", latin: "latin", tango: "latin", reggae: "reggae",
-  arena: "rock", neo: "rock", mathrock: "rock", classical: "classical", baroque: "classical", orchestra: "classical", celtic: "folk", country: "folk", folkworld: "folk", folk: "folk", hymn: "classical", nongenre: "pop", kayo: "pop", douyou: "pop", dance: "electronic",
+  arena: "rock", neo: "rock", mathrock: "rock", classical: "classical", baroque: "classical", orchestra: "classical", celtic: "folk", country: "folk", folkworld: "folk", folk: "folk", hymn: "classical", nongenre: "pop", jpop90: "pop", punk: "rock", surf: "rock", blues: "jazz", ragtime: "jazz", hiphop: "pop", rockabilly: "rock", newage: "world", kayo: "pop", douyou: "pop", dance: "electronic",
   game: "soundtrack", dq: "soundtrack", ff: "soundtrack", chip: "soundtrack", epic: "soundtrack", arabic: "world", balkan: "world", andean: "world", afrobeat: "world", indian: "world", gamelan: "world", hawaiian: "world" };
 function genreProfile(style) { var k = GENRE_OF[style] || (/^(rk_|mcl_|fu_)/.test(style || "") ? (/^rk_/.test(style) ? "rock" : "jazz") : null); return k && GENRE_PROF[k] ? { genre: k, t: GENRE_PROF[k].t, minor: GENRE_PROF[k].minor, lead: GENRE_PROF[k].lead } : null; }
 /* ジャンルの幅と、曲種・形式の標準テンポの0.8〜1.25倍が重なる範囲から、rnd(0〜1)で選ぶ。重ならなければ null（標準のまま） */
