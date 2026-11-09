@@ -2174,6 +2174,57 @@ var FORMS = {
          T(0, "maj"), T(5, "maj"), T(0, "maj"), T(9, "min"),
          T(5, "maj"), T(7, "dom7"), T(0, "maj"), T(0, "maj")]
   },
+  hymn_chorale16: {
+    tempo: 72, label: "賛美歌 16小節（コラール：Ⅰ→Ⅳ→Ⅰ→Ⅴ、ゆったり歌える旋律）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_folk", bass: "kayo_folk", drums: "none", perc: "none" },
+    ch: [T(0, "maj"), T(5, "maj"), T(0, "maj"), T(7, "dom7"), T(9, "min"), T(5, "maj"), T(0, "maj"), T(7, "dom7"),
+         T(0, "maj"), T(5, "maj"), T(0, "maj"), T(9, "min"), T(5, "maj"), T(0, "maj"), T(7, "dom7"), T(0, "maj")]
+  },
+  hymn_gospel16: {
+    tempo: 80, label: "ゴスペル 16小節（Ⅰ→Ⅰ7→Ⅳ→Ⅳm→Ⅰ：アーメン終止）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_folk", bass: "kayo_folk", drums: "none", perc: "none" },
+    ch: [T(0, "maj"), T(0, "dom7"), T(5, "maj"), T(5, "min"), T(0, "maj"), T(9, "min"), T(2, "min"), T(7, "dom7"),
+         T(0, "maj"), T(0, "dom7"), T(5, "maj"), T(5, "min"), T(0, "maj"), T(7, "dom7"), T(5, "maj"), T(0, "maj")]
+  },
+  hymn_minor16: {
+    tempo: 68, label: "賛美歌（短調）16小節（Ⅰm→Ⅳm→Ⅴ7：哀歌・キリエ風）", bars: 16, minor: true, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_folk", bass: "kayo_folk", drums: "none", perc: "none" },
+    ch: [T(0, "min"), T(5, "min"), T(0, "min"), T(7, "dom7"), T(8, "maj"), T(5, "min"), T(7, "dom7"), T(0, "min"),
+         T(0, "min"), T(3, "maj"), T(8, "maj"), T(7, "dom7"), T(5, "min"), T(0, "min"), T(7, "dom7"), T(0, "min")]
+  },
+  folk_strum16: {
+    tempo: 96, label: "フォーク 16小節（ストローク：Ⅰ→Ⅴ→Ⅵm→Ⅳ の循環）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_folk", bass: "kayo_folk", drums: "none", perc: "none" },
+    ch: [T(0, "maj"), T(7, "maj"), T(9, "min"), T(5, "maj"), T(0, "maj"), T(7, "maj"), T(9, "min"), T(5, "maj"),
+         T(0, "maj"), T(7, "maj"), T(9, "min"), T(5, "maj"), T(5, "maj"), T(7, "maj"), T(0, "maj"), T(0, "maj")]
+  },
+  folk_travis16: {
+    tempo: 104, label: "フォーク 16小節（トラヴィス・ピッキング：Ⅰ→Ⅵm→Ⅱ7→Ⅴ7）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_folk", bass: "kayo_folk", drums: "none", perc: "none" },
+    ch: [T(0, "maj"), T(0, "maj"), T(9, "min"), T(9, "dom7"), T(2, "dom7"), T(7, "dom7"), T(0, "maj"), T(0, "dom7"),
+         T(5, "maj"), T(5, "min"), T(0, "maj"), T(9, "min"), T(2, "m7"), T(7, "dom7"), T(0, "maj"), T(0, "maj")]
+  },
+  folk_minor16: {
+    tempo: 92, label: "フォーク（短調）16小節（Ⅵm→Ⅴ→Ⅳ→Ⅲ の下降：アンダルシア風）", bars: 16, minor: true, ts: [4, 4], sec: "AA",
+    feel: { comp: "kayo_folk", bass: "kayo_folk", drums: "none", perc: "none" },
+    ch: [T(0, "min"), T(10, "maj"), T(8, "maj"), T(7, "maj"), T(0, "min"), T(10, "maj"), T(8, "maj"), T(7, "maj"),
+         T(0, "min"), T(3, "maj"), T(10, "maj"), T(8, "maj"), T(5, "min"), T(7, "dom7"), T(0, "min"), T(0, "min")]
+  },
+  ng_major16: {
+    tempo: 100, label: "ノンジャンル 16小節（長調：ジャンル不問の平均的な進行 Ⅰ→Ⅵm→Ⅳ→Ⅴ）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    ch: [T(0, "maj"), T(9, "min"), T(5, "maj"), T(7, "maj"), T(0, "maj"), T(7, "maj"), T(9, "min"), T(5, "maj"),
+         T(0, "maj"), T(5, "maj"), T(0, "maj"), T(7, "dom7"), T(9, "min"), T(2, "m7"), T(7, "dom7"), T(0, "maj")]
+  },
+  ng_major7_16: {
+    tempo: 92, label: "ノンジャンル 16小節（長調・7thの響き：Ⅰ△7→Ⅵm7→Ⅳ△7→Ⅴ7）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+    ch: [T(0, "maj7"), T(9, "m7"), T(5, "maj7"), T(7, "dom7"), T(0, "maj7"), T(4, "m7"), T(9, "m7"), T(5, "maj7"),
+         T(2, "m7"), T(7, "dom7"), T(0, "maj7"), T(9, "m7"), T(5, "maj7"), T(2, "m7"), T(7, "dom7"), T(0, "maj7")]
+  },
+  ng_minor16: {
+    tempo: 96, label: "ノンジャンル 16小節（短調：Ⅰm→♭ⅥM7→♭Ⅲ→♭Ⅶ の平均的な進行）", bars: 16, minor: true, ts: [4, 4], sec: "AA",
+    ch: [T(0, "min"), T(8, "maj7"), T(3, "maj"), T(10, "maj"), T(0, "min"), T(8, "maj7"), T(7, "dom7"), T(0, "min"),
+         T(0, "min"), T(5, "min"), T(8, "maj"), T(10, "maj"), T(3, "maj"), T(8, "maj7"), T(7, "dom7"), T(0, "min")]
+  },
   kayo_idol16: {
     tempo: 124, label: "アイドル歌謡 16小節（筒美京平風：王道進行 Ⅳ△7→Ⅴ7→Ⅲm7→Ⅵm7 とⅡ-Ⅴの明るい歌）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
     feel: { comp: "kayo_idol", bass: "kayo_idol", drums: "kayo_idol", perc: "none" },
@@ -2857,6 +2908,24 @@ var STYLES = {
     comp: "piano", bass: "even8", drums: "rock", mel: "ballad",
     forms: ["kayo_idol16", "kayo_idol32", "kayo_mood16", "kayo_mood_cliche16", "kayo_gs16", "kayo_city16", "kayo_folk16", "kayo_enka16"],
     voice: "auto", lead: 27, compProg: 0, feel: 8
+  },
+  hymn: {
+    label: "賛美歌・ゴスペル（コラール：ゆったりした和音の歩みと、歌えるメロディ）", swing: 0.5, tempo: 72,
+    comp: "piano", bass: "even8", drums: "rock", mel: "ballad",
+    forms: ["hymn_chorale16", "hymn_gospel16", "hymn_minor16"],
+    voice: "auto", lead: 19, compProg: 19, feel: 8
+  },
+  folk: {
+    label: "フォーク（アコースティック弾き語り：ストロークとトラヴィス・ピッキング）", swing: 0.5, tempo: 96,
+    comp: "piano", bass: "even8", drums: "rock", mel: "ballad",
+    forms: ["folk_strum16", "folk_travis16", "folk_minor16"],
+    voice: "auto", lead: 25, compProg: 25, feel: 8
+  },
+  nongenre: {
+    label: "ノンジャンル（ジャンル不問：多数の譜面の平均的な和音の進みと、歌えるメロディ）", swing: 0.5, tempo: 98,
+    comp: "piano", bass: "even8", drums: "rock", mel: "ballad",
+    forms: ["ng_major16", "ng_major7_16", "ng_minor16"],
+    voice: "auto", lead: 0, compProg: 0, feel: 8
   },
   enka: {
     label: "演歌（ヨナ抜き短音階・こぶし・しゃくり、ストリングスの刺し、ズン・タのリズム：歌い上げる王道）", swing: 0.5, tempo: 80,
@@ -24354,9 +24423,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 546;
+var BUILD_NO = 549;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 204;
+var GEN_NO = 206;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
@@ -26383,6 +26452,9 @@ var KW_RULES = [
   [/ケルト|celtic|アイリッシュ|irish|ブルターニュ|スコットランド|バグパイプ|ジグ\b|リール\b/i, { style: "celtic" }, 8, "ケルト／アイリッシュ"],
   [/リール(?!\s*[A-Za-z])|reel\b|リール・?ダンス/i, { style: "celtic", form: "reel_dor", mode: "minor" }, 9, "リール（ドリアン）"],
   [/ミクソリディアン|mixolydian/i, { style: "celtic", form: "reel_mix", mode: "major" }, 7, "リール（ミクソリディアン）"],
+  [/ノンジャンル|ジャンル不問|ジャンルを問わ|ジャンルなし|non-?genre|genre-?less/i, { style: "nongenre", form: "ng_major16", mode: "major" }, 11, "ノンジャンル"],
+  [/賛美歌|讃美歌|聖歌|コラール|chorale|hymn|ゴスペル|gospel|アメイジング・?グレイス|礼拝|教会/i, { style: "hymn", form: "hymn_chorale16", mode: "major" }, 11, "賛美歌・ゴスペル"],
+  [/フォークギター|弾き語り|フォークソング(?!.*昭和)|アコースティック・?フォーク|ボブ・?ディラン|bob\s*dylan|サイモン・?&?・?ガーファンクル|ジョーン・?バエズ|ピーター・?ポール|folk\s*(?:song|guitar)/i, { style: "folk", form: "folk_strum16", mode: "major" }, 11, "フォーク"],
   [/カントリー|country|ブルーグラス|bluegrass|フラットピッキング|flat\s*pick|ナッシュビル|nashville|チェット・?アトキンス|chet\s*atkins|マール・?トラヴィス|merle\s*travis|トニー・?ライス|tony\s*rice|ドク・?ワトソン|doc\s*watson|ジェームス・?バートン|james\s*burton|ブラッド・?ペイズリー|brad\s*paisley/i, { style: "country", mode: "major" }, 10, "カントリー／ブルーグラス"],
   [/ブルーグラス|bluegrass|ビル・?モンロー|bill\s*monroe|フラット&スクラッグス|スクラッグス/i, { style: "country", form: "bluegrass16", mode: "major" }, 11, "ブルーグラス"],
   [/ウェスタン・?スウィング|western\s*swing|ボブ・?ウィルス|bob\s*wills/i, { style: "country", form: "western_swing", mode: "major", voice: "country" }, 11, "ウェスタン・スウィング"],
@@ -26697,7 +26769,7 @@ var GENRE_PROF = {
   world:      { t: [105, 160], minor: 0.42, lead: [["trumpet", 25], ["flute", 25], ["clarinet", 20], ["sax", 15], ["guitar", 15]] }
 };
 var GENRE_OF = { swing: "jazz", bebop: "jazz", soul: "jazz", organjazz: "jazz", modern: "jazz", gypsy: "jazz", fusion: "jazz", ballad: "jazz", bossa: "latin", brazil: "latin", latin: "latin", tango: "latin", reggae: "reggae",
-  arena: "rock", neo: "rock", mathrock: "rock", classical: "classical", baroque: "classical", orchestra: "classical", celtic: "folk", country: "folk", folkworld: "folk", kayo: "pop", douyou: "pop", dance: "electronic",
+  arena: "rock", neo: "rock", mathrock: "rock", classical: "classical", baroque: "classical", orchestra: "classical", celtic: "folk", country: "folk", folkworld: "folk", folk: "folk", hymn: "classical", nongenre: "pop", kayo: "pop", douyou: "pop", dance: "electronic",
   game: "soundtrack", dq: "soundtrack", ff: "soundtrack", chip: "soundtrack", epic: "soundtrack", arabic: "world", balkan: "world", andean: "world", afrobeat: "world", indian: "world", gamelan: "world", hawaiian: "world" };
 function genreProfile(style) { var k = GENRE_OF[style] || (/^(rk_|mcl_|fu_)/.test(style || "") ? (/^rk_/.test(style) ? "rock" : "jazz") : null); return k && GENRE_PROF[k] ? { genre: k, t: GENRE_PROF[k].t, minor: GENRE_PROF[k].minor, lead: GENRE_PROF[k].lead } : null; }
 /* ジャンルの幅と、曲種・形式の標準テンポの0.8〜1.25倍が重なる範囲から、rnd(0〜1)で選ぶ。重ならなければ null（標準のまま） */

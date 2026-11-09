@@ -1,0 +1,70 @@
+{
+  "id": "2026-11-09_hymn_hymn_chorale16",
+  "date": "2026-11-09",
+  "style": "hymn",
+  "styleShort": "賛美歌・ゴスペル",
+  "styleLabel": "賛美歌・ゴスペル（コラール：ゆったりした和音の歩みと、歌えるメロディ）",
+  "form": "hymn_chorale16",
+  "formLabel": "賛美歌 16小節（コラール：Ⅰ→Ⅳ→Ⅰ→Ⅴ、ゆったり歌える旋律）",
+  "title": "Nuit de Paris (F)",
+  "key": "F",
+  "tempo": 72,
+  "tempoGenerated": 72,
+  "bars": 92,
+  "seed": 20261109,
+  "gen": 206,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 19
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 19
+    },
+    {
+      "id": "comp",
+      "name": "Piano",
+      "prog": 19
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "F",
+    "A#",
+    "F",
+    "Gm7",
+    "C7b9",
+    "Dm",
+    "A#",
+    "F",
+    "C7alt",
+    "F",
+    "A#",
+    "F",
+    "Dm",
+    "A#",
+    "F",
+    "C7",
+    "F"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 206). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-09_hymn_hymn_chorale16/2026-11-09_hymn_hymn_chorale16_midi-set.zip",
+    "midi": "demos/2026-11-09_hymn_hymn_chorale16/2026-11-09_hymn_hymn_chorale16_all.mid",
+    "info": "demos/2026-11-09_hymn_hymn_chorale16/info.md"
+  },
+  "audio": "demos/2026-11-09_hymn_hymn_chorale16/2026-11-09_hymn_hymn_chorale16.mp3"
+}
