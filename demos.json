@@ -850,6 +850,111 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-09_blues_blues_shuffle12",
+  "date": "2026-11-09",
+  "style": "blues",
+  "styleShort": "ブルース",
+  "styleLabel": "ブルース（シャッフルの12小節・マイナー・ジャズ・ブルース：ブルース・スケールのギターとシャッフルのリズム）",
+  "form": "blues_shuffle12",
+  "formLabel": "ブルース：12小節のシャッフル(Ⅰ7 4小節 → Ⅳ7 2 → Ⅰ7 2 → Ⅴ7 Ⅳ7 Ⅰ7 Ⅴ7)を2回 24小節",
+  "title": "Étoile du Nord (A)",
+  "key": "A",
+  "tempo": 108,
+  "tempoGenerated": 108,
+  "bars": 156,
+  "seed": 20261109,
+  "gen": 209,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 26
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 26
+   },
+   {
+    "id": "comp",
+    "name": "Chord Gtr",
+    "prog": 26
+   },
+   {
+    "id": "gtr2",
+    "name": "Guitar 2 (rhythm riff)",
+    "prog": 30
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "gtr3",
+    "name": "Guitar 3 (harmony)",
+    "prog": 30
+   },
+   {
+    "id": "gtr4",
+    "name": "Guitar 4 (riff double / harmony)",
+    "prog": 30
+   }
+  ],
+  "chordsOneChorus": [
+   "Em7",
+   "A7b9",
+   "A7",
+   "D#13",
+   "A7",
+   "Am7",
+   "D7",
+   "G#9",
+   "A9",
+   "A7",
+   "E7",
+   "D7",
+   "A7",
+   "E7",
+   "Em7",
+   "A9",
+   "Em7",
+   "A7b9",
+   "Em7",
+   "A7b9",
+   "A7",
+   "Am7",
+   "D9",
+   "Am7",
+   "D9",
+   "Em7",
+   "A7b9",
+   "A13",
+   "E7alt",
+   "G#9",
+   "A7",
+   "E7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 209). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-09_blues_blues_shuffle12/2026-11-09_blues_blues_shuffle12_midi-set.zip",
+   "midi": "demos/2026-11-09_blues_blues_shuffle12/2026-11-09_blues_blues_shuffle12_all.mid",
+   "info": "demos/2026-11-09_blues_blues_shuffle12/info.md"
+  },
+  "audio": "demos/2026-11-09_blues_blues_shuffle12/2026-11-09_blues_blues_shuffle12.mp3",
+  "scorePages": [
+   "scores/2026-11-09_blues_blues_shuffle12-1.png"
+  ],
+  "cover": "covers/2026-11-09_blues_blues_shuffle12.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-08_bossa_jobimmin32",
   "date": "2026-11-08",
   "style": "bossa",
