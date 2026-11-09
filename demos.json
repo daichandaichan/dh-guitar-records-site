@@ -955,6 +955,82 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-09_ragtime_ragtime_a",
+  "date": "2026-11-09",
+  "style": "ragtime",
+  "styleShort": "ラグタイム",
+  "styleLabel": "ラグタイム（ジョプリン型：ベースと和音の交互の左手と、シンコペの旋律／近似）",
+  "form": "ragtime_a",
+  "formLabel": "ラグタイム 16小節（Ⅰ→Ⅴ7→Ⅰ→Ⅳ のあと、Ⅲ7→Ⅵ7→Ⅱ7→Ⅴ7 の連続属和音）",
+  "title": "Café Bleue (C)",
+  "key": "C",
+  "tempo": 100,
+  "tempoGenerated": 100,
+  "bars": 76,
+  "seed": 20261109,
+  "gen": 209,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 0
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 0
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 0
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "C",
+   "Dm7",
+   "G7b9",
+   "C",
+   "C",
+   "F",
+   "F",
+   "C",
+   "G7",
+   "A#13",
+   "E7",
+   "Em7",
+   "A7",
+   "D#9",
+   "D9",
+   "G7",
+   "C",
+   "C"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 209). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-09_ragtime_ragtime_a/2026-11-09_ragtime_ragtime_a_midi-set.zip",
+   "midi": "demos/2026-11-09_ragtime_ragtime_a/2026-11-09_ragtime_ragtime_a_all.mid",
+   "info": "demos/2026-11-09_ragtime_ragtime_a/info.md"
+  },
+  "audio": "demos/2026-11-09_ragtime_ragtime_a/2026-11-09_ragtime_ragtime_a.mp3",
+  "scorePages": [
+   "scores/2026-11-09_ragtime_ragtime_a-1.png"
+  ],
+  "cover": "covers/2026-11-09_ragtime_ragtime_a.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-08_bossa_jobimmin32",
   "date": "2026-11-08",
   "style": "bossa",
