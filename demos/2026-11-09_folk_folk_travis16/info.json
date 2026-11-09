@@ -1,0 +1,72 @@
+{
+  "id": "2026-11-09_folk_folk_travis16",
+  "date": "2026-11-09",
+  "style": "folk",
+  "styleShort": "フォーク",
+  "styleLabel": "フォーク（アコースティック弾き語り：ストロークとトラヴィス・ピッキング）",
+  "form": "folk_travis16",
+  "formLabel": "フォーク 16小節（トラヴィス・ピッキング：Ⅰ→Ⅵm→Ⅱ7→Ⅴ7）",
+  "title": "Café du Nord (G)",
+  "key": "G",
+  "tempo": 104,
+  "tempoGenerated": 104,
+  "bars": 92,
+  "seed": 20261109,
+  "gen": 206,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 25
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 25
+    },
+    {
+      "id": "comp",
+      "name": "Piano",
+      "prog": 25
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "G",
+    "G",
+    "Em",
+    "E7",
+    "Em7",
+    "A7b9",
+    "D7",
+    "G",
+    "Dm7",
+    "G7",
+    "C",
+    "Cm7",
+    "G",
+    "Em",
+    "Am7",
+    "Am7",
+    "D7",
+    "G",
+    "G"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 206). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-09_folk_folk_travis16/2026-11-09_folk_folk_travis16_midi-set.zip",
+    "midi": "demos/2026-11-09_folk_folk_travis16/2026-11-09_folk_folk_travis16_all.mid",
+    "info": "demos/2026-11-09_folk_folk_travis16/info.md"
+  },
+  "audio": "demos/2026-11-09_folk_folk_travis16/2026-11-09_folk_folk_travis16.mp3"
+}
