@@ -1,0 +1,84 @@
+{
+  "id": "2026-11-09_punk_punk_a",
+  "date": "2026-11-09",
+  "style": "punk",
+  "styleShort": "ロック：パンク／ポップ・パンク",
+  "styleLabel": "ロック：パンク／ポップ・パンク（速い8分のパワー・コード・単純で勢いのある進行／ギター2本）",
+  "form": "punk_a",
+  "formLabel": "パンク：I → V → vi → IV の反復(ポップ・パンク型) 16小節",
+  "title": "Swing du Nord (E)",
+  "key": "E",
+  "tempo": 176,
+  "tempoGenerated": 176,
+  "bars": 92,
+  "seed": 20261109,
+  "gen": 209,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 30
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 30
+    },
+    {
+      "id": "comp",
+      "name": "Chord Gtr",
+      "prog": 30
+    },
+    {
+      "id": "gtr2",
+      "name": "Guitar 2 (rhythm riff)",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "gtr3",
+      "name": "Guitar 3 (harmony)",
+      "prog": 30
+    },
+    {
+      "id": "gtr4",
+      "name": "Guitar 4 (riff double / harmony)",
+      "prog": 30
+    }
+  ],
+  "chordsOneChorus": [
+    "E",
+    "E",
+    "B",
+    "B",
+    "C#m",
+    "C#m",
+    "A",
+    "A",
+    "E",
+    "E",
+    "B",
+    "B",
+    "C#m",
+    "C#m",
+    "A",
+    "A"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 209). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-09_punk_punk_a/2026-11-09_punk_punk_a_midi-set.zip",
+    "midi": "demos/2026-11-09_punk_punk_a/2026-11-09_punk_punk_a_all.mid",
+    "info": "demos/2026-11-09_punk_punk_a/info.md"
+  },
+  "audio": "demos/2026-11-09_punk_punk_a/2026-11-09_punk_punk_a.mp3"
+}
