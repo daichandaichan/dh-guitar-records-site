@@ -1,0 +1,86 @@
+{
+  "id": "2026-11-09_surf_surf_a",
+  "date": "2026-11-09",
+  "style": "surf",
+  "styleShort": "ロック：サーフ／インスト・ギター",
+  "styleLabel": "ロック：サーフ／インスト・ギター（ベンチャーズ型：短調のリフとトレモロ・ピッキング／ギター2本）",
+  "form": "surf_a",
+  "formLabel": "サーフ(短調)：i → iv → i → V7 の反復(ベンチャーズ型) 16小節",
+  "title": "Café Rapide (Dm)",
+  "key": "Dm",
+  "tempo": 150,
+  "tempoGenerated": 150,
+  "bars": 108,
+  "seed": 20261109,
+  "gen": 209,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 27
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 27
+    },
+    {
+      "id": "comp",
+      "name": "Chord Gtr",
+      "prog": 27
+    },
+    {
+      "id": "gtr2",
+      "name": "Guitar 2 (rhythm riff)",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "gtr3",
+      "name": "Guitar 3 (harmony)",
+      "prog": 30
+    },
+    {
+      "id": "gtr4",
+      "name": "Guitar 4 (riff double / harmony)",
+      "prog": 30
+    }
+  ],
+  "chordsOneChorus": [
+    "Dm",
+    "Dm",
+    "Dm",
+    "Dm",
+    "Gm",
+    "Gm",
+    "Dm7",
+    "Dm",
+    "A7",
+    "Em7",
+    "A7",
+    "Dm",
+    "Dm",
+    "Gm",
+    "Gm",
+    "Em7",
+    "A7",
+    "A7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 209). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-09_surf_surf_a/2026-11-09_surf_surf_a_midi-set.zip",
+    "midi": "demos/2026-11-09_surf_surf_a/2026-11-09_surf_surf_a_all.mid",
+    "info": "demos/2026-11-09_surf_surf_a/info.md"
+  },
+  "audio": "demos/2026-11-09_surf_surf_a/2026-11-09_surf_surf_a.mp3"
+}
