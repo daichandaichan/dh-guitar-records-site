@@ -1,0 +1,84 @@
+{
+  "id": "2026-11-09_hiphop_hh_loop2",
+  "date": "2026-11-09",
+  "style": "hiphop",
+  "styleShort": "ヒップホップ",
+  "styleLabel": "ヒップホップ（ブーム・バップ：短調の短いループ・間のあるベースとファンクのドラム／近似）",
+  "form": "hh_loop2",
+  "formLabel": "ヒップホップ：i 3小節 ♭VII 1小節の2コード・ループ(ブーム・バップ) 16小節",
+  "title": "Tempo Bleue (Am)",
+  "key": "Am",
+  "tempo": 90,
+  "tempoGenerated": 90,
+  "bars": 92,
+  "seed": 20261109,
+  "gen": 209,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 4
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 4
+    },
+    {
+      "id": "comp",
+      "name": "Chord Gtr",
+      "prog": 4
+    },
+    {
+      "id": "gtr2",
+      "name": "Guitar 2 (rhythm riff)",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "gtr3",
+      "name": "Guitar 3 (harmony)",
+      "prog": 30
+    },
+    {
+      "id": "gtr4",
+      "name": "Guitar 4 (riff double / harmony)",
+      "prog": 30
+    }
+  ],
+  "chordsOneChorus": [
+    "Am7",
+    "Am7",
+    "Am7",
+    "G",
+    "Am7",
+    "Am7",
+    "Am7",
+    "G",
+    "Am7",
+    "Am7",
+    "Am7",
+    "G",
+    "Am7",
+    "Am7",
+    "Am6",
+    "G"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 209). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-09_hiphop_hh_loop2/2026-11-09_hiphop_hh_loop2_midi-set.zip",
+    "midi": "demos/2026-11-09_hiphop_hh_loop2/2026-11-09_hiphop_hh_loop2_all.mid",
+    "info": "demos/2026-11-09_hiphop_hh_loop2/info.md"
+  },
+  "audio": "demos/2026-11-09_hiphop_hh_loop2/2026-11-09_hiphop_hh_loop2.mp3"
+}
