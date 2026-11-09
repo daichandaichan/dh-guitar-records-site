@@ -359,6 +359,80 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-09_nongenre_ng_major16",
+  "date": "2026-11-09",
+  "style": "nongenre",
+  "styleShort": "ノンジャンル",
+  "styleLabel": "ノンジャンル（ジャンル不問：多数の譜面の平均的な和音の進みと、歌えるメロディ）",
+  "form": "ng_major16",
+  "formLabel": "ノンジャンル 16小節（長調：ジャンル不問の平均的な進行 Ⅰ→Ⅵm→Ⅳ→Ⅴ）",
+  "title": "Valse de Paris (D)",
+  "key": "D",
+  "tempo": 100,
+  "tempoGenerated": 100,
+  "bars": 108,
+  "seed": 20261109,
+  "gen": 206,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 0
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 0
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 0
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "D",
+   "Bm",
+   "G",
+   "A",
+   "D",
+   "A",
+   "Bm",
+   "G",
+   "D",
+   "G",
+   "D",
+   "A7",
+   "Bm9",
+   "Em7",
+   "A7",
+   "D"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 206). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-09_nongenre_ng_major16/2026-11-09_nongenre_ng_major16_midi-set.zip",
+   "midi": "demos/2026-11-09_nongenre_ng_major16/2026-11-09_nongenre_ng_major16_all.mid",
+   "info": "demos/2026-11-09_nongenre_ng_major16/info.md"
+  },
+  "audio": "demos/2026-11-09_nongenre_ng_major16/2026-11-09_nongenre_ng_major16.mp3",
+  "scorePages": [
+   "scores/2026-11-09_nongenre_ng_major16-1.png"
+  ],
+  "cover": "covers/2026-11-09_nongenre_ng_major16.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-08_bossa_jobimmin32",
   "date": "2026-11-08",
   "style": "bossa",
