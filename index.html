@@ -627,8 +627,9 @@
   // ------------------------------------------------------------
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } });
-  }, { threshold: .15 });
+  }, { threshold: 0, rootMargin: "0px 0px -6% 0px" });      /* 背が高い要素（曲種タイル42枚など）は、小さい画面（iPhone SE など）で「15%見えた」に届かず、ずっと透明（真っ黒）になっていた。少しでも見えたら表示する */
   document.querySelectorAll(".reveal").forEach(el => io.observe(el));
+  setTimeout(() => document.querySelectorAll(".reveal:not(.in)").forEach(el => el.classList.add("in")), 2500);      /* 念のため：2.5秒たったら、すべて表示 */
 </script>
 </body>
 </html>
