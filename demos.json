@@ -1,5 +1,98 @@
 [
  {
+  "id": "2026-11-10_rk_zappa_auto16m",
+  "date": "2026-11-10",
+  "style": "rk_zappa",
+  "styleShort": "ロック：ザッパ型",
+  "styleLabel": "ロック：ザッパ型（フランク・ザッパ／変拍子・ユニゾンのリフ／ギター2本＋シンセ）",
+  "form": "auto16m",
+  "formLabel": "16小節・短調（毎回ちがう）",
+  "title": "Étoile des Lilas (C#m)",
+  "key": "C#m",
+  "tempo": 112,
+  "tempoGenerated": 112,
+  "bars": 92,
+  "seed": 20261110,
+  "gen": 211,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 29
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 29
+   },
+   {
+    "id": "comp",
+    "name": "Synth (riff/pad)",
+    "prog": 80
+   },
+   {
+    "id": "gtr2",
+    "name": "Guitar 2 (rhythm riff)",
+    "prog": 30
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "gtr3",
+    "name": "Guitar 3 (harmony)",
+    "prog": 30
+   },
+   {
+    "id": "gtr4",
+    "name": "Guitar 4 (riff double / harmony)",
+    "prog": 30
+   }
+  ],
+  "chordsOneChorus": [
+   "Emaj7",
+   "A9",
+   "F#m7",
+   "F#m7",
+   "B9",
+   "Amaj7",
+   "D#m7",
+   "G#9",
+   "D#m7b5",
+   "G#9",
+   "C#m6",
+   "D#m7b5",
+   "G#7b9",
+   "C#m9",
+   "C#m6",
+   "Emaj7",
+   "A7b9",
+   "D#m7b5",
+   "G#9",
+   "C#m6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 211). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-10_rk_zappa_auto16m/2026-11-10_rk_zappa_auto16m_midi-set.zip",
+   "midi": "demos/2026-11-10_rk_zappa_auto16m/2026-11-10_rk_zappa_auto16m_all.mid",
+   "info": "demos/2026-11-10_rk_zappa_auto16m/info.md"
+  },
+  "audio": "demos/2026-11-10_rk_zappa_auto16m/2026-11-10_rk_zappa_auto16m.mp3",
+  "scorePages": [
+   "scores/2026-11-10_rk_zappa_auto16m-1.png"
+  ],
+  "cover": "covers/2026-11-10_rk_zappa_auto16m.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-09_arabic_ar_nahawand",
   "date": "2026-11-09",
   "style": "arabic",
