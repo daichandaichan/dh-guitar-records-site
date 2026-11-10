@@ -1,0 +1,70 @@
+{
+  "id": "2026-11-10_kayo_kayo_city16",
+  "date": "2026-11-10",
+  "style": "kayo",
+  "styleShort": "昭和歌謡曲",
+  "styleLabel": "昭和歌謡曲（ムード歌謡・GS・アイドル歌謡・フォーク・ニューミュージック・演歌：歌えるメロディと王道の進行）",
+  "form": "kayo_city16",
+  "formLabel": "ニューミュージック／シティポップ 16小節（maj7とⅡm7→Ⅴ7の洗練、16ビート気味）",
+  "title": "Nuit Bleue (G)",
+  "key": "G",
+  "tempo": 108,
+  "tempoGenerated": 108,
+  "bars": 92,
+  "seed": 20261110,
+  "gen": 211,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 27
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 27
+    },
+    {
+      "id": "comp",
+      "name": "Piano",
+      "prog": 0
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "Cmaj7",
+    "B9",
+    "Em9",
+    "Em7",
+    "Am7",
+    "D7",
+    "Gmaj7",
+    "Gmaj7",
+    "Cmaj7",
+    "D7",
+    "Bm7",
+    "Em7",
+    "Am7",
+    "Am7",
+    "D7b9",
+    "Gmaj7",
+    "Gmaj7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 211). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-10_kayo_kayo_city16/2026-11-10_kayo_kayo_city16_midi-set.zip",
+    "midi": "demos/2026-11-10_kayo_kayo_city16/2026-11-10_kayo_kayo_city16_all.mid",
+    "info": "demos/2026-11-10_kayo_kayo_city16/info.md"
+  },
+  "audio": "demos/2026-11-10_kayo_kayo_city16/2026-11-10_kayo_kayo_city16.mp3"
+}
