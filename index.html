@@ -523,7 +523,7 @@
         if (!v) {
           v = document.createElement("video");
           v.src = d.video; v.controls = true; v.playsInline = true; v.preload = "auto";
-          v.className = "w-full bg-black"; v.style.maxWidth = "640px";
+          v.className = "w-full bg-black"; v.style.maxWidth = "960px";
           v.onplay = () => { stop(v); playingId = d.id; btn.textContent = "■ 止める"; };
           v.onpause = () => { if (playingId === d.id) { playingId = null; btn.textContent = "▶ 再生"; } };
           v.onended = () => { v.currentTime = 0; };

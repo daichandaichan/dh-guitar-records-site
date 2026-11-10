@@ -71,7 +71,8 @@
   },
   "audio": "demos/2026-11-10_contemporary_ct_free/2026-11-10_contemporary_ct_free.mp3",
   "cover": "covers/2026-11-10_contemporary_ct_free.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "video": "demos/2026-11-10_contemporary_ct_free/2026-11-10_contemporary_ct_free.mp4"
  },
  {
   "id": "2026-11-10_rk_zappa_auto16m",
