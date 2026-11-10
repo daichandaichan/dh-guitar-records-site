@@ -2231,8 +2231,8 @@ var FORMS = {
     ch: [T(5, "maj7"), T(7, "dom7"), T(4, "m7"), T(9, "m7"), T(5, "maj7"), T(7, "dom7"), T(4, "m7"), T(9, "m7"),
          T(2, "m7"), T(7, "dom7"), T(0, "maj7"), T(9, "m7"), T(5, "maj7"), T(2, "m7"), T(7, "dom7"), T(0, "maj7")]
   },
-  jpop_komuro16: {
-    tempo: 120, label: "90年代J-POP 16小節（小室系：Ⅵm→Ⅳ→Ⅴ→Ⅰ の反復、シンセと16ビート）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
+  jpop_dance16: {
+    tempo: 120, label: "90年代J-POP 16小節（ダンス・ポップ系：Ⅵm→Ⅳ→Ⅴ→Ⅰ の反復、シンセと16ビート）", bars: 16, minor: false, ts: [4, 4], sec: "AA",
     feel: { comp: "kayo_idol", bass: "kayo_idol", drums: "kayo_idol", perc: "none" },
     ch: [T(9, "min"), T(5, "maj"), T(7, "maj"), T(0, "maj"), T(9, "min"), T(5, "maj"), T(7, "maj"), T(0, "maj"),
          T(9, "min"), T(5, "maj7"), T(7, "dom7"), T(0, "maj"), T(5, "maj"), T(7, "maj"), T(9, "min"), T(0, "maj")]
@@ -2982,9 +2982,9 @@ var STYLES = {
     voice: "auto", lead: 0, compProg: 0, feel: 8
   },
   jpop90: {
-    label: "90年代J-POP（王道進行・小室系・ビーイング系・渋谷系・バラード：7thの和音と16ビート、歌えるメロディ）", swing: 0.5, tempo: 108,
+    label: "90年代J-POP（王道進行・ダンス・ポップ系・ビーイング系・渋谷系・バラード：7thの和音と16ビート、歌えるメロディ）", swing: 0.5, tempo: 108,
     comp: "piano", bass: "even8", drums: "rock", mel: "ballad",
-    forms: ["jpop_oudou16", "jpop_komuro16", "jpop_being16", "jpop_shibuya16", "jpop_ballad16"],
+    forms: ["jpop_oudou16", "jpop_dance16", "jpop_being16", "jpop_shibuya16", "jpop_ballad16"],
     voice: "auto", lead: 27, compProg: 4, feel: 16
   },
   punk: {
@@ -18580,6 +18580,84 @@ function ctTonnetzPath(R, root0) {
   }
   return { n: st.n, path: path };
 }
+/* モメント形式 */
+function ctMomentForm(R, voices, total) {
+  var N = 7 + R.i(4), w = [], tw = 0, i, b = [0];
+  for (i = 0; i < N; i++) { var x = 0.5 + R.f() * 1.5; w.push(x); tw += x; }
+  for (i = 0; i < N; i++) b.push(b[i] + total * w[i] / tw);
+  var chars = [], nv = voices.length;
+  for (i = 0; i < N; i++) {
+    var act = voices.map(function (v, vi) { return vi === 0 ? R.chance(0.7) : R.chance(0.35 + R.f() * 0.5); });
+    if (!act.some(function (a) { return a; })) act[R.i(nv)] = true;
+    chars.push({ act: act, keep: 0.45 + R.f() * 0.55, oct: [-12, 0, 0, 12][R.i(4)], dyn: [0.55, 0.8, 1.0, 1.3][R.i(4)], gap: 0.3 + R.f() * 1.1 });
+  }
+  return voices.map(function (v, vi) {
+    var out = [];
+    v.forEach(function (n) {
+      var k = 0; while (k < N - 1 && n.t >= b[k + 1]) k++;
+      var c = chars[k]; if (!c.act[vi]) return;
+      if (n.t < b[k] + c.gap) return;
+      if (!R.chance(c.keep)) return;
+      var d = Math.min(n.d, b[k + 1] - n.t - 0.04); if (d < 0.05) return;
+      out.push(ctClone(n, { m: n.m + c.oct, d: d, dyn: Math.max(0.05, Math.min(0.98, n.dyn * c.dyn)), sec: "Moment" + (k + 1) }));
+    });
+    return out;
+  });
+}
+/* フォルメル技法（公式の拡大） */
+function ctFormel(R, voices, total) {
+  var lead = voices[0]; if (!lead || lead.length < 12) return voices;
+  var src = lead.filter(function (n) { return n.sec === "Exp1"; }); if (src.length < 9) src = lead.slice(0, Math.min(40, lead.length));
+  var F = src.slice(0, 9); if (F.length < 7) return voices;
+  var t0 = F[0].t, span = F[F.length - 1].t + F[F.length - 1].d - t0; if (span < 0.6) return voices;
+  var A = total * 0.2, B = total * 0.86, L = (B - A) / F.length;
+  var newLead = lead.filter(function (n) { return n.t < A || n.t >= B; });
+  F.forEach(function (c, i) {
+    var sc = L / span, off = c.m - F[0].m;
+    F.forEach(function (n) {
+      var t = A + i * L + (n.t - t0) * sc, d = Math.max(0.08, n.d * sc * 0.92);
+      if (t >= B) return;
+      newLead.push(ctClone(n, { t: t, d: d, m: n.m + off, dyn: Math.max(0.1, Math.min(0.95, 0.35 + 0.5 * (i / F.length) + (R.f() - 0.5) * 0.06)), sec: "Formel" + (i + 1) }));
+    });
+  });
+  newLead.sort(function (a, b) { return a.t - b.t; });
+  var out = voices.slice(); out[0] = newLead;
+  if (voices[1]) {                    /* 別の声部は、公式を引き伸ばして下から支える（拡大） */
+    var aug = [], K = (B - A) / span, v1 = voices[1].filter(function (n) { return n.t < A || n.t >= B; });
+    F.forEach(function (n) { aug.push(ctClone(n, { t: A + (n.t - t0) * K, d: Math.max(0.3, n.d * K), m: n.m - 12, dyn: 0.32, sec: "FormelAug" })); });
+    aug = aug.filter(function (n) { return n.t < B; });
+    out[1] = v1.concat(aug).sort(function (a, b) { return a.t - b.t; });
+  }
+  return out;
+}
+/* グループ選択型（クラヴィーアシュトゥック XI 風） */
+function ctGroupChoice(R, voices, total) {
+  var G = 12 + R.i(8), cuts = [0], i;
+  for (i = 1; i < G; i++) cuts.push(total * (i + (R.f() - 0.5) * 0.7) / G);
+  cuts.push(total); cuts.sort(function (a, b) { return a - b; });
+  var attrs = cuts.slice(0, -1).map(function () { return { ratio: [0.62, 0.8, 1, 1.25, 1.6][R.i(5)], dyn: [0.55, 0.78, 1.0, 1.25][R.i(4)], gap: [0.3, 0.8, 1.4][R.i(3)] }; });
+  var seq = [], visits = new Array(G).fill(0), prev = -1, cur = 0, att = { ratio: 1, dyn: 1, gap: 0.4 }, guard = 0, pl = [];
+  while (cur < total && guard++ < 200) {
+    var cand = [], j;
+    for (j = 0; j < G; j++) if (j !== prev && visits[j] < 3) cand.push(j);
+    if (!cand.length) { visits = new Array(G).fill(0); continue; }
+    var w = cand[R.i(cand.length)]; visits[w]++; var len = (cuts[w + 1] - cuts[w]) * att.ratio;
+    pl.push({ w: w, at: cur, att: att }); cur += len + att.gap; prev = w; att = attrs[w];
+    if (visits[w] >= 3 && cur >= total * 0.8) break;
+  }
+  return voices.map(function (v) {
+    var out = [];
+    pl.forEach(function (p) {
+      var a = cuts[p.w], bnd = cuts[p.w + 1];
+      v.forEach(function (n) {
+        if (n.t < a || n.t >= bnd) return;
+        var t = p.at + (n.t - a) * p.att.ratio; if (t >= total) return;
+        out.push(ctClone(n, { t: t, d: Math.max(0.05, Math.min(n.d * p.att.ratio, bnd - n.t)) * 1.0, dyn: Math.max(0.05, Math.min(0.98, n.dyn * p.att.dyn)), sec: "Gruppe" + (p.w + 1) }));
+      });
+    });
+    return out.sort(function (a, b) { return a.t - b.t; });
+  });
+}
 var CT_TECHS = [
   { id: "isorhythm", jp: "アイソリズム（タレア）", on: true }, { id: "hocket", jp: "ホケット", on: true }, { id: "stretto", jp: "ストレット", on: true },
   { id: "chaconne", jp: "シャコンヌ（反復する低音）", on: true }, { id: "metricmod", jp: "拍子の変換（メトリック・モジュレーション）", on: true },
@@ -18591,6 +18669,7 @@ var CT_TECHS = [
   { id: "octdouble", jp: "オクターヴ・ダブリング（フルート・低音・トランペット）", on: true }, { id: "antiphony", jp: "セクション間の呼応（弦と管が交互に前へ）", on: true },
   { id: "swell", jp: "ダイナミック・スウェル（フレーズの抑揚と全体の弧）", on: true }, { id: "phrasing", jp: "フレージング（末尾の着地と息継ぎ）", on: true },
   { id: "timpani", jp: "ティンパニ（管弦楽のとき、頂点の一撃とロール）", on: true },
+  { id: "momentform", jp: "モメント形式（独立した「瞬間」を並べる：シュトックハウゼン）", on: false }, { id: "formel", jp: "フォルメル技法（一つの公式を拡大して連ねる：マントラ風）", on: false }, { id: "groupchoice", jp: "グループ選択型（断片を乱数で選んで並べ替える：クラヴィーアシュトゥック XI 風）", on: false },
   { id: "totalserial", jp: "トータル・セリー（音の長さと強さも列で決める：ブーレーズ）", on: false }, { id: "phasing", jp: "フェイジング（ミニマル）", on: false }, { id: "additive", jp: "加算的な変化（ミニマル）", on: false },
   { id: "micropoly", jp: "ミクロポリフォニー", on: false }, { id: "cluster", jp: "トーン・クラスター", on: false }, { id: "quartertone", jp: "微分音（4分音）", on: false }
 ];
@@ -19157,7 +19236,7 @@ function ctNorm(c) {
   if (!insts.length) insts = ["piano"];
   CT_TECHS.forEach(function (t) { tech[t.id] = (c.tech && c.tech[t.id] != null) ? !!c.tech[t.id] : t.on; });
   return { pcs: pcs.length ? pcs : [0, 1, 3, 4, 6, 7, 9, 10], algo: algoOk ? c.algo : "stochastic", insts: insts,
-    dur: Math.max(20, Math.min(360, c.dur || 60)), dens: Math.max(1, Math.min(5, Math.round(c.dens || 3))), plan: (c.plan != null ? c.plan : -1), tech: tech, row: ctRowValid(c.row) ? c.row.map(ctMod12) : null };
+    dur: Math.max(20, Math.min(360, c.dur || 60)), dens: Math.max(1, Math.min(5, Math.round(c.dens || 3))), plan: (c.plan != null ? c.plan : -1), tech: tech, row: ctRowValid(c.row) ? c.row.map(ctMod12) : null, composer: (typeof c.composer === "string") ? c.composer : "", techRandom: !!c.techRandom };
 }
 
 /* ================= PCS Composer v9.7 の後処理（HCG 向けに移植）=================
@@ -19328,6 +19407,10 @@ var CT_COMPOSERS = [
   { n: "ライヒ型（フェイジング・加算：短い型がずれて重なり、少しずつ変わる）", ct: { pcs: [0, 2, 4, 7, 9], algo: "sieves", insts: ["piano", "violin", "cello", "flute", "clarinet", "harp"], dur: 200, dens: 4, tech: { phasing: true, additive: true, polymeter: true, isorhythm: true } } },
   { n: "クセナキス型（確率論・篩・粒子雲：統計で音の群れを動かす）", ct: { pcs: [0, 1, 3, 4, 6, 7, 9, 10], algo: "stochastic", insts: ["violin", "cello", "trumpet", "trombone", "horn", "piano", "flute"], dur: 170, dens: 5, tech: { cluster: true, stochorch: true, entropy: true, polymeter: true } } },
   { n: "メシアン型（移調の限られた旋法・アイソリズム：色彩の和音と鳥の歌）", ct: { pcs: [0, 2, 3, 5, 6, 8, 9, 11], algo: "melodic", insts: ["piano", "violin", "cello", "flute", "clarinet", "oboe", "harp"], dur: 210, dens: 4, tech: { isorhythm: true, cycle: true, morph: true, harmsupport: true } } },
+  { n: "シュトックハウゼン型（グルッペン：楽器群が別々のテンポで重なり、倍音のスペクトルと点描が交差する）", ct: { pcs: [0, 2, 4, 6, 7, 9, 10], algo: "harmonic", insts: ["violin", "cello", "flute", "oboe", "clarinet", "horn", "trumpet", "trombone", "piano"], dur: 190, dens: 5, tech: { polymeter: true, metricmod: true, hocket: true, cluster: true, stochorch: true, entropy: true, stretto: true, echo: true } } },
+  { n: "シュトックハウゼン型・モメント形式（独立した「瞬間」が並ぶ：楽器の顔ぶれ・音域・強さが瞬間ごとに変わり、間が挟まる）", ct: { pcs: [0, 1, 4, 6, 7, 9], algo: "granular", insts: ["violin", "cello", "flute", "clarinet", "horn", "trumpet", "harp", "piano"], dur: 190, dens: 4, tech: { momentform: true, cluster: true, stochorch: true, echo: true, hocket: true } } },
+  { n: "シュトックハウゼン型・フォルメル（一つの公式を拡大して連ねる：マントラ風）", ct: { pcs: [0, 2, 3, 5, 7, 8, 10], algo: "melodic", insts: ["piano", "violin", "cello", "flute", "oboe", "clarinet", "horn"], dur: 200, dens: 4, tech: { formel: true, harmsupport: true, swell: true, echo: true, morph: true } } },
+  { n: "シュトックハウゼン型・グループ選択（断片を乱数で選んで並べ替える：クラヴィーアシュトゥック XI 風）", ct: { pcs: [0, 1, 3, 4, 6, 7, 9, 10], algo: "markov", insts: ["piano", "violin", "cello", "flute", "clarinet", "harp"], dur: 180, dens: 4, tech: { groupchoice: true, hocket: true, entropy: true } } },
   { n: "ネオ・リーマン型（トンネッツ：3和音が P・L・R の最短の動きで滑り、色彩が移ろう）", ct: { pcs: [0, 4, 7], algo: "tonnetz", insts: ["piano", "violin", "cello", "flute", "clarinet", "horn", "harp"], dur: 200, dens: 4, tech: { harmsupport: true, swell: true, phrasing: true, echo: true } } },
   { n: "シェーンベルク型（12音技法・表現主義：音列の全12音を使い切り、声部が絡む）", ct: { row: [4, 5, 7, 1, 6, 3, 8, 2, 11, 0, 9, 10], pcs: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11], algo: "serial", insts: ["piano", "violin", "cello", "clarinet", "flute", "horn"], dur: 190, dens: 4, tech: { stretto: true, morph: true, cycle: true, swell: true, echo: true } } },
   { n: "ベルク型（12音列に3和音を含める抒情：長3度・短3度の連なりと息の長い旋律）", ct: { row: [7, 10, 2, 6, 9, 0, 4, 8, 11, 1, 3, 5], pcs: [0, 3, 7, 11, 2, 5, 9, 1, 4, 6, 8, 10], algo: "serial", insts: ["violin", "cello", "clarinet", "oboe", "horn", "harp", "piano"], dur: 200, dens: 4, tech: { harmsupport: true, swell: true, phrasing: true, octdouble: true, themerecap: true } } },
@@ -19342,6 +19425,11 @@ function generateContemporary(opt) {
   }
   var optIn = JSON.parse(JSON.stringify(opt));
   var C = ctNorm(opt.ct), R = RNG(opt.seed || 1), rngE = RNG(((opt.seed || 1) * 733 + 11) % 2147483647);
+  if (C.techRandom) {          /* 技法のおまかせ：既定の技法に加えて、シードで 2〜4 個の技法をランダムに足す */
+    var rt = RNG(((opt.seed || 1) * 4099 + 3) % 2147483647), pool = ["momentform", "formel", "groupchoice", "totalserial", "hocket", "stretto", "polymeter", "metricmod", "cluster", "echo", "phasing", "additive", "micropoly", "isorhythm", "chaconne"].filter(function (k) { return !C.tech[k]; }), nAdd = 2 + rt.i(3), qq;
+    for (qq = 0; qq < nAdd && pool.length; qq++) { var pk = rt.i(pool.length); C.tech[pool[pk]] = true; pool.splice(pk, 1); }
+  }
+  if (C.composer) autoComp = autoComp || { n: C.composer };
   opt.ct = C;
   var tempo = Math.max(30, Math.min(300, opt.tempo || 60)); opt.tempo = tempo;
   if (opt.expr == null) opt.expr = true;
@@ -19400,6 +19488,9 @@ function generateContemporary(opt) {
   if (tech.harmsupport && voices.length >= 3) { voices = ctHarmonicSupport(R, voices, C.pcs); used.push("和声的サポート"); }
   if (tech.octdouble && voices.length >= 2) { voices = ctOctaveDoubling(R, voices); used.push("オクターヴ・ダブリング"); }
   if (tech.antiphony && voices.length >= 3) { var va = ctAntiphony(voices, total); if (va !== voices) { voices = va; used.push("セクション間の呼応"); } }
+  if (tech.formel && voices.length >= 2) { var vfm = ctFormel(R, voices, total); if (vfm !== voices) { voices = vfm; used.push("フォルメル技法（公式の拡大）"); } }
+  if (tech.groupchoice && voices.length >= 1) { voices = ctGroupChoice(R, voices, total); used.push("グループ選択型（断片を乱数で並べ替え）"); }
+  if (tech.momentform && voices.length >= 2) { voices = ctMomentForm(R, voices, total); used.push("モメント形式（独立した瞬間の並び）"); }
   /* ミニマル・ミクロポリフォニー・クラスター・微分音 */
   var extra = [];
   if (tech.phasing && ai.length >= 2) { extra = extra.concat(ctPhasing(R, ai, shared, S, C.pcs)); used.push("フェイジング（2声の速さをわずかにずらす）"); }
@@ -19432,7 +19523,7 @@ function generateContemporary(opt) {
     var ex = [];
     if (inst.id !== "piano" && inst.id !== "harp") ex = polishExtras(stemExpression("horn", ns, sections, opt, rngE, beats, opt.style), ns);
     var seat = CT_SEAT[inst.id];
-    if (seat) { ex.push({ t: 0, cc: 10, val: Math.max(0, Math.min(127, Math.round(64 + seat[0] * 63))) }); ex.push({ t: 0, cc: 91, val: seat[1] }); }   /* 座席の定位と残響の送り量 */
+    if (seat && opt.midiPan !== false) { ex.push({ t: 0, cc: 10, val: Math.max(0, Math.min(127, Math.round(64 + seat[0] * 63))) }); ex.push({ t: 0, cc: 91, val: seat[1] }); }   /* 座席の定位と残響の送り量 */
     ns.forEach(function (n) { if (n.micro) { ex.push({ t: Math.max(0, n.t - 0.01), bend: n.micro }); ex.push({ t: n.t + n.d + 0.005, bend: 0 }); } });
     ex.sort(function (a, b) { return a.t - b.t; });
     stems.push({ id: inst.stem, name: inst.name, jp: inst.jp, prog: inst.prog, ch: inst.ch, notes: ns, extra: ex });
@@ -19455,7 +19546,7 @@ function generateContemporary(opt) {
   var title = R.pick(["Étude", "Studie", "Fragment", "Mobile", "Cycle", "Sequence", "Texture", "Process", "Canon", "Study"]) + " No." + (1 + R.i(9)) + " [" + pf.length + "-" + pfk.replace(/,/g, "") + "]";
   opt.epicSolo = "piano";
   return {
-    opt: opt, form: { label: "現代音楽（" + (autoComp ? autoComp.n.split("（")[0] + "・" : "") + A.n + "・" + (opt.ct.pcs.length) + "音のセット）", ts: [4, 4], bars: Math.ceil(totalBeats / 4), minor: false },
+    opt: opt, form: { label: "現代音楽（" + (autoComp ? autoComp.n.split("（")[0] + (C.techRandom ? "×おまかせ技法" : "") + "・" : "") + A.n + "・" + (opt.ct.pcs.length) + "音のセット）", ts: [4, 4], bars: Math.ceil(totalBeats / 4), minor: false },
     sty: STYLES.contemporary, chords: [], flats: false, sections: sections, sheet: null, order: ["head"], beats: beats, barsPerChorus: Math.ceil(totalBeats / 4),
     totalBeats: totalBeats, stems: stems, title: title, chordText: "", explain: explain, optIn: optIn, contemporary: { plan: plan.n, prime: pf, forte: fi, used: used }
   };
@@ -24642,9 +24733,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 556;
+var BUILD_NO = 562;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 211;
+var GEN_NO = 213;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
@@ -26659,7 +26750,7 @@ var KW_RULES = [
   [/ハパ・?ハオレ|hapa/i, { style: "hawaiian", form: "hw_waltz24", mode: "major" }, 11, "ハパ・ハオレのワルツ"],
   [/ポリリズム|polyrhythm|3対4|三対四/i, { style: "afrobeat", form: "afro_poly", mode: "minor" }, 11, "ポリリズム（アフロビート）"],
   [/クレズマー|klezmer/i, { style: "gypsy", mode: "minor" }, 7, "クレズマー（ジプシー系の短調で近似）"],
-  [/90年代(?:の)?(?:j-?pop|jポップ|ポップス)|j-?pop|jポップ|ジェイポップ|小室|ビーイング|being系|渋谷系|trf|globe|ミスチル|mr\.?\s*children|スピッツ|b'z|ドリカム|dreams?\s*come\s*true/i, { style: "jpop90", form: "jpop_oudou16", mode: "major" }, 12, "90年代J-POP"],
+  [/90年代(?:の)?(?:j-?pop|jポップ|ポップス)|j-?pop|jポップ|ジェイポップ|ビーイング|being系|渋谷系|trf|globe|ミスチル|mr\.?\s*children|スピッツ|b'z|ドリカム|dreams?\s*come\s*true/i, { style: "jpop90", form: "jpop_oudou16", mode: "major" }, 12, "90年代J-POP"],
   [/昭和歌謡|歌謡曲|昭和の(?:曲|歌|ヒット)|昭和レトロ|昭和風|昭和ポップ|kayokyoku|showa/i, { style: "kayo" }, 12, "昭和歌謡曲"],
   [/アイドル歌謡|筒美京平|70年代アイドル|80年代アイドル|松田聖子|山口百恵|キャンディーズ|ピンク・?レディー/i, { style: "kayo", form: "kayo_idol16", mode: "major" }, 13, "アイドル歌謡（筒美京平風）"],
   [/ムード歌謡|ムードギター|ナイトクラブ|キャバレー|クール・?ファイブ|前川清|石原裕次郎|ブルー・?シャトウ/i, { style: "kayo", form: "kayo_mood16", mode: "minor" }, 13, "ムード歌謡"],
@@ -26833,7 +26924,7 @@ function pickFormFromText(text, styleKey, mode) {
 var NAMED_PROGS = [
   [/カノン進行|canon\s*prog|パッヘルベル|pachelbel/i, "カノン進行（I-V-vi-iii-IV-I-IV-V）", false, [[[0, "maj"]], [[7, "maj"]], [[9, "min"]], [[4, "min"]], [[5, "maj"]], [[0, "maj"]], [[5, "maj"]], [[7, "maj"]]]],
   [/王道進行|royal\s*road/i, "王道進行（IVmaj7-V7-iii7-vi）", false, [[[5, "maj7"]], [[7, "dom7"]], [[4, "m7"]], [[9, "m7"]]]],
-  [/小室進行|komuro/i, "小室進行（vi-IV-V-I）", false, [[[9, "min"]], [[5, "maj"]], [[7, "maj"]], [[0, "maj"]]]],
+  [/ⅵⅣⅤⅠ進行|vi-?iv-?v-?i|komuro/i, "Ⅵ-Ⅳ-Ⅴ-Ⅰ進行（vi-IV-V-I）", false, [[[9, "min"]], [[5, "maj"]], [[7, "maj"]], [[0, "maj"]]]],
   [/丸サ進行|丸の内サディスティック/i, "丸サ進行（IVmaj7-III7-vi7-I7）", false, [[[5, "maj7"]], [[4, "dom7"]], [[9, "m7"]], [[0, "dom7"]]]],
   [/枯葉|autumn\s*leaves/i, "枯葉の進行（ii7-V7-Imaj7-IVmaj7-vii7b5-III7-vi7）", false, [[[2, "m7"]], [[7, "dom7"]], [[0, "maj7"]], [[5, "maj7"]], [[11, "m7b5"]], [[4, "dom7"]], [[9, "m7"]], [[9, "m7"]]]],
   [/マイナー\s*(?:の)?\s*(?:ii|II|ツー)\s*-?\s*(?:v|V|ファイブ)|minor\s*ii\s*-?\s*v/i, "マイナー ii-V-i（iim7b5-V7b9-im7）", true, [[[2, "m7b5"]], [[7, "dom7b9"]], [[0, "m7"]], [[0, "m7"]]]],
@@ -27817,7 +27908,7 @@ var API = { genreProfile: genreProfile, genreTempoPick: genreTempoPick, genreMod
   BUILD: BUILD_NO, GEN: GEN_NO, packSong: packSong, unpackSong: unpackSong, codeOf: codeOf, optOfCode: optOfCode,
   readMidi: readMidi, songFromMidi: songFromMidi, absChords: absChords, detectChords: detectChords,
   IN: { pickRaga: inPickRaga, pickTala: inPickTala, RAGAS: IN_RAGAS, TALAS: IN_TALAS, tempoOf: inTempoOf, SARGAM: IN_SARGAM, character: inCharacter, charKey: inCharKey, fit: inFit, talaFit: inTalaFit, THAAT: IN_THAAT, thaatOf: inThaatOf },
-  CT: { PRESETS: CT_PRESETS, ALGOS: CT_ALGOS, TECHS: CT_TECHS, INSTS: CT_INSTS, INSTSETS: CT_INSTSETS, PLANS: CT_PLANS, primeForm: ctPrimeForm, intervalVector: ctIntervalVector,
+  CT: { COMPOSERS: CT_COMPOSERS, ROWS: CT_ROWS, PRESETS: CT_PRESETS, ALGOS: CT_ALGOS, TECHS: CT_TECHS, INSTS: CT_INSTS, INSTSETS: CT_INSTSETS, PLANS: CT_PLANS, primeForm: ctPrimeForm, intervalVector: ctIntervalVector,
         forte: function (p) { var pf = ctPrimeForm(p); return { prime: pf, name: CT_FORTE[pf.join(",")] || (pf.length + "-?"), iv: ctIntervalVector(p) }; } },
   generate: generate, arrangeFromMidi: arrangeFromMidi, parseChordText: parseChordText, chordTextOf: chordTextOf, detectChordsVit: detectChordsVit, midiStem: midiStem, midiAll: midiAll, buildMusicXML: buildMusicXML, scoreData: scoreData,
   pcName: pcName, chordSym: chordSym, chordAt: chordAt, keyPrefersFlats: keyPrefersFlats,
