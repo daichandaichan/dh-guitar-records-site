@@ -66,7 +66,7 @@
   "files": {
     "zip": "demos/2026-11-10_contemporary_ct_free/2026-11-10_contemporary_ct_free_midi-set.zip",
     "midi": "demos/2026-11-10_contemporary_ct_free/2026-11-10_contemporary_ct_free_all.mid",
-    "info": "demos/2026-11-10_contemporary_ct_free/info.md",
-    "song": "demos/2026-11-10_contemporary_ct_free/song.json"
-  }
+    "info": "demos/2026-11-10_contemporary_ct_free/info.md"
+  },
+  "audio": "demos/2026-11-10_contemporary_ct_free/2026-11-10_contemporary_ct_free.mp3"
 }

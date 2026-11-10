@@ -83,13 +83,90 @@
   "files": {
    "zip": "demos/2026-11-10_rk_zappa_auto16m/2026-11-10_rk_zappa_auto16m_midi-set.zip",
    "midi": "demos/2026-11-10_rk_zappa_auto16m/2026-11-10_rk_zappa_auto16m_all.mid",
-   "info": "demos/2026-11-10_rk_zappa_auto16m/info.md"
+   "info": "demos/2026-11-10_rk_zappa_auto16m/info.md",
+   "song": "demos/2026-11-10_rk_zappa_auto16m/song.json"
   },
-  "audio": "demos/2026-11-10_rk_zappa_auto16m/2026-11-10_rk_zappa_auto16m.mp3",
   "scorePages": [
    "scores/2026-11-10_rk_zappa_auto16m-1.png"
   ],
   "cover": "covers/2026-11-10_rk_zappa_auto16m.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-11-10_contemporary_ct_free",
+  "date": "2026-11-10",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_free",
+  "formLabel": "現代音楽（自由な形式：起承転結・頂点は黄金比）",
+  "title": "Mobile No.9 [12-01234567891011]",
+  "key": "C",
+  "tempo": 60,
+  "tempoGenerated": 60,
+  "bars": 50,
+  "seed": 3,
+  "gen": 211,
+  "stems": [
+   {
+    "id": "solo",
+    "name": "Piano",
+    "prog": 0
+   },
+   {
+    "id": "mel",
+    "name": "Violin",
+    "prog": 40
+   },
+   {
+    "id": "cello",
+    "name": "Cello",
+    "prog": 42
+   },
+   {
+    "id": "fl",
+    "name": "Flute",
+    "prog": 73
+   },
+   {
+    "id": "cl",
+    "name": "Clarinet",
+    "prog": 71
+   },
+   {
+    "id": "horn",
+    "name": "French Horn",
+    "prog": 60
+   },
+   {
+    "id": "harp",
+    "name": "Harp",
+    "prog": 46
+   },
+   {
+    "id": "ob",
+    "name": "Oboe",
+    "prog": 68
+   },
+   {
+    "id": "timp",
+    "name": "Timpani",
+    "prog": 47
+   }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 211). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-10_contemporary_ct_free/2026-11-10_contemporary_ct_free_midi-set.zip",
+   "midi": "demos/2026-11-10_contemporary_ct_free/2026-11-10_contemporary_ct_free_all.mid",
+   "info": "demos/2026-11-10_contemporary_ct_free/info.md"
+  },
+  "audio": "demos/2026-11-10_contemporary_ct_free/2026-11-10_contemporary_ct_free.mp3",
+  "scorePages": [
+   "scores/2026-11-10_contemporary_ct_free-1.png"
+  ],
+  "cover": "covers/2026-11-10_contemporary_ct_free.jpg",
   "coverKind": "generated"
  },
  {
