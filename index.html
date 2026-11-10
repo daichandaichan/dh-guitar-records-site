@@ -242,10 +242,6 @@
       <span class="kicker text-[var(--ink-dim)] uppercase" id="demo-count"></span>
     </div>
     <div id="demo-filter" class="flex flex-wrap gap-2 mb-6"></div>
-    <div id="zip-bar" class="hidden items-center gap-3 mb-6 flex-wrap">
-      <button type="button" id="zip-all" class="pill">⬇ 全デモを zip で保存</button>
-      <span id="zip-msg" class="mono text-[10.5px] text-[var(--ink-dim)]"></span>
-    </div>
     <div id="demo-list"></div>
     <p id="demo-empty" class="text-center text-[var(--ink-dim)] text-sm py-14 hidden border-t border-b hairline">
       <span class="mono text-[11px] tracking-widest uppercase text-[var(--amber)]">Coming Soon</span><br><br>最初のデモを準備中です。
@@ -460,35 +456,6 @@
     // MIDI のダウンロードは、制作者が手元のファイル／localhost で開いた時だけ表示する（公開サイトでは再生のみ）
     const OWNER = location.protocol === "file:" || ["localhost", "127.0.0.1"].includes(location.hostname);
     const CAN_EMBED_YT = location.protocol === "file:" || /(^|\.)(netlify\.app|github\.io)$/.test(location.hostname) || ["localhost", "127.0.0.1"].includes(location.hostname);
-    // 全デモを1つの zip で保存（制作者の手元・Artifact のみ。公開サイトでは出さない）
-    (async () => {
-      let dl = null; try { dl = window.claude && window.claude.use ? await window.claude.use("downloads") : null; } catch (e) {}
-      if (!OWNER && !dl) return;
-      const bar = document.getElementById("zip-bar"), btn = document.getElementById("zip-all"), msg = document.getElementById("zip-msg");
-      bar.classList.remove("hidden"); bar.classList.add("flex");
-      const loadJSZip = () => window.JSZip ? Promise.resolve() : new Promise((ok, ng) => { const sc = document.createElement("script"); sc.src = "https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"; sc.onload = ok; sc.onerror = () => ng(new Error("zip ライブラリを読み込めません")); document.head.appendChild(sc); });
-      btn.onclick = async () => {
-        btn.disabled = true;
-        try {
-          msg.textContent = "準備中…"; await loadJSZip();
-          const list = await fetch("demos.json").then(r => r.json()); const zip = new JSZip(); let n = 0;
-          zip.file("demos.json", JSON.stringify(list, null, 1));
-          for (const d of list) {
-            const dir = zip.folder(d.id + "_" + String(d.title).replace(/[\/:*?"<>|]/g, "").replace(/\s+/g, "_"));
-            const add = async (url, name) => { if (!url) return; try { const r = await fetch(url); if (r.ok) { dir.file(name || url.split("/").pop(), await r.blob()); } } catch (e) {} };
-            await add(d.audio); await add(d.files && d.files.info, "info.md"); await add(d.cover);
-            msg.textContent = (++n) + " / " + list.length + " 曲を追加";
-          }
-          msg.textContent = "zip を作成中…";
-          const blob = await zip.generateAsync({ type: "blob", compression: "STORE" });
-          const name = "DH-Guitar-Records_demos_" + new Date().toISOString().slice(0, 10) + ".zip";
-          if (dl) { await dl.save({ filename: name, data: blob }); }
-          else { const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); }
-          msg.textContent = "保存しました（" + (blob.size / 1048576).toFixed(1) + " MB）";
-        } catch (e) { msg.textContent = (e && e.code === "declined") ? "キャンセルしました" : "失敗しました：" + ((e && e.message) || e); }
-        btn.disabled = false;
-      };
-    })();
     let demos = [], current = "all", eng = null, audioEl = null, playingId = null, libPromise = null;
 
     const loadScript = (src) => new Promise((ok, ng) => {
@@ -524,7 +491,7 @@
         let v = box.querySelector("video");
         if (!v) {
           v = document.createElement("video");
-          v.src = d.video; v.controls = true; v.playsInline = true; v.preload = "auto";
+          v.src = d.video; v.controls = true; v.playsInline = true; v.setAttribute("controlsList", "nodownload"); v.oncontextmenu = (e) => e.preventDefault(); v.preload = "auto";
           v.className = "w-full bg-black"; v.style.maxWidth = "960px";
           v.onplay = () => { stop(v); playingId = d.id; btn.textContent = "■ 止める"; };
           v.onpause = () => { if (playingId === d.id) { playingId = null; btn.textContent = "▶ 再生"; } };
@@ -601,11 +568,18 @@
             <div class="flex flex-wrap gap-1.5 mt-3">
               <button type="button" class="pill" data-play="${esc(d.id)}">▶ 再生</button>
               ${d.youtube ? `<a class="pill" href="https://youtu.be/${esc(d.youtube)}" target="_blank" rel="noopener">YouTube で見る</a>` : ""}
+              ${d.video ? `<button type="button" class="pill" data-fs="${esc(d.id)}">⛶ 全画面</button>` : ""}
             </div>
             <div class="demo-video hidden mt-3"></div>
           </div>
           ${(d.scorePages && d.scorePages.length) ? `<button type="button" class="score-thumb" data-score="${esc(d.id)}" aria-label="テーマ譜を全画面で見る"><img src="${esc(d.scorePages[0])}" alt="テーマ譜" loading="lazy" decoding="async" draggable="false"><span>譜面</span></button>` : "<span></span>"}`;
         el.querySelector("[data-play]").onclick = (ev) => play(d, ev.currentTarget);
+        const fsb = el.querySelector("[data-fs]"); if (fsb) fsb.onclick = async () => {      /* 全画面（iPhone は webkitEnterFullscreen）。まだ動画が無ければ、再生してから開く */
+          const box = el.querySelector(".demo-video"); let v = box.querySelector("video");
+          if (!v) { await play(d, el.querySelector("[data-play]")); v = box.querySelector("video"); }
+          if (!v) return;
+          try { if (v.requestFullscreen) await v.requestFullscreen(); else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen(); else if (v.webkitRequestFullscreen) v.webkitRequestFullscreen(); } catch (e) {}
+        };
         const sb = el.querySelector("[data-score]"); if (sb) sb.onclick = () => openScore(d);
         listEl.appendChild(el);
       });
