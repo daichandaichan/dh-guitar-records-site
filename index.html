@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="dark">
 <title>D・H Guitar Records</title>
 <meta name="description" content="自作の自動作曲アプリ「Hot Club Generator」が毎日つくる、曲種別の自動作曲デモサイト。D・H Guitar Records。">
 
@@ -154,7 +155,7 @@
   .track-idx{ font-family:'JetBrains Mono',monospace; font-size:12px; color:var(--ink-dim); width:24px; }
   .pill{
     font-family:'JetBrains Mono',monospace; font-size:10.5px; padding:4px 10px; border-radius:99px;
-    border:1px solid var(--line); color:var(--ink-dim); transition:border-color .2s,color .2s; letter-spacing:.03em;
+    border:1px solid rgba(244,234,217,.30); color:#c9b894; transition:border-color .2s,color .2s; letter-spacing:.03em;
   }
   .pill:hover{border-color:var(--amber); color:var(--amber);}
 
@@ -215,7 +216,7 @@
   <section id="genres" class="relative z-10 max-w-6xl mx-auto px-5 py-16">
     <div class="flex items-end justify-between mb-9 reveal">
       <h2 class="disp text-2xl italic">The Catalog</h2>
-      <span class="kicker text-[var(--ink-dim)] uppercase" id="catalog-count">30 Song Types</span>
+      <span class="kicker text-[var(--ink-dim)] uppercase" id="catalog-count">42 Song Types</span>
     </div>
     <div id="genre-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3 reveal"></div>
   </section>
@@ -399,7 +400,7 @@
     const h = (i * 14.4 + 18) % 360;
     const el = document.createElement("div");
     el.className = "tile"; el.dataset.style = t.k;
-    el.style.background = `linear-gradient(150deg,hsl(${h} 28% 13%),hsl(${h} 34% 28%))`;
+    const hh = Math.round(h); el.style.backgroundColor = `hsl(${hh},30%,20%)`; el.style.backgroundImage = `linear-gradient(150deg,hsl(${hh},28%,16%),hsl(${hh},34%,30%))`;      /* 古いスマホでも真っ黒にならないよう、カンマ区切りの hsl と単色の下地も指定 */
     el.innerHTML = `
       <span class="ghost-num">${String(i + 1).padStart(2, "0")}</span>
       <h3 class="text-white">${t.s}</h3>
@@ -407,6 +408,7 @@
       <span class="mono text-[10px] text-white/50 mt-2 tile-state">準備中</span>`;
     genreGrid.appendChild(el);
   });
+  { const cc = document.getElementById("catalog-count"); if (cc) cc.textContent = SONG_TYPES.length + " Song Types"; }
   window.__catalogCount = (list) => {
     const n = {}; list.forEach(d => { const c = catOf(d.style); n[c] = (n[c] || 0) + 1; });
     genreGrid.querySelectorAll(".tile").forEach(el => {
