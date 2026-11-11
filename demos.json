@@ -1,5 +1,78 @@
 [
  {
+  "id": "2026-11-12_contemporary_ct_free",
+  "date": "2026-11-12",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_free",
+  "formLabel": "現代音楽（自由な形式：起承転結・頂点は黄金比）",
+  "title": "Studie No.5 [6-014679]",
+  "key": "C",
+  "tempo": 60,
+  "tempoGenerated": 60,
+  "bars": 48,
+  "seed": 20261112,
+  "gen": 213,
+  "stems": [
+   {
+    "id": "solo",
+    "name": "Piano",
+    "prog": 0
+   },
+   {
+    "id": "mel",
+    "name": "Violin",
+    "prog": 40
+   },
+   {
+    "id": "cello",
+    "name": "Cello",
+    "prog": 42
+   },
+   {
+    "id": "fl",
+    "name": "Flute",
+    "prog": 73
+   },
+   {
+    "id": "cl",
+    "name": "Clarinet",
+    "prog": 71
+   },
+   {
+    "id": "tpt",
+    "name": "Trumpet",
+    "prog": 56
+   },
+   {
+    "id": "horn",
+    "name": "French Horn",
+    "prog": 60
+   },
+   {
+    "id": "harp",
+    "name": "Harp",
+    "prog": 46
+   }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 213). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-12_contemporary_ct_free/2026-11-12_contemporary_ct_free_midi-set.zip",
+   "midi": "demos/2026-11-12_contemporary_ct_free/2026-11-12_contemporary_ct_free_all.mid",
+   "info": "demos/2026-11-12_contemporary_ct_free/info.md"
+  },
+  "audio": "demos/2026-11-12_contemporary_ct_free/2026-11-12_contemporary_ct_free.mp3",
+  "scorePages": [
+   "scores/2026-11-12_contemporary_ct_free-1.png"
+  ],
+  "video": "demos/2026-11-12_contemporary_ct_free/2026-11-12_contemporary_ct_free.mp4",
+  "cover": "covers/2026-11-12_contemporary_ct_free.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-11_flamenco_buleriasmod12",
   "date": "2026-11-11",
   "style": "flamenco",
