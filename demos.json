@@ -73,6 +73,81 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-12_hawaiian_hw_slack16",
+  "date": "2026-11-12",
+  "style": "hawaiian",
+  "styleShort": "ハワイアン",
+  "styleLabel": "ハワイアン（スラック・キー：親指の交互ベースとアルペジオ、3度・6度で歌う旋律、ゆったり）",
+  "form": "hw_slack16",
+  "formLabel": "スラック・キー 16小節（G・I → IV → V・親指の交互ベース）",
+  "title": "Hula Morning (D)",
+  "key": "D",
+  "tempo": 88,
+  "tempoGenerated": 88,
+  "bars": 92,
+  "seed": 20261112,
+  "gen": 213,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 24
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 24
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 24
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "D",
+   "D",
+   "G",
+   "D",
+   "D",
+   "Bm7",
+   "Em7",
+   "Em7",
+   "A7",
+   "D",
+   "D",
+   "G",
+   "D",
+   "D",
+   "A7",
+   "D6",
+   "D6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 213). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-12_hawaiian_hw_slack16/2026-11-12_hawaiian_hw_slack16_midi-set.zip",
+   "midi": "demos/2026-11-12_hawaiian_hw_slack16/2026-11-12_hawaiian_hw_slack16_all.mid",
+   "info": "demos/2026-11-12_hawaiian_hw_slack16/info.md"
+  },
+  "audio": "demos/2026-11-12_hawaiian_hw_slack16/2026-11-12_hawaiian_hw_slack16.mp3",
+  "scorePages": [
+   "scores/2026-11-12_hawaiian_hw_slack16-1.png"
+  ],
+  "cover": "covers/2026-11-12_hawaiian_hw_slack16.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-11_flamenco_buleriasmod12",
   "date": "2026-11-11",
   "style": "flamenco",
