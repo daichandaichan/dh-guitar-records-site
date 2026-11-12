@@ -76,6 +76,80 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-13_folk_folk_strum16",
+  "date": "2026-11-13",
+  "style": "folk",
+  "styleShort": "フォーク",
+  "styleLabel": "フォーク（アコースティック弾き語り：ストロークとトラヴィス・ピッキング）",
+  "form": "folk_strum16",
+  "formLabel": "フォーク 16小節（ストローク：Ⅰ→Ⅴ→Ⅵm→Ⅳ の循環）",
+  "title": "Hillside Road (G)",
+  "key": "G",
+  "tempo": 96,
+  "tempoGenerated": 96,
+  "bars": 92,
+  "seed": 20261113,
+  "gen": 216,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 25
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 25
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 25
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "G",
+   "D",
+   "Em",
+   "C",
+   "G",
+   "D",
+   "Em",
+   "C",
+   "G",
+   "D",
+   "Em",
+   "C",
+   "C",
+   "D",
+   "G",
+   "G"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 216). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-13_folk_folk_strum16/2026-11-13_folk_folk_strum16_midi-set.zip",
+   "midi": "demos/2026-11-13_folk_folk_strum16/2026-11-13_folk_folk_strum16_all.mid",
+   "info": "demos/2026-11-13_folk_folk_strum16/info.md"
+  },
+  "audio": "demos/2026-11-13_folk_folk_strum16/2026-11-13_folk_folk_strum16.mp3",
+  "scorePages": [
+   "scores/2026-11-13_folk_folk_strum16-1.png"
+  ],
+  "cover": "covers/2026-11-13_folk_folk_strum16.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-12_contemporary_ct_free",
   "date": "2026-11-12",
   "style": "contemporary",
