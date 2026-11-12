@@ -252,11 +252,12 @@
    "info": "demos/2026-11-13_brazil_samba32/info.md"
   },
   "audio": "demos/2026-11-13_brazil_samba32/2026-11-13_brazil_samba32.mp3",
+  "cover": "covers/2026-11-13_brazil_samba32.jpg",
+  "coverKind": "generated",
+  "video": "demos/2026-11-13_brazil_samba32/2026-11-13_brazil_samba32.mp4",
   "scorePages": [
    "scores/2026-11-13_brazil_samba32-1.png"
-  ],
-  "cover": "covers/2026-11-13_brazil_samba32.jpg",
-  "coverKind": "generated"
+  ]
  },
  {
   "id": "2026-11-12_contemporary_ct_free",

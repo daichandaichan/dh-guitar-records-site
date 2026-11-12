@@ -1,0 +1,104 @@
+{
+  "id": "2026-11-13_brazil_samba32",
+  "date": "2026-11-13",
+  "style": "brazil",
+  "styleShort": "ブラジル",
+  "styleLabel": "ブラジル（サンバ・ショーロ・フレヴォ）",
+  "form": "samba32",
+  "formLabel": "サンバ AABA 32小節",
+  "title": "Samba do Vento (D)",
+  "key": "D",
+  "tempo": 208,
+  "tempoGenerated": 208,
+  "bars": 204,
+  "seed": 20261113,
+  "gen": 217,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 24
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 24
+    },
+    {
+      "id": "comp",
+      "name": "Piano",
+      "prog": 25
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "perc",
+      "name": "Percussion",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "D6/9",
+    "D6/9",
+    "Em7",
+    "D#13",
+    "Dmaj7",
+    "Gmaj7",
+    "Gm9",
+    "Em7",
+    "A7b9",
+    "D6/9",
+    "A9",
+    "D6/9",
+    "D6/9",
+    "Em7",
+    "A9",
+    "Dmaj7",
+    "Gmaj7",
+    "Gm",
+    "Em7",
+    "D#13",
+    "D6/9",
+    "Bm7",
+    "E9",
+    "Amaj7",
+    "Amaj7",
+    "C#7b9",
+    "F#m7",
+    "F9",
+    "Em7",
+    "Em7",
+    "A7alt",
+    "D6/9",
+    "A7b9",
+    "D6/9",
+    "Em7",
+    "F7",
+    "A#maj7",
+    "C#13",
+    "F#maj7",
+    "A7",
+    "Dmaj7",
+    "Gmaj7",
+    "Gm",
+    "Em7",
+    "A7b9",
+    "D6/9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 217). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-13_brazil_samba32/2026-11-13_brazil_samba32_midi-set.zip",
+    "midi": "demos/2026-11-13_brazil_samba32/2026-11-13_brazil_samba32_all.mid",
+    "info": "demos/2026-11-13_brazil_samba32/info.md"
+  },
+  "audio": "demos/2026-11-13_brazil_samba32/2026-11-13_brazil_samba32.mp3"
+}
