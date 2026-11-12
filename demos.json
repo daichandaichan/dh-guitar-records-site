@@ -1,5 +1,81 @@
 [
  {
+  "id": "2026-11-13_jpop90_jpop_being16",
+  "date": "2026-11-13",
+  "style": "jpop90",
+  "styleShort": "90年代J-POP",
+  "styleLabel": "90年代J-POP（王道進行・ダンス・ポップ系・ビーイング系・渋谷系・バラード：7thの和音と16ビート、歌えるメロディ）",
+  "form": "jpop_being16",
+  "formLabel": "90年代J-POP 16小節（ビーイング系：短調 Ⅰm7→Ⅳm7→♭ⅥM7→Ⅴ7、ハードなギターのポップス）",
+  "title": "Midnight Highway (Em)",
+  "key": "Em",
+  "tempo": 112,
+  "tempoGenerated": 112,
+  "bars": 108,
+  "seed": 20261113,
+  "gen": 216,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 27
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 27
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 4
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Em7",
+   "Am7",
+   "Cmaj7",
+   "F#m7",
+   "B7b9",
+   "Em6/9",
+   "Am7",
+   "Cmaj7",
+   "F#m7",
+   "B7b9",
+   "Gmaj7",
+   "Cmaj7",
+   "AmMaj7",
+   "B7",
+   "Em7",
+   "Cmaj7",
+   "B7",
+   "Em6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 216). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-13_jpop90_jpop_being16/2026-11-13_jpop90_jpop_being16_midi-set.zip",
+   "midi": "demos/2026-11-13_jpop90_jpop_being16/2026-11-13_jpop90_jpop_being16_all.mid",
+   "info": "demos/2026-11-13_jpop90_jpop_being16/info.md"
+  },
+  "audio": "demos/2026-11-13_jpop90_jpop_being16/2026-11-13_jpop90_jpop_being16.mp3",
+  "scorePages": [
+   "scores/2026-11-13_jpop90_jpop_being16-1.png"
+  ],
+  "cover": "covers/2026-11-13_jpop90_jpop_being16.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-12_contemporary_ct_free",
   "date": "2026-11-12",
   "style": "contemporary",
