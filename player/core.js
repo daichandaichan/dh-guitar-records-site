@@ -21256,15 +21256,16 @@ var END_TYPES = [
 var VAR_ACCENTS = [null, [0, 0, 0, 0, 10, 0, 0, 0, 0, 0, 0, 0, 10, 0, 0, 0], [9, 0, 0, 0, 0, 0, 0, 0, 9, 0, 0, 0, 0, 0, 0, 0], [0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 8, 0, 0, 0, 8, 0],
   [10, 0, 0, 8, 0, 0, 8, 0, 0, 0, 8, 0, 9, 0, 0, 0], [-8, -7, -6, -5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 6, 7, 8], [8, 0, 0, 0, 0, 0, 0, 8, 0, 0, 8, 0, 0, 0, 0, 0]];
 var VAR_DEPTH = 0, VAR_SW = 0.5;      /* VAR_SW：その曲の跳ね方（0.5＝まっすぐ）。0.54 を超える曲は、8分の裏を跳ねた位置で読み書きする */
-function varStepPos(k) { var sw = VAR_SW; return sw > 0.54 ? [0, sw / 2, sw, sw + (1 - sw) / 2][k] : k / 4; }
-function varPosToStep(x) { var bt = Math.floor(x + 0.04), fr = x - bt, k, best = 0, bd = 9, d; for (k = 0; k <= 4; k++) { d = Math.abs(fr - (k === 4 ? 1 : varStepPos(k))); if (d < bd) { bd = d; best = k; } } return { st: bt * 4 + best, err: bd }; }
-function varStepT(st) { return (st >> 2) + varStepPos(st & 3); }
+var VAR_SPB = 4;      /* 1拍を何刻みで見るか（4＝16分。1小節が 30刻みを超える変拍子は 2） */
+function varStepPos(k) { var sw = VAR_SW; if (VAR_SPB === 2) return k === 0 ? 0 : (sw > 0.54 ? sw : 0.5); return sw > 0.54 ? [0, sw / 2, sw, sw + (1 - sw) / 2][k] : k / 4; }
+function varPosToStep(x) { var bt = Math.floor(x + 0.04), fr = x - bt, k, best = 0, bd = 9, d; for (k = 0; k <= VAR_SPB; k++) { d = Math.abs(fr - (k === VAR_SPB ? 1 : varStepPos(k))); if (d < bd) { bd = d; best = k; } } return { st: bt * VAR_SPB + best, err: bd }; }
+function varStepT(st) { return Math.floor(st / VAR_SPB) + varStepPos(st % VAR_SPB); }
 function varPop(m) { var c = 0; while (m) { c += m & 1; m >>>= 1; } return c; }
 function varJac(a, b) { var u = varPop(a | b); return u ? varPop(a & b) / u : 1; }
 function varBits(m, n) { var o = [], i; for (i = 0; i < n; i++) if ((m >> i) & 1) o.push(i); return o; }
 /* 区間 [a,b) の小節ごとの型：{ m: 型, ok: 16分の格子に乗っているか, ns: その小節の音 }。3連・跳ね・装飾音のある小節は ok=false（触らない） */
 function varBarMasks(notes, a, b, beats, sel, strum) {
-  var nb = Math.round((b - a) / beats), bars = [], i, nS = beats * 4, pT = -9, pB = -1, src = notes;
+  var nb = Math.round((b - a) / beats), bars = [], i, nS = Math.round(beats * VAR_SPB), pT = -9, pB = -1, src = notes;
   for (i = 0; i < nb; i++) bars.push({ m: 0, ok: true, ns: [] });
   if (strum) src = notes.filter(function (n) { return n.t >= a - 0.06 && n.t < b - 0.06; }).sort(function (x, y) { return x.t - y.t; });
   src.forEach(function (n) {
@@ -21424,8 +21425,8 @@ function varTops(bars) {
 }
 /* 曲の本体（テーマ・ソロなど）の1区間に、選んだ型を当てはめる。「いつもの小節」だけを置き換え、作り込んだ小節（フィル・キメ・駆け上がり）は触らない */
 function varGroove(song, sec, G, R, beats, stat) {
-  if (beats !== 4 && beats !== 3 && beats !== 6) return;
-  var a = sec.at, b = sec.at + sec.beats, nS = beats * 4, nb = Math.round(sec.beats / beats), i, k;
+  var a = sec.at, b = sec.at + sec.beats, nS = Math.round(beats * VAR_SPB), nb = Math.round(sec.beats / beats), i, k;
+  if (nS < 6 || nS > 30 || Math.abs(nb * beats - sec.beats) > 0.01) return;
   var dr = varStem(song, "drums"), bs = varStem(song, "bass"), cp = varStem(song, "comp");
   var isK = function (n) { return n.p === 36 || n.p === 35; }, isS = function (n) { return n.p === 38 || n.p === 40 || n.p === 37; };
   var jit = function () { return (R.f() - 0.5) * 0.012; }, kRef = 0;
@@ -21518,7 +21519,27 @@ function varGroove(song, sec, G, R, beats, stat) {
 function varLead(song, R, beats, lines, info) {
   var secs = song.sections, solos = secs.filter(function (x) { return x.kind === "solo"; }), heads = secs.filter(function (x) { return x.kind === "head"; });
   var solo = varStem(song, "solo"), mel = varStem(song, "mel"), done = [];
-  var shape = R.wpick([["sparse", 3], ["arch", 2.5], ["late", 2.5], ["none", 2]]), push = R.chance(0.45), phr = R.chance(0.8);
+  var shape = R.wpick([["sparse", 3], ["arch", 2.5], ["late", 2.5], ["none", 2]]), push = R.chance(0.45), phr = R.chance(0.8), dev = R.chance(0.7), nDev = 0;
+  /* 動機の展開（リズムの呼応）：4小節のまとまりごとに、1小節目のリズムを、3小節目が受ける。音は3小節目の自分の音（その時点で鳴っていた音）で、位置だけ1小節目の型に合わせる */
+  if (solo && solos.length && dev && Math.round(beats * VAR_SPB) <= 30 && Math.round(beats * VAR_SPB) >= 6) solos.forEach(function (x) {
+    var nSd = Math.round(beats * VAR_SPB), bars = varBarMasks(solo.notes, x.at, x.at + x.beats, beats), i0, add = [];
+    if (Math.abs(bars.length * beats - x.beats) > 0.01) return;
+    for (i0 = 0; i0 + 2 < bars.length; i0 += 4) {
+      var A = bars[i0], B = bars[i0 + 2], pa = varPop(A.m), pb = varPop(B.m);
+      if (!A.ok || !B.ok || pa < 3 || pb < 3 || pa > pb * 2 || pb > pa * 2 || A.m === B.m || !R.chance(0.6)) continue;
+      var t0 = x.at + (i0 + 2) * beats, ns = B.ns.slice().sort(function (p, q) { return p.t - q.t; }), sts = varBits(A.m, nSd);
+      ns.forEach(function (n) { n._x = 1; });
+      sts.forEach(function (st, q) {
+        var t = t0 + varStepT(st), src = null, z; for (z = 0; z < ns.length; z++) if (ns[z].t <= t + 0.04) src = ns[z];
+        if (!src) src = ns[0];
+        var t2 = q + 1 < sts.length ? t0 + varStepT(sts[q + 1]) : t0 + beats, o = varCopy(src); delete o._x;
+        o.t = t; o.d = Math.max(0.1, Math.min((t2 - t) * 0.92, Math.max(src.d, 0.2) * 1.5)); add.push(o);
+      });
+      nDev++;
+    }
+    solo.notes = solo.notes.filter(function (n) { return !n._x; }).concat(add); solo.notes.sort(function (p, q) { return p.t - q.t; });
+  });
+  if (nDev) done.push("動機の展開：1小節目のリズムを3小節目が受ける（" + nDev + "か所）");
   var inSec = function (st, x) { return st.notes.filter(function (n) { return n.t >= x.at - 0.03 && n.t < x.at + x.beats - 0.03; }).sort(function (p, q) { return p.t - q.t; }); };
   if (solo && solos.length && shape !== "none") {
     var cut = 0, tot = 0;
@@ -21563,7 +21584,7 @@ function varLead(song, R, beats, lines, info) {
 }
 /* ベースと同じ扱いで、もう1本の楽器（リズムギターなど）の刻みを変える。型は「b」の鍵で選ぶので、ベースと同じ刻みの小節は、ベースと同じ新しい型になる */
 function varRetimeStem(stem, a, b, beats, G, R, kRef) {
-  var nS = beats * 4, nb = Math.round((b - a) / beats), bb = varBarMasks(stem.notes, a, b, beats, null, true), tops = varTops(bb), map = {}, add = [], i, n0 = 0;
+  var nS = Math.round(beats * VAR_SPB), nb = Math.round((b - a) / beats), bb = varBarMasks(stem.notes, a, b, beats, null, true), tops = varTops(bb), map = {}, add = [], i, n0 = 0;
   tops.forEach(function (m) { var nw = G.pick("b", m, G.v, function (x) { return 1 + 2 * (kRef ? varJac(x, kRef) : 0); }); if (nw && nw !== m) map[m] = nw; });
   for (i = 0; i < nb; i++) {
     var nm = bb[i].ok ? map[bb[i].m] : 0; if (!nm) continue;
@@ -21614,8 +21635,9 @@ function varietyApply(song, opt) {
   var swung = ((song.opt && song.opt.swing) || opt.swing || 0.5) > 0.54;          /* 跳ねる曲（スウィングなど）は、16分の型を当てない（まっすぐの8分が混じると、ノリが崩れる）。もともと毎回違うので、そのまま */
   VAR_SW = swung ? Math.min(0.72, (song.opt && song.opt.swing) || opt.swing || 0.5) : 0.5;
   var gb = beats === 12 ? 6 : beats;                                            /* 12拍の曲（フラメンコのコンパス）は、6拍ずつに分けて見る */
-  if (body.length && (gb === 4 || gb === 3 || gb === 6)) {
-    var nS = gb * 4, fam = beats === 4 ? VAR_FAMILY[style] : null, ST = fam ? PAT_STOCK[fam] : null, dr = varStem(song, "drums");
+  VAR_SPB = gb * 4 <= 30 ? 4 : 2;                                               /* 9/8・11/8 など：1拍を2つに分けて見る */
+  if (body.length && gb >= 2 && gb * VAR_SPB <= 30 && Math.abs(gb * VAR_SPB - Math.round(gb * VAR_SPB)) < 0.01) {
+    var nS = Math.round(gb * VAR_SPB), fam = beats === 4 ? VAR_FAMILY[style] : null, ST = fam ? PAT_STOCK[fam] : null, dr = varStem(song, "drums");
     var kit = !!(dr && dr.ch === 9 && dr.notes.some(function (n) { return n.p === 38; }) && dr.notes.some(function (n) { return n.p === 36; }));
     var lockBass = !fam || ["reggae", "latin"].indexOf(fam) < 0;
     var fills = kit && ST && ST.f.length && !swung ? varChoose(ST.f.map(function (x) { return [x, x[2]]; }), R, 3) : [];
@@ -21635,7 +21657,7 @@ function varietyApply(song, opt) {
   }
   /* ④ テーマ・アドリブの仕上げ */
   if (opt.leadShape !== false) { try { varLead(song, R, beats, lines, info); } catch (eL) {} }
-  VAR_SW = 0.5;
+  VAR_SW = 0.5; VAR_SPB = 4;
   song.stems.forEach(function (s) { s.notes.sort(function (x, y) { return x.t - y.t; }); });
   song.variety = info;
   if (lines.length) { var note = "【変化の在庫】" + lines.join("／") + "。シードを変えると、ここも変わります。"; if (song.explain && song.explain.push) song.explain.push(note); else if (!song.explain) song.explain = [note]; }
@@ -25158,9 +25180,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 565;
+var BUILD_NO = 566;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 216;
+var GEN_NO = 217;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
