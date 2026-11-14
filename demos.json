@@ -205,7 +205,9 @@
    "scores/2026-11-14_cgsolo_romance24-1.png"
   ],
   "cover": "covers/2026-11-14_cgsolo_romance24.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "video": "demos/2026-11-14_cgsolo_romance24/2026-11-14_cgsolo_romance24.mp4",
+  "videoKind": "page-turn-score"
  },
  {
   "id": "2026-11-14_gs_sakuraba_gm_boss",
