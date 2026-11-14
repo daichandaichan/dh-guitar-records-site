@@ -5517,15 +5517,15 @@ var VOICES = {
   romeo:      { label: "マイケル・ロメオ風（シンフォニーX：Dチューニングの16分ユニゾン・リフ、ハーモニック・マイナーの速いレガートと半音・増4度の影）", nps: 14 },
   /* クラシックギター／バロック（第290版） */
   villalobos: { label: "ヴィラ＝ロボス風（練習曲の広いアルペジオ・ブラジルのリズムと和声）" , nps: 11 },
-  carcassi: { label: "カルカッシ風（古典派の練習曲：分散和音と低音・高音の交互の伴奏型・3度6度・明快な和声。譜面 218曲）", nps: 10 },
+  carcassi: { label: "カルカッシ風（古典派の練習曲：分散和音と低音・高音の交互の伴奏型・3度6度・明快な和声。譜面 256曲）", nps: 10 },
   aguado: { label: "アグアド風（古典派：和音の響き・分散和音・3度6度の平行・音階の走句。譜面 36曲）", nps: 10 },
-  carulli: { label: "カルッリ風（古典派の小品：3度6度の重音・和音の伴奏・素直な旋律。譜面 31曲）", nps: 10 },
-  tarrega: { label: "タレガ風（ロマン派：広い分散和音・3度6度の歌う旋律・トレモロ・スラー。譜面 32曲）", nps: 10 },
-  albeniz: { label: "アルベニス風（スペインの情緒：跳躍する旋律・和音の打ち込み・長い音とトレモロ。譜面 28曲）", nps: 10 },
-  sor: { label: "ソル風（古典派：3度・6度の重音・長い音で歌う旋律・素直な和声。譜面 12曲）", nps: 10 },
-  giuliani: { label: "ジュリアーニ風（古典派：低音と高音を交互に行き来する伴奏型・分散和音・音階の走句。譜面 9曲）", nps: 12 },
-  lauro: { label: "ラウロ風（ベネズエラのワルツ：長い音で歌う旋律・和音の打ち込み・3度6度。譜面 17曲）", nps: 10 },
-  dowland: { label: "ダウランド風（ルネサンスのリュート：多声の和音と重音・歌う旋律・短い走句。譜面 11曲）", nps: 10 },
+  carulli: { label: "カルッリ風（古典派の小品：3度6度の重音・和音の伴奏・素直な旋律。譜面 49曲）", nps: 10 },
+  tarrega: { label: "タレガ風（ロマン派：広い分散和音・3度6度の歌う旋律・トレモロ・スラー。譜面 48曲）", nps: 10 },
+  albeniz: { label: "アルベニス風（スペインの情緒：跳躍する旋律・和音の打ち込み・長い音とトレモロ。譜面 33曲）", nps: 10 },
+  sor: { label: "ソル風（古典派：3度・6度の重音・長い音で歌う旋律・素直な和声。譜面 48曲）", nps: 10 },
+  giuliani: { label: "ジュリアーニ風（古典派：低音と高音を交互に行き来する伴奏型・分散和音・音階の走句。譜面 12曲）", nps: 12 },
+  lauro: { label: "ラウロ風（ベネズエラのワルツ：長い音で歌う旋律・和音の打ち込み・3度6度。譜面 20曲）", nps: 10 },
+  dowland: { label: "ダウランド風（ルネサンスのリュート：多声の和音と重音・歌う旋律・短い走句。譜面 20曲）", nps: 10 },
   dyens:      { label: "ローラン・ディアンス風（ジャズの和声・ハーモニクス・タンボーラ・平行の旋律）", nps: 12 },
   scarlatti:  { label: "スカルラッティ風（速い音階・同音連打・トリルとスペイン風の響き）", nps: 14 },
   barrios:    { label: "バリオス風（ロマン派のトレモロと分散和音・歌う旋律）", nps: 10 },
@@ -5772,15 +5772,15 @@ var VOICE_PROFILE = {
   beck:       { reg: 3,  span: 1.25, dens: 0.75, leg: 0.80, stac: 0.50, ahead: -0.004, rest: 1.1, phr: [2, 4, 4], slide: 0.45, vib: 1.5, land: "root", sc: "blues", start: [0, 0.5], rep: 0.10, bend: 1.9, nps: 8 },
   macalpine:  { reg: 5,  span: 0.95, dens: 1.30, leg: 0.86, stac: 0.70, ahead: -0.004, rest: 0.6, phr: [4, 6, 8], slide: 0.06, vib: 0.8, land: "third", sc: "neo", start: [0, 0.5], rep: 0.16, bend: 0.6, nps: 13 },
   takasaki:   { reg: 4,  span: 1.30, dens: 1.30, leg: 0.78, stac: 0.66, ahead: -0.008, rest: 0.6, phr: [4, 6, 8],    slide: 0.12, vib: 1.1, land: "root",   sc: "hmin",      start: [0, 0, 0.5], rep: 0.08, bend: 1.3 },
-  carcassi: { reg: 1,  span: 1.30, dens: 0.88, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 218曲（GP3/4・TablEdit・PowerTab）：密度 3.09・音域 中央 60 */
-  aguado: { reg: 0,  span: 1.30, dens: 1.17, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 36曲（GP3/4・TablEdit・PowerTab）：密度 4.11・音域 中央 59 */
-  carulli: { reg: 0,  span: 1.30, dens: 0.85, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 31曲（GP3/4・TablEdit・PowerTab）：密度 2.84・音域 中央 59 */
-  tarrega: { reg: 3,  span: 1.30, dens: 1.2, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 32曲（GP3/4・TablEdit・PowerTab）：密度 4.59・音域 中央 62 */
-  albeniz: { reg: 0,  span: 1.30, dens: 1.13, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 28曲（GP3/4・TablEdit・PowerTab）：密度 3.94・音域 中央 59 */
-  sor: { reg: 0,  span: 1.30, dens: 0.85, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 12曲（GP3/4・TablEdit・PowerTab）：密度 2.86・音域 中央 59 */
-  giuliani: { reg: 0,  span: 1.30, dens: 1.09, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 9曲（GP3/4・TablEdit・PowerTab）：密度 3.8・音域 中央 59 */
-  lauro: { reg: 1,  span: 1.30, dens: 0.87, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 17曲（GP3/4・TablEdit・PowerTab）：密度 3.04・音域 中央 60 */
-  dowland: { reg: 0,  span: 1.30, dens: 1.01, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 11曲（GP3/4・TablEdit・PowerTab）：密度 3.53・音域 中央 59 */
+  carcassi: { reg: 1,  span: 1.30, dens: 0.89, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 256曲（GP1〜4・TablEdit・PowerTab）：密度 3.11・音域 中央 60 */
+  aguado: { reg: 0,  span: 1.30, dens: 1.14, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 36曲（GP1〜4・TablEdit・PowerTab）：密度 3.99・音域 中央 59 */
+  carulli: { reg: 0,  span: 1.30, dens: 0.85, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 49曲（GP1〜4・TablEdit・PowerTab）：密度 2.91・音域 中央 59 */
+  tarrega: { reg: 3,  span: 1.30, dens: 1.2, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 48曲（GP1〜4・TablEdit・PowerTab）：密度 4.54・音域 中央 62 */
+  albeniz: { reg: 0,  span: 1.30, dens: 1.14, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 33曲（GP1〜4・TablEdit・PowerTab）：密度 3.99・音域 中央 59 */
+  sor: { reg: 0,  span: 1.30, dens: 0.86, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 48曲（GP1〜4・TablEdit・PowerTab）：密度 3.02・音域 中央 59 */
+  giuliani: { reg: 0,  span: 1.30, dens: 1.13, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 12曲（GP1〜4・TablEdit・PowerTab）：密度 3.95・音域 中央 59 */
+  lauro: { reg: 1,  span: 1.30, dens: 0.85, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 20曲（GP1〜4・TablEdit・PowerTab）：密度 2.98・音域 中央 60 */
+  dowland: { reg: 0,  span: 1.30, dens: 0.96, leg: 0.80, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.03, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },      /* 譜面 20曲（GP1〜4・TablEdit・PowerTab）：密度 3.35・音域 中央 59 */
   villalobos: { reg: 3,  span: 1.50, dens: 1.10, leg: 0.82, stac: 0.72, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.04, vib: 0.5, land: "root",   sc: "classical", start: [0, 0],       rep: 0.04, bend: 0.3 },
   dyens:      { reg: 3,  span: 1.40, dens: 1.20, leg: 0.80, stac: 0.70, ahead: 0.000,  rest: 0.9, phr: [4, 6, 8],    slide: 0.05, vib: 0.5, land: "nine",   sc: "classical", start: [0, 0.5],     rep: 0.05, bend: 0.4 },
   scarlatti:  { reg: 4,  span: 1.20, dens: 1.45, leg: 0.74, stac: 0.64, ahead: 0.000,  rest: 0.5, phr: [4, 8, 8],    slide: 0.0,  vib: 0.0, land: "third",  sc: "bach",      start: [0, 0],       rep: 0.22, bend: 0 },
@@ -7430,28 +7430,28 @@ RIFFHARM.sabbath = { rate: 0.26, chug: true, col: [1, 6], w: { 1: 1.8, 2: 3.0, 3
 RIFFHARM.maiden = { rate: 0.27, chug: true, col: [6], w: { 1: 0.5, 2: 1.9, 3: 4.2, 4: 2.9, 5: 4.4, 6: 1.0, 7: 4.3, 8: 3.8, 9: 4.6, 10: 2.1, 11: 0.5 } };
 RIFFHARM.zappa = { rate: 0.65, chug: true, col: [1, 6, 11], w: { 1: 1.6, 2: 3.1, 3: 4.8, 4: 4.6, 5: 10.7, 6: 1.7, 7: 8.9, 8: 4.1, 9: 4.5, 10: 5.7, 11: 0.9 } };
 /* ヴォーン・ワンダー・ジェームス・ブラウン（第489版）：GP譜(47／16／8曲)から。analyze_rock3.js・analyze_rock3b.js・analyze_riffharm.js */
-ROCK_RIFF.vaughan = [["o-o-o-o-o-o-o-o-",483],["--o-o-o-o-o-o-o-",98],["o---o-o-o-o-o-o-",94],["o---o---o---o---",77],["o-o-o-o---o-o-o-",70],["o-o-o-o---o---o-",42],["o-o-o---o-o-o-o-",42],["o---o---o---o--o",41]];
-ROCK_PROF.vaughan = {chord: [0.52,0.25,0.14,0.1],pm: 0,root: 0.45,same: 0.5,cell: 0.5,move: [[7,5],[5,5],[3,4],[4,4],[2,3],[10,3],[9,2]]};
-ROCK_BASS.vaughan = [["x-x-x-x-x-x-x-x-",793],["x---x---x---x---",126],["x---x-x---x-x-x-",101],["x--xx--xx--xx--x",77],["x---------------",74]];
+ROCK_RIFF.vaughan = [["o-o-o-o-o-o-o-o-",484],["--o-o-o-o-o-o-o-",101],["o---o-o-o-o-o-o-",94],["o---o---o---o---",85],["o-o-o-o---o-o-o-",70],["o---o--o--o---o-",56],["o-o-o-o---o---o-",42],["o-o-o---o-o-o-o-",42]];
+ROCK_PROF.vaughan = {chord: [0.52,0.24,0.14,0.09],pm: 0,root: 0.45,same: 0.5,cell: 0.5,move: [[7,5],[5,5],[3,4],[4,4],[2,3],[10,3],[9,2]]};
+ROCK_BASS.vaughan = [["x-x-x-x-x-x-x-x-",797],["x---x---x---x---",126],["x---x-x---x-x-x-",101],["x---------------",81],["x--xx--xx--xx--x",77]];
 ROCK_DR.vaughan = { kick: [["K.......K.......",364],["....K.......K...",268],["K.....K.K.......",195],["K.......K.K.....",126],["K.......K.....K.",118]], snare: [["....S.......S...",1154],["................",215],["....S.......SSSS",93],["......S...S.....",77]], ride: 0.36 };
 ROCK_CELLS.vaughan = [["0 . 0 . 0 . 0 . 0 . 0 . 0 . 0 .",131],["0 . . . 0 . . . 0 . . . 0 . . .",124],["-7 . -7 . -4 . -3 . 0 . 0 . 2 . 0 .",31],[". . 0 . 0 . 0 . 0 . 0 . 0 . 0 .",24],["0 . 0 . 3 . 4 . 7 . 7 . 9 . 5 .",23],["-22 . . . 0 . -22 . 0 . 0 . -22 . 0 .",21],["-7 . . . -8 . -5 . -3 . 0 . 2 . 0 .",21],["0 . 0 . . . 0 . . . 0 . . . 0 .",19],["0 . 0 . -12 . 0 . . . 0 . . . -12 .",18],["5 . -2 . 0 . 0 . 3 . 3 . 4 . 4 .",18],[". . 0 . . . 0 . . . 0 . . . 0 .",17]];
-ROCK_RIFF.wonder = [["o-o-o-o-o-o-o-o-",201],["o-------o-------",42],["--o---o---o-o-o-",41],["oooooooo-o-ooooo",40],["o-o-o-o-o-o---o-",38],["o-o-o-o-o--o--o-",27],["o-o-o-o-o-o-ooo-",24],["o-o-o---o-------",17]];
-ROCK_PROF.wonder = {chord: [0.31,0.05,0.16,0.48],pm: 0.06,root: 0.39,same: 0.5,cell: 0.5,move: [[7,12],[10,7],[5,3],[2,2],[9,2],[3,2],[8,2]]};
-ROCK_BASS.wonder = [["x-----x-x---x---",165],["x-----x-x-----x-",142],["x---x---x---x---",85],["x-x-x-x-x-x-x-x-",63],["x--xx-xx---xx---",53]];
+ROCK_RIFF.wonder = [["o-o-o-o-o-o-o-o-",205],["p-------p-------",42],["--o---o---o-o-o-",41],["oooooooo-o-ooooo",40],["o-o-o-o-o-o---o-",38],["o-o-o-o-o--o--o-",27],["o-o-o-o-o-o-ooo-",24],["p-p-p---p-------",17]];
+ROCK_PROF.wonder = {chord: [0.32,0.05,0.15,0.47],pm: 0.06,root: 0.39,same: 0.5,cell: 0.5,move: [[7,12],[10,7],[5,3],[2,2],[3,2],[9,2],[1,2]]};
+ROCK_BASS.wonder = [["x-----x-x---x---",210],["x-----x-x-----x-",142],["x---x---x---x---",85],["x-x-x-x-x-x-x-x-",67],["x--xx-xx---xx---",53]];
 ROCK_DR.wonder = { kick: [["K.......K.......",267],["......K.K.......",114],["K.....K.K.....K.",70],["K...K...K...K...",54],["K......K.K.K...K",52]], snare: [["....S.......S...",492],["....S.....S.....",32],["........S.......",22],["....S...........",19]], ride: 0.09 };
 ROCK_CELLS.wonder = [["-10 . 0 . 0 . 0 . -10 . 0 . 0 . 0 .",40],["0 . . . 0 . . . 7 . . . 0 . . .",30],[". . 0 . 3 5 . 0 . . 0 . 0 . 0 .",22],[". . 0 . 3 5 . . 8 . . 3 . . 0 .",21],["-7 . 0 . 0 . 0 . -7 . 0 . 0 . 0 .",18],["-12 . 0 . -2 . 0 . 3 . . -2 . . 0 .",14],["0 . . . . 0 5 0 . . . . . 0 4 2",13],["0 . . . 0 . . . 8 . . . 0 . . .",13],["-5 . -3 . 0 . 2 . 5 . . 0 . . 2 .",13],["0 . 12 . 10 . . . . . . . 17 . 15 .",12],["-7 . 0 . 0 . 0 . -7 . 0 . 0 0 0 .",12]];
 ROCK_RIFF.jbrown = [["o-o-o-o--------o",32],["o-o-o-o-o-o-o-o-",15],["----o--o--o-----",6],["o---o---oo--ooo-",5],["oooooooooooooooo",3],["ooo-o-o-o--o----",2],["ooo-o-o-oooo----",2],["o-o-oo-o-------o",2]];
 ROCK_PROF.jbrown = {chord: [0.55,0.23,0.09,0.13],pm: 0,root: 0.53,same: 0.5,cell: 0.5,move: [[7,7],[5,5],[2,4],[3,4],[10,3],[8,2],[6,2]]};
-ROCK_BASS.jbrown = [["x---x-x-x-x-x-x-",24],["x-xxxxxxxx-x-x-x",20],["x-x-x-x-x-x-x-x-",20],["----x---x-------",20],["x-x---x---x---x-",12]];
+ROCK_BASS.jbrown = [["x---x-x-x-x-x-x-",28],["x-x-x-x-x-x-x-x-",26],["----x---x-------",26],["x-xxxxxxxx-x-x-x",20],["x-x---x---x---x-",16]];
 ROCK_DR.jbrown = { kick: [["K.........K...K.",54],["K.......K.......",44],["K.........K..K..",32],["....K...K.......",10],["K...............",6]], snare: [["....S.......S...",72],["....S.SS.S..S...",48],["....S...S.......",10],["....S...S...S...",7]], ride: 0.03 };
 ROCK_CELLS.jbrown = [["7 . 0 . 7 . 0 . . . . . . . . 0",32],[". . 0 -2 0 -2 0 -2 0 . . . . . . .",20],["5 . 5 . 3 . 3 . 2 . 2 . 0 . 0 .",12],["2 . 2 . . . . . . . . . 0 . 0 .",7],[". . . . 0 . . 0 . . 0 . . . . .",6],["5 . . . 0 . . . 0 0 . . 8 5 3 .",5],[". . 0 . 4 . 7 . 10 . 14 . . . . .",4],["0 . 12 . . . . 10 . 7 . . . . . .",4],["0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0",4],["0 . 0 . 0 . 0 . 0 . 0 . 0 . 0 .",3],[". . . . . . . . . . 0 2 0 2 0 .",2]];
 RIFFHARM.vaughan = { rate: 0.16, chug: true, col: [], w: { 1: 0.4, 2: 1.6, 3: 2.0, 4: 1.1, 5: 2.3, 6: 0.5, 7: 3.2, 8: 0.7, 9: 1.6, 10: 2.0, 11: 0.2 } };
 RIFFHARM.wonder = { rate: 0.55, chug: false, col: [], w: { 1: 1.3, 2: 9.1, 3: 7.2, 4: 5.4, 5: 6.1, 6: 2.2, 7: 11.8, 8: 3.8, 9: 6.4, 10: 4.2, 11: 0.7 } };
 RIFFHARM.jbrown = { rate: 0.3, chug: false, col: [], w: { 2: 3, 3: 1, 5: 2, 7: 2, 9: 3, 10: 5 } };       /* 重なりが測れたのは1曲だけ（暫定） */
 /* ビートルズ（第492版）：GP譜382曲から。analyze_rock4.js・analyze_rock4b.js・analyze_riffharm.js・gen_rock4.js */
-ROCK_RIFF.beatles = [["o-o-o-o-o-o-o-o-",3997],["o---o---o---o---",1621],["o---o---o-o-o-o-",962],["o-o-o-o---o-o-o-",440],["o---o-o-o-o-o-o-",405],["----o-------o---",396],["o---o-o---o-o-o-",382],["o-------o-------",376]];
-ROCK_PROF.beatles = {chord: [0.32,0.16,0.06,0.45],pm: 0.01,root: 0.69,same: 0.5,cell: 0.5,move: [[7,3],[5,3],[4,2],[3,2],[2,2],[9,2],[10,2]]};
-ROCK_BASS.beatles = [["x-x-x-x-x-x-x-x-",3126],["x---x---x---x---",2859],["x-------x-------",1813],["x---------------",1153],["x-----x-x-------",1038]];
+ROCK_RIFF.beatles = [["o-o-o-o-o-o-o-o-",4292],["o---o---o---o---",1696],["o---o---o-o-o-o-",1067],["o-o-o-o---o-o-o-",447],["o---o-o-o-o-o-o-",444],["----o-------o---",420],["o---o-o---o-o-o-",397],["o-------o-------",389]];
+ROCK_PROF.beatles = {chord: [0.33,0.16,0.06,0.44],pm: 0.02,root: 0.69,same: 0.5,cell: 0.5,move: [[7,4],[5,3],[4,2],[3,2],[2,2],[9,2],[10,2]]};
+ROCK_BASS.beatles = [["x-x-x-x-x-x-x-x-",3207],["x---x---x---x---",3001],["x-------x-------",1871],["x---------------",1224],["x-----x-x-------",1082]];
 ROCK_DR.beatles = { kick: [["K.......K.......",4183],["K...............",1892],["K.....K.K.......",1605],["K.......K.K.....",1343],["K.......K.K...K.",1293]], snare: [["....S.......S...",9750],["................",1878],["....S.S.....S...",1257],["............S...",309]], ride: 0.07 };
 ROCK_CELLS.beatles = [["0 . 0 . 0 . 0 . 0 . 0 . 0 . 0 .",1757],["0 . . . 0 . . . 0 . . . 0 . . .",1462],["0 . . . 0 . . . 0 . 0 . 0 . 0 .",577],["0 . . . 0 . 0 . . . 0 . 0 . 0 .",270],["0 . 0 . 0 . 0 . . . 0 . 0 . 0 .",229],["0 . . . 0 . 0 . 0 . 0 . 0 . 0 .",200],["0 . . . 0 . . . 0 . 0 . 0 . . .",195],["0 . 0 . 0 . . . 0 . 0 . 0 . . .",179],["0 . . . . . 0 . . . 0 . 0 . 0 .",176],["0 . . . 0 . 0 . . . 0 . 0 . . .",167],["0 . 0 . 4 . 7 . 10 . 10 . 9 . 7 .",130]];
 RIFFHARM.beatles = { rate: 0.6, chug: false, col: [], w: { 1: 1.1, 2: 4.5, 3: 6.1, 4: 4.9, 5: 11.6, 6: 1.0, 7: 9.3, 8: 8.5, 9: 6.0, 10: 4.8, 11: 0.7 } };
@@ -14627,7 +14627,21 @@ function genSolo(chs, form, sty, opt, rng, offsetBeats, sctx) {
 }
 
 /* ---------- ヴォイシング ---------- */
+/* ジプシーのポンプの押さえ方（奏者の TAB 100曲・和音 5498：tools/mine_gypsy_grips.py）。型（sym）→ [低音の弦(0＝6弦), 低音からの音程] の多い順 */
+var GYPSY_GRIPS = {"6":[[0,[0,9,16,19]],[2,[0,4,9,12]],[2,[0,7,9,16]],[3,[0,4,9]]],"7":[[1,[0,4,10,12]],[0,[0,7,10,16,19]],[0,[0,7,10,16,19,24]],[0,[0,10,16,19]]],"9":[[1,[0,4,10,14]],[2,[0,4,10,14]]],"":[[1,[0,7,12,16]],[0,[0,7,12,16,19,24]],[2,[0,4,7,12]],[0,[0,7,12,16,19]]],"7#5":[[0,[0,10,16,20]],[0,[0,10,16,20,24]],[1,[0,10,16,20]]],"m7":[[0,[0,10,15,19]],[1,[0,7,10,15]],[1,[0,3,10,15]],[0,[0,7,10,15,19]]],"7b9":[[1,[0,4,10,13]],[2,[0,4,10,13]],[1,[0,4,10,13,19]]],"maj7":[[0,[0,11,16,19]],[1,[0,7,11,16]],[0,[0,7,16,23]],[3,[0,4,11]]],"m6":[[0,[0,9,15,19]],[0,[0,9,15,19,24]],[2,[0,7,9,15]],[3,[0,3,9]]],"dim7":[[2,[0,6,9,15]],[0,[0,9,15,18]],[1,[0,6,9,15]]],"6/9":[[1,[0,4,9,14,19]],[2,[0,4,9,14]],[1,[0,4,9,14]]],"m":[[1,[0,7,12,15,19]],[2,[0,3,7,12]],[1,[0,7,12,15]],[0,[0,7,12,15,19]]],"m6/9":[[2,[0,3,9,14]]],"m7b5":[[2,[0,6,10,15]],[1,[0,6,10,15]],[0,[0,10,15,18]]]};
+function gypsyGrip(ch, lo, hi) {
+  var Q = QUAL[ch.q], L = Q && GYPSY_GRIPS[Q.sym], i, k, T = [40, 45, 50, 55, 59, 64];
+  if (!L) return null;
+  for (i = 0; i < L.length; i++) {
+    var bs = L[i][0], iv = L[i][1], top = iv[iv.length - 1];
+    for (k = 0; k < 8; k++) { var b = (ch.root % 12) + 12 * k;
+      if (b < T[bs] + 1 || b > T[bs] + 12 || b < lo || b + top > hi) continue;
+      return iv.map(function (x) { return b + x; }); }
+  }
+  return null;
+}
 function voicing(ch, style, lo, hi) {
+  if (style === "pompe") { var gG = gypsyGrip(ch, lo, hi); if (gG) return gG; }      /* 奏者の押さえ方があれば、それで */
   if (style === "green") {
     /* 4つ切りは、根音＋3度＋7度の枠。ジプシーのポンプ（6thを含む）とは別の響きにする */
     var g3 = QUAL[ch.q].gt, r0 = inRange(nearest([0], ch.root, 50), 44, 56);
@@ -22184,10 +22198,86 @@ var SOLO_DEF = {
 var GAME_SERIES = {"gs_chrono":{"label":"時の旅のRPG風（クロノ系：ケルト・民族の笛と弦、ピアノ、ナイロンギター、短調が多い）","src":"chrono","tempo":[79,120,184],"fam":"game","lead":{"field":[73,75,24,46,0],"town":[24,73,46,0],"battle":[48,56,24,30],"boss":[48,30,56,19],"dungeon":[46,0,48,12],"emotion":[0,46,24,73],"prelude":[46,0,73],"overture":[56,48,73],"castle":[48,6,73],"minuet":[6,73,46],"jingle":[56,73]},"comp":[0,46,24,48],"bass":[33,32,43],"mn":0.73,"t3":0.16},"gs_mana":{"label":"森と精霊のRPG風（聖剣系：マリンバ、パンフルート、フルート、ヴィブラフォン、民族の打楽器）","src":"mana","tempo":[76,120,230],"fam":"latin","lead":{"field":[75,73,12,11],"town":[12,75,73,46],"battle":[48,81,56,12],"boss":[48,19,81,56],"dungeon":[12,11,46,75],"emotion":[75,73,46,0],"prelude":[46,75,11],"overture":[56,75,48],"castle":[48,6,75],"minuet":[6,73,12],"jingle":[56,12]},"comp":[12,46,11,48],"bass":[33,38,32],"mn":0.7,"t3":0.07},"gs_saga":{"label":"疾走するバトルのRPG風（サガ系：動くベース、スラップ／シンセベース、弦とハープ、ドラムが多い）","src":"saga","tempo":[95,120,160],"fam":"hardrock","lead":{"field":[48,56,73,81],"town":[46,73,48,0],"battle":[48,81,56,30],"boss":[30,48,81,19],"dungeon":[48,46,19],"emotion":[48,46,0,73],"prelude":[46,48],"overture":[56,48],"castle":[48,56,6],"minuet":[6,48],"jingle":[56,81]},"comp":[48,0,46,29],"bass":[37,36,38,33],"mn":0.73,"t3":0.07},"gs_tactics":{"label":"重厚な軍楽オーケストラのRPG風（タクティクス系：弦合奏、ハープ、ティンパニ、ピッツィカート、3拍子も）","src":"tactics","tempo":[79,128,204],"fam":"game","lead":{"field":[48,49,73,60],"town":[45,73,46,68],"battle":[48,49,56,60],"boss":[48,49,56,57],"dungeon":[48,45,46,70],"emotion":[48,49,46,73],"prelude":[46,48,49],"overture":[56,60,48],"castle":[48,49,56],"minuet":[48,45,73],"jingle":[56,60]},"comp":[49,48,46,45],"bass":[43,42,32],"mn":0.64,"t3":0.21},"gs_comic":{"label":"明るくコミカルなRPG風（マリオRPG系：マリンバ、シンセベース、スチール弦ギター、弾むドラム）","src":"mario","tempo":[92,130,170],"fam":"funk","lead":{"field":[12,80,25,73],"town":[12,25,73,56],"battle":[80,12,56,81],"boss":[80,30,48,81],"dungeon":[12,45,11],"emotion":[25,0,12,73],"prelude":[12,46],"overture":[56,12,80],"castle":[56,12,48],"minuet":[12,6],"jingle":[56,80]},"comp":[12,25,0,45],"bass":[38,33,36],"mn":0.55,"t3":0.08},"gs_xeno":{"label":"聖歌とケルトのSF RPG風（ゼノギアス系：弦・ピアノ・ハープ・合唱・クラリネット、民族の笛、3拍子も）","src":"xeno","tempo":[75,120,167],"fam":"game","lead":{"field":[71,73,75,25],"town":[25,73,46,71],"battle":[48,56,61,30],"boss":[52,48,19,61],"dungeon":[52,46,0,89],"emotion":[0,52,73,71],"prelude":[46,0,52],"overture":[52,56,48],"castle":[52,19,48],"minuet":[46,71,6],"jingle":[56,73]},"comp":[0,46,48,45,25],"bass":[32,33,43],"mn":0.45,"t3":0.27},"gs_livealive":{"label":"時代を巡るオムニバスRPG風（ライブ・ア・ライブ系：ブラス・歪みギター・ロックオルガン・フレットレスベース、短調が多い）","src":"livealive","tempo":[90,120,162],"fam":"rock","lead":{"field":[25,73,61,46],"town":[25,22,46,73],"battle":[30,61,19,29],"boss":[30,19,61,52],"dungeon":[19,46,48,35],"emotion":[48,46,25,0],"prelude":[46,25],"overture":[61,56,48],"castle":[61,19,48],"minuet":[46,6,25],"jingle":[61,56]},"comp":[29,19,25,48,46],"bass":[35,34,33],"mn":0.84,"t3":0.04},"gs_terra":{"label":"大地と再生のRPG風（天地創造系：ハープ・弦・スチール弦ギター・フレットレス／ウッドベース・フルート・合唱）","src":"terra","tempo":[78,110,161],"fam":"game","lead":{"field":[73,25,46,75],"town":[25,73,46,12],"battle":[48,56,30,61],"boss":[52,48,47,61],"dungeon":[46,52,48,89],"emotion":[52,73,46,48],"prelude":[46,73],"overture":[56,52,48],"castle":[52,48,73],"minuet":[46,73,6],"jingle":[56,73]},"comp":[46,25,48,52],"bass":[35,32,43],"mn":0.52,"t3":0.11},"gs_frontm":{"label":"メカと戦場の軍事ドラマ風（フロントミッション系：弦・シンセベース・ピアノ・ティンパニ・ホルン、短調が多い）","src":"frontm","tempo":[75,127,180],"fam":"hardrock","lead":{"field":[60,48,0,61],"town":[0,48,25,81],"battle":[61,48,81,30],"boss":[61,48,30,52],"dungeon":[48,0,89,38],"emotion":[0,48,60,46],"prelude":[0,48],"overture":[61,60,56],"castle":[60,48,61],"minuet":[48,0,46],"jingle":[61,56]},"comp":[48,0,61,81],"bass":[38,39,33],"mn":0.79,"t3":0.13},"gs_pe":{"label":"夜の都市のオペラ・ホラー風（パラサイト・イヴ系：ピアノ・ハープ・合唱・指弾きベース・電子音、短調が多い）","src":"pe","tempo":[82,138,168],"fam":"dance","lead":{"field":[0,1,52,46],"town":[0,12,1,46],"battle":[81,0,30,52],"boss":[52,19,81,0],"dungeon":[52,0,89,12],"emotion":[0,52,46,48],"prelude":[0,46],"overture":[52,0,48],"castle":[52,19,0],"minuet":[0,46,6],"jingle":[0,52]},"comp":[0,46,52,89],"bass":[33,38,39],"mn":0.86,"t3":0.11},"gs_musashi":{"label":"元気な冒険アクション風（ブレイヴフェンサー武蔵伝系：弦・ハープ・ブラス・チューバ・トロンボーン、速いテンポ）","src":"musashi","tempo":[104,152,240],"fam":"pop","lead":{"field":[61,56,73,48],"town":[57,12,73,46],"battle":[61,56,48,30],"boss":[61,57,48,52],"dungeon":[58,48,46,12],"emotion":[48,46,60,0],"prelude":[46,48],"overture":[61,56,60],"castle":[61,60,48],"minuet":[46,57,6],"jingle":[56,61]},"comp":[48,46,61,0],"bass":[58,33,32],"mn":0.52,"t3":0.04},"gs_actraiser":{"label":"神殿と天空のシンフォニック風（アクトレイザー系：弦・トランペット・ティンパニ・オルガン、ドラムは控えめ）","src":"actraiser","tempo":[89,147,250],"fam":"game","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[19,56,48],"minuet":[48,46,6],"jingle":[56,73],"field":[56,48,73,60],"town":[73,68,46,48],"battle":[56,48,61,30],"boss":[19,52,48,56],"dungeon":[48,19,52,70],"emotion":[48,73,52,0]},"comp":[48,52,19,46],"bass":[43,42,32],"mn":0.67,"t3":0.04},"gs_quintet":{"label":"古代遺跡の冒険RPG風（ソウルブレイダー／ガイア幻想紀系：弦・ハープ・ティンパニ・合唱・フルート）","src":"quintet","tempo":[93,126,192],"fam":"game","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[56,73],"field":[73,48,46,56],"town":[73,46,12,71],"battle":[56,48,30,61],"boss":[52,48,19,56],"dungeon":[52,46,48,89],"emotion":[52,73,48,0]},"comp":[46,48,52,0],"bass":[32,43,33],"mn":0.51,"t3":0.02},"gs_sakuraba":{"label":"プログレ・ロックのRPG風（スターオーシャン／ヴァルキリープロファイル系：ハープ・チェンバロ・オルガン・歪みギター・指弾きベース）","src":"sakuraba","tempo":[76,121,250],"fam":"hardrock","lead":{"prelude":[46,10],"overture":[56,48,61],"castle":[48,56,6],"minuet":[6,46,10],"jingle":[56,10],"field":[6,46,73,10],"town":[10,6,46,73],"battle":[30,19,81,29],"boss":[19,30,52,81],"dungeon":[6,19,52,89],"emotion":[46,0,48,10]},"comp":[19,6,46,4,29],"bass":[33,34,38],"mn":0.69,"t3":0.21},"gs_evermore":{"label":"密林と神秘のアンビエントRPG風（シークレット・オブ・エヴァーモア系：ハープ・ナイロンギター・ヴィブラフォン・フルート、3拍子も）","src":"evermore","tempo":[76,125,152],"fam":"game","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[56,73],"field":[73,24,11,46],"town":[24,11,73,46],"battle":[48,56,24,47],"boss":[52,48,19,47],"dungeon":[11,46,89,52],"emotion":[46,24,73,0]},"comp":[46,24,11,4],"bass":[32,33,43],"mn":0.6,"t3":0.26},"gs_enixrpg":{"label":"素朴な冒険のRPG風（7thサガ・パラディンズクエストほかエニックス系：弦・パンフルート・ハープ・エレピ・ホルン、短調が多い）","src":"enixrpg","tempo":[89,120,240],"fam":"game","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[56,73],"field":[75,73,60,46],"town":[75,4,46,12],"battle":[48,56,60,30],"boss":[48,19,56,52],"dungeon":[46,48,4,89],"emotion":[4,48,75,46]},"comp":[46,4,48],"bass":[33,32,43],"mn":0.72,"t3":0.1},"gs_ogre":{"label":"戦記と傭兵のシミュレーション風（オウガバトル系：弦・トランペット・ティンパニ・合唱・チューバ）","src":"ogre","tempo":[120,142,250],"fam":"game","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[56,61,48],"minuet":[48,46,6],"jingle":[56,73],"field":[48,56,60,73],"town":[73,48,46,68],"battle":[56,48,61,58],"boss":[52,48,56,47],"dungeon":[48,52,58,70],"emotion":[48,52,73,46]},"comp":[48,52,46,61],"bass":[58,43,42],"mn":0.58,"t3":0.08},"gs_megaman":{"label":"ロックのアクション風（ロックマン系：歪みギター・矩形波のリード・速いベース、短調が多い）","src":"megaman","tempo":[105,148,180],"fam":"hardrock","lead":{"prelude":[46,48],"overture":[30,80,81],"castle":[30,19,80],"minuet":[48,46,6],"jingle":[80,81],"field":[80,30,81,29],"town":[80,81,12,29],"battle":[30,81,29,80],"boss":[30,29,81,19],"dungeon":[81,30,80],"emotion":[80,48,0]},"comp":[29,30,48,80],"bass":[33,38,34],"mn":0.73,"t3":0.02},"gs_zelda":{"label":"冒険のファンファーレ風（ゼルダ系：トランペット・弦・ハープ・ティンパニ・合唱）","src":"zelda","tempo":[88,130,175],"fam":"game","lead":{"prelude":[46,48],"overture":[56,57,48],"castle":[56,60,48],"minuet":[48,46,6],"jingle":[56,57],"field":[56,48,73,60],"town":[73,46,0,12],"battle":[56,48,57,30],"boss":[57,52,48,56],"dungeon":[52,46,48,89],"emotion":[48,0,46,73]},"comp":[48,46,0],"bass":[32,58,43],"mn":0.59,"t3":0.04},"gs_smb":{"label":"明るく弾むアクション風（スーパーマリオ系：矩形波・ピアノ・マリンバ・ピック弾きのベース、長調が多い）","src":"smb","tempo":[86,121,183],"fam":"pop","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[80,56],"field":[80,56,12,0],"town":[12,0,26,56],"battle":[80,30,56],"boss":[30,19,80],"dungeon":[12,11,46],"emotion":[0,48,12]},"comp":[0,26,12,48],"bass":[34,32,33],"mn":0.32,"t3":0.05},"gs_metroid":{"label":"未知の惑星のSF風（メトロイド系：シンセ・不穏な和音・フレットレス／シンセベース）","src":"metroid","tempo":[75,126,160],"fam":"game","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[81,80],"field":[81,80,89,48],"town":[80,12,0],"battle":[81,30,80],"boss":[30,81,19],"dungeon":[89,80,48,95],"emotion":[0,48,89]},"comp":[89,48,0,95],"bass":[38,35,39],"mn":0.61,"t3":0.14},"gs_castlevania":{"label":"ゴシックの古城ロック風（悪魔城ドラキュラ系：オルガン・チェンバロ・歪みギター・弦、短調が多い）","src":"castlevania","tempo":[80,120,190],"fam":"hardrock","lead":{"prelude":[46,48],"overture":[19,30,56],"castle":[19,6,48],"minuet":[6,19,48],"jingle":[56,73],"field":[19,30,48,6],"town":[6,19,46],"battle":[30,19,48,81],"boss":[19,30,52,48],"dungeon":[19,6,48,52],"emotion":[48,6,0,46]},"comp":[19,6,48,29],"bass":[33,32,34],"mn":0.83,"t3":0.09},"gs_dkc":{"label":"ジャングルのアンビエント風（ドンキーコング系：マリンバ・ヴィブラフォン・ハープ・パッド・グルーヴ）","src":"dkc","tempo":[85,115,193],"fam":"funk","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[56,73],"field":[12,11,73,80],"town":[12,46,0],"battle":[80,30,48],"boss":[30,48,81],"dungeon":[11,46,89,48],"emotion":[46,0,89,48]},"comp":[46,12,0,89],"bass":[34,38,33],"mn":0.59,"t3":0.01},"gs_kirby":{"label":"ポップでかわいいアクション風（カービィ系：シンセ・パンフルート・エレピ・ブラス、長調寄り）","src":"kirby","tempo":[100,150,187],"fam":"pop","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[56,73],"field":[80,75,57,12],"town":[5,12,75],"battle":[80,61,81,30],"boss":[30,81,61],"dungeon":[75,11,5],"emotion":[5,0,75]},"comp":[5,61,0,12],"bass":[34,38,33],"mn":0.45,"t3":0.08},"gs_mother":{"label":"ちょっと不思議な日常のRPG風（MOTHER系：オカリナ・ナイロンギター・オルガン・シンセ、長調が多い）","src":"mother","tempo":[78,120,180],"fam":"pop","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[56,73],"field":[79,80,24,0],"town":[24,25,0,16],"battle":[80,16,30,81],"boss":[81,16,30],"dungeon":[16,79,89],"emotion":[0,24,79]},"comp":[24,0,16,25],"bass":[33,34,32],"mn":0.31,"t3":0.04},"gs_tales":{"label":"プログレ風の王道RPG（テイルズ系：ハープ・チェレスタ・チェンバロ・シンセ、3拍子も）","src":"tales","tempo":[86,120,180],"fam":"rock","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[56,73],"field":[8,46,73,6],"town":[6,8,25,46],"battle":[81,30,19,7],"boss":[19,30,81,52],"dungeon":[6,8,52,89],"emotion":[0,46,8]},"comp":[46,6,7,0],"bass":[33,35,34],"mn":0.58,"t3":0.18},"gs_jrpg":{"label":"90年代の王道RPG風（ルフィア・ブレス オブ ファイア・ワイルドアームズ・幻想水滸伝・ルナ系：弦・ハープ・フルート・スチール弦ギター）","src":"jrpg","tempo":[82,121,190],"fam":"game","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[56,73],"field":[73,25,48,61],"town":[25,46,73,0],"battle":[48,30,61,56],"boss":[48,30,19,52],"dungeon":[46,48,52],"emotion":[0,48,46,73]},"comp":[46,48,25,0],"bass":[33,32,43],"mn":0.59,"t3":0.06},"gs_shmup":{"label":"疾走するシューティング風（グラディウス・スターフォックス・F-ZERO系：シンセのリード・ブラス・歪みギター、速い）","src":"shmup","tempo":[105,146,192],"fam":"hardrock","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[56,73],"field":[81,61,30,56],"town":[80,61],"battle":[81,30,61,80],"boss":[30,81,61,19],"dungeon":[81,89,48],"emotion":[48,61,0]},"comp":[61,48,29,81],"bass":[34,35,37],"mn":0.65,"t3":0.05},"gs_fighting":{"label":"対戦格闘のステージ風（ストリートファイター系：歪みギター・スラップベース・ブラス、短調が多い）","src":"fighting","tempo":[100,131,180],"fam":"funk","lead":{"prelude":[46,48],"overture":[56,48,61],"castle":[48,56,6],"minuet":[48,46,6],"jingle":[56,73],"field":[30,81,61,29],"town":[81,61,0],"battle":[30,81,61,29],"boss":[30,19,81],"dungeon":[30,81],"emotion":[48,0,81]},"comp":[29,61,30,48],"bass":[36,33,39],"mn":0.77,"t3":0.02}};
 (function () { Object.keys(GAME_SERIES).forEach(function (k) { var b0 = STYLES.game, st = {}, key; if (!b0) return; for (key in b0) st[key] = b0[key]; st.label = GAME_SERIES[k].label; st.group = "ゲーム音楽"; st.forms = b0.forms.slice(); st.gameOf = k; STYLES[k] = st; }); })();
 /* クラシックギターの作曲者の、ソロの型の比重 */
-var CG_MODE = {"carcassi":[["arp",1.5],["wide",4.8],["par",2.8],["chorale",1.5],["trem",0.8],["brun",1],["fig",1.5],["hold",1.3]],"aguado":[["arp",3.1],["wide",3.8],["par",2],["chorale",2.1],["trem",0.7],["brun",1.6],["fig",1.3],["hold",0.8]],"carulli":[["arp",1.1],["wide",6],["par",3.3],["chorale",2],["trem",0.5],["brun",0.5],["fig",0.8],["hold",1.1]],"tarrega":[["arp",3.4],["wide",3.5],["par",2.9],["chorale",2.3],["trem",0.7],["brun",1.1],["fig",0.8],["hold",0.8]],"albeniz":[["arp",1.5],["wide",5],["par",1.7],["chorale",2.3],["trem",1.4],["brun",1],["fig",1],["hold",1.3],["harm",0.3]],"sor":[["arp",0.7],["wide",3.8],["par",3.5],["chorale",2.8],["trem",0.5],["brun",0.6],["fig",0.6],["hold",2.1]],"giuliani":[["arp",1.9],["wide",3.6],["par",2.8],["chorale",1.4],["trem",0.7],["brun",0.8],["fig",2.7],["hold",1.3]],"lauro":[["arp",0.7],["wide",6.4],["par",2.4],["chorale",3.1],["trem",0.5],["brun",0.6],["fig",0.6],["hold",1]],"dowland":[["arp",0.7],["wide",4.5],["par",2.9],["chorale",4.1],["trem",0.5],["brun",0.9],["fig",0.5],["hold",1.1],["btrill",1]],"villalobos":[["arp",1.2],["wide",4.3],["par",3.1],["chorale",2.6],["trem",0.7],["brun",0.8],["fig",1.3],["hold",2],["camp",2],["harm",1]],"barrios":[["arp",2.1],["wide",3.5],["par",1.6],["chorale",1.2],["trem",3.3],["brun",1.4],["fig",1.4],["hold",1.9],["harm",0.3],["camp",2.5],["harm",0.8]]};
+var CG_MODE = {"carcassi":[["arp",1.6],["wide",4.8],["par",2.7],["chorale",1.5],["trem",0.9],["brun",1],["fig",1.6],["hold",1.2]],"aguado":[["arp",2.9],["wide",3.7],["par",2],["chorale",2.1],["trem",0.7],["brun",1.5],["fig",1.2],["hold",1.1]],"carulli":[["arp",1.1],["wide",5.9],["par",3.2],["chorale",2],["trem",0.5],["brun",0.7],["fig",0.8],["hold",1]],"tarrega":[["arp",3.1],["wide",3.3],["par",2.6],["chorale",2.2],["trem",0.9],["brun",1.1],["fig",0.9],["hold",1.1],["harm",0.3]],"albeniz":[["arp",1.4],["wide",4.8],["par",1.8],["chorale",2.4],["trem",1.4],["brun",1],["fig",1],["hold",1.3],["harm",0.3]],"sor":[["arp",1.3],["wide",5.5],["par",2.5],["chorale",2.6],["trem",0.6],["brun",0.6],["fig",0.7],["hold",1.4]],"giuliani":[["arp",1.4],["wide",4.8],["par",2.8],["chorale",2],["trem",0.7],["brun",0.8],["fig",2.1],["hold",0.8]],"lauro":[["arp",0.7],["wide",6.6],["par",2.3],["chorale",2.9],["trem",0.5],["brun",0.6],["fig",0.6],["hold",1.1],["harm",0.3]],"dowland":[["arp",0.7],["wide",4.3],["par",2.4],["chorale",4.1],["trem",0.5],["brun",1],["fig",0.7],["hold",1.3],["btrill",1]],"villalobos":[["arp",1.2],["wide",4.2],["par",3.1],["chorale",2.9],["trem",0.7],["brun",0.8],["fig",1.3],["hold",2],["harm",0.3],["camp",2],["harm",1]],"barrios":[["arp",2.1],["wide",3.5],["par",1.6],["chorale",1.3],["trem",3.2],["brun",1.4],["fig",1.4],["hold",1.9],["harm",0.3],["camp",2.5],["harm",0.8]]};
 function soloBaseOf(k, form) { var D = SOLO_DEF[k], i; for (i = 0; i < D.bases.length; i++) if (STYLES[D.bases[i]] && STYLES[D.bases[i]].forms.indexOf(form) >= 0) return D.bases[i]; return D.bases[0]; }
 /* フラメンコギター・ソロで、トレモロのファルセータを入れる形式（ソレア系・タランタ・タラント・グラナイーナ・マラゲーニャ・ロンデーニャ・シギリージャ・ペテネーラ・カーニャ・セラーナ・ティエントス） */
 var FLSOLO_TREM_RX = /^(sole(12|amod12|aletra12)|taranta16|taranto|minera16|granaina16|malaguena16|rondena|seguiriya(12|mod12)|petenera12|cana12|serrana12|tientos16)/;
+/* ピアノ・ソロ：両手で届く形に（左右とも 10度以内・5音以内に分けられない和音は、伴奏の音を外す） */
+function pianoHandsCost(ps) {
+  var k, best = 1e9;
+  for (k = 0; k <= ps.length; k++) { var L = ps.slice(0, k), Rr = ps.slice(k), sL = L.length ? L[L.length - 1] - L[0] : 0, sR = Rr.length ? Rr[Rr.length - 1] - Rr[0] : 0;
+    if (L.length <= 5 && Rr.length <= 5) { var c = Math.max(sL, sR); if (c < best) best = c; } }
+  return best;
+}
+function pianoReach(all, A, win) {
+  var acc = new Set(A), out = [], i = 0, dropped = 0; win = win || 0.04;
+  all.sort(function (a, b) { return a.t - b.t || a.p - b.p; });
+  while (i < all.length) {
+    var j = i; while (j + 1 < all.length && all[j + 1].t - all[i].t < win) j++;
+    var g = all.slice(i, j + 1).sort(function (a, b) { return a.p - b.p; });
+    while (g.length > 7 || (g.length >= 3 && pianoHandsCost(g.map(function (x) { return x.p; })) > 16)) {
+      var bestQ = -1, bestC = 1e9, q;
+      for (q = 0; q < g.length; q++) { if (!acc.has(g[q])) continue; var rest = g.filter(function (x, r) { return r !== q; }).map(function (x) { return x.p; }), c = pianoHandsCost(rest); if (c < bestC) { bestC = c; bestQ = q; } }
+      if (bestQ < 0) break;
+      g.splice(bestQ, 1); dropped++;
+    }
+    out = out.concat(g); i = j + 1;
+  }
+  return { notes: out.sort(function (a, b) { return a.t - b.t || b.p - a.p; }), dropped: dropped };
+}
+/* ギター・ソロ：人の手で押さえられる和音に（別々の弦・指4本・幅3フレット（7フレットより上は4）） */
+var GTR_TUNE = [40, 45, 50, 55, 59, 64];
+function guitarFits(ps) {
+  var u = [], q; for (q = 0; q < ps.length; q++) if (u.indexOf(ps[q]) < 0) u.push(ps[q]);
+  if (u.length > 6) return false; if (u.length <= 1) return true;
+  u.sort(function (a, b) { return b - a; });
+  var ok = false, fr = [];
+  var rec = function (k, used) {
+    if (ok) return;
+    if (k === u.length) {
+      var f = fr.filter(function (x) { return x > 0; }); if (!f.length) { ok = true; return; }
+      var mn = Math.min.apply(null, f), mx = Math.max.apply(null, f); if (mx - mn > (mn >= 7 ? 4 : 3)) return;
+      var atMin = f.filter(function (x) { return x === mn; }).length; if (f.length - (atMin > 1 ? atMin - 1 : 0) <= 4) ok = true; return;
+    }
+    var st; for (st = 0; st < 6; st++) { if (used & (1 << st)) continue; var ff = u[k] - GTR_TUNE[st]; if (ff < 0 || ff > 19) continue; fr.push(ff); rec(k + 1, used | (1 << st)); fr.pop(); }
+  };
+  rec(0, 0); return ok;
+}
+function gypsyCompReach(song) {      /* ジプシーのリズムギター：押さえられない和音の内側の音を外す */
+  var st = (song.stems || []).filter(function (x) { return x.id === "comp"; })[0]; if (!st) return 0;
+  var ns = st.notes.slice().sort(function (a, b) { return a.t - b.t || a.p - b.p; }), keep = [], i = 0, drop = 0;
+  var pf = function (g) { return g.map(function (x) { return x.p; }); };
+  while (i < ns.length) {
+    var j = i; while (j + 1 < ns.length && ns[j + 1].t - ns[j].t < 0.06) j++;
+    var g = ns.slice(i, j + 1).sort(function (a, b) { return a.p - b.p; });
+    while (g.length >= 3 && !guitarFits(pf(g))) {
+      var q, pick = 1; for (q = 1; q < g.length - 1; q++) { if (guitarFits(pf(g.filter(function (x, r) { return r !== q; })))) { pick = q; break; } }
+      g.splice(pick, 1); drop++;
+    }
+    keep = keep.concat(g); i = j + 1;
+  }
+  st.notes = keep.sort(function (a, b) { return a.t - b.t || b.p - a.p; }); song.gypsyCompDropped = drop; return drop;
+}
+function guitarReach(all, A, B, win) {      /* 同時の組：前の音から win 以内に続く音（かき鳴らしの和音も1つの組に） */
+  var acc = new Set(A), bas = new Set(B), out = [], i = 0, dropped = 0, moved = 0;
+  all.sort(function (a, b) { return a.t - b.t || a.p - b.p; });
+  var pf = function (g) { return g.map(function (x) { return x.p; }); };
+  while (i < all.length) {
+    var j = i; while (j + 1 < all.length && all[j + 1].t - all[j].t < win) j++;
+    var g = all.slice(i, j + 1);
+    while (g.length >= 2 && !guitarFits(pf(g))) {
+      var qa = -1, q; for (q = 0; q < g.length; q++) { if (!acc.has(g[q])) continue; var rest = g.filter(function (x, r) { return r !== q; }); if (guitarFits(pf(rest))) { qa = q; break; } if (qa < 0) qa = q; }
+      if (qa >= 0) { g.splice(qa, 1); dropped++; continue; }
+      var bq = -1; for (q = 0; q < g.length; q++) if (bas.has(g[q])) { bq = q; break; }
+      if (bq >= 0) { var bn = g[bq], p0 = bn.p, tried = false;
+        [12, -12].forEach(function (d) { if (tried) return; bn.p = p0 + d; if (bn.p >= 40 && bn.p <= 64 && guitarFits(pf(g))) tried = true; else bn.p = p0; });
+        if (tried) { moved++; continue; } g.splice(bq, 1); dropped++; continue; }
+      g.splice(0, 1); dropped++;                                                    /* 旋律だけが重なる：低いほうを外す */
+    }
+    out = out.concat(g); i = j + 1;
+  }
+  return { notes: out.sort(function (a, b) { return a.t - b.t || b.p - a.p; }), dropped: dropped, moved: moved };
+}
 /* 旋律＋伴奏＋ベースを、1つの楽器の1パートにまとめる */
 function soloMerge(song, k) {
   var D = SOLO_DEF[k]; if (!D || !song || !song.stems) return song;
@@ -22229,6 +22319,8 @@ function soloMerge(song, k) {
   if (D.reach) { A.sort(function (a, b) { return a.t - b.t; }); var nx = 0, q; for (q = 0; q < A.length; q++) { while (nx < A.length && A[nx].t < A[q].t + 0.035) nx++; if (nx < A.length) A[q].d = Math.min(A[q].d, Math.max(0.08, A[nx].t - A[q].t - 0.02)); } }      /* ギターは、次の和音で弦を弾き直すので、前の和音は止まる */
   B.forEach(function (n) { n.v = Math.max(24, Math.round(n.v * 0.9)); });
   var all = L.concat(A).concat(B).sort(function (a, b) { return a.t - b.t || b.p - a.p; });
+  if (k === "flsolo" || k === "cgsolo") { var GR = guitarReach(all, A, B, Math.max(0.04, 45 / 1000 * (((song.opt && song.opt.tempo) || 100) / 60))); all = GR.notes; song.guitarDropped = GR.dropped; song.guitarBassMoved = GR.moved; }      /* 人の手で押さえられる和音に */
+  if (k === "pianosolo") { var PR = pianoReach(all, A, Math.max(0.04, 45 / 1000 * (((song.opt && song.opt.tempo) || 100) / 60)));      /* soloHuman が和音とみなす幅（40ms）より少し広く */ all = PR.notes; song.pianoDropped = PR.dropped; }      /* 両手で届く形に */
   /* フラメンコギター・ソロ：トレモロのファルセータ（ソレア・タランタなど。旋律とトレモロをセットで） */
   var fmK = String((song.opt && song.opt.form) || "");
   var tmpoT = (song.opt && song.opt.tempo) || 100, seedT = (song.opt && song.opt.seed) || 1;
@@ -22377,6 +22469,7 @@ function generate(opt) {                                                        
   var sgV; try { sgV = generateCore(opt); } finally { VAR_DEPTH--; if (soloSaved) { opt.style = soloSaved.style; opt.useDrums = soloSaved.useDrums; } }
   if (VAR_DEPTH === 0) { try { varietyApply(sgV, opt); } catch (eV) { if (typeof console !== "undefined" && console.warn) console.warn("variety:", eV && eV.message); }
     if (soloK) { try { sgV._soloBase = soloBaseOf(soloK, opt.form); soloMerge(sgV, soloK); soloHuman(sgV, soloK, opt); sgV.opt.style = soloK; if (sgV.optIn) sgV.optIn.style = soloK; sgV.sty = STYLES[soloK]; } catch (eS) { if (typeof console !== "undefined" && console.warn) console.warn("solo:", eS && eS.message); } }
+    if (!soloK && opt.style === "gypsy") { try { gypsyCompReach(sgV); } catch (eG) {} }      /* リズムギターを押さえられる和音に */
     try { endTail(sgV, opt); } catch (eT) {} }
   return sgV;
 }
@@ -25901,9 +25994,9 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 590;
+var BUILD_NO = 596;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
-var GEN_NO = 239;
+var GEN_NO = 245;
 function r3(x) { return Math.round(x * 1000) / 1000; }
 function packSong(s) {
   /* 音符は MIDI 書き出しと同じ刻み（1拍＝PPQ）の整数で持つ＝読み込み後の書き出しが元と完全に同じ */
@@ -28027,7 +28120,101 @@ var KW_RULES = [
   [/ソロ(?:多|たっぷり)|アドリブ(?:多|たっぷり)|長め|たっぷり|長い曲|long\b|extended/i, { solos: 3 }, 5, "ソロを多め（3コーラス）"],
   [/ソロなし|短め|短い曲|short\b|ワンコーラス|one\s*chorus|コンパクト/i, { solos: 0 }, 5, "ソロなし・短め"],
   [/リハモ|複雑|ジャジー|jazzy|おしゃれ|オシャレ|洗練|sophisticated|凝った/i, { reharm: 70 }, 5, "和声を複雑に（リハモナイズ強め）"],
-  [/シンプル|素朴|simple|ストレート|直球|わかりやすい|親しみ/i, { reharm: 10, motif: 80 }, 5, "和声をシンプルに・動機をはっきり"]
+  [/シンプル|素朴|simple|ストレート|直球|わかりやすい|親しみ/i, { reharm: 10, motif: 80 }, 5, "和声をシンプルに・動機をはっきり"],
+  /* 汎用の言葉（2026-11-14：Wikipedia の「速度記号」「Tempo」「発想記号」「教会旋法」「音楽のジャンル一覧」で調べた言葉） */
+  /* ① 速度記号 → テンポ（BPM の目安の真ん中）。複合語は重み 10、単独は 9 */
+  [/allegro\s*moderato|アレグロ・?モデラート/i, { tempoAbs: 120 }, 10, "Allegro moderato（穏やかに速く・♩≈120）"],
+  [/larghissimo|ラルギッシモ/i, { tempoAbs: 40 }, 9, "Larghissimo（極めて遅く・♩≈40）"],
+  [/\bgrave\b|グラーヴェ|グラーベ/i, { tempoAbs: 40 }, 9, "Grave（重く厳粛に・♩≈40）"],
+  [/larghetto|ラルゲット/i, { tempoAbs: 63 }, 9, "Larghetto（Largo より少し速く・♩≈63）"],
+  [/largo|ラルゴ/i, { tempoAbs: 54 }, 9, "Largo（幅広く・ゆったり・♩≈54）"],
+  [/lento|レント/i, { tempoAbs: 52 }, 9, "Lento（ゆっくり・♩≈52）"],
+  [/adagietto|アダジェット/i, { tempoAbs: 70 }, 9, "Adagietto（Adagio より少し速く・♩≈70）"],
+  [/adagio|アダージョ|アダージオ/i, { tempoAbs: 58 }, 9, "Adagio（緩やかに・♩≈58）"],
+  [/andantino|アンダンティーノ/i, { tempoAbs: 94 }, 9, "Andantino（Andante より少し速く・♩≈94）"],
+  [/andante|アンダンテ/i, { tempoAbs: 80 }, 9, "Andante（歩くような速さ・♩≈80）"],
+  [/moderato|モデラート/i, { tempoAbs: 112 }, 9, "Moderato（中くらいの速さ・♩≈112）"],
+  [/allegretto|アレグレット/i, { tempoAbs: 116 }, 9, "Allegretto（やや速く・♩≈116）"],
+  [/allegro(?!\s*moderato)|アレグロ(?!・?モデラート)/i, { tempoAbs: 138 }, 9, "Allegro（快速に・♩≈138）"],
+  [/vivace|ヴィヴァーチェ|ビバーチェ/i, { tempoAbs: 166 }, 9, "Vivace（活発に・♩≈166）"],
+  [/\bvivo\b|ヴィーヴォ/i, { tempoAbs: 172 }, 9, "Vivo（さらに活発に・♩≈172）"],
+  [/prestissimo|プレスティッシモ/i, { tempoAbs: 208 }, 10, "Prestissimo（極めて速く・♩≈208）"],
+  [/presto|プレスト/i, { tempoAbs: 184 }, 9, "Presto（急速に・♩≈184）"],
+  [/tempo\s*di\s*valse|テンポ・?ディ・?ヴァルス/i, { style: "waltz" }, 9, "Tempo di valse（ワルツのテンポで）"],
+  [/rubato|ルバート/i, { arc: "wave" }, 6, "Tempo rubato（自由な速さ：揺れのある形）"],
+  /* ② 発想記号・気分 */
+  [/misterioso|ミステリオーソ|神秘的|ミステリアス/i, { mode: "minor", mchar: "flow", emotion: "calm" }, 7, "Misterioso（神秘的に：短調・流れる旋律）"],
+  [/tranquillo|トランクィッロ|calmato|カルマート|穏やかに|おだやか/i, { emotion: "calm", tempoMul: 0.85 }, 7, "Tranquillo（静かに）"],
+  [/maestoso|マエストーソ|grandioso|グランディオーソ|荘厳|荘重|堂々と/i, { mchar: "climb", arc: "build" }, 7, "Maestoso（堂々と・荘厳に：上っていく旋律）"],
+  [/agitato|アジタート|con\s*fuoco|コン・?フオーコ|feroce|フェローチェ|荒々しく/i, { emotion: "fierce", tempoMul: 1.15 }, 7, "Agitato（激しく）"],
+  [/animato|アニマート|con\s*brio|コン・?ブリオ|energico|エネルジコ|spiritoso|スピリトーゾ|生き生き/i, { emotion: "joy", mchar: "push", tempoMul: 1.1 }, 7, "Animato（生き生きと）"],
+  [/cantabile|カンタービレ|espressivo|エスプレッシーヴォ|歌うように/i, { mchar: "sing" }, 7, "Cantabile（歌うように）"],
+  [/dolce|ドルチェ|amabile|アマービレ|grazioso|グラツィオーソ|優し[いく]|やさし[いく]|柔らか/i, { emotion: "calm", mchar: "sing" }, 7, "Dolce（柔らかく・優しく）"],
+  [/lamentabile|ラメンタービレ|lamento|ラメント|哀れ/i, { emotion: "grief", mode: "minor" }, 7, "Lamentabile（哀れに）"],
+  [/giocoso|ジョコーソ|scherzando|スケルツァンド|scherzo|スケルツォ|capriccioso|カプリチョーソ|おどけ/i, { emotion: "joy", mchar: "leap" }, 7, "Scherzando（おどけて・楽しげに：跳ねる旋律）"],
+  [/appassionato|アパッシオナート|情熱的|パッション/i, { emotion: "senti", arc: "wave" }, 7, "Appassionato（情熱的に）"],
+  [/pesante|ペザンテ|重々し/i, { mchar: "low", tempoMul: 0.85 }, 7, "Pesante（重々しく）"],
+  [/morendo|モレンド|smorzando|スモルツァンド|perdendosi|ペルデンドシ|消えるように/i, { arc: "fade" }, 7, "Morendo（消えるように：だんだん静かに）"],
+  [/leggero|leggiero|レジェロ|レッジェーロ|軽やか/i, { mchar: "dance" }, 7, "Leggero（軽く）"],
+  [/brillante|ブリッランテ|華やか/i, { emotion: "joy", mchar: "climb" }, 7, "Brillante（華やかに）"],
+  [/risoluto|リゾルート|勇まし[いく]|勇壮|雄々し/i, { mode: "major", mchar: "call", emotion: "fierce" }, 7, "Risoluto（決然と・勇ましく）"],
+  [/ゆったり|のんびり|ゆっくり/i, { emotion: "calm", tempoMul: 0.8 }, 6, "ゆったり（遅め・穏やか）"],
+  [/瞑想|メディテーション|meditation|ヨガ|yoga|ヒーリング|healing/i, { style: "newage", emotion: "calm", tempoMul: 0.75, useDrums: false }, 9, "瞑想・ヒーリング（ニューエイジ・静か）"],
+  [/チル(?:アウト)?|chill\s*(?:out|hop)?/i, { style: "hiphop", emotion: "calm", tempoMul: 0.9 }, 8, "チル（ゆったりしたヒップホップ）"],
+  /* ③ 教会旋法 */
+  [/ドリアン|ドリア旋法|dorian/i, { mode: "minor", style: "modern" }, 6, "ドリア旋法（短調の一種・短3度と長6度：モード・ジャズ）"],
+  [/(?:^|[^ソ])リディアン|(?:^|[^ソ])リディア旋法|(?:^|[^oO])lydian/i, { mode: "major", mchar: "flow", style: "newage" }, 6, "リディア旋法（長調で4度が半音高い：浮遊感）"],
+  [/フリジアン|フリギア|phrygian/i, { mode: "minor", style: "flamenco" }, 7, "フリギア旋法（短2度：スペイン・フラメンコの響き）"],
+  [/エオリアン|エオリア旋法|aeolian|自然短音階/i, { mode: "minor" }, 8, "エオリア旋法（自然的短音階）"],
+  [/イオニアン|イオニア旋法|ionian/i, { mode: "major" }, 8, "イオニア旋法（長音階）"],
+  [/ロクリアン|ロクリア旋法|locrian/i, { mode: "minor", style: "chaos" }, 6, "ロクリア旋法（減5度：不安定な響き）"],
+  /* ④ ジャンル・地域・時代 */
+  [/ポルカ|polka/i, { style: "folkworld", mode: "major", mchar: "dance" }, 9, "ポルカ（世界の民謡・2拍子の踊り）"],
+  [/ファド|fado/i, { style: "folkworld", mode: "minor", emotion: "senti" }, 9, "ファド（ポルトガルの哀歌：短調・感傷的）"],
+  [/カンツォーネ|canzone/i, { style: "folkworld", mode: "major", mchar: "sing" }, 9, "カンツォーネ（イタリアの歌：歌う旋律）"],
+  [/ミュゼット|musette|シャンソン|chanson/i, { style: "gypsy", mchar: "sing" }, 9, "ミュゼット・シャンソン（パリのアコーディオンの響き）"],
+  [/アイルランド|ireland/i, { style: "celtic" }, 9, "アイルランド（ケルト）"],
+  [/北欧メタル|ヴァイキング・?メタル|viking\s*metal/i, { style: "melodeath" }, 12, "北欧メタル（メロディック・デス）"],
+  [/北欧(?!メタル)|スカンジナビア|scandinavia|ノルウェー|スウェーデン|フィンランド/i, { style: "folkworld", mode: "minor", emotion: "calm" }, 8, "北欧（民謡・短調・静か）"],
+  [/アフリカ|africa|ハイライフ|highlife/i, { style: "afrobeat" }, 9, "アフリカ（アフロビート）"],
+  [/メキシコ|mexico|マリアッチ|mariachi|ランチェラ/i, { style: "latin", mode: "major" }, 9, "メキシコ（ラテン）"],
+  [/アルゼンチン|argentin/i, { style: "tango" }, 9, "アルゼンチン（タンゴ）"],
+  [/カリプソ|calypso|ソカ|soca|スティールパン|steel\s*pan/i, { style: "reggae", mode: "major" }, 9, "カリブ（カリプソ：レゲエの型で近似）"],
+  [/ヨーデル|yodel|アルプス|alps|チロル/i, { style: "folkworld", mode: "major", mchar: "leap" }, 9, "アルプス（ヨーデル：跳ねる旋律）"],
+  [/印象派|impressionis|ドビュッシー|debussy|ラヴェル|ravel|サティ|satie/i, { style: "pianosolo", mchar: "flow", reharm: 80, emotion: "calm" }, 10, "印象派（ピアノ：流れる旋律・豊かな和声）"],
+  [/ノクターン|夜想曲|nocturne|ショパン|chopin/i, { style: "pianosolo", emotion: "senti", mchar: "sing" }, 11, "ノクターン・ショパン風（ピアノ・ソロ）"],
+  [/ロマン派|romantic\s*(?:era|period)|チャイコフスキー|ブラームス|ラフマニノフ/i, { style: "orchestra", emotion: "senti", arc: "wave" }, 9, "ロマン派（オーケストラ・感傷的）"],
+  [/ルネサンス|renaissance|リュート|lute/i, { style: "classical", voice: "dowland" }, 10, "ルネサンス（リュートの曲：ダウランド風）"],
+  [/中世|medieval|グレゴリオ|gregorian|聖歌/i, { style: "hymn" }, 9, "中世・聖歌（賛美歌の型）"],
+  [/ブギ(?:ウギ)?|boogie/i, { style: "blues", tempoMul: 1.15 }, 9, "ブギウギ（ブルース・速め）"],
+  [/ディスコ|disco|ユーロビート|eurobeat/i, { style: "dance", mode: "minor" }, 9, "ディスコ・ユーロビート（ダンス）"],
+  [/テクノ|techno|ドラムン?ベース|drum\s*(?:n|and|&)\s*bass|ジャングル|エレクトロ(?!ニカ)|electro(?!nica)/i, { style: "dance" }, 9, "テクノ・エレクトロ（ダンス）"],
+  [/エレクトロニカ|electronica|IDM|アンビエント|ambient/i, { style: "newage", useDrums: false }, 8, "エレクトロニカ・アンビエント（ニューエイジ）"],
+  [/アニソン|アニメ(?:ソング|の主題歌)?|anime/i, { style: "jpop90", emotion: "joy", tempoMul: 1.1 }, 9, "アニソン（J-POP・明るく速め）"],
+  [/ボカロ|ボーカロイド|vocaloid|初音/i, { style: "jpop90", mchar: "push", tempoMul: 1.2 }, 9, "ボカロ曲（J-POP・速く押し出す旋律）"],
+  [/童謡|わらべうた|nursery\s*rhyme/i, { style: "douyou" }, 10, "童謡"],
+  [/グランジ|grunge|オルタナ(?:ティブ|ティヴ)?|alternative\s*rock/i, { style: "rk_90" }, 9, "グランジ・オルタナ（90年代ロック）"],
+  [/吹奏楽|ブラス・?バンド|brass\s*band|マーチング/i, { style: "epic", mchar: "call", mode: "major" }, 9, "吹奏楽（エピックの管楽器・呼びかける旋律）"],
+  [/オペラ|opera|アリア|aria/i, { style: "orchestra", mchar: "sing" }, 9, "オペラ・アリア（オーケストラ・歌う旋律）"],
+  [/セレナー[デド]|serenade/i, { style: "classical", emotion: "calm", mchar: "sing" }, 8, "セレナーデ（クラシックギター・穏やか）"],
+  /* ⑤ 行事・場面 */
+  [/(?:クリスマス|christmas|x'?mas).*(?:ジャズ|jazz|スウィング|swing)|(?:ジャズ|jazz|スウィング|swing).*(?:クリスマス|christmas|x'?mas)/i, { style: "swing", mode: "major", emotion: "joy" }, 9, "クリスマスのジャズ（スウィング・明るく）"],
+  [/クリスマス|christmas|x'?mas|聖夜|キャロル/i, { style: "hymn", mode: "major", emotion: "joy" }, 5, "クリスマス（賛美歌の型・明るく）"],
+  [/ハロウィ[ンーン]|halloween/i, { mode: "minor", mchar: "leap", emotion: "joy" }, 7, "ハロウィン（短調・跳ねるおどけた旋律）"],
+  [/結婚式|ウェディング|wedding|ブライダル/i, { mode: "major", emotion: "joy", arc: "build" }, 7, "結婚式（長調・明るく・だんだん盛り上がる）"],
+  [/卒業|graduation|旅立ち/i, { mode: "major", emotion: "senti", arc: "build" }, 7, "卒業・旅立ち（長調・感傷的・盛り上がる）"],
+  [/誕生日|バースデー|birthday/i, { mode: "major", emotion: "joy", mchar: "dance" }, 7, "誕生日（明るく弾む）"],
+  /* ⑥ 楽器の名前（その楽器が主役になる曲種へ、弱めに） */
+  [/バンジョー|banjo/i, { style: "country" }, 9, "バンジョー（カントリー／ブルーグラス）"],
+  [/フィドル|fiddle/i, { style: "celtic" }, 8, "フィドル（ケルト）"],
+  [/ハーモニカ|harmonica|ブルース・?ハープ/i, { style: "blues" }, 7, "ハーモニカ（ブルース）"],
+  [/マンドリン|mandolin/i, { style: "folkworld", mchar: "dance" }, 7, "マンドリン（世界の民謡）"],
+  [/ハープ(?!・?シコード)|harp(?!sichord)|竪琴/i, { style: "newage", mchar: "flow" }, 6, "ハープ（ニューエイジ・流れる旋律）"],
+  [/チェンバロ|ハープシコード|harpsichord/i, { style: "baroque" }, 9, "チェンバロ（バロック）"],
+  [/[ヴバ]イオリン|violin|弦楽四重奏|string\s*quartet/i, { style: "orchestra", mchar: "sing" }, 6, "ヴァイオリン・弦楽（オーケストラ・歌う旋律）"],
+  [/チェロ|cello|コントラバス/i, { style: "orchestra", mchar: "low" }, 6, "チェロ（オーケストラ・低い旋律）"],
+  /* ⑦ 拍子 */
+  [/8分の6|6\s*\/\s*8|six[\s-]*eight/i, { style: "celtic", form: "jig_c" }, 5, "6/8 拍子（ジグの型で近似）"],
 ];
 var KW_JP_NOTE = { "イ": 9, "ロ": 11, "ハ": 0, "ニ": 2, "ホ": 4, "ヘ": 5, "ト": 7 };
 function parseKeyFromText(t, noBare) {
@@ -28050,18 +28237,19 @@ function parseKeyFromText(t, noBare) {
   return tonic === null ? null : { tonic: tonic, minor: minor, kw: kw };
 }
 function parsePrompt(text) {
-  var src = String(text || ""), set = {}, wt = {}, hits = [], used = [], mul = null, i, k;
+  var src = String(text || ""), set = {}, wt = {}, hits = [], used = [], mul = null, kwTempo = null, i, k;
   function put(f, v, w) { if (wt[f] === undefined || w > wt[f]) { set[f] = v; wt[f] = w; } }
   for (i = 0; i < KW_RULES.length; i++) {
     var R = KW_RULES[i], m = R[0].exec(src);
     if (!m) continue;
     hits.push({ kw: m[0], desc: R[3] });
     used.push(m[0]);
-    for (k in R[1]) { if (k === "tempoMul") { if (mul === null || R[2] >= (wt.tempoMul || 0)) { mul = R[1][k]; wt.tempoMul = R[2]; } } else put(k, R[1][k], R[2]); }
+    for (k in R[1]) { if (k === "tempoMul") { if (mul === null || R[2] >= (wt.tempoMul || 0)) { mul = R[1][k]; wt.tempoMul = R[2]; } } else if (k === "tempoAbs") { if (kwTempo === null || R[2] > (wt.kwTempo || 0)) { kwTempo = R[1][k]; wt.kwTempo = R[2]; } } else put(k, R[1][k], R[2]); }
   }
   var bp = /(\d{2,3})\s*(?:bpm|ビーピーエム|BPM)/i.exec(src) || /(?:テンポ|tempo)\s*(?:は|を|が|=|＝|:|：)?\s*(\d{2,3})/i.exec(src) || /♩\s*=\s*(\d{2,3})/.exec(src);
   var tempoAbs = null;
   if (bp) { var tv = parseInt(bp[1], 10); if (tv >= 40 && tv <= 400) { tempoAbs = tv; hits.push({ kw: bp[0], desc: "テンポ ♩=" + tv }); used.push(bp[0]); } }
+  if (tempoAbs === null && kwTempo !== null) { tempoAbs = kwTempo; if (mul !== null && (wt.tempoMul || 0) <= (wt.kwTempo || 0)) mul = null; }      /* 速度記号（Andante など）のテンポ。BPM の数字があればそちら */
   var pg0 = progFromText(src, set.style);
   var ky = parseKeyFromText(src, !!(pg0 && pg0.abs));          /* 和音名を書いたときは、和音名（Am など）をキーと読まない */
   if (ky) {
