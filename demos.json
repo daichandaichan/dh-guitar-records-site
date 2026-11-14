@@ -141,7 +141,9 @@
    "scores/2026-11-14_pianosolo_ballad32-1.png"
   ],
   "cover": "covers/2026-11-14_pianosolo_ballad32.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "video": "demos/2026-11-14_pianosolo_ballad32/2026-11-14_pianosolo_ballad32.mp4",
+  "videoKind": "falling-keys"
  },
  {
   "id": "2026-11-14_cgsolo_romance24",
