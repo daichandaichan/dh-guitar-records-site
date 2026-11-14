@@ -144,6 +144,68 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-14_cgsolo_romance24",
+  "date": "2026-11-14",
+  "style": "cgsolo",
+  "styleShort": "クラシックギター・ソロ",
+  "styleLabel": "クラシックギター・ソロ（1本のギターだけで弾く）",
+  "form": "romance24",
+  "formLabel": "ロマンス 24小節（3拍子・3連で旋律を上に）",
+  "title": "Romance de Otoño (Em)",
+  "key": "Em",
+  "tempo": 84,
+  "tempoGenerated": 84,
+  "bars": 107,
+  "seed": 20261114,
+  "gen": 237,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Classical Guitar",
+    "prog": 24
+   }
+  ],
+  "chordsOneChorus": [
+   "Em7",
+   "Em",
+   "Em6",
+   "B7",
+   "B7",
+   "B9",
+   "Em7",
+   "Em",
+   "Em",
+   "Em",
+   "Am",
+   "Am",
+   "Em",
+   "Em",
+   "B7",
+   "Em",
+   "G#",
+   "G#",
+   "D#7",
+   "G#",
+   "C#m6",
+   "D#7",
+   "B7",
+   "Em"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 237). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-14_cgsolo_romance24/2026-11-14_cgsolo_romance24_midi-set.zip",
+   "midi": "demos/2026-11-14_cgsolo_romance24/2026-11-14_cgsolo_romance24_all.mid",
+   "info": "demos/2026-11-14_cgsolo_romance24/info.md"
+  },
+  "audio": "demos/2026-11-14_cgsolo_romance24/2026-11-14_cgsolo_romance24.mp3",
+  "scorePages": [
+   "scores/2026-11-14_cgsolo_romance24-1.png"
+  ],
+  "cover": "covers/2026-11-14_cgsolo_romance24.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-13_jpop90_jpop_being16",
   "date": "2026-11-13",
   "style": "jpop90",
