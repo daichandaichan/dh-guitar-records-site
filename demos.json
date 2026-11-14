@@ -206,6 +206,101 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-14_gs_sakuraba_gm_boss",
+  "date": "2026-11-14",
+  "style": "gs_sakuraba",
+  "styleShort": "プログレ・ロックのRPG風",
+  "styleLabel": "プログレ・ロックのRPG風（スターオーシャン／ヴァルキリープロファイル系：ハープ・チェンバロ・オルガン・歪みギター・指弾きベース）",
+  "form": "gm_boss",
+  "formLabel": "ボス戦（FF風：パイプオルガンと合唱・ロックのドラム・三全音で揺れる和声）",
+  "title": "Labyrinth of Clockwork (Dm)",
+  "key": "Dm",
+  "tempo": 150,
+  "tempoGenerated": 150,
+  "bars": 138,
+  "seed": 20261115,
+  "gen": 239,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Strings (theme)",
+    "prog": 19
+   },
+   {
+    "id": "solo",
+    "name": "Solo trumpet",
+    "prog": 56
+   },
+   {
+    "id": "comp",
+    "name": "Church organ",
+    "prog": 6
+   },
+   {
+    "id": "bass",
+    "name": "Electric bass",
+    "prog": 38
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "horn",
+    "name": "Choir",
+    "prog": 52
+   }
+  ],
+  "chordsOneChorus": [
+   "DmMaj7",
+   "D#",
+   "Dm",
+   "G#",
+   "Gm",
+   "D#",
+   "A#maj7",
+   "A7sus4",
+   "Dm",
+   "D#",
+   "Dm",
+   "G#",
+   "Gm",
+   "D#",
+   "A7b9",
+   "A#maj7",
+   "A#",
+   "D#",
+   "A#",
+   "A9",
+   "Gm",
+   "G#",
+   "A7sus4",
+   "A9",
+   "Dm",
+   "D#",
+   "Dm6/9",
+   "G#",
+   "Gm7",
+   "D#",
+   "Gm7",
+   "Dm"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 239). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-14_gs_sakuraba_gm_boss/2026-11-14_gs_sakuraba_gm_boss_midi-set.zip",
+   "midi": "demos/2026-11-14_gs_sakuraba_gm_boss/2026-11-14_gs_sakuraba_gm_boss_all.mid",
+   "info": "demos/2026-11-14_gs_sakuraba_gm_boss/info.md"
+  },
+  "audio": "demos/2026-11-14_gs_sakuraba_gm_boss/2026-11-14_gs_sakuraba_gm_boss.mp3",
+  "scorePages": [
+   "scores/2026-11-14_gs_sakuraba_gm_boss-1.png"
+  ],
+  "cover": "covers/2026-11-14_gs_sakuraba_gm_boss.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-13_jpop90_jpop_being16",
   "date": "2026-11-13",
   "style": "jpop90",
