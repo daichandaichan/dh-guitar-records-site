@@ -301,6 +301,116 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-14_gs_xeno_gm_field",
+  "date": "2026-11-14",
+  "style": "gs_xeno",
+  "styleShort": "聖歌とケルトのSF RPG風",
+  "styleLabel": "聖歌とケルトのSF RPG風（ゼノギアス系：弦・ピアノ・ハープ・合唱・クラリネット、民族の笛、3拍子も）",
+  "form": "gm_field",
+  "formLabel": "フィールド（ドラクエ風：木管の牧歌的な旋律・弦のピチカート）",
+  "title": "Hymn of the Far Shore (D)",
+  "key": "D",
+  "tempo": 102,
+  "tempoGenerated": 102,
+  "bars": 144,
+  "seed": 20261114,
+  "gen": 239,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Strings (theme)",
+    "prog": 75
+   },
+   {
+    "id": "solo",
+    "name": "Solo flute",
+    "prog": 73
+   },
+   {
+    "id": "comp",
+    "name": "Strings pad",
+    "prog": 0
+   },
+   {
+    "id": "bass",
+    "name": "Pizzicato strings",
+    "prog": 32
+   },
+   {
+    "id": "drums",
+    "name": "Cymbals",
+    "prog": 0
+   },
+   {
+    "id": "horn",
+    "name": "French Horn",
+    "prog": 60
+   },
+   {
+    "id": "cello",
+    "name": "Cello (counter)",
+    "prog": 42
+   },
+   {
+    "id": "harp",
+    "name": "Harp",
+    "prog": 46
+   },
+   {
+    "id": "timp",
+    "name": "Timpani",
+    "prog": 47
+   }
+  ],
+  "chordsOneChorus": [
+   "D",
+   "A",
+   "Bm",
+   "F#m",
+   "Gmaj7",
+   "D",
+   "Gmaj7",
+   "A7",
+   "D",
+   "A",
+   "Bm",
+   "F#m",
+   "Gmaj7",
+   "D",
+   "Gmaj7",
+   "D6/9",
+   "Bm7",
+   "F#7",
+   "Bm7",
+   "E7alt",
+   "Em7",
+   "A7",
+   "Gmaj7",
+   "A7sus4",
+   "D",
+   "Bm",
+   "Em7",
+   "A7",
+   "D",
+   "Gmaj7",
+   "A#",
+   "D"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 239). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-14_gs_xeno_gm_field/2026-11-14_gs_xeno_gm_field_midi-set.zip",
+   "midi": "demos/2026-11-14_gs_xeno_gm_field/2026-11-14_gs_xeno_gm_field_all.mid",
+   "info": "demos/2026-11-14_gs_xeno_gm_field/info.md"
+  },
+  "audio": "demos/2026-11-14_gs_xeno_gm_field/2026-11-14_gs_xeno_gm_field.mp3",
+  "scorePages": [
+   "scores/2026-11-14_gs_xeno_gm_field-1.png"
+  ],
+  "cover": "covers/2026-11-14_gs_xeno_gm_field.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-13_jpop90_jpop_being16",
   "date": "2026-11-13",
   "style": "jpop90",
