@@ -239,7 +239,10 @@
   "video": "demos/2026-11-16_contemporary_glissando/2026-11-16_contemporary_glissando.mp4",
   "videoKind": "graphic-score-guitar",
   "cover": "covers/2026-11-16_contemporary_glissando.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "scorePages": [
+   "scores/2026-11-16_contemporary_glissando-1.png"
+  ]
  },
  {
   "id": "2026-11-15_rk_maiden_auto16m",
@@ -5553,9 +5556,9 @@
   "key": "Am",
   "tempo": 235,
   "tempoGenerated": 235,
-  "bars": 53,
+  "bars": 54,
   "seed": 20261028,
-  "gen": 148,
+  "gen": 251,
   "stems": [
    {
     "id": "mel",
@@ -5606,7 +5609,7 @@
    "Fsus2",
    "E7b9"
   ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 148). MIDI draft — to be arranged in Cubase.",
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
   "files": {
    "zip": "demos/2026-10-28_flamenco_bulerias12/2026-10-28_flamenco_bulerias12_midi-set.zip",
