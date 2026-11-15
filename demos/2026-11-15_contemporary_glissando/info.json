@@ -1,0 +1,49 @@
+{
+  "id": "2026-11-15_contemporary_glissando",
+  "date": "2026-11-15",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_graphic",
+  "formLabel": "図形楽譜（線＝グリッサンドが絵を描く：クセナキス風 × インド音楽）",
+  "title": "Glissando Archtop — 線がギターを描く",
+  "key": "C#",
+  "tempo": 60,
+  "tempoGenerated": 60,
+  "bars": 43,
+  "seed": 20261115,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "str",
+      "name": "Strings (glissandi)",
+      "prog": 48
+    },
+    {
+      "id": "pizz",
+      "name": "Pizzicato",
+      "prog": 45
+    },
+    {
+      "id": "tanpura",
+      "name": "Tanpura",
+      "prog": 104
+    },
+    {
+      "id": "tabla",
+      "name": "Tabla",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Original composition (graphic score by own software; Xenakis-inspired glissandi × Raga Jaunpuri). Sound synthesized by own tools.",
+  "status": "demo",
+  "files": {
+    "info": "demos/2026-11-15_contemporary_glissando/info.md"
+  },
+  "audio": "demos/2026-11-15_contemporary_glissando/2026-11-15_contemporary_glissando.mp3",
+  "video": "demos/2026-11-15_contemporary_glissando/2026-11-15_contemporary_glissando.mp4",
+  "videoKind": "graphic-score-guitar",
+  "cover": "covers/2026-11-15_contemporary_glissando.jpg",
+  "coverKind": "generated"
+}
