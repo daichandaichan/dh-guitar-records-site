@@ -10,9 +10,9 @@
   "key": "Em",
   "tempo": 100,
   "tempoGenerated": 100,
-  "bars": 45,
+  "bars": 46,
   "seed": 20261114,
-  "gen": 226,
+  "gen": 251,
   "stems": [
     {
       "id": "mel",
@@ -37,7 +37,7 @@
     "C",
     "B(b9)"
   ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 226). MIDI draft — to be arranged in Cubase.",
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
   "files": {
     "zip": "demos/2026-11-14_flsolo_sole12/2026-11-14_flsolo_sole12_midi-set.zip",

@@ -388,59 +388,6 @@
   "videoKind": "pianoroll-lead"
  },
  {
-  "id": "2026-11-14_flsolo_sole12",
-  "date": "2026-11-14",
-  "style": "flsolo",
-  "styleShort": "フラメンコギター・ソロ",
-  "styleLabel": "フラメンコギター・ソロ（1本のギターだけで弾く）",
-  "form": "sole12",
-  "formLabel": "ソレア 12拍 × 8コンパス（アンダルシア終止）",
-  "title": "Soleá de la Luna (Em)",
-  "key": "Em",
-  "tempo": 100,
-  "tempoGenerated": 100,
-  "bars": 45,
-  "seed": 20261114,
-  "gen": 226,
-  "stems": [
-   {
-    "id": "mel",
-    "name": "Flamenco Guitar",
-    "prog": 24
-   }
-  ],
-  "chordsOneChorus": [
-   "Fm",
-   "Em",
-   "D",
-   "D",
-   "Cmaj7(#11)",
-   "C",
-   "B(b9)",
-   "Cmaj7",
-   "Fm",
-   "Em",
-   "Dsus2",
-   "D",
-   "Cmaj7",
-   "C",
-   "B(b9)"
-  ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 226). MIDI draft — to be arranged in Cubase.",
-  "status": "demo",
-  "files": {
-   "zip": "demos/2026-11-14_flsolo_sole12/2026-11-14_flsolo_sole12_midi-set.zip",
-   "midi": "demos/2026-11-14_flsolo_sole12/2026-11-14_flsolo_sole12_all.mid",
-   "info": "demos/2026-11-14_flsolo_sole12/info.md"
-  },
-  "audio": "demos/2026-11-14_flsolo_sole12/2026-11-14_flsolo_sole12.mp3",
-  "scorePages": [
-   "scores/2026-11-14_flsolo_sole12-1.png"
-  ],
-  "cover": "covers/2026-11-14_flsolo_sole12.jpg",
-  "coverKind": "generated"
- },
- {
   "id": "2026-11-14_pianosolo_ballad32",
   "date": "2026-11-14",
   "style": "pianosolo",
@@ -800,6 +747,59 @@
    "scores/2026-11-14_gs_xeno_gm_field-1.png"
   ],
   "cover": "covers/2026-11-14_gs_xeno_gm_field.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-11-14_flsolo_sole12",
+  "date": "2026-11-14",
+  "style": "flsolo",
+  "styleShort": "フラメンコギター・ソロ",
+  "styleLabel": "フラメンコギター・ソロ（1本のギターだけで弾く）",
+  "form": "sole12",
+  "formLabel": "ソレア 12拍 × 8コンパス（アンダルシア終止）",
+  "title": "Soleá de la Luna (Em)",
+  "key": "Em",
+  "tempo": 100,
+  "tempoGenerated": 100,
+  "bars": 46,
+  "seed": 20261114,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Flamenco Guitar",
+    "prog": 24
+   }
+  ],
+  "chordsOneChorus": [
+   "Fm",
+   "Em",
+   "D",
+   "D",
+   "Cmaj7(#11)",
+   "C",
+   "B(b9)",
+   "Cmaj7",
+   "Fm",
+   "Em",
+   "Dsus2",
+   "D",
+   "Cmaj7",
+   "C",
+   "B(b9)"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-14_flsolo_sole12/2026-11-14_flsolo_sole12_midi-set.zip",
+   "midi": "demos/2026-11-14_flsolo_sole12/2026-11-14_flsolo_sole12_all.mid",
+   "info": "demos/2026-11-14_flsolo_sole12/info.md"
+  },
+  "audio": "demos/2026-11-14_flsolo_sole12/2026-11-14_flsolo_sole12.mp3",
+  "scorePages": [
+   "scores/2026-11-14_flsolo_sole12-1.png"
+  ],
+  "cover": "covers/2026-11-14_flsolo_sole12.jpg",
   "coverKind": "generated"
  },
  {
