@@ -325,6 +325,28 @@
   // }
   // ------------------------------------------------------------
   const tracks = [
+    {      /* 2026-11-15 ユーザー自作曲：旋律と和音の声部の動き（弦楽合奏・チェロ・フルート）の縦長動画 */
+      title: "Cm Ballad — 旋律と声部の動き",
+      genre: "jazz",
+      video: "videos/cm_ballad_voices.mp4",
+      vertical: true,
+      jacket: "jackets/cm-ballad-voices.jpg",
+      releaseDate: "2026-11-15",
+      copyright: `© ${new Date().getFullYear()} ${LABEL_NAME} All Rights Reserved.`,
+      rights: "Original composition",
+      links: { spotify: "", appleMusic: "", youtubeMusic: "", amazonMusic: "" },
+    },
+    {
+      title: "月明かりのワルツ (Moonlit Waltz) — 旋律と声部の動き",
+      genre: "jazz",
+      video: "videos/moonlit_waltz_voices.mp4",
+      vertical: true,
+      jacket: "jackets/moonlit-waltz-voices.jpg",
+      releaseDate: "2026-11-15",
+      copyright: `© ${new Date().getFullYear()} ${LABEL_NAME} All Rights Reserved.`,
+      rights: "Original composition",
+      links: { spotify: "", appleMusic: "", youtubeMusic: "", amazonMusic: "" },
+    },
     {
       title: "月明かりのワルツ (Moonlit Waltz)",
       genre: "jazz",
@@ -445,7 +467,7 @@
         <div class="min-w-0">
           <p class="disp text-lg truncate">${t.title}</p>
           <p class="mono text-[10.5px] text-[var(--ink-dim)] uppercase tracking-wide mt-0.5">${genreInfo ? genreInfo.label : t.genre} ・ ${t.releaseDate || ''}</p>
-          ${t.video ? `<video controls playsinline preload="metadata" src="${t.video}" ${t.jacket ? `poster="${t.jacket}"` : ''} class="w-full mt-3 bg-black" style="max-width:640px"></video>` : t.audio ? `<audio controls src="${t.audio}" class="w-full mt-3 h-8"></audio>` : ''}
+          ${t.video ? `<video controls playsinline preload="metadata" src="${t.video}" ${t.jacket ? `poster="${t.jacket}"` : ''} class="w-full mt-3 bg-black" style="max-width:${t.vertical ? 360 : 640}px"></video>` : t.audio ? `<audio controls src="${t.audio}" class="w-full mt-3 h-8"></audio>` : ''}
           ${renderTrackLinks(t)}
         </div>
         <p class="mono text-[9px] text-[var(--ink-dim)]/70 self-start text-right hidden md:block">${t.copyright || ''}</p>
