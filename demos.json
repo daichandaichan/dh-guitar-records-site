@@ -138,7 +138,9 @@
    "scores/2026-11-15_indian_in_gat-1.png"
   ],
   "cover": "covers/2026-11-15_indian_in_gat.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "video": "demos/2026-11-15_indian_in_gat/2026-11-15_indian_in_gat.mp4",
+  "videoKind": "pianoroll-lead"
  },
  {
   "id": "2026-11-14_flsolo_sole12",
