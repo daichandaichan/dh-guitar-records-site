@@ -10,9 +10,9 @@
   "key": "Am",
   "tempo": 270,
   "tempoGenerated": 270,
-  "bars": 61,
+  "bars": 62,
   "seed": 50446,
-  "gen": 213,
+  "gen": 251,
   "stems": [
     {
       "id": "mel",
@@ -70,7 +70,7 @@
     "Fmaj7(#11)",
     "Esus4(b9)"
   ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 213). MIDI draft — to be arranged in Cubase.",
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
   "files": {
     "zip": "demos/2026-11-11_flamenco_buleriasmod12/2026-11-11_flamenco_buleriasmod12_midi-set.zip",
