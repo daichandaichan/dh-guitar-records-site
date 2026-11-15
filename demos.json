@@ -736,7 +736,8 @@
    "scores/2026-11-14_flsolo_sole12-1.png"
   ],
   "cover": "covers/2026-11-14_flsolo_sole12.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "video": "demos/2026-11-14_flsolo_sole12/2026-11-14_flsolo_sole12.mp4"
  },
  {
   "id": "2026-11-14_cgsolo_romance24",
@@ -798,7 +799,8 @@
    "scores/2026-11-14_cgsolo_romance24-1.png"
   ],
   "cover": "covers/2026-11-14_cgsolo_romance24.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "video": "demos/2026-11-14_cgsolo_romance24/2026-11-14_cgsolo_romance24.mp4"
  },
  {
   "id": "2026-11-13_jpop90_jpop_being16",
