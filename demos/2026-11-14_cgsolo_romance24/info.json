@@ -10,9 +10,9 @@
   "key": "Em",
   "tempo": 84,
   "tempoGenerated": 84,
-  "bars": 107,
+  "bars": 106,
   "seed": 20261114,
-  "gen": 237,
+  "gen": 251,
   "stems": [
     {
       "id": "mel",
@@ -46,7 +46,7 @@
     "B7",
     "Em"
   ],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 237). MIDI draft — to be arranged in Cubase.",
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
   "files": {
     "zip": "demos/2026-11-14_cgsolo_romance24/2026-11-14_cgsolo_romance24_midi-set.zip",
