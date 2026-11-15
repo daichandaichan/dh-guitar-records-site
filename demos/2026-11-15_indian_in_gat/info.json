@@ -1,0 +1,42 @@
+{
+  "id": "2026-11-15_indian_in_gat",
+  "date": "2026-11-15",
+  "style": "indian",
+  "styleShort": "インド古典",
+  "styleLabel": "インド古典（ラーガとターラ：ラヴィ・シャンカール型／シャクティ型）",
+  "form": "in_gat",
+  "formLabel": "ガット（テーマ→応答→タン→ティハイ、タブラ付き）",
+  "title": "Raga Jaunpuri — Morning of Hemant",
+  "key": "C#",
+  "tempo": 80,
+  "tempoGenerated": 80,
+  "bars": 35,
+  "seed": 20261115,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Sitar",
+      "prog": 104
+    },
+    {
+      "id": "harp",
+      "name": "Tanpura",
+      "prog": 46
+    },
+    {
+      "id": "perc",
+      "name": "Tabla",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-15_indian_in_gat/2026-11-15_indian_in_gat_midi-set.zip",
+    "midi": "demos/2026-11-15_indian_in_gat/2026-11-15_indian_in_gat_all.mid",
+    "info": "demos/2026-11-15_indian_in_gat/info.md"
+  },
+  "audio": "demos/2026-11-15_indian_in_gat/2026-11-15_indian_in_gat.mp3"
+}
