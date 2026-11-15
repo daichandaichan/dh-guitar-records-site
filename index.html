@@ -324,7 +324,7 @@
   //   },
   // }
   // ------------------------------------------------------------
-  const tracks = [
+  const TRACKS_ALL = [
     {      /* 2026-11-15 ユーザー自作曲：旋律と和音の声部の動き（弦楽合奏・チェロ・フルート）の縦長動画 */
       title: "Cm Ballad — 旋律と声部の動き",
       genre: "jazz",
@@ -337,7 +337,7 @@
       links: { spotify: "", appleMusic: "", youtubeMusic: "", amazonMusic: "" },
     },
     {
-      title: "月明かりのワルツ (Moonlit Waltz) — 旋律と声部の動き",
+      title: "Cm Waltz — 旋律と声部の動き",
       genre: "jazz",
       video: "videos/moonlit_waltz_voices.mp4",
       vertical: true,
@@ -349,6 +349,7 @@
     },
     {
       title: "月明かりのワルツ (Moonlit Waltz)",
+      hidden: true,      /* 2026-11-15 ユーザーの指示で非表示（データは残す） */
       genre: "jazz",
       audio: "audio/moonlit-waltz.mp3",
       jacket: "jackets/moonlit-waltz.jpg",
@@ -358,6 +359,8 @@
       links: { spotify: "", appleMusic: "", youtubeMusic: "", amazonMusic: "" },
     },
   ];
+
+  const tracks = TRACKS_ALL.filter(t => !t.hidden);      /* hidden: true の曲は表示しない */
 
   const STREAM_ICONS = { spotify: "🟢", appleMusic: "🎧", youtubeMusic: "▶", amazonMusic: "🛒" };
   const STREAM_LABELS = { spotify: "Spotify", appleMusic: "Apple Music", youtubeMusic: "YouTube Music", amazonMusic: "Amazon Music" };
