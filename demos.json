@@ -83,9 +83,114 @@
   "files": {
    "zip": "demos/2026-11-16_rk_hendrix_auto16m/2026-11-16_rk_hendrix_auto16m_midi-set.zip",
    "midi": "demos/2026-11-16_rk_hendrix_auto16m/2026-11-16_rk_hendrix_auto16m_all.mid",
-   "info": "demos/2026-11-16_rk_hendrix_auto16m/info.md",
-   "song": "demos/2026-11-16_rk_hendrix_auto16m/song.json"
-  }
+   "info": "demos/2026-11-16_rk_hendrix_auto16m/info.md"
+  },
+  "audio": "demos/2026-11-16_rk_hendrix_auto16m/2026-11-16_rk_hendrix_auto16m.mp3",
+  "scorePages": [
+   "scores/2026-11-16_rk_hendrix_auto16m-1.png"
+  ],
+  "cover": "covers/2026-11-16_rk_hendrix_auto16m.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-11-16_gypsy_manouche32",
+  "date": "2026-11-16",
+  "style": "gypsy",
+  "styleShort": "ジプシー・スウィング",
+  "styleLabel": "ジプシー・スウィング（マヌーシュ）",
+  "form": "manouche32",
+  "formLabel": "マヌーシュ AABA 32小節",
+  "title": "Novembre à Samois (Dm)",
+  "key": "Dm",
+  "tempo": 200,
+  "tempoGenerated": 200,
+  "bars": 206,
+  "seed": 20261116,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 25
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 25
+   },
+   {
+    "id": "comp",
+    "name": "Rhythm Gtr (la pompe)",
+    "prog": 26
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 32
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Dm7",
+   "Dm6",
+   "Gm7",
+   "D#7",
+   "Dm6",
+   "A#maj7",
+   "Em7b5",
+   "A13",
+   "Dm6",
+   "A7b9",
+   "Dm6",
+   "Dm6",
+   "D9",
+   "GmMaj7",
+   "A7b9",
+   "Dm6",
+   "A#maj7",
+   "Em7b5",
+   "A7alt",
+   "Dm6",
+   "C7b9",
+   "Fmaj7",
+   "Fmaj7",
+   "A#9",
+   "D#maj7",
+   "A#7b9",
+   "D#maj7",
+   "Fm7",
+   "A#7",
+   "Fmaj7",
+   "Em7b5",
+   "D#9",
+   "Dm6",
+   "Dm6",
+   "Gm7",
+   "A7b9",
+   "Dm6",
+   "F9",
+   "A#maj7",
+   "Em7b5",
+   "A7alt",
+   "Dm6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-16_gypsy_manouche32/2026-11-16_gypsy_manouche32_midi-set.zip",
+   "midi": "demos/2026-11-16_gypsy_manouche32/2026-11-16_gypsy_manouche32_all.mid",
+   "info": "demos/2026-11-16_gypsy_manouche32/info.md"
+  },
+  "audio": "demos/2026-11-16_gypsy_manouche32/2026-11-16_gypsy_manouche32.mp3",
+  "scorePages": [
+   "scores/2026-11-16_gypsy_manouche32-1.png"
+  ],
+  "cover": "covers/2026-11-16_gypsy_manouche32.jpg",
+  "coverKind": "generated"
  },
  {
   "id": "2026-11-15_rk_maiden_auto16m",
