@@ -3541,6 +3541,49 @@ function makePdf(pages, PW, PH, MG) {
 /* ---------- 曲を音声にする（WAV・MP3）----------
    曲を約20秒ずつの窓に区切り、窓ごとに OfflineAudioContext へ内蔵音源で描画して重ねる（tools/render_mp3.js と同じ方法）。
    読み込んだ音声ループが有効なら、同じ長さの別の描画で重ねる。ピークは -1dBFS に合わせる。 */
+/* BS.1770 の大きさ（LUFS）：K 特性（高域の棚＋低域カット）を掛け、400ms ごと（100ms ずつずらす）の平均を、−70 LUFS と相対 −10 LU の門で選ぶ（配信の測り方と同じ。2026-11-16） */
+function lufsOf(L, R, sr) {
+  var K1 = Math.tan(Math.PI * 1681.974450955533 / sr), Vh = Math.pow(10, 3.999843853973347 / 20), Vb = Math.pow(Vh, 0.4996667741545416), Q1 = 0.7071752369554196, d1 = 1 + K1 / Q1 + K1 * K1;
+  var b0 = (Vh + Vb * K1 / Q1 + K1 * K1) / d1, b1 = 2 * (K1 * K1 - Vh) / d1, b2 = (Vh - Vb * K1 / Q1 + K1 * K1) / d1, a1 = 2 * (K1 * K1 - 1) / d1, a2 = (1 - K1 / Q1 + K1 * K1) / d1;
+  var K2 = Math.tan(Math.PI * 38.13547087602444 / sr), Q2 = 0.5003270373238773, d2 = 1 + K2 / Q2 + K2 * K2, c1 = 2 * (K2 * K2 - 1) / d2, c2 = (1 - K2 / Q2 + K2 * K2) / d2;
+  var hop = Math.round(sr * 0.1), nh = Math.floor(L.length / hop), E = new Float64Array(nh), chs = [L, R || L], ch, i, k;
+  for (ch = 0; ch < 2; ch++) {
+    var x = chs[ch], x1 = 0, x2 = 0, y1 = 0, y2 = 0, z1 = 0, z2 = 0;
+    for (k = 0; k < nh; k++) {
+      var acc = 0;
+      for (i = k * hop; i < (k + 1) * hop; i++) {
+        var x0 = x[i], y0 = b0 * x0 + b1 * x1 + b2 * x2 - a1 * y1 - a2 * y2, z0 = y0 - 2 * y1 + y2 - c1 * z1 - c2 * z2;
+        x2 = x1; x1 = x0; y2 = y1; y1 = y0; z2 = z1; z1 = z0; acc += z0 * z0;
+      }
+      E[k] += acc;
+    }
+  }
+  var bl = [], tot = 0, n = 0;
+  for (k = 0; k + 4 <= nh; k++) { var ms = (E[k] + E[k + 1] + E[k + 2] + E[k + 3]) / (4 * hop); bl.push(ms); }
+  bl = bl.filter(function (m) { return -0.691 + 10 * Math.log10(m + 1e-20) > -70; });
+  if (!bl.length) return -Infinity;
+  bl.forEach(function (m) { tot += m; }); var rel = -0.691 + 10 * Math.log10(tot / bl.length) - 10; tot = 0;
+  bl.forEach(function (m) { if (-0.691 + 10 * Math.log10(m) > rel) { tot += m; n++; } });
+  return n ? -0.691 + 10 * Math.log10(tot / n) : -Infinity;
+}
+/* 先読みのリミッター（左右いっしょ）：srcL/srcR を gg 倍し、上限 T を超えないように、5ms 先読みで手前から下げ、80ms で戻す。結果を dstL/dstR へ（同じ配列でもよい）。
+   必要な倍率（need）の「先5msの最小」を、さらに5msの平均でなだらかにする（山の位置では必ず need 以下）。戻りはゆっくり（下がるのは即時） */
+function limitStereo(srcL, srcR, dstL, dstR, gg, T, sr, A, B) {
+  var N = srcL.length, la = Math.max(1, Math.round(sr * 0.005)), rel = 1 - Math.exp(-1 / (sr * 0.08)), i;
+  A = A && A.length >= N ? A : new Float32Array(N); B = B && B.length >= N ? B : new Float32Array(N);
+  for (i = 0; i < N; i++) { var a = Math.max(Math.abs(srcL[i]), Math.abs(srcR[i])) * gg; A[i] = a > T ? T / a : 1; }
+  var dq = new Int32Array(N), h = 0, t = 0, j = 0;                     /* 先 la サンプルの最小（単調な待ち行列） */
+  for (i = 0; i < N; i++) {
+    var e = Math.min(N - 1, i + la);
+    while (j <= e) { while (t > h && A[dq[t - 1]] >= A[j]) t--; dq[t++] = j; j++; }
+    while (dq[h] < i) h++;
+    B[i] = A[dq[h]];
+  }
+  var sum = 0; for (i = 0; i < N; i++) { sum += B[i]; if (i > la) sum -= B[i - la - 1]; A[i] = sum / Math.min(i + 1, la + 1); }      /* 後ろ la+1 サンプルの平均 */
+  var env = 1;
+  for (i = 0; i < N; i++) { var w = A[i]; env = w < env ? w : env + (w - env) * rel; var k = gg * env; dstL[i] = srcL[i] * k; dstR[i] = srcR[i] * k; }
+  return { A: A, B: B };
+}
 function renderSongAudio(song, opts, progress) {
   opts = opts || {};
   var SR = 44100, W = 20, TAIL = 6;
@@ -3645,22 +3688,39 @@ function renderSongAudio(song, opts, progress) {
           s2 /= (2 * (fr / 3));
           if (s2 > 1e-6) { ms += s2; cnt++; }
         }
-        var rmsG = cnt ? Math.sqrt(ms / cnt) : 0, g = 0.89 / pk, tgtR = opts.rms || 0.14, capP = opts.pcap || 1.8;      /* 標準：実効値 約 −17dBFS・ピーク上限 1.8／大きめ・最大：尖った音をなだらかに抑えて、全体を持ち上げる */
-        if (rmsG > 1e-5) g = Math.min(tgtR / rmsG, capP / pk);          /* 目標の実効値。ピークが大きい曲は上限で止める */
-        if (opts.asis) g = Math.min(opts.mgain > 0 ? opts.mgain : 1, 0.98 / pk);                      /* フェーダーのまま：音量そろえをしない（ピークが 0.98 を超えるときだけ、線形に下げる） */
+        var rmsG = cnt ? Math.sqrt(ms / cnt) : 0, g = 0.89 / pk, tgtR = opts.rms || 0.14, capP = opts.pcap || 1.8, CEIL = 0.88;      /* 仕上げの上限：サンプルで −1.1 dB（MP3 にしても 0 dB を超えにくい） */
+        if (rmsG > 1e-5) g = Math.min(tgtR / rmsG, capP / pk);          /* 目標の実効値。ピークが大きい曲は上限で止める（LUFS の目標がないときの決め方） */
+        if (opts.asis) g = Math.min(opts.mgain > 0 ? opts.mgain : 1, CEIL / pk);                      /* フェーダーのまま：音量そろえをしない（ピークが上限を超えるときだけ、線形に下げる） */
         if (opts.gain) g = opts.gain;                                   /* パートごとの書き出し：全体の音量の倍率をそのまま使う（パートの音量の関係を保つ） */
-        var K = opts.asis ? 99 : 0.72;                                                  /* これを超える山は、なだらかに丸める（ソフトリミッター） */
-        for (i = 0; i < N; i++) {
-          var xl = L[i] * g, xr = R[i] * g;
-          if (xl > K) xl = K + (1 - K) * Math.tanh((xl - K) / (1 - K)); else if (xl < -K) xl = -K - (1 - K) * Math.tanh((-xl - K) / (1 - K));
-          if (xr > K) xr = K + (1 - K) * Math.tanh((xr - K) / (1 - K)); else if (xr < -K) xr = -K - (1 - K) * Math.tanh((-xr - K) / (1 - K));
-          L[i] = xl * 0.97; R[i] = xr * 0.97;
-        }
-        resolve({ L: L, R: R, sr: SR, secs: secs, rms: rmsG * g, gain: g });
+        var K = (opts.asis || opts.gain) ? 99 : 0.72, outC = (opts.asis || opts.gain) ? 1 : CEIL;      /* パートごと（opts.gain）は丸めない（32 ビット浮動小数点で書くので切れない） */      /* K を超える山は、なだらかに丸める（ソフトリミッター） */
+        var shape = function (src, dst, gg) { for (var i2 = 0; i2 < N; i2++) { var v = src[i2] * gg; if (v > K) v = K + (1 - K) * Math.tanh((v - K) / (1 - K)); else if (v < -K) v = -K - (1 - K) * Math.tanh((-v - K) / (1 - K)); dst[i2] = v * outC; } };
+        var lu = null;
+        if (opts.lufs && !opts.asis && !opts.gain) {                    /* LUFS の目標（標準 −14 など）：仕上げて測り、差を足して仕上げ直す（リミッターで下がる分も含めて合わせる。最大3回） */
+          var L0 = new Float32Array(L), R0 = new Float32Array(R), lr = lufsOf(L0, R0, SR), TL = 0.84, wk = null;      /* 上限 −1.5 dBFS（MP3 にしても 0 dB を超えにくい） */
+          if (isFinite(lr)) {
+            g = Math.min(Math.pow(10, (opts.lufs - lr) / 20), capP / pk);
+            for (var it = 0; it < 3; it++) {
+              wk = limitStereo(L0, R0, L, R, g, TL, SR, wk && wk.A, wk && wk.B); lu = lufsOf(L, R, SR);
+              if (!isFinite(lu) || Math.abs(opts.lufs - lu) < 0.15 || it === 2) break;
+              var g2 = Math.min(g * Math.pow(10, (opts.lufs - lu) / 20), capP / pk); if (Math.abs(g2 / g - 1) < 0.005) break; g = g2;
+            }
+          } else { shape(L, L, g); shape(R, R, g); }
+        } else { shape(L, L, g); shape(R, R, g); }
+        resolve({ L: L, R: R, sr: SR, secs: secs, rms: rmsG * g, gain: g, lufs: lu });
       };
       step();
     } catch (er) { restore(); reject(er); }
   });
+}
+/* 32 ビット浮動小数点の WAV（パートごとの書き出し用：0 dB を超えても切れない） */
+function wavBytesF32(L, R, sr) {
+  var n = L.length, out = new Uint8Array(58 + n * 8), dv = new DataView(out.buffer), i, o = 58;
+  var w = function (p, s) { for (var q = 0; q < s.length; q++) dv.setUint8(p + q, s.charCodeAt(q)); };
+  w(0, "RIFF"); dv.setUint32(4, 50 + n * 8, true); w(8, "WAVEfmt "); dv.setUint32(16, 18, true); dv.setUint16(20, 3, true); dv.setUint16(22, 2, true);
+  dv.setUint32(24, sr, true); dv.setUint32(28, sr * 8, true); dv.setUint16(32, 8, true); dv.setUint16(34, 32, true); dv.setUint16(36, 0, true);
+  w(38, "fact"); dv.setUint32(42, 4, true); dv.setUint32(46, n, true); w(50, "data"); dv.setUint32(54, n * 8, true);
+  for (i = 0; i < n; i++, o += 8) { dv.setFloat32(o, L[i], true); dv.setFloat32(o + 4, R[i], true); }
+  return out;
 }
 function wavBytes(L, R, sr) {
   var n = L.length, out = new Uint8Array(44 + n * 4), dv = new DataView(out.buffer), i, o = 44;
@@ -3708,7 +3768,7 @@ function mp3Bytes(L, R, sr, kbps) {
 }
 
 root.HCGX = {
-  noteEditor: noteEditor, staffEditor: staffEditor, renderSongAudio: renderSongAudio, wavBytes: wavBytes, mp3Bytes: mp3Bytes,
+  noteEditor: noteEditor, staffEditor: staffEditor, renderSongAudio: renderSongAudio, wavBytes: wavBytes, wavBytesF32: wavBytesF32, mp3Bytes: mp3Bytes,
   scorePdf: scorePdf,
   Engine: Engine, SFStore: SFStore, saveFiles: saveFiles, dlReady: dlReady, sf2Parse: sf2Parse, saveBytes: saveBytes, saveText: saveText, shareBytes: shareBytes,
   drawRoll: function (cv, song, playBeat, mute) { drawRoll(cv, song, playBeat, mute); orchHook(song, playBeat, mute); },
