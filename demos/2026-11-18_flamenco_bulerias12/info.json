@@ -1,0 +1,102 @@
+{
+  "id": "2026-11-18_flamenco_bulerias12",
+  "date": "2026-11-18",
+  "style": "flamenco",
+  "styleShort": "フラメンコ",
+  "styleLabel": "フラメンコ（ソレア・ブレリア・タンゴス）",
+  "form": "bulerias12",
+  "formLabel": "ブレリア 12拍 × 8コンパス（速い）",
+  "title": "Bulería Morena (Am)",
+  "key": "Am",
+  "tempo": 250,
+  "tempoGenerated": 250,
+  "bars": 46,
+  "seed": 20261118,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 24
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 24
+    },
+    {
+      "id": "comp",
+      "name": "Flamenco Gtr (rasgueado)",
+      "prog": 24
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Cajon",
+      "prog": 0
+    },
+    {
+      "id": "perc",
+      "name": "Palmero 1 (accent)",
+      "prog": 0
+    },
+    {
+      "id": "perc2",
+      "name": "Palmero 2 (offbeat)",
+      "prog": 0
+    },
+    {
+      "id": "jaleo",
+      "name": "Jaleo (shouts)",
+      "prog": 53
+    }
+  ],
+  "chordsOneChorus": [
+    "Am",
+    "Am",
+    "G6",
+    "Fmaj7(#11)",
+    "E(b9)",
+    "Am",
+    "G",
+    "Fsus2",
+    "E(b9)",
+    "F",
+    "E(b9,11)"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-18_flamenco_bulerias12/2026-11-18_flamenco_bulerias12_midi-set.zip",
+    "midi": "demos/2026-11-18_flamenco_bulerias12/2026-11-18_flamenco_bulerias12_all.mid",
+    "info": "demos/2026-11-18_flamenco_bulerias12/info.md"
+  },
+  "playable": {
+    "Melody": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Solo": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Flamenco Gtr (rasgueado)": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    }
+  },
+  "audio": "demos/2026-11-18_flamenco_bulerias12/2026-11-18_flamenco_bulerias12.mp3"
+}
