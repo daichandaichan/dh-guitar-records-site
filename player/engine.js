@@ -1740,6 +1740,7 @@ Engine.prototype.voice = function (kind, p, when, dur, vel, g, gd, ao, vw, fl, a
   if (kind === "wfl") { this.orchVoice("fl", p, when, dur, vel, out, "flute"); return; }                 /* セクステットのフルート */
   if (kind === "wsx") { this.blownVoice(p, when, dur, vel, out); return; }                              /* ソプラノ・サックス */
   if (kind === "gtr2") kind = "mel";                                                                    /* 2本目のギターは旋律と同じ鳴らし方（バスは別） */
+  if (kind === "mel2") { if ((((this.sfProg && this.sfProg.mel2) | 0) >= 40) && (((this.sfProg && this.sfProg.mel2) | 0) <= 41)) { this.orchVoice("mel", p, when, dur, vel, out, "strings"); return; } kind = "mel"; }      /* テーマの受け渡し（2026-11-17）：ヴァイオリンは弦の音、ギターは旋律と同じ鳴らし方 */
   if (kind === "cante") { this.canteVoice(p, when, dur, vel, out, g, gd, ao, vw, fl); return; }
   var TT = TTc;
   if (TT.ind) {

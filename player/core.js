@@ -17442,6 +17442,28 @@ function secAt(sections, t) {
 }
 /* 仕上げ：①CC1・CC11 の段差（12を超える跳び）は 1/32 拍刻みの短いランプでつなぐ
           ②ピッチベンドが大きく飛ぶ瞬間に鳴り残っている前の音は、その直前で切る（余韻に音程の揺れが乗らない） */
+/* テーマの受け渡し（2026-11-17）：テーマ（head）の区間を、曲の形の文字（A・B…）で 2 つの楽器に分ける。stems に「mel2」を足す */
+function themeTradeSplit(stems, sections, form, beats, opt) {
+  var mel = null, i; for (i = 0; i < stems.length; i++) if (stems[i].id === "mel") mel = stems[i];
+  if (!mel || !mel.notes.length || !form.sec || form.sec.length < 2 || !/[^A]/.test(form.sec)) return;
+  var L = form.sec.split(""), secLen = form.bars / L.length, heads = sections.filter(function (x) { return x.kind === "head" && x.tag !== "turn" && x.tag !== "voice"; });
+  if (!heads.length) return;
+  var leadVln = mel.prog >= 40 && mel.prog <= 41;
+  var pt = leadVln ? { prog: 25, name: "Guitar (theme, trade)", jp: "テーマ（ギター：受け渡し）", lo: 40 } : { prog: 40, name: "Violin (theme, trade)", jp: "テーマ（ヴァイオリン：受け渡し）", lo: 55 };
+  var letterAt = function (t) {
+    for (var k = 0; k < heads.length; k++) { var h = heads[k]; if (t >= h.at && t < h.at + h.beats) { var bar = (h.from || 0) + Math.floor((t - h.at) / beats); return L[Math.min(L.length - 1, Math.floor(bar / secLen))]; } }
+    return null;
+  };
+  var toPartner = function (t) { var c = letterAt(t + 0.5); return c != null && (opt.themeTrade === "ab" ? c !== "A" : c === "A"); };
+  var up = function (p) { while (p < pt.lo) p += 12; return p; };
+  var keep = [], moved = [], kx = [], mx = [];
+  mel.notes.forEach(function (n) { if (toPartner(n.t)) { var c = {}, k; for (k in n) c[k] = n[k]; c.p = up(n.p); moved.push(c); } else keep.push(n); });
+  if (!moved.length || !keep.length) return;
+  (mel.extra || []).forEach(function (e) { if (toPartner(e.t)) { var c = {}, k; for (k in e) c[k] = e[k]; if (c.p != null) c.p = up(c.p); mx.push(c); } else kx.push(e); });
+  mel.notes = keep; mel.extra = kx;
+  var j = 0; for (i = 0; i < stems.length; i++) if (stems[i] === mel) j = i;
+  stems.splice(j + 1, 0, { id: "mel2", name: pt.name, jp: pt.jp, prog: pt.prog, ch: 10, notes: moved, extra: mx, trade: opt.themeTrade });
+}
 function polishExtras(extra, notes) {
   if (!extra || !extra.length) return extra || [];
   var ex = extra.slice().sort(function (a, b) { return a.t - b.t; }), out = [], last = {}, i, k;
@@ -24983,6 +25005,7 @@ function generateMain(opt) {
         : sty.perc === "palmas" ? "パルマス" : "パーカッション（スルド・タンボリン）",
       prog: 0, ch: 9, notes: perc }
   ].filter(function (s) { return s.notes.length > 0; });
+  if (opt.themeTrade === "ab" || opt.themeTrade === "ba") themeTradeSplit(stems, sections, form, beats, opt);      /* テーマの受け渡し（A／B〔サビ〕を別の楽器で。2026-11-17） */
   /* ピアノの伴奏を「追加」する（ギターの伴奏はそのまま。伴奏がもともとピアノ／鍵盤のスタイルや、特殊なスタイルでは足さない） */
   var PNO_OK = ["swing", "bebop", "gypsy", "soul", "bossa", "brazil", "latin", "waltz", "modern", "fusion", "ballad", "flamenco"];
   if (opt.pianoComp && PNO_OK.indexOf(opt.style) >= 0 && instrOfOpt(opt) !== INSTR.piano && opt.leadInst !== "piano" && sty.compProg !== 0 && sty.compProg !== 4 && sty.compProg !== 16) {
@@ -26117,7 +26140,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 605;
+var BUILD_NO = 608;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 251;
 function r3(x) { return Math.round(x * 1000) / 1000; }
