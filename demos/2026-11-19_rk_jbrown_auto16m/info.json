@@ -1,0 +1,132 @@
+{
+  "id": "2026-11-19_rk_jbrown_auto16m",
+  "date": "2026-11-19",
+  "style": "rk_jbrown",
+  "styleShort": "ロック：ファンク・ロック",
+  "styleLabel": "ロック：ファンク・ロック（ジェームス・ブラウン型／クリーンのカッティングとホーン風のシンセ）",
+  "form": "auto16m",
+  "formLabel": "16小節・短調（毎回ちがう）",
+  "title": "Nuit du Nord (Em)",
+  "key": "Em",
+  "tempo": 112,
+  "tempoGenerated": 112,
+  "bars": 109,
+  "seed": 20261119,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 27
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 27
+    },
+    {
+      "id": "comp",
+      "name": "Chord Gtr",
+      "prog": 27
+    },
+    {
+      "id": "gtr2",
+      "name": "Guitar 2 (rhythm riff)",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "gtr3",
+      "name": "Guitar 3 (harmony)",
+      "prog": 30
+    },
+    {
+      "id": "gtr4",
+      "name": "Guitar 4 (riff double / harmony)",
+      "prog": 30
+    }
+  ],
+  "chordsOneChorus": [
+    "Em6",
+    "A9",
+    "D",
+    "Cmaj7",
+    "B7alt",
+    "Am7",
+    "G#13",
+    "F9",
+    "Em6",
+    "F#m7b5",
+    "F#m7",
+    "B7",
+    "Em6",
+    "D",
+    "F#m7b5",
+    "B7b9",
+    "Em9",
+    "F#m7",
+    "B9",
+    "Em6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-19_rk_jbrown_auto16m/2026-11-19_rk_jbrown_auto16m_midi-set.zip",
+    "midi": "demos/2026-11-19_rk_jbrown_auto16m/2026-11-19_rk_jbrown_auto16m_all.mid",
+    "info": "demos/2026-11-19_rk_jbrown_auto16m/info.md"
+  },
+  "playable": {
+    "Melody": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Solo": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 1
+    },
+    "Chord Gtr": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Guitar 4 (riff double / harmony)": {
+      "tuning": "7dropA",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Guitar 3 (harmony)": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Guitar 2 (rhythm riff)": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    }
+  },
+  "audio": "demos/2026-11-19_rk_jbrown_auto16m/2026-11-19_rk_jbrown_auto16m.mp3"
+}
