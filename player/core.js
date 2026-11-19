@@ -26431,7 +26431,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 613;
+var BUILD_NO = 624;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 251;
 function r3(x) { return Math.round(x * 1000) / 1000; }
@@ -28677,8 +28677,22 @@ function parseKeyFromText(t, noBare) {
 function parsePrompt(text) {
   var src = String(text || ""), set = {}, wt = {}, hits = [], used = [], mul = null, kwTempo = null, i, k;
   function put(f, v, w) { if (wt[f] === undefined || w > wt[f]) { set[f] = v; wt[f] = w; } }
+  /* 役割つきの言い方（2026-11-19）：「テーマはトランペット」→ テーマの楽器。「伴奏はピアノ、ベース、ドラム（の）カルテット」→ 伴奏の楽器（ここに出る楽器名はテーマの楽器にしない）。
+     伴奏にドラムが無ければドラムなし、ドラムがあればドラムあり。バラード等の標準の編成（ピアノ・ベース・ドラム）はそのまま使う。 */
+  var srcD = src, mTh = /テーマ(?:の楽器|の担当)?(?:は|を|に|が)\s*([^、。,，\s]{1,14})/.exec(src), mAc = /伴奏(?:の楽器|の編成)?(?:は|に|を|には)\s*([^。\n]*?)(?:の?(?:カルテット|クァルテット|クワルテット|トリオ|クインテット|デュオ|編成)|で(?=[^、]*(?:バラード|曲|お願い|作))|。|\n|$)/.exec(src);
+  if (mTh) {
+    for (i = 0; i < KW_RULES.length; i++) { if (KW_RULES[i][1].leadInst && KW_RULES[i][0].test(mTh[1])) { put("leadInst", KW_RULES[i][1].leadInst, 12); hits.push({ kw: mTh[0], desc: "テーマの楽器：" + mTh[1].replace(/で$|を$|に$/, "") }); used.push(mTh[0]); break; } }
+    srcD = srcD.replace(mTh[0], " ");
+  }
+  if (mAc && mAc[1]) {
+    var acT = mAc[1], hasDr = /ドラム|drums?|パーカッション/i.test(acT), hasOther = /ピアノ|ベース|ギター|piano|bass|guitar|オルガン|ヴィブラフォン|ビブラフォン/i.test(acT);
+    if (hasDr) put("useDrums", true, 8); else if (hasOther) put("useDrums", false, 8);
+    hits.push({ kw: mAc[0].replace(/[、。\s]+$/, ""), desc: "伴奏の楽器：" + acT.replace(/[、，,\s]+/g, "・").replace(/で$/, "") + (hasDr ? "（ドラムあり）" : (hasOther ? "（ドラムなし）" : "")) });
+    used.push(mAc[0]);
+    srcD = srcD.replace(mAc[0], " ");
+  }
   for (i = 0; i < KW_RULES.length; i++) {
-    var R = KW_RULES[i], m = R[0].exec(src);
+    var R = KW_RULES[i], m = R[0].exec(srcD);
     if (!m) continue;
     hits.push({ kw: m[0], desc: R[3] });
     used.push(m[0]);

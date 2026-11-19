@@ -1,5 +1,143 @@
 [
  {
+  "id": "2026-11-20_neo_neobaroque32",
+  "date": "2026-11-20",
+  "style": "neo",
+  "styleShort": "ネオクラシカル",
+  "styleLabel": "ネオクラシカル（ハーモニック・マイナー）",
+  "form": "neobaroque32",
+  "formLabel": "バロック循環 32小節（ネオクラシカル）",
+  "title": "Tempo des Lilas (Am)",
+  "key": "Am",
+  "tempo": 168,
+  "tempoGenerated": 168,
+  "bars": 238,
+  "seed": 20261120,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 30
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 30
+   },
+   {
+    "id": "comp",
+    "name": "Rhythm Gtr (power)",
+    "prog": 29
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "gtr3",
+    "name": "Guitar 3 (riff double / harmony)",
+    "prog": 30
+   },
+   {
+    "id": "gtr2",
+    "name": "Guitar 2 (twin harmony)",
+    "prog": 30
+   },
+   {
+    "id": "org",
+    "name": "Organ sustain (chords)",
+    "prog": 19
+   }
+  ],
+  "chordsOneChorus": [
+   "Am",
+   "Dm",
+   "G",
+   "C",
+   "F",
+   "Bm7b5",
+   "E(b9)",
+   "Am",
+   "Am",
+   "Dm7",
+   "G",
+   "C",
+   "F",
+   "Bm7b5",
+   "E(b9)",
+   "Am",
+   "C",
+   "Em",
+   "Am",
+   "Dm7",
+   "G",
+   "F",
+   "Bm7b5",
+   "Bm7",
+   "E9",
+   "Am",
+   "Dm",
+   "G",
+   "C",
+   "F",
+   "Bm7b5",
+   "E(b9)",
+   "Am"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-20_neo_neobaroque32/2026-11-20_neo_neobaroque32_midi-set.zip",
+   "midi": "demos/2026-11-20_neo_neobaroque32/2026-11-20_neo_neobaroque32_all.mid",
+   "info": "demos/2026-11-20_neo_neobaroque32/info.md",
+   "song": "demos/2026-11-20_neo_neobaroque32/song.json"
+  },
+  "playable": {
+   "Melody": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 0
+   },
+   "Solo": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 2
+   },
+   "Rhythm Gtr (power)": {
+    "tuning": "dropD",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 1
+   },
+   "Guitar 3 (riff double / harmony)": {
+    "tuning": "7B",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 0
+   },
+   "Guitar 2 (twin harmony)": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 0
+   }
+  }
+ },
+ {
   "id": "2026-11-19_rk_jbrown_auto16m",
   "date": "2026-11-19",
   "style": "rk_jbrown",
