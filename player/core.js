@@ -5909,7 +5909,7 @@ function biasScale(sc, ch, bias) {
     /* メロディック・マイナー系に置き換える */
     if (isDom(ch.q)) out = [0, 2, 4, 6, 7, 9, 10];
     else if (isMin(ch.q)) out = [0, 2, 3, 5, 7, 9, 11];
-    else out = [0, 2, 4, 6, 8, 9, 11];
+    else out = SCALE_STRICT ? [0, 2, 4, 6, 7, 9, 11] : [0, 2, 4, 6, 8, 9, 11];          /* メジャー系は、リディアン（増5度のリディアン・オーギュメントは、5度を含む和音と外れる） */
   } else if (bias === "symmetric") {
     if (isDom(ch.q)) out = [0, 1, 3, 4, 6, 7, 9, 10];
     else if (isMin(ch.q)) out = [0, 2, 3, 5, 7, 8, 11];
@@ -7508,11 +7508,20 @@ function harmTension(ch, tonic) {
 }
 /* kind: "tri"(6半音)／"dim"(3半音)。dir: 正＝上、負＝下。調の音(短調は和声的短音階・長調は長音階)＋その和音の音に収まる音だけ。
    dim は、色の2小節の間ずっと付ける。tri は、緊張する和音の上か、句の終わりの長い音(finalLong)だけ。 */
-var EXO_ACC = true;
+var EXO_ACC = true, EXO_STRICT = false, EXO_MAJK = null;
+/* ドミナント7（属7・♭9・alt・aug7）／フリジアン・ドミナント／減7＝トライトーン・フリジアン・コンビネーション・ディミニッシュの色を付けてよい和音。メジャー（長三和音・maj7）やマイナーの上では付けない（2026-11-20：ユーザー指摘「それ以外でやると音が外れる。ジャズでも同じ」）。 */
+function domChord(c) {
+  var q = QUAL[c.q], iv = q ? q.iv : [0, 7];
+  if (iv.indexOf(4) >= 0 && iv.indexOf(10) >= 0) return true;
+  if (c.q === "phryg" || c.q === "phrygSus" || c.q === "phryg11") return true;
+  if (c.q === "dim7" || (iv.indexOf(3) >= 0 && iv.indexOf(6) >= 0 && iv.indexOf(9) >= 0)) return true;
+  return false;
+}
 function exoticHarm(p, ab, tt, tonic, kind, dir, finalLong, loose) {
   if (!ab || !ab.length) return null;
   var c = ab[0], z; for (z = 0; z < ab.length; z++) { if (ab[z].t <= tt + 1e-6) c = ab[z]; else break; }
   var q0 = QUAL[ab[0].q] || { iv: [0, 7] }, minor = !(q0.iv.indexOf(4) >= 0), set = {}, cq = QUAL[c.q] || { iv: [0, 7] };
+  if (EXO_STRICT) { if (!domChord(c)) return null; if (EXO_MAJK != null) minor = !EXO_MAJK; }          /* ドミナント7・減7の上だけ。調は形式の長調／短調で決める */
   (minor ? [0, 2, 3, 5, 7, 8, 11] : [0, 2, 4, 5, 7, 9, 11]).forEach(function (x) { set[(x + tonic) % 12] = 1; });
   cq.iv.forEach(function (x) { set[(c.root + x) % 12] = 1; });
   if (kind === "tri" && loose !== true && !(harmTension(c, tonic) || finalLong)) return null;
@@ -7593,6 +7602,7 @@ function riffHarmony(comp, sections, beats, opt, ab, wins, rkey) {
   var tbl = []; for (k in w) tbl.push([+k, w[k]]);
   var songRate = P.rate * (rkey ? 1.25 : 1) * (0.45 + rh.f() * 1.2);        /* ロックはリフが和音で、最低音1本線のハモリ率が実測より下がるので補正 */
   var q0 = QUAL[ab[0] && ab[0].q] || { iv: [0, 7] }, minor = !(q0.iv.indexOf(4) >= 0);
+  if (opt.harmFix !== false && FORMS[opt.form] && typeof FORMS[opt.form].minor === "boolean") minor = !!FORMS[opt.form].minor;          /* 2026-11-20：最初の和音（前奏）でなく、形式の長調／短調で決める */
   var base = {}; (minor ? [0, 2, 3, 5, 7, 8, 11] : [0, 2, 4, 5, 7, 9, 11]).forEach(function (x) { base[(x + tonic) % 12] = 1; });
   function secAt(tt) { var z; for (z = 0; z < sections.length; z++) if (tt >= sections[z].at - 1e-6 && tt < sections[z].at + sections[z].beats - 1e-6) return sections[z]; return null; }
   function chAt(tt) { var c = ab[0], z; for (z = 0; z < ab.length; z++) { if (ab[z].t <= tt + 1e-6) c = ab[z]; else break; } return c; }
@@ -7613,7 +7623,7 @@ function riffHarmony(comp, sections, beats, opt, ab, wins, rkey) {
       for (z2 = 0; z2 < 2 && found == null; z2++) {
         var cp = cand[z2], pc = ((cp % 12) + 12) % 12;
         if (cp < 33 || cp > 80) continue;
-        if (base[pc] || ok[pc] || (P.col.indexOf(D2.iv) >= 0 && (opt.harmOut === true || harmTension(c, tonic)))) found = cp;
+        if (base[pc] || ok[pc] || (P.col.indexOf(D2.iv) >= 0 && (opt.harmOut === true || (opt.harmFix !== false ? domChord(c) : harmTension(c, tonic))))) found = cp;
       }
       if (found != null) q = found;
     } else if (D2.oct && !mute) q = p + 12;
@@ -7636,6 +7646,17 @@ function twinSafe(n, q, ab) {
     if (d2 === 1 || (d2 === 11 && (n.d >= 0.5 || onB))) return false;
   }
   return true;
+}
+/* ハモリの音が、調の音（短調は和声的短音階まで）か、その時の和音の音か */
+function neoHarmOk(q, tonic, majK, ab, t) {
+  if (q == null) return false;
+  var rel = ((q - tonic) % 12 + 12) % 12, scl = majK ? [0, 2, 4, 5, 7, 9, 11] : [0, 2, 3, 5, 7, 8, 10, 11];
+  if (scl.indexOf(rel) >= 0) return true;
+  if (!ab || !ab.length) return false;
+  var c = ab[0], z; for (z = 0; z < ab.length; z++) { if (ab[z].t <= t + 1e-6) c = ab[z]; else break; }
+  var cq = QUAL[c.q] || { iv: [0, 4, 7] }, k;
+  for (k = 0; k < cq.iv.length; k++) if ((((q - c.root - cq.iv[k]) % 12) + 12) % 12 === 0) return true;
+  return false;
 }
 function twinFix(n, q, alts, ab, on, ref) {
   if (!on || q == null || twinSafe(n, q, ab)) return q;
@@ -7666,9 +7687,10 @@ function twinBendExtra(harm, stemsAll, opt) {
   return out;
 }
 function twinHarmony(mel, solo, sections, beats, opt, tempo, ab) {
-  EXO_ACC = opt.harmAcc !== false;
+  EXO_ACC = opt.harmAcc !== false; EXO_STRICT = opt.harmFix !== false; EXO_MAJK = null;
   var out = [], tonic = ((opt.tonic || 0) % 12 + 12) % 12, rr = RNG((((opt.seed || 1) * 57 + 3) % 2147483647) || 1), regs = [];
-  var q0H = QUAL[ab && ab[0] && ab[0].q] || { iv: [0, 7] }, ACC = opt.harmAcc !== false, majK = !!opt.neoMajor || (ACC && q0H.iv.indexOf(4) >= 0 && q0H.iv.indexOf(3) < 0);       /* 長調か（最初の和音が長三和音） */
+  var q0H = QUAL[ab && ab[0] && ab[0].q] || { iv: [0, 7] }, ACC = opt.harmAcc !== false, majK = !!opt.neoMajor || (ACC && q0H.iv.indexOf(4) >= 0 && q0H.iv.indexOf(3) < 0);
+  if (opt.harmFix !== false && !opt.neoMajor && FORMS[opt.form] && typeof FORMS[opt.form].minor === "boolean") majK = !FORMS[opt.form].minor;  EXO_MAJK = (opt.harmFix !== false) ? majK : null;          /* 2026-11-20：最初の和音（前奏が長和音で始まる曲）で長調と取り違えていたので、形式の長調／短調の指定で決める */       /* 長調か（最初の和音が長三和音） */
   var rx = RNG((((opt.seed || 1) * 89 + 5) % 2147483647) || 1), exo = {}, xm = ["thrash", "death", "melodeath", "black"].indexOf(opt.style) >= 0;       /* スラッシュ・デス・メロデス・ブラックは、増4度を多めに */
   sections.forEach(function (sec, i) {
     if (sec.kind === "head" || sec.kind === "shout") regs.push({ a: sec.at, z: sec.at + sec.beats, src: mel });
@@ -7699,8 +7721,15 @@ function twinHarmony(mel, solo, sections, beats, opt, tempo, ab) {
         var qn = n.d >= 1.5 ? n.p - 12 : (dirs[ph] === 0 ? n.p - 12 : twinPitch(n.p, tonic, dirs[ph], majK));
         if (qn == null) qn = gap(n);
         if (qn == null || qn < 40) return;
-        qn = twinFix(n, qn, [dirs[ph] ? twinPitch(n.p, tonic, -dirs[ph], majK) : null, twinPitch(n.p, tonic, 2, majK), twinPitch(n.p, tonic, -2, majK), n.p - 12], ab, ACC, ref(n));
-        var xn = xHarm(n, ph, dirs[ph] || 1); if (xn != null) qn = xn;
+        var altsN = [dirs[ph] ? twinPitch(n.p, tonic, -dirs[ph], majK) : null, twinPitch(n.p, tonic, 2, majK), twinPitch(n.p, tonic, -2, majK), n.p - 12];
+        qn = twinFix(n, qn, altsN, ab, ACC, ref(n));
+        if (opt.harmFix === false) { var xn = xHarm(n, ph, dirs[ph] || 1); if (xn != null) qn = xn; }          /* 2026-11-20 以前：トライトーン／ディミニッシュの色（調の外の音）を既定で付けていた。いまは付けない（opt.harmFix=false で従来） */
+        else if (!neoHarmOk(qn, tonic, majK, ab, n.t)) {          /* 調にもコードにもない音は、ほかの候補（逆向きの3度・6度・オクターヴ下）に替え、なければ付けない */
+          var fixN = null, kN;
+          for (kN = 0; kN < altsN.length && fixN == null; kN++) if (altsN[kN] != null && altsN[kN] >= 40 && neoHarmOk(altsN[kN], tonic, majK, ab, n.t) && twinSafe(n, altsN[kN], ab)) fixN = altsN[kN];
+          if (fixN == null) return;
+          qn = fixN;
+        }
         out.push({ t: n.t + 0.004, d: n.d, p: qn, v: Math.max(30, n.v - 14) }); pv = { t: n.t, p: n.p, q: qn };
         return;
       }
@@ -9466,11 +9495,13 @@ function devSixths(t0, beats, ch, cur, goal, lo, hi, rng) {
 /* ---- ネオクラシカル（イングヴェイ風）----
    ハーモニック・マイナー／フリジアン・ドミナント／ディミニッシュを軸に、
    スウィープ・ピッキング、ペダル音、4音のシークエンス、トリルを使う。 */
+var SCALE_STRICT = false;          /* true＝音階を、和音の種類に合うものだけにする（メジャー系にオルタード・♭6・増5度は付けない。opt.harmFix=false で従来） */
 function neoScale(ch) {
   var q = ch.q;
   if (isDom(q) || q === "phryg" || q === "phrygSus" || q === "phryg11") return [0, 1, 4, 5, 7, 8, 10]; /* フリジアン・ドミナント */
   if (q === "dim7") return [0, 2, 3, 5, 6, 8, 9, 11];
   if (isMin(q)) return [0, 2, 3, 5, 7, 8, 11];                    /* ハーモニック・マイナー */
+  if (SCALE_STRICT) return [0, 2, 4, 5, 7, 9, 11];                /* メジャー系は、アイオニアン（♭6は付けない） */
   return [0, 2, 4, 5, 7, 8, 11];                                  /* 長調でも♭6を混ぜる */
 }
 /* スウィープ・ピッキング：3〜5弦にまたがるアルペジオを一息で上下する */
@@ -26431,7 +26462,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 624;
+var BUILD_NO = 626;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 251;
 function r3(x) { return Math.round(x * 1000) / 1000; }

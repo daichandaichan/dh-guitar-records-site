@@ -55,5 +55,5 @@
 - ベース（GM音色 33）: E1〜D3／1小節あたり約3.9音
 - ドラム（GM音色 0）: 6001打／1小節あたり約25.2打
 - Guitar 3 (riff double / harmony)（GM音色 30）: C2〜B4／1小節あたり約2.9音
-- Guitar 2 (twin harmony)（GM音色 30）: Ab2〜D6／1小節あたり約1.3音
+- Guitar 2 (twin harmony)（GM音色 30）: Ab2〜B5／1小節あたり約1.7音
 - Organ sustain (chords)（GM音色 19）: C2〜C4／1小節あたり約4.1音
