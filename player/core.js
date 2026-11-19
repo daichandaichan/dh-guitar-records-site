@@ -5626,6 +5626,9 @@ var EMOTION = {
   joy:   { label: "楽しく", tempo: 1.10, vel: 9, dyn: 1.15, dens: 1.25, rest: 0.72, reg: 1,
            leg: -0.03, stac: -0.06, drums: 0.22, shout: 0.85, arc: 1.15, color: "bright", contour: 1.0,
            ahead: -0.008, slide: 1.2, vib: 1.0, peak: 1.3 },
+  solemn:{ label: "厳粛に（盛大）", tempo: 0.80, vel: 6, dyn: 1.3, dens: 0.9, rest: 1.2, reg: -1,
+           leg: 0.12, stac: -0.04, drums: -0.3, shout: 0.3, arc: 1.0, color: "dark", contour: -0.2,
+           ahead: 0.016, slide: 0.9, vib: 1.3, peak: 1.4 },
   anger: { label: "怒り", tempo: 1.15, vel: 18, dyn: 1.38, dens: 1.35, rest: 0.42, reg: 1,
            leg: -0.12, stac: -0.16, drums: 0.42, shout: 1, arc: 1.4, color: "sharp", contour: 0.5,
            ahead: -0.020, slide: 0.5, vib: 0.6, peak: 1.6 }
@@ -6196,13 +6199,46 @@ function metalPatPick(rng, tbl) {                                    /* 型を�
   var w = tbl.map(function (e) { return [e[0], e[1] * (e[0].indexOf("x") >= 0 ? 1.8 : 1)]; });
   return metalWPick(rng, w);
 }
+/* ノリの型（2026-11-19）：曲ごとに、刻みの型の選びやすさをかたよらせる（opt.metSub 未指定／std は従来どおり） */
+var MET_SUB_LIST = [["std", 30], ["drive", 20], ["groove", 20], ["gallop", 15], ["accent", 15]];
+var MET_SUB_JP = { std: "標準", drive: "突進（密な連打）", groove: "グルーヴ（間のあるミッド）", gallop: "ギャロップ多め", accent: "アクセント多め" };
+function metSubOf(opt) {
+  var v = opt && opt.metSub; if (!v || v === "std") return "";
+  if (v === "auto") {
+    var u = (((Math.imul((opt.seed || 1) | 0, 2246822519) >>> 0) ^ 0x85ebca6b) >>> 0) / 4294967296, tot = 0, q; MET_SUB_LIST.forEach(function (e) { tot += e[1]; }); u *= tot; v = "std";
+    for (q = 0; q < MET_SUB_LIST.length; q++) { u -= MET_SUB_LIST[q][1]; if (u < 0) { v = MET_SUB_LIST[q][0]; break; } }
+    if (v === "std") return "";
+  }
+  return MET_SUB_JP[v] ? v : "";
+}
+var MET_TBL_CACHE = {};
+function metTbl(opt, kind) {
+  var sub = (opt.style === "thrash" || opt.style === "death" || opt.style === "melodeath") ? metSubOf(opt) : "";
+  if (!sub) return METAL_PATS[kind];
+  var key = kind + "|" + sub + "|" + (opt.seed || 1); if (MET_TBL_CACHE[key]) return MET_TBL_CACHE[key];
+  var out = METAL_PATS[kind].map(function (e) {
+    var p = e[0], dens = 0, acc = 0, gal = 0, i;
+    for (i = 0; i < p.length; i++) { if (p.charAt(i) !== "-") dens++; if (p.charAt(i) === "x") acc++; if (i < p.length - 1 && p.charAt(i) !== "-" && p.charAt(i + 1) !== "-" && (i === 0 || p.charAt(i - 1) === "-")) gal++; }
+    var m = 1;
+    if (sub === "drive") m = dens >= 12 ? 3 : (dens <= 6 ? 0.3 : 1);
+    else if (sub === "groove") m = dens <= 6 ? 3 : (dens >= 12 ? 0.3 : 1);
+    else if (sub === "gallop") m = gal >= 2 ? 3 : 0.7;
+    else if (sub === "accent") m = acc >= 2 ? 3 : 0.6;
+    return [p, e[1] * (m === 1 ? 1 : m * 2.5)];
+  });
+  /* 曲ごとの「語彙」：選びやすさで 4 つだけ選び、その曲はそれらの型で通す（曲ごとに似ない・曲の中では繰り返しで覚えやすい） */
+  var rv = RNG(((((opt.seed || 1) * 389 + 17) % 2147483647) + 2147483647) % 2147483647 || 1), pool = out.slice(), voc = [], q;
+  for (q = 0; q < 4 && pool.length; q++) { var pk = metalWPick(rv, pool), ix = -1, z; for (z = 0; z < pool.length; z++) if (pool[z][0] === pk) { ix = z; break; } voc.push(pool[ix]); pool.splice(ix, 1); }
+  out = voc;
+  MET_TBL_CACHE[key] = out; return out;
+}
 function metalWPick(rng, tbl) { var tot = 0, i; for (i = 0; i < tbl.length; i++) tot += tbl[i][1]; var r = rng.f() * tot; for (i = 0; i < tbl.length; i++) { r -= tbl[i][1]; if (r <= 0) return tbl[i][0]; } return tbl[0][0]; }
 /* 小節 bar の型。同じ曲・同じ4小節のまとまりなら、誰が呼んでも同じ結果。solo＝ソロの区間（支えに回る＝8分のペダルか4分） */
 function metalBarPlan(opt, form, bar, solo) {
   var kind = metalKind(opt.style), ph = Math.floor(bar / 4), pos = bar % 4;
   var rr = RNG(((((opt.seed || 1) * 977 + ph * 131 + (solo ? 17 : 0) + ({ death: 5, melodeath: 11, black: 23, thrash: 0 }[kind])) % 2147483647) + 2147483647) % 2147483647 || 1);
-  var A = metalPatPick(rr, METAL_PATS[kind]), B = metalPatPick(rr, METAL_PATS[kind]), tries = 0;
-  while (B === A && tries++ < 6) B = metalPatPick(rr, METAL_PATS[kind]);
+  var mtb = metTbl(opt, kind), A = metalPatPick(rr, mtb), B = metalPatPick(rr, mtb), tries = 0;
+  while (B === A && tries++ < 6) B = metalPatPick(rr, mtb);
   if (solo) { A = rr.chance(0.7) ? "r-r-r-r-r-r-r-r-" : "r---r---r---r---"; B = "r-r-r-r-r-r-r-x-"; }
   else {
     var rb = RNG(((((opt.seed || 1) * 61 + ph * 17 + ({ death: 3, melodeath: 5, black: 7, thrash: 11 }[kind])) % 2147483647) + 2147483647) % 2147483647 || 1);
@@ -6225,11 +6261,37 @@ function metalRootIn(pc, lo) { var p = ((pc % 12) + 12) % 12; while (p < lo) p +
    拍の頭の音は、4拍で輪郭（0-2-4-2、0-3-2-1…）を描き、4小節ごとに2つの小節（A／B）を作る。Bは終わりを根音に戻す。
    ソロ（旋律）との絡み：旋律が忙しい拍（dens が多い）は、リフは根音のペダルに引いて音量を下げ、旋律が休み・伸ばしの拍は、リフが旋律の形で答える。
    opt.blackRiff=false で従来のトレモロに戻す。 */
+/* リフの型（2026-11-19）：[拍内の位置, 長さ(拍), 旋律の形の番号, 5度を足す] の並び。tremolo＝従来の16分（opt.blkSub 未指定のときはこれで、従来と同じ結果） */
+var BLK_LAY = {
+  eighth: [[0, 0.5, 0], [0.5, 0.5, 1]],
+  gallop: [[0, 0.5, 0], [0.5, 0.25, 1], [0.75, 0.25, 2]],
+  triplet: [[0, 1 / 3, 0], [1 / 3, 1 / 3, 1], [2 / 3, 1 / 3, 2]],
+  sparse: [[0, 0.25, 0], [0.25, 0.25, 1], [0.5, 0.25, 2], [0.75, 0.25, 3]],
+  sparseOdd: [[0, 0.8, 0]],
+  march: [[0, 0.92, 0, 1]]
+};
+var BLK_SUB_LIST = [["tremolo", 34], ["eighth", 18], ["gallop", 16], ["triplet", 10], ["sparse", 14], ["march", 8]];
+var BLK_SUB_JP = { tremolo: "激速トレモロ（16分）", eighth: "8分の刻み（行進）", gallop: "ギャロップ", triplet: "3連", sparse: "間のある陰鬱", march: "4分の重い行進" };
+function blkSubOf(opt) {
+  var v = opt && opt.blkSub; if (!v || v === "tremolo") return "";
+  if (v === "auto") { var u = (((Math.imul((opt.seed || 1) | 0, 2654435761) >>> 0) ^ 0x9e3779b9) >>> 0) / 4294967296, tot = 0, q; BLK_SUB_LIST.forEach(function (e) { tot += e[1]; }); u *= tot; v = "tremolo"; for (q = 0; q < BLK_SUB_LIST.length; q++) { u -= BLK_SUB_LIST[q][1]; if (u < 0) { v = BLK_SUB_LIST[q][0]; break; } } if (v === "tremolo") return ""; }
+  return BLK_LAY[v] ? v : "";
+}
+/* ドラムの型の重みの倍率（リフの型に合わせる） */
+var BLK_DRUM_MUL = {
+  eighth: { half: 3, blast: 0.3, dbeat: 1.6, dbl: 0.7 }, gallop: { gallop: 6, dbeat: 2, blast: 0.4, half: 0.8 }, triplet: { other: 3, half: 1.6, blast: 0.3, dbl: 0.6 },
+  sparse: { half: 4, other: 2, blast: 0.2, dbl: 0.4, half_dbl: 1.5 }, march: { half: 4, back: 2, blast: 0.15, dbl: 0.5 }
+};
+var BLK_GROOVE = {
+  "": [["blastb", 5], ["half", 2.2], ["blast", 1], ["dbeat", 1]], eighth: [["blastb", 1.2], ["half", 4], ["dbeat", 2.5], ["back", 1.5]], gallop: [["blastb", 1.5], ["dbeat", 4], ["half", 2], ["dbl", 1.5]],
+  triplet: [["blastb", 1.2], ["half", 3], ["dbeat", 2], ["back", 1.5]], sparse: [["half", 5], ["back", 2.5], ["blastb", 0.8], ["dbeat", 0.8]], march: [["half", 5], ["back", 3], ["blastb", 0.5], ["dbeat", 0.8]]
+};
+var BLK_DRUM_SUB = "";
 var BLK_SCX = [0, 2, 3, 5, 7, 8, 10, 12, 14, 15, 17, 19];
 var BLK_CONT = [[0, 2, 4, 2], [0, 0, 3, 2], [0, 4, 3, 2], [0, 2, 3, 5], [0, 1, 2, 1], [0, 3, 5, 4], [0, 0, 0, 2], [4, 3, 2, 0], [0, 2, 1, 3], [0, 5, 4, 2]];
 function blackRiffComp(chs, form, opt, rng, ctx) {
   var beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", dens = ctx && ctx.dens, bar, b, k;
-  var tonic = ((opt.tonic || 0) % 12 + 12) % 12, key = form.minor ? [0, 2, 3, 5, 7, 8, 10, 11] : [0, 2, 4, 5, 7, 9, 11], step = 0.25;
+  var tonic = ((opt.tonic || 0) % 12 + 12) % 12, key = form.minor ? [0, 2, 3, 5, 7, 8, 10, 11] : [0, 2, 4, 5, 7, 9, 11], step = 0.25, bsub = blkSubOf(opt);
   function mkBeat(rb, anchor, last) {
     var sh = rb.wpick([["hold", 2], ["pedal", 4], ["pedal2", 2], ["run", 3], ["trill", 2.5], ["arp", 3]]), i = BLK_SCX[anchor], j = BLK_SCX[Math.min(BLK_SCX.length - 1, anchor + rb.pick([1, 2, 2]))], d = BLK_SCX[Math.min(BLK_SCX.length - 1, anchor + 1)];
     if (last) sh = "pedal";
@@ -6278,7 +6340,14 @@ function blackRiffComp(chs, form, opt, rng, ctx) {
         else if (act >= 1) { shape = [0, shape[1], 0, shape[1]]; vmul = -10; }
         else vmul = -4;                                              /* ソロが休み・伸ばし：リフが旋律の形で答える */
       } else if (act >= 3) { shape = [0, shape[1], 0, shape[1]]; vmul = -8; }
-      for (k = 0; k < 4; k++) {
+      if (bsub) {
+        BLK_LAY[bsub === "sparse" && b % 2 ? "sparseOdd" : bsub].forEach(function (e) {
+          var tt = t0 + b + e[0], ch = chordAt(chs, tt), rootP = metalRootIn(ch.root, 40), p = rootP + fit(shape[e[2] % 4], ch), vv = Math.max(40, Math.min(112, 80 + (e[0] === 0 ? 10 : 0) + (b === 0 && e[0] === 0 ? 4 : 0) + vmul + rng.i(8)));
+          if (p > 64) p -= 12;
+          notes.push({ t: tt, d: Math.max(0.1, e[1] * 0.94), p: p, v: vv });
+          if (e[3]) { var p5 = rootP + fit(7, ch); if (p5 > 64) p5 -= 12; notes.push({ t: tt + 0.004, d: Math.max(0.1, e[1] * 0.94), p: p5, v: Math.max(40, vv - 6) }); }
+        });
+      } else for (k = 0; k < 4; k++) {
         var tt = t0 + b + k * step, ch = chordAt(chs, tt), rootP = metalRootIn(ch.root, 40), off = fit(shape[k], ch), p = rootP + off;
         if (p > 64) p -= 12;
         notes.push({ t: tt, d: 0.235, p: p, v: Math.max(40, Math.min(112, 80 + (k === 0 ? 10 : 0) + (b === 0 && k === 0 ? 4 : 0) + vmul + rng.i(8))) });
@@ -6621,6 +6690,7 @@ function metalLibPick(kind, rg, dens, twinP, solo, tempo) {
   if (dens >= 12) { w.blast *= 2; w.dbl *= 1.8; w.gallop *= 1.3; w.half *= 0.3; w.other *= 0.4; }
   else if (dens <= 6) { w.half *= 2.5; w.other *= 2; w.half_dbl *= 1.5; w.blast *= 0.2; w.dbl *= 0.4; w.dbeat *= 1.3; }
   if (solo) { w.blast *= 0.1; w.dbl *= 0.4; }
+  if (kind === "black" && BLK_DRUM_SUB && BLK_DRUM_MUL[BLK_DRUM_SUB]) { var bm = BLK_DRUM_MUL[BLK_DRUM_SUB]; for (k in bm) if (w[k] != null) w[k] *= bm[k]; }
   var ks = []; for (k in w) ks.push([k, w[k]]);
   var kk = metalWPick(rg, ks), pool = DRUM_LIB.filter(function (e) { return e.kind === kk; });
   if (!pool.length) return null;
@@ -6635,10 +6705,11 @@ function metalDrums(chs, form, sty, opt, rng, ctx) {
   var twinP = opt.twinPedal != null ? !!opt.twinPedal : (RNG((((opt.seed || 1) * 91 + 7) % 2147483647) || 1).f() < { thrash: 0.55, death: 0.7, melodeath: 0.65, black: 0.4, burzum: 0.45, mayhem: 0.8 }[mk]);
   function addKick(t, s, v) { var left = twinP && (s % 2 === 1); add(t, left ? D.kick2 : D.kick, left ? v - 4 : v); }
   var libCache = {};
+  BLK_DRUM_SUB = (kind === "black" && !opt.m2Kind) ? blkSubOf(opt) : "";
   for (bar = 0; bar < bars; bar++) {
     var plan = metalBarPlan(opt, form, bar, solo), t0 = bar * beats;
     var rg = RNG((((opt.seed || 1) * 31 + plan.ph * 977 + ({ thrash: 3, death: 7, melodeath: 13, black: 19 }[kind])) % 2147483647) || 1);
-    var groove = mk === "burzum" ? rg.wpick([["half", 4], ["back", 2], ["dbeat", 1], ["blastb", 1.2]]) : mk === "mayhem" ? rg.wpick([["blastb", 6], ["blast", 2], ["dbeat", 1], ["half", 0.6]]) : kind === "black" ? rg.wpick([["blastb", 5], ["half", 2.2], ["blast", 1], ["dbeat", 1]])
+    var groove = mk === "burzum" ? rg.wpick([["half", 4], ["back", 2], ["dbeat", 1], ["blastb", 1.2]]) : mk === "mayhem" ? rg.wpick([["blastb", 6], ["blast", 2], ["dbeat", 1], ["half", 0.6]]) : kind === "black" ? rg.wpick(BLK_GROOVE[BLK_DRUM_SUB] || BLK_GROOVE[""])
       : kind === "death" ? rg.wpick([["blast", 3.5], ["dbeat", 2.5], ["half", 2], ["dbl", 2]])
       : kind === "melodeath" ? rg.wpick([["back", 3.5], ["dbl", twinP ? 6 : 4], ["skank", 0.6], ["half", 1.2]])
       : rg.wpick([["back", 5], ["dbl", twinP ? 5.5 : 2.5], ["skank", 1.5], ["half", 1]]);
@@ -6734,6 +6805,24 @@ var YNG_PROF = {
     ["sx_d", 3, "0 . 0 . -2 . 0 . 0 . -2 . 0 . -2 ."], ["sx_e", 2.5, "0 . 0 . -2 . 0 . 0 . -2 . 0 . 7 5"], ["sx_f", 2.5, "0 0 0 0 12 10 0 0 13 10 0 0 0 0 12 10"], ["sx_g", 2.2, "0 -2 0 1 4 1 0 -2 0 1 4 1 4 1 0 -2"],
     ["sx_h", 2, "-3 0 -3 0 3 0 -2 0 -3 0 3 6 5 3 1 0"], ["sx_i", 2, "2 . . . . . 0 2 3 . . . 0 . . ."], ["sx_j", 2, "0 . . 0 1 . 0 . 0 0 0 . 0 . -2 0"]] }
 };
+/* ネオクラシカルのノリの型（2026-11-19）：opt.neoSub 未指定／std＝従来／auto＝シードで選ぶ／drive・march・sweep・accent。型に合う刻みを選びやすくし、曲ごとに使う型を 3 つに絞る */
+var NEO_SUB_LIST = [["std", 28], ["drive", 22], ["march", 18], ["sweep", 17], ["accent", 15]];
+var NEO_SUB_JP = { std: "標準", drive: "突進（16分の連打）", march: "行進（開放のパワーコード）", sweep: "分散・模進（スウィープ風）", accent: "アクセント（3+3+2・オクターヴ）" };
+var NEO_SUB_RE = { drive: /^(ped16|gal16)/, march: /^(ped8|q4|pwq|pw332)/, sweep: /^(seq|ped16rise)/, accent: /^(acc332|oct8|syn)/ };
+function neoSubOf(opt) {
+  var v = opt && opt.neoSub; if (!v || v === "std") return "";
+  if (v === "auto") {
+    var u = (((Math.imul((opt.seed || 1) | 0, 3266489917) >>> 0) ^ 0x27d4eb2f) >>> 0) / 4294967296, tot = 0, q; NEO_SUB_LIST.forEach(function (e) { tot += e[1]; }); u *= tot; v = "std";
+    for (q = 0; q < NEO_SUB_LIST.length; q++) { u -= NEO_SUB_LIST[q][1]; if (u < 0) { v = NEO_SUB_LIST[q][0]; break; } }
+    if (v === "std") return "";
+  }
+  return NEO_SUB_RE[v] ? v : "";
+}
+function neoVocab(list, opt, sub) {
+  var re = NEO_SUB_RE[sub], rv = RNG(((((opt.seed || 1) * 541 + 29) % 2147483647) + 2147483647) % 2147483647 || 1), pool = list.map(function (c) { return [c[0], c[1] * (re.test(c[0]) ? 3 : 0.25), c]; }), out = [], q;
+  for (q = 0; q < 3 && pool.length; q++) { var pk = metalWPick(rv, pool.map(function (e) { return [e[0], e[1]]; })), ix = 0, z; for (z = 0; z < pool.length; z++) if (pool[z][0] === pk) { ix = z; break; } out.push(pool[ix][2]); pool.splice(ix, 1); }
+  return out;
+}
 function yngRiffComp(chs, form, sty, opt, rng, ctx) {
   var PR = YNG_PROF[voiceOf(opt, sty)] || YNG_PROF.yngwie;
   var beats = form.ts[0], bars = form.bars, notes = [], solo = ctx && ctx.role === "solo", inten = (ctx && ctx.inten != null) ? ctx.inten : 0.6;
@@ -6744,7 +6833,8 @@ function yngRiffComp(chs, form, sty, opt, rng, ctx) {
     for (i = 0; i < list.length; i++) { r -= w[i]; if (r <= 0) return list[i]; }
     return list[0];
   }
-  var cur = { A: null, B: null }, accA = 8, accB = 7;
+  var cur = { A: null, B: null }, accA = 8, accB = 7, nsub = neoSubOf(opt), LA = YNG_CELLS.A.concat(PR.extra || []), LA2 = YNG_CELLS.A;
+  if (nsub) { LA = neoVocab(LA, opt, nsub); LA2 = LA; }
   function allowed(p, ch) {                                       /* 調の音階と、その和音の音。外れる音は、半音だけずらす */
     var ct = chordTonesOf(ch), set = {}, k;
     scale.forEach(function (x) { set[(x + tonic) % 12] = 1; }); set[ct.r % 12] = 1; set[ct.t3 % 12] = 1; set[ct.f5 % 12] = 1;
@@ -6760,7 +6850,7 @@ function yngRiffComp(chs, form, sty, opt, rng, ctx) {
       continue;
     }
     if (pos === 0 || !cur.A) {                                    /* 4小節のまとまりごとに型を決める */
-      cur.A = pickCell(YNG_CELLS.A.concat(PR.extra || [])); cur.A2 = rng.chance(PR.same) ? cur.A : pickCell(YNG_CELLS.A); cur.B = pickCell(YNG_CELLS.B);
+      cur.A = pickCell(LA); cur.A2 = rng.chance(PR.same) ? cur.A : pickCell(LA2); cur.B = pickCell(YNG_CELLS.B);
       accA = rng.pick([8, 7, 12, 3]); accB = rng.pick([7, 8, 5, 12]);
     }
     var cell = pos === 3 ? cur.B : (pos === 2 ? cur.A2 : cur.A), offs = parse(cell[2]), cname = cell[0];
@@ -22584,6 +22674,206 @@ function tradeBlocks(nb, opt) {
   while (tot < nb && out.length < 200) { var len = i < seq.length ? seq[i] : L; len = Math.min(len, nb - tot); out.push({ at: tot, len: len, drums: i % 2 === 1 }); tot += len; i++; }
   return out;
 }
+/* ---------- 本格フーガ（フーガの技法風・オーケストラ）2026-11-19 ----------
+   ユーザー「オーケストラ系で語法はバッハ、フーガの技法で、盛大で厳粛」。opt.fugue === "art"（style＝orchestra／baroque）のとき、
+   ふだんの生成のあとで、声部（ソプラノ・アルト・テノール・バス）を持つ本格的なフーガに作り替える。
+   構成：提示部（主題→応答→主題→応答）→間奏1（主題の動機の模進）→中間部（近親調での提示）→間奏2→ストレッタ（2小節ずらしの密接な模倣）→全奏の主題→終止（ピカルディの三度）。
+   主題は 4 小節。答えは属調（5度上）への「応唱」（冒頭の 1→5 は 5→1 に）。自由対位法は、拍ごとに、不協和・並行5度8度・大きな跳躍を避けて選ぶ。
+   弦＝声部（Violin I＝S、Violin II＝A、弦のアンサンブル＝T、チェロ＋コントラバス＝B）、木管・ホルン・トランペット・ティンパニは、中間部以降、重ねて盛大にする。 */
+var FUG_MIN = [0, 2, 3, 5, 7, 8, 10];
+var FUG_TPL = [
+  [[0, 2], [4, 2], [2, 2], [0, 2], [-1, 2, 1], [0, 1], [1, 1], [2, 2], [0, 2]],
+  [[0, 2], [0, 1], [1, 1], [2, 2], [4, 2], [3, 1], [2, 1], [3, 2], [1, 1], [-1, 1, 1], [0, 2]],
+  [[0, 1], [1, 1], [2, 1], [3, 1], [4, 2], [2, 2], [0, 2], [-1, 1, 1], [0, 1], [1, 2], [0, 2]],
+  [[0, 3], [2, 1], [4, 2], [3, 1], [2, 1], [1, 2], [-1, 2, 1], [0, 1], [2, 1], [1, 1], [0, 1]]
+];
+var FUG_RANGE = { S: [62, 88], A: [53, 77], T: [45, 67], B: [34, 58] };
+var FUG_VOICE_STEM = { S: "mel", A: "solo", T: "comp", B: "bass" };
+function fugPitch(step, base, lt) { var o = Math.floor(step / 7), i = ((step % 7) + 7) % 7; return base + 12 * o + FUG_MIN[i] + (lt ? 1 : 0); }
+function fugEntry(tpl, shift, tonal) {                      /* 主題の音（拍・長さ・音階の段・導音）。shift＝調の段のずらし（4＝属調の答え） */
+  var t = 0, out = [];
+  tpl.forEach(function (n, idx) {
+    var s = n[0] + shift;
+    if (tonal && shift === 4 && idx === 1 && n[0] === 4) s = n[0] + 3;           /* 応唱：冒頭の 1→5 は、5→1（オクターヴ上の主音）に */
+    out.push({ t: t, d: n[1], step: s, lt: !!n[2] && (shift === 0 || shift === 4) });
+    t += n[1];
+  });
+  return out;
+}
+function fugFit(pitches, lo, hi) {                           /* 声部の音域に収まるよう、オクターヴ単位でずらす量 */
+  var best = 0, bestCost = 1e9, k, mn = Math.min.apply(null, pitches), mx = Math.max.apply(null, pitches);
+  for (k = -3; k <= 3; k++) { var cost = Math.max(0, lo - (mn + 12 * k)) + Math.max(0, (mx + 12 * k) - hi); cost = cost * 10 + Math.abs(k); if (cost < bestCost) { bestCost = cost; best = k; } }
+  return best * 12;
+}
+function fugueArt(base, opt) {
+  var rng = RNG(((((opt.seed || 1) * 7919 + 101) % 2147483647) + 2147483647) % 2147483647 || 1);
+  var tonicPc = ((opt.tonic != null ? opt.tonic : 2) % 12 + 12) % 12;
+  var tempo = opt.tempo || 64;
+  var tpl = FUG_TPL[rng.i(FUG_TPL.length)];
+  var tonicNear = function (target) { var p = tonicPc; while (p < target - 6) p += 12; while (p > target + 6) p -= 12; return p; };
+  var vbase = { S: tonicNear(74), A: tonicNear(62), T: tonicNear(50), B: tonicNear(38) };
+  var VO = ["S", "A", "T", "B"], total = 0, plan = [], G = {};
+  var lines = { S: [], A: [], T: [], B: [] }, extraStems = { fl: [], ob: [], bsn: [], horn: [], tpt: [], timp: [], cello: [] };
+  var scalePc = {}; FUG_MIN.forEach(function (x) { scalePc[(tonicPc + x) % 12] = 1; }); var ltPc = (tonicPc + 11) % 12;
+  /* ---- 計画（拍）---- */
+  var L16 = 16, T0 = 0;
+  plan.push({ name: "提示部", at: 0, len: 64, inten: 0.45 });
+  plan.push({ name: "間奏１", at: 64, len: 16, inten: 0.5 });
+  plan.push({ name: "中間部", at: 80, len: 64, inten: 0.62 });
+  plan.push({ name: "間奏２", at: 144, len: 16, inten: 0.7 });
+  plan.push({ name: "ストレッタ", at: 160, len: 40, inten: 0.85 });
+  plan.push({ name: "終結", at: 200, len: 20, inten: 1.0 });
+  total = 220;
+  var grid = {}; VO.forEach(function (v) { grid[v] = []; for (var k = 0; k < total * 2 + 8; k++) grid[v].push(null); });
+  function place(v, t, d, p, vel, stemOvr) {
+    lines[v].push({ t: t, d: d, p: p, v: vel });
+    var k0 = Math.round(t * 2), k1 = Math.max(k0 + 1, Math.round((t + d) * 2));
+    for (var k = k0; k < k1 && k < grid[v].length; k++) grid[v][k] = p;
+  }
+  function velOf(t, bonus) { var inten = 0.45, i; for (i = 0; i < plan.length; i++) if (t >= plan[i].at) inten = plan[i].inten; return Math.max(40, Math.min(118, Math.round(58 + inten * 44 + (bonus || 0) + rng.i(7) - 3))); }
+  function stateEntry(v, t0, shift, opts) {
+    var ent = fugEntry(tpl, shift, true), ps = ent.map(function (n) { return fugPitch(n.step, vbase[v], n.lt); });
+    var rg = FUG_RANGE[v], off = fugFit(ps, rg[0], rg[1]);
+    ent.forEach(function (n, i) { place(v, t0 + n.t, n.d * 0.97, ps[i] + off, velOf(t0 + n.t, 8)); });
+    return { from: t0, to: t0 + 16 };
+  }
+  function pitchesAt(v, t) { var o = [], k = Math.round(t * 2); VO.forEach(function (w) { if (w !== v && grid[w][k] != null) o.push({ v: w, p: grid[w][k] }); }); return o; }
+  function isCons(i) { i = ((i % 12) + 12) % 12; return i === 0 || i === 3 || i === 4 || i === 7 || i === 8 || i === 9; }
+  function freeLine(v, t0, t1, opts) {                       /* 自由対位法：t0〜t1（拍）。opts.target＝最後の音の候補（音名クラスの配列）、opts.busy＝8分の多さ */
+    var rg = FUG_RANGE[v], t = t0, prev = null, prevP = null, busy = (opts && opts.busy != null) ? opts.busy : 0.5, rr = opts && opts.target;
+    var center = (rg[0] + rg[1]) / 2;
+    function cands(near) { var out = [], p; for (p = rg[0]; p <= rg[1]; p++) { var pc = p % 12; if ((scalePc[pc] || pc === ltPc) && Math.abs(p - near) <= 9) out.push(p); } return out; }
+    while (t < t1 - 1e-6) {
+      var left = t1 - t, d, r = rng.f(), isB = t % 1 === 0;
+      if (isB && t % 2 === 0 && left >= 2 && r < 0.16) d = 2; else if (isB && r < 1 - busy) d = 1; else d = 0.5;
+      if (d === 0.5 && t % 1 !== 0) d = 0.5;
+      if (d > left) d = left;
+      var last = (t + d >= t1 - 1e-6), others = pitchesAt(v, t), near = prevP != null ? prevP : center, cs = cands(near), best = null, bestS = 1e9;
+      if (last && rr && rr.length) cs = cs.filter(function (p) { return rr.indexOf(p % 12) >= 0; }).length ? cs.filter(function (p) { return rr.indexOf(p % 12) >= 0; }) : cs;
+      cs.forEach(function (p) {
+        var sc = rng.f() * 0.6, strong = isB && (t % 2 === 0);
+        if (prevP != null) { var lp = Math.abs(p - prevP); sc += lp === 0 ? 2.2 : (lp <= 2 ? 0 : (lp <= 4 ? 1.2 : (lp <= 7 ? 3.5 : 8))); if (prev && prev.leap && Math.sign(p - prevP) === prev.dir && lp > 2) sc += 3; if (prev && prev.leap && Math.sign(p - prevP) !== prev.dir && lp <= 2) sc -= 1.2; }
+        sc += Math.abs(p - center) * 0.07;
+        if (p % 12 === ltPc) sc += 1.4;
+        others.forEach(function (o) {
+          var iv = Math.abs(p - o.p) % 12, below = p < o.p;
+          if (strong || isB) { if (isCons(iv)) sc += (iv === 0 ? 2.4 : 0); else if (iv === 5 && !below) sc += 2.5; else sc += (iv === 1 || iv === 11 || iv === 6) ? 11 : 6.5; }
+          else { if (isCons(iv)) sc += 0; else if (iv === 2 || iv === 10) sc += 1.6; else sc += (iv === 1 || iv === 11 || iv === 6) ? 5 : 2.5; }
+          if (p === o.p) sc += 2;
+          if (Math.abs(p - o.p) < 3 && (v === "B" ? false : true)) sc += 0.8;
+          if (prevP != null) { var pk = Math.round((t - (prev ? prev.d : 1)) * 2), po = grid[o.v][pk]; if (po != null) { var ivPrev = Math.abs(prevP - po) % 12; if ((iv === 7 || iv === 0) && ivPrev === iv && Math.sign(p - prevP) === Math.sign(o.p - po) && p !== prevP) sc += 12; } }
+          /* 声部の交差 */
+          var ord = { S: 3, A: 2, T: 1, B: 0 }; if ((ord[v] > ord[o.v] && p < o.p - 0) || (ord[v] < ord[o.v] && p > o.p + 0)) sc += 5;
+        });
+        if (sc < bestS) { bestS = sc; best = p; }
+      });
+      if (best == null) best = Math.round(center);
+      place(v, t, d * 0.95, best, velOf(t, 0));
+      prev = { d: d, leap: prevP != null && Math.abs(best - prevP) > 2, dir: prevP != null ? Math.sign(best - prevP) : 0 }; prevP = best; t += d;
+    }
+  }
+  /* ---- 提示部 ---- */
+  var order = rng.chance(0.5) ? ["A", "S", "T", "B"] : ["S", "A", "B", "T"];
+  var shiftOf = function (k) { return (k % 2 === 0) ? 0 : 4; };
+  var done = [];
+  for (var seg = 0; seg < 4; seg++) {
+    var vs = order[seg], t0 = seg * 16;
+    stateEntry(vs, t0, shiftOf(seg));
+    done.forEach(function (w) { if (w !== vs) freeLine(w, t0, t0 + 16, { busy: 0.45 }); });
+    done.push(vs);
+  }
+  /* ---- 間奏（動機の模進）---- */
+  function episode(t0, dir, voicesA, voicesB) {
+    var motif = []; var acc = 0; tpl.forEach(function (n) { if (acc < 4) { motif.push({ t: acc, d: Math.min(n[1], 4 - acc), step: n[0] }); } acc += n[1]; });
+    var startStep = dir < 0 ? 4 : 0, rep, v1 = voicesA, v2 = voicesB;
+    for (rep = 0; rep < 4; rep++) {
+      var st = startStep + dir * rep;
+      motif.forEach(function (n) {
+        [[v1, 0, 0], [v2, 2, -2]].forEach(function (z) {
+          var v = z[0], tt = t0 + rep * 4 + n.t + z[1];
+          if (tt >= t0 + 16) return;
+          var p = fugPitch(n.step + st + z[2], vbase[v], false), rg = FUG_RANGE[v];
+          while (p > rg[1]) p -= 12; while (p < rg[0]) p += 12;
+          place(v, tt, Math.min(n.d * 0.97, t0 + 16 - tt), p, velOf(tt, 4));
+        });
+      });
+    }
+    VO.forEach(function (w) { if (w !== v1 && w !== v2) freeLine(w, t0, t0 + 16, { busy: 0.55, target: [tonicPc, (tonicPc + 7) % 12] }); });
+  }
+  episode(64, -1, rng.chance(0.5) ? "S" : "A", "T");
+  /* ---- 中間部：近親調での提示 ---- */
+  var mid = [["T", 2], ["S", 4], ["A", 3], ["B", 0]];
+  mid.forEach(function (m, k) {
+    var t0 = 80 + k * 16; stateEntry(m[0], t0, m[1]);
+    VO.forEach(function (w) { if (w !== m[0]) freeLine(w, t0, t0 + 16, { busy: 0.55, target: k === 3 ? [tonicPc, (tonicPc + 7) % 12] : null }); });
+  });
+  episode(144, 1, "A", "S");
+  /* ---- ストレッタ：2小節（8拍）ずつずらして重ねる ---- */
+  var stre = [["S", 0, 160], ["A", 4, 168], ["T", 0, 176], ["B", 4, 184]];
+  stre.forEach(function (e) { stateEntry(e[0], e[2], e[1]); });
+  VO.forEach(function (w) {
+    var firstEnd = null, stItem = stre.filter(function (e) { return e[0] === w; })[0];
+    if (stItem[2] > 160) freeLine(w, 160, stItem[2], { busy: 0.6 });
+    freeLine(w, stItem[2] + 16, 200, { busy: 0.6, target: [tonicPc, (tonicPc + 7) % 12] });
+  });
+  /* ---- 終結：バスはペダル（属音→主音）、ソプラノが全奏で主題、最後はピカルディの三度 ---- */
+  var domB = tonicNear(37 + 0); var bp = (tonicPc + 7) % 12; while (bp < 34) bp += 12; while (bp > 46) bp -= 12;
+  place("B", 200, 8, bp, 100); place("B", 208, 8, tonicNear(38), 104);
+  stateEntry("S", 200, 0);
+  freeLine("A", 200, 216, { busy: 0.5, target: [tonicPc, (tonicPc + 7) % 12] }); freeLine("T", 200, 216, { busy: 0.5, target: [tonicPc, (tonicPc + 4) % 12] });
+  var endP = { S: tonicNear(74), A: tonicNear(62) + 4 + 0, T: tonicNear(50) + 7, B: tonicNear(38) };      /* 主音・長3度・5度・主音 */
+  endP.A = ((tonicPc + 4) % 12); while (endP.A < 62) endP.A += 12; while (endP.A > 70) endP.A -= 12;
+  endP.T = ((tonicPc + 7) % 12); while (endP.T < 50) endP.T += 12; while (endP.T > 62) endP.T -= 12;
+  VO.forEach(function (v) { lines[v] = lines[v].filter(function (n) { return n.t < 216; }); place(v, 216, 6, endP[v], 112); });
+  /* ---- 声部 → 楽器 ---- */
+  var notesOf = { mel: [], solo: [], comp: [], bass: [], cello: [], fl: [], ob: [], bsn: [], horn: [], tpt: [], timp: [] };
+  function add(id, n, dp, dv, dd) { var p = n.p + (dp || 0); if (id === "tpt" && p > 86) p -= 12; notesOf[id].push({ t: n.t, d: dd != null ? dd : n.d, p: p, v: Math.max(30, Math.min(120, n.v + (dv || 0))) }); }
+  lines.S.forEach(function (n) { add("mel", n); if (n.t >= 80) add("fl", n, 12, -14); if (n.t >= 160) add("ob", n, 0, -16); });
+  lines.A.forEach(function (n) { add("solo", n); if (n.t >= 80) add("ob", n, 0, -16); });
+  lines.T.forEach(function (n) { add("comp", n); if (n.t >= 80) add("bsn", n, 0, -12); });
+  lines.B.forEach(function (n) { add("bass", n); add("cello", n, 12, -6); if (n.t >= 64) add("bsn", n, 12, -14); });
+  /* 終結と、ストレッタの後半：トランペットが主題を重ね、ホルンが和音を支える */
+  lines.S.filter(function (n) { return n.t >= 200; }).forEach(function (n) { add("tpt", n, 0, -8); });
+  lines.S.filter(function (n) { return n.t >= 160 && n.t < 176; }).forEach(function (n) { add("tpt", n, 0, -14); });
+  /* 和音（小節ごと）：鳴っている音から三和音をあてはめる */
+  var chords = [], bar, bars = Math.ceil(total / 4);
+  for (bar = 0; bar < bars; bar++) {
+    var t = bar * 4, cnt = {}, k;
+    [0, 1, 2, 3].forEach(function (b) { VO.forEach(function (v) { var kk = Math.round((t + b) * 2); var p = grid[v][kk]; if (p != null) cnt[p % 12] = (cnt[p % 12] || 0) + (v === "B" ? 2.2 : 1); }); });
+    var bestC = null, bestSc = -1e9, r, q;
+    for (r = 0; r < 12; r++) [["maj", [0, 4, 7]], ["min", [0, 3, 7]], ["dim", [0, 3, 6]]].forEach(function (qq) {
+      var sc = 0; qq[1].forEach(function (x) { sc += (cnt[(r + x) % 12] || 0); }); sc -= (qq[0] === "dim" ? 1.5 : 0) + (scalePc[r] || r === ltPc ? 0 : 3) + (cnt[(r + 1) % 12] || 0) * 0.15;
+      if (sc > bestSc) { bestSc = sc; bestC = { root: r, q: qq[0] }; }
+    });
+    chords.push({ root: bestC.root, q: bestC.q, b: 4, at: t, bar: bar });
+  }
+  /* ホルン：中間部から、和音の根音と5度を長く（和音の変わり目ごと）。ティンパニ：区切りと終止 */
+  chords.forEach(function (c, i) {
+    if (c.at < 80 || c.at >= 216) return;
+    var rp = c.root; while (rp < 48) rp += 12; while (rp > 60) rp -= 12; var fp = rp + 7;
+    var vv = Math.round(58 + 40 * (c.at >= 200 ? 1 : (c.at >= 160 ? 0.85 : (c.at >= 144 ? 0.7 : 0.6))));
+    notesOf.horn.push({ t: c.at, d: 3.9, p: rp, v: vv - 12 }); notesOf.horn.push({ t: c.at + 0.01, d: 3.9, p: fp, v: vv - 16 });
+  });
+  [0, 64, 80, 144, 160, 200].forEach(function (t, i) { var pp = tonicNear(43); while (pp < 40) pp += 12; notesOf.timp.push({ t: t, d: 2.5, p: pp, v: 70 + i * 8 }); });
+  [60, 140, 196, 212].forEach(function (t) { var pp = (tonicPc + 7) % 12; while (pp < 40) pp += 12; while (pp > 52) pp -= 12; notesOf.timp.push({ t: t, d: 1.5, p: pp, v: 84 }); notesOf.timp.push({ t: t + 2, d: 1.5, p: pp, v: 92 }); });
+  for (var rl = 0; rl < 12; rl++) { var pp2 = tonicNear(43); while (pp2 < 40) pp2 += 12; notesOf.timp.push({ t: 216 + rl * 0.5, d: 0.5, p: pp2, v: 80 + rl * 2 }); }
+  /* ---- 曲のまとめ ---- */
+  var s = base, names = { 0: "C", 1: "Db", 2: "D", 3: "Eb", 4: "E", 5: "F", 6: "F#", 7: "G", 8: "Ab", 9: "A", 10: "Bb", 11: "B" };
+  s.title = "Contrapunctus Solemnis (" + names[tonicPc] + "m)";
+  s.opt = Object.assign({}, s.opt, { tempo: tempo });
+  s.totalBeats = total + 4; s.barsPerChorus = bars; s.beats = 4;
+  s.form = Object.assign({}, s.form, { bars: bars, label: "本格フーガ（フーガの技法風）", sec: "A", minor: true });
+  s.chords = chords; s.flats = true;
+  s.sections = plan.map(function (pl) { return { kind: "head", at: pl.at, beats: pl.len, from: pl.at / 4, tr: 0, pivot: null, bar0: pl.at / 4, inten: pl.inten, tag: "fugue", label: pl.name }; });
+  s.order = s.sections.map(function () { return "head"; });
+  s.chordText = "[tempo:" + tempo + "] [A] " + chords.map(function (c) { return names[c.root] + (c.q === "min" ? "m" : (c.q === "dim" ? "dim" : "")); }).join(" | ");
+  s.sheet = { notes: lines.S.map(function (n) { return { t: n.t, dn: n.d, p: n.p }; }) };
+  s.stems.forEach(function (st) { st.notes = (notesOf[st.id] || []).slice().sort(function (a, b) { return a.t - b.t; }); st.extra = []; });
+  s.stems = s.stems.filter(function (st) { return st.notes.length > 0; });
+  s.explain = { fugue: { subjectTemplate: FUG_TPL.indexOf(tpl) + 1, order: order, sections: plan.map(function (pl) { return pl.name; }) } };
+  return s;
+}
+
 function generate(opt) {                                                                  /* 出口で、変化の在庫（前奏・終わり方・伴奏／ベース／ドラムの型）を当てはめる。中から呼ばれた分（部品として作る曲）には当てない */
   var gsK = opt && GAME_SERIES[opt.style] ? opt.style : null;
   if (gsK) { var seed0 = opt.seed || 1, hk = 0, ci; for (ci = 0; ci < gsK.length; ci++) hk = (hk * 31 + gsK.charCodeAt(ci)) % 9973;
@@ -22608,6 +22898,7 @@ function generate(opt) {                                                        
     if (soloK) { try { sgV._soloBase = soloBaseOf(soloK, opt.form); soloMerge(sgV, soloK); soloHuman(sgV, soloK, opt); sgV.opt.style = soloK; if (sgV.optIn) sgV.optIn.style = soloK; sgV.sty = STYLES[soloK]; } catch (eS) { if (typeof console !== "undefined" && console.warn) console.warn("solo:", eS && eS.message); } }
     if (!soloK && opt.style === "gypsy") { try { gypsyCompReach(sgV); } catch (eG) {} }      /* リズムギターを押さえられる和音に */
     if (opt.playFix !== false) { try { guitarStemPlayable(sgV, opt); } catch (eP) {} }      /* フラメンコ・クラシックギターを弾ける範囲に */
+    if (opt.fugue === "art" && (opt.style === "orchestra" || opt.style === "baroque")) { try { sgV = fugueArt(sgV, opt); if (sgV.optIn) sgV.optIn.fugue = "art"; } catch (eF) { if (typeof console !== "undefined" && console.warn) console.warn("fugue:", eF && eF.message); } }      /* 本格フーガ（2026-11-19） */
     try { endTail(sgV, opt); } catch (eT) {} }
   return sgV;
 }
@@ -26140,7 +26431,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 608;
+var BUILD_NO = 613;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 251;
 function r3(x) { return Math.round(x * 1000) / 1000; }

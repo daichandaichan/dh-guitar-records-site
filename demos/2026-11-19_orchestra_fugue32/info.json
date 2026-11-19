@@ -1,0 +1,138 @@
+{
+  "id": "2026-11-19_orchestra_fugue32",
+  "date": "2026-11-19",
+  "style": "orchestra",
+  "styleShort": "クラシック・オーケストラ",
+  "styleLabel": "クラシック・オーケストラ（バロック〜古典派：弦楽合奏＋木管・ホルン・トランペット・ティンパニ）",
+  "form": "fugue32",
+  "formLabel": "フーガ風 32小節（主題と応答）",
+  "title": "Contrapunctus Solemnis (Dm)",
+  "key": "Dm",
+  "tempo": 64,
+  "tempoGenerated": 64,
+  "bars": 56,
+  "seed": 1750,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Violin I",
+      "prog": 40
+    },
+    {
+      "id": "solo",
+      "name": "Violin II",
+      "prog": 40
+    },
+    {
+      "id": "comp",
+      "name": "Strings (viola ensemble)",
+      "prog": 48
+    },
+    {
+      "id": "bass",
+      "name": "Contrabass",
+      "prog": 43
+    },
+    {
+      "id": "cello",
+      "name": "Cello",
+      "prog": 42
+    },
+    {
+      "id": "fl",
+      "name": "Flute",
+      "prog": 73
+    },
+    {
+      "id": "ob",
+      "name": "Oboe",
+      "prog": 68
+    },
+    {
+      "id": "bsn",
+      "name": "Bassoon",
+      "prog": 70
+    },
+    {
+      "id": "horn",
+      "name": "Horn",
+      "prog": 60
+    },
+    {
+      "id": "tpt",
+      "name": "Trumpet",
+      "prog": 56
+    },
+    {
+      "id": "timp",
+      "name": "Timpani",
+      "prog": 47
+    }
+  ],
+  "chordsOneChorus": [
+    "D",
+    "Dm",
+    "A",
+    "Dm",
+    "Dm",
+    "F",
+    "C#",
+    "F",
+    "Dm",
+    "A#",
+    "A#dim",
+    "Dm",
+    "Dm",
+    "F",
+    "Am",
+    "F",
+    "Dm",
+    "C",
+    "A#",
+    "Am",
+    "F",
+    "A#",
+    "Am",
+    "Am",
+    "Gm",
+    "F",
+    "C#",
+    "F",
+    "Gm",
+    "C",
+    "A#",
+    "Gm",
+    "Dm",
+    "Dm",
+    "A#dim",
+    "A#",
+    "Gm",
+    "F",
+    "A#",
+    "Am",
+    "A#",
+    "Gm",
+    "Dm",
+    "Dm",
+    "A#m",
+    "Dm",
+    "Dm",
+    "F",
+    "C#m",
+    "Am",
+    "Dm",
+    "Dm",
+    "Gm",
+    "Dm",
+    "D"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-19_orchestra_fugue32/2026-11-19_orchestra_fugue32_midi-set.zip",
+    "midi": "demos/2026-11-19_orchestra_fugue32/2026-11-19_orchestra_fugue32_all.mid",
+    "info": "demos/2026-11-19_orchestra_fugue32/info.md"
+  },
+  "audio": "demos/2026-11-19_orchestra_fugue32/2026-11-19_orchestra_fugue32.mp3"
+}
