@@ -1,17 +1,17 @@
 {
-  "id": "2026-11-20_neo_neobaroque32",
+  "id": "2026-11-20_neo_pedalsweep16",
   "date": "2026-11-20",
   "style": "neo",
   "styleShort": "ネオクラシカル",
   "styleLabel": "ネオクラシカル（ハーモニック・マイナー）",
-  "form": "neobaroque32",
-  "formLabel": "バロック循環 32小節（ネオクラシカル）",
-  "title": "Tempo des Lilas (Am)",
-  "key": "Am",
-  "tempo": 168,
-  "tempoGenerated": 168,
-  "bars": 238,
-  "seed": 20261120,
+  "form": "pedalsweep16",
+  "formLabel": "持続低音の上のスウィープ 16小節（和音だけが動く）",
+  "title": "Rue d'Automne (Cm)",
+  "key": "Cm",
+  "tempo": 116,
+  "tempoGenerated": 116,
+  "bars": 141,
+  "seed": 20267138,
   "gen": 251,
   "stems": [
     {
@@ -45,57 +45,50 @@
       "prog": 30
     },
     {
-      "id": "gtr2",
-      "name": "Guitar 2 (twin harmony)",
-      "prog": 30
-    },
-    {
       "id": "org",
       "name": "Organ sustain (chords)",
       "prog": 19
     }
   ],
   "chordsOneChorus": [
-    "Am",
-    "Dm",
+    "Cm",
+    "G#",
+    "Fm",
+    "Cm",
+    "Cm6",
+    "A#",
+    "G#",
     "G",
-    "C",
-    "F",
-    "Bm7b5",
-    "E(b9)",
-    "Am",
-    "Am",
-    "Dm7",
     "G",
-    "C",
-    "F",
-    "Bm7b5",
-    "E(b9)",
-    "Am",
-    "C",
-    "Em",
-    "Am",
-    "Dm7",
+    "Cm6",
     "G",
-    "F",
-    "Bm7b5",
-    "Bm7",
-    "E9",
-    "Am",
-    "Dm",
+    "G#",
     "G",
-    "C",
-    "F",
-    "Bm7b5",
-    "E(b9)",
-    "Am"
+    "Fm",
+    "Bdim7",
+    "G",
+    "Cm",
+    "G#",
+    "Fm",
+    "Cm",
+    "D#",
+    "A#",
+    "G#",
+    "C#",
+    "G",
+    "Cm",
+    "Fm6/9",
+    "G",
+    "Bdim7",
+    "G",
+    "Cm"
   ],
   "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
   "files": {
-    "zip": "demos/2026-11-20_neo_neobaroque32/2026-11-20_neo_neobaroque32_midi-set.zip",
-    "midi": "demos/2026-11-20_neo_neobaroque32/2026-11-20_neo_neobaroque32_all.mid",
-    "info": "demos/2026-11-20_neo_neobaroque32/info.md"
+    "zip": "demos/2026-11-20_neo_pedalsweep16/2026-11-20_neo_pedalsweep16_midi-set.zip",
+    "midi": "demos/2026-11-20_neo_pedalsweep16/2026-11-20_neo_pedalsweep16_all.mid",
+    "info": "demos/2026-11-20_neo_pedalsweep16/info.md"
   },
   "playable": {
     "Melody": {
@@ -103,7 +96,7 @@
       "fing": 0,
       "span": 0,
       "str": 0,
-      "jump": 0
+      "jump": 1
     },
     "Solo": {
       "tuning": "std",
@@ -113,11 +106,11 @@
       "jump": 2
     },
     "Rhythm Gtr (power)": {
-      "tuning": "dropD",
+      "tuning": "std",
       "fing": 0,
       "span": 0,
       "str": 0,
-      "jump": 1
+      "jump": 0
     },
     "Guitar 3 (riff double / harmony)": {
       "tuning": "7B",
@@ -125,14 +118,7 @@
       "span": 0,
       "str": 0,
       "jump": 0
-    },
-    "Guitar 2 (twin harmony)": {
-      "tuning": "std",
-      "fing": 0,
-      "span": 0,
-      "str": 0,
-      "jump": 0
     }
   },
-  "audio": "demos/2026-11-20_neo_neobaroque32/2026-11-20_neo_neobaroque32.mp3"
+  "audio": "demos/2026-11-20_neo_pedalsweep16/2026-11-20_neo_pedalsweep16.mp3"
 }
