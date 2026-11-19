@@ -7674,6 +7674,22 @@ function twinBendExtra(harm, stemsAll, opt) {
   stemsAll.forEach(function (st) { if ((st.id === "mel" || st.id === "solo") && st.extra) st.extra.forEach(function (e) { if (e.bend != null) src.push(e); }); });
   if (!src.length) return [];
   src.sort(function (a, b) { return a.t - b.t; });
+  if (opt.harmFix !== false) {
+    /* 2026-11-20：ハモリの音が鳴っている間のベンドだけを写すと、ベンドを戻す操作（0に戻す）が窓の外に出て、次のベンドまで「かかったまま」になっていた
+       （測ると、最初のベンドのあと、ハモリの音が約+55セント高いまま）。音ごとに、初めの値を決め、写し、終わりで0に戻す。 */
+    var out2 = [], cur = 0, hs = harm.slice().sort(function (a, b) { return a.t - b.t; }), i2, j2;
+    for (i2 = 0; i2 < hs.length; i2++) {
+      var h2 = hs[i2], a2 = h2.t - 0.05, z2 = h2.t + h2.d + 0.06, init = 0, any = false;
+      for (j2 = 0; j2 < src.length && src[j2].t <= a2; j2++) init = src[j2].bend;
+      for (; j2 < src.length && src[j2].t < z2; j2++) any = true;
+      if (!any && init === 0 && cur === 0) continue;               /* ベンドが関わらない音は、何も足さない */
+      if (init !== cur) { out2.push({ t: a2, bend: init }); cur = init; }
+      var k2; for (k2 = 0; k2 < src.length; k2++) { if (src[k2].t > a2 && src[k2].t < z2) { out2.push({ t: src[k2].t, bend: src[k2].bend }); cur = src[k2].bend; } }
+      var nxt = hs[i2 + 1];
+      if (cur !== 0 && (!nxt || nxt.t - 0.05 > z2 + 0.012)) { out2.push({ t: z2 + 0.01, bend: 0 }); cur = 0; }
+    }
+    return out2;
+  }
   var out = [], seen = {}, i, j = 0;
   for (i = 0; i < harm.length; i++) {
     var h = harm[i], a = h.t - 0.05, z = h.t + h.d + 0.06, k;
@@ -7713,9 +7729,37 @@ function twinHarmony(mel, solo, sections, beats, opt, tempo, ab) {
       var fin = ((((n.t - rg.a) % (2 * beats)) + 2 * beats) % (2 * beats) >= beats) && n.d >= 0.75;
       return exoticHarm(n.p, ab, n.t, tonic, exo[key], dir, fin, xm ? (opt.harmOut === true ? true : "tens") : false);
     }
+    /* 2026-11-20（ネオ）：ハモリを付けるのは、「ゆっくりした旋律の句」だけ。速い走句（中央値0.35拍未満）や、4音に満たない短い句には付けない（合間に1音ずつ入る・速い音に1音ずつ付くハモリが不自然）。
+       向きは句ごとに1つ（3度下／6度下／まれに8度下）で、途中で上下に入れ替えない。opt.harmFix=false で従来。 */
+    var neoPlan = null;
+    if (opt.style === "neo" && opt.harmFix !== false) {
+      neoPlan = {};
+      var seqN = rg.src.filter(function (n) { return n.t >= rg.a - 1e-6 && n.t < rg.z - 1e-6 && !n.grace && n.d >= 0.1; }).sort(function (a, b) { return a.t - b.t; });
+      var phrN = [], curN = [], zN;
+      seqN.forEach(function (n) { if (curN.length && n.t - (curN[curN.length - 1].t + curN[curN.length - 1].d) > 1.0) { phrN.push(curN); curN = []; } curN.push(n); });
+      if (curN.length) phrN.push(curN);
+      phrN.forEach(function (pz) {
+        if (pz.length < 4) return;
+        var dz = pz.map(function (n) { return n.d; }).sort(function (a, b) { return a - b; });
+        if (dz[Math.floor(dz.length / 2)] < 0.35) return;
+        var dirP = rr.wpick([[-2, 5], [-5, 4], [-7, 1]]);
+        pz.forEach(function (n) { if (n.d >= 0.25) neoPlan[n.t.toFixed(4) + ":" + n.p] = dirP; });
+      });
+    }
     rg.src.forEach(function (n) {
       if (n.t < rg.a - 1e-6 || n.t >= rg.z - 1e-6 || n.grace || n.d < 0.1) return;
       var ph = Math.floor((n.t - rg.a) / (2 * beats));
+      if (opt.style === "neo" && neoPlan) {
+        var dirN = neoPlan[n.t.toFixed(4) + ":" + n.p];
+        if (dirN == null) return;
+        var qp = n.d >= 1.5 ? n.p - 12 : (dirN === -7 ? n.p - 12 : twinPitch(n.p, tonic, dirN, majK));
+        if (qp == null || qp < 40) return;
+        var altsP = dirN === -2 ? [twinPitch(n.p, tonic, -5, majK), n.p - 12] : (dirN === -5 ? [twinPitch(n.p, tonic, -2, majK), n.p - 12] : [twinPitch(n.p, tonic, -2, majK), twinPitch(n.p, tonic, -5, majK)]);
+        qp = twinFix(n, qp, altsP, ab, ACC, ref(n));
+        if (!neoHarmOk(qp, tonic, majK, ab, n.t)) return;
+        out.push({ t: n.t + 0.004, d: n.d, p: qp, v: Math.max(30, n.v - 14) }); pv = { t: n.t, p: n.p, q: qp };
+        return;
+      }
       if (opt.style === "neo") {                                   /* ネオクラシカル：バロック風の6度・3度下の平行と、長い音・フレーズ終わりのオクターヴ重ね（スラッシュ／デスの「3度上の平行」とは違う動き） */
         if (dirs[ph] == null) dirs[ph] = rr.wpick([[-5, 4], [-2, 3], [0, 1.5], [2, 1]]);
         var qn = n.d >= 1.5 ? n.p - 12 : (dirs[ph] === 0 ? n.p - 12 : twinPitch(n.p, tonic, dirs[ph], majK));
@@ -22905,7 +22949,43 @@ function fugueArt(base, opt) {
   return s;
 }
 
+/* パッド（オルガン・鍵盤・パッド）の和音の音が、旋律（mel・ソロの長めの音）の半音上・半音下（短2度・長7度）にぶつかるとき、
+   その音を、オクターヴずらす（ぶつからない高さになるとき）か、外す（ほかに3音以上鳴っているとき）。2026-11-20：テーマの土台を整える一連の直し。opt.padFix=false で従来。 */
+var PADFIX_SKIP = { chaos: 1, djent: 1, mathrock: 1, gamelan: 1, arabic: 1, balkan: 1, indian: 1, wa: 1, contemporary: 1 };
+function padClashFix(song, opt) {
+  if (!song || !song.stems || PADFIX_SKIP[opt.style]) return 0;
+  var leads = [], fixed = 0;
+  song.stems.forEach(function (z) { if ((z.id === "mel" || z.id === "solo") && z.notes) z.notes.forEach(function (n) { if (!n.grace && n.d >= 0.3) leads.push(n); }); });
+  if (!leads.length) return 0;
+  leads.sort(function (a, b) { return a.t - b.t; });
+  function clashAt(pitch, t0, t1) {
+    var lo = 0, hi = leads.length, m, k;
+    while (lo < hi) { m = (lo + hi) >> 1; if (leads[m].t < t0 - 8) lo = m + 1; else hi = m; }
+    for (k = lo; k < leads.length && leads[k].t < t1; k++) {
+      var L = leads[k]; if (L.t + L.d < t0 + 0.2 || L.t > t1 - 0.2) continue;
+      var d = (((pitch - L.p) % 12) + 12) % 12; if ((d === 1 || d === 11) && Math.abs(pitch - L.p) <= 14) return true;
+    }
+    return false;
+  }
+  song.stems.forEach(function (z) {
+    if (["org", "kbd", "pad"].indexOf(z.id) < 0 || !z.notes || !z.notes.length) return;
+    var ns = z.notes, keep = [], i, j;
+    for (i = 0; i < ns.length; i++) {
+      var n = ns[i];
+      if (n.d < 0.3 || !clashAt(n.p, n.t, n.t + n.d)) { keep.push(n); continue; }
+      var mates = 0; for (j = Math.max(0, i - 8); j < Math.min(ns.length, i + 9); j++) if (j !== i && Math.abs(ns[j].t - n.t) < 0.05 && ns[j].d >= 0.3) mates++;
+      var alt = null, tries = [-12, 12];
+      for (j = 0; j < tries.length; j++) { var q = n.p + tries[j]; if (q >= 30 && q <= 100 && !clashAt(q, n.t, n.t + n.d)) { alt = q; break; } }
+      if (mates >= 3) { fixed++; continue; }                          /* 外す（ほかの音で和音は保たれる） */
+      if (alt != null) { n.p = alt; fixed++; }
+      keep.push(n);
+    }
+    z.notes = keep;
+  });
+  return fixed;
+}
 function generate(opt) {                                                                  /* 出口で、変化の在庫（前奏・終わり方・伴奏／ベース／ドラムの型）を当てはめる。中から呼ばれた分（部品として作る曲）には当てない */
+  SCALE_STRICT = !(opt && opt.harmFix === false);
   var gsK = opt && GAME_SERIES[opt.style] ? opt.style : null;
   if (gsK) { var seed0 = opt.seed || 1, hk = 0, ci; for (ci = 0; ci < gsK.length; ci++) hk = (hk * 31 + gsK.charCodeAt(ci)) % 9973;
     var seedG = ((seed0 * 131 + hk * 7919) % 2147483646) + 1;      /* 系統ごとに別の曲になるよう、内部の種を変える（再現コードは元の種のまま） */
@@ -22928,7 +23008,18 @@ function generate(opt) {                                                        
   if (VAR_DEPTH === 0) { try { varietyApply(sgV, opt); } catch (eV) { if (typeof console !== "undefined" && console.warn) console.warn("variety:", eV && eV.message); }
     if (soloK) { try { sgV._soloBase = soloBaseOf(soloK, opt.form); soloMerge(sgV, soloK); soloHuman(sgV, soloK, opt); sgV.opt.style = soloK; if (sgV.optIn) sgV.optIn.style = soloK; sgV.sty = STYLES[soloK]; } catch (eS) { if (typeof console !== "undefined" && console.warn) console.warn("solo:", eS && eS.message); } }
     if (!soloK && opt.style === "gypsy") { try { gypsyCompReach(sgV); } catch (eG) {} }      /* リズムギターを押さえられる和音に */
-    if (opt.playFix !== false) { try { guitarStemPlayable(sgV, opt); } catch (eP) {} }      /* フラメンコ・クラシックギターを弾ける範囲に */
+    if (opt.playFix !== false) { try { guitarStemPlayable(sgV, opt); } catch (eP) {} }
+    if (opt.themeFix !== false && !opt.theme && !opt.noThemeFix && !soloK && (THEME_FIX[opt.style] || /^(rk_|fu_|mcl_)/.test(opt.style))) {          /* 変化の在庫（強拍へ寄せる・別の和音の音へ・反復進行）が、あとから半音のぶつかりを作るので、もう一度、土台を整える */
+      try {
+        var stT = sgV.stems.filter(function (z0) { return z0.id === "mel"; })[0];
+        if (stT && stT.notes && stT.notes.length) {
+          var fmT = FORMS[opt.form] || {}, fxT = themeFoundationFix(stT.notes, absChords(sgV), ((opt.tonic || 0) % 12 + 12) % 12, !!fmT.minor, opt);
+          sgV._themeFix = fxT;
+          if (!opt.noFinger && stT.prog >= 24 && stT.prog <= 31 && (fxT.avoid || fxT.end)) gtrFinger(stT.notes, sgV.opt.tempo, opt.style === "flamenco" ? (GUITAR_CAPO || 0) : 0);          /* 音が動いたので、運指をやり直す */
+        }
+      } catch (eT3) {}
+    }
+    if (opt.padFix !== false && opt.harmFix !== false) { try { sgV._padFix = padClashFix(sgV, opt); } catch (eK) {} }          /* パッドと旋律の半音のぶつかり */      /* フラメンコ・クラシックギターを弾ける範囲に */
     if (opt.fugue === "art" && (opt.style === "orchestra" || opt.style === "baroque")) { try { sgV = fugueArt(sgV, opt); if (sgV.optIn) sgV.optIn.fugue = "art"; } catch (eF) { if (typeof console !== "undefined" && console.warn) console.warn("fugue:", eF && eF.message); } }      /* 本格フーガ（2026-11-19） */
     try { endTail(sgV, opt); } catch (eT) {} }
   return sgV;
@@ -25238,6 +25329,11 @@ function generateMain(opt) {
     neoSnapOut(mel, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor, exN);
     if (opt.style === "arena" && opt.rockAvoid !== false) { rockAvoidFix(solo, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor); rockAvoidFix(mel, abN, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor); }
   }
+  var themeFixInfo = null;
+  if (opt.themeFix !== false && !opt.theme && !opt.noThemeFix && (THEME_FIX[opt.style] || /^(rk_|fu_|mcl_)/.test(opt.style))) {          /* テーマの土台（和音の半音上のぶつかり・句末の和音の音） */
+    var abT = absChords({ chords: chs, sections: sections, beats: beats, opt: opt });
+    themeFixInfo = themeFoundationFix(mel, abT, ((opt.tonic || 0) % 12 + 12) % 12, !!form.minor, opt);
+  }
   var fingerFix = { mel: 0, solo: 0 };
   var chordFix = { comp: null, mel: null, solo: null };
   if (!opt.noFinger) {                                                          /* 和音の運指の検証：押さえられない組を、オクターヴをずらすか、内側の音を減らして直す */
@@ -25959,6 +26055,53 @@ function neoSnapOut(notes, ab, tonic, minor, extra) {
 }
 /* ロック：和音の音と半音でぶつかる長めの音を直す。シンセの持続和音・ギターの和音・ベースが鳴っている上で、旋律・ソロの長めの音(0.4拍以上)が、和音の音(根音・3度・5度・7度)の半音上／下だと、濁って「外れた」ように聞こえる。
    その音を、ぶつかっている和音の音へ寄せる(そのとき音階の外にならない向きを選ぶ。経過音・短い音は、そのまま)。 */
+/* ---------- テーマ（旋律）の土台を整える（2026-11-20）----------
+   ユーザー指摘：「テーマがしっかりしていないと、ハモリも語法も活きない」。どの調性の曲種でも、旋律に次の2つを守らせる。
+   ①長い音・拍の頭の音が、和音の音の「半音上」にぶつからない（長3度の上の4度＝アヴォイド・ノート、根音の上の♭9 など）→ 半音下の和音の音へ。
+      例外：短調の和音の5度の上の♭6（自然短音階の6度は、5度へ下がる定番）、ブルースのブルーノート。
+   ②句の終わり（次の音まで1拍以上あく／曲の終わり）の長い音は、和音の音にする（9度・13度の色は、曲の終わり以外では許す）。
+   opt.themeFix=false で従来。指定の旋律（opt.theme）や、旋律を取り込んだ曲には使わない。 */
+var THEME_FIX = { thrash: 1, death: 1, melodeath: 1, black: 1, kayo: 1, afrobeat: 1, celtic: 1, folkworld: 1, hawaiian: 1, reggae: 1, nongenre: 1, neo: 1, classical: 1, baroque: 1, orchestra: 1, epic: 1, hymn: 1, waltz: 1, ballad: 1, bossa: 1, brazil: 1, swing: 1, bebop: 1, modern: 1, fusion: 1, gypsy: 1, soul: 1, newage: 1, pianosolo: 1, country: 1, folk: 1, rockabilly: 1, tango: 1, latin: 1, organjazz: 1, jpop90: 1, douyou: 1, guitartrio: 1, cgsolo: 1, flsolo: 1, ragtime: 1 };
+var METAL_TH = { thrash: 1, death: 1, melodeath: 1, black: 1 };
+function themeFoundationFix(mel, ab, tonic, minor, opt) {
+  var ns = mel.filter(function (n) { return !n.grace && !n.cm; }).sort(function (a, b) { return a.t - b.t; }), st = { avoid: 0, end: 0 }, i;
+  function chAt(t) { var c = ab[0], z; for (z = 0; z < ab.length; z++) { if (ab[z].t <= t + 1e-6) c = ab[z]; else break; } return c; }
+  function ctOf(c) { var q = QUAL[c.q], o = {}; (q ? q.iv : [0, 4, 7]).forEach(function (x) { o[((c.root + x) % 12 + 12) % 12] = 1; }); return o; }
+  for (i = 0; i < ns.length; i++) {
+    var n = ns[i]; if (n.d < 0.5) continue;
+    var c = chAt(n.t + 0.01); if (!c) continue;
+    var ct = ctOf(c), pc = ((n.p % 12) + 12) % 12, strong = Math.abs(n.t - Math.round(n.t)) < 0.03;
+    if (ct[pc]) continue;
+    if (METAL_TH[opt.style]) {                                  /* メタルの旋律：パワーコード（根音と5度だけ）が土台なので、基準は「調の音」。強拍の長い音が、調にも和音にもない音（短調の長3度・♭2・増4度など）なら、近い調の音へ。ドミナント7・減7・フリジアン・ドミナントの上では、♭2・増4度の色を許す */
+      var keyM = {}, ksM = minor ? [0, 2, 3, 5, 7, 8, 10, 11] : [0, 2, 4, 5, 7, 9, 11, 10];
+      ksM.forEach(function (x) { keyM[(x + tonic) % 12] = 1; });
+      var nxM = ns[i + 1], endM = !nxM || (nxM.t - (n.t + n.d)) >= 0.99;
+      if (!keyM[pc] && (strong || n.d >= 1) && !domChord(c)) {
+        var pvM = i > 0 ? ns[i - 1] : null, dsM = pvM && pvM.p < n.p ? [1, -1, 2, -2] : [-1, 1, -2, 2], bestM = null, bcM = 9, kM;
+        for (kM = 0; kM < dsM.length; kM++) { var pM = (((n.p + dsM[kM]) % 12) + 12) % 12, costM = Math.abs(dsM[kM]) - (ct[pM] ? 0.5 : 0); if ((keyM[pM] || ct[pM]) && costM < bcM) { bcM = costM; bestM = dsM[kM]; } }
+        if (bestM != null) { n.p += bestM; st.avoid++; pc = ((n.p % 12) + 12) % 12; }
+      }
+      if (endM && n.d >= 0.75 && !ct[pc]) {                      /* 句末は、和音の音か、和音の根音の上の調の3度 */
+        var rr0 = ((c.root - tonic) % 12 + 12) % 12, th = keyM[(c.root + 3) % 12] ? 3 : 4, tgt = {}; tgt[(c.root + th) % 12] = 1;
+        var bestE = null, bdE = 9, kE, dsE = [-1, 1, -2, 2];
+        for (kE = 0; kE < dsE.length; kE++) { var pE = (((n.p + dsE[kE]) % 12) + 12) % 12; if ((ct[pE] || tgt[pE]) && Math.abs(dsE[kE]) < bdE) { bdE = Math.abs(dsE[kE]); bestE = dsE[kE]; } }
+        if (bestE != null) { n.p += bestE; st.end++; }
+      }
+      continue;
+    }
+    var nx = ns[i + 1], endPh = !nx || (nx.t - (n.t + n.d)) >= 0.99, last = !nx, pv = i > 0 ? ns[i - 1] : null;
+    var rel = ((pc - c.root) % 12 + 12) % 12, iv = (QUAL[c.q] && QUAL[c.q].iv) || [0, 4, 7], minC = iv.indexOf(3) >= 0 && iv.indexOf(4) < 0;
+    var below = ct[(pc + 11) % 12];
+    if (below && (strong || n.d >= 1) && !(minC && rel === 8) && !(opt.style === "blues")) { n.p -= 1; st.avoid++; continue; }          /* ① 和音の音の半音上 */
+    if (endPh && n.d >= 0.75) {                                                                                                 /* ② 句の終わり */
+      if (!last && (rel === 2 || rel === 9)) continue;                                                                            /* 9度・13度の色は許す */
+      var best = null, bd = 9, dd, ds = pv && pv.p < n.p ? [1, -1, 2, -2] : [-1, 1, -2, 2];
+      for (dd = 0; dd < ds.length; dd++) { var pcN = (((n.p + ds[dd]) % 12) + 12) % 12; if (ct[pcN] && Math.abs(ds[dd]) < bd) { bd = Math.abs(ds[dd]); best = ds[dd]; } }
+      if (best != null) { n.p += best; st.end++; }
+    }
+  }
+  return st;
+}
 function rockAvoidFix(notes, ab, tonic, minor) {
   var key = minor ? [0, 2, 3, 5, 7, 8, 10, 11] : [0, 2, 4, 5, 7, 8, 9, 10, 11], fixed = 0, i;
   var sorted = notes.filter(function (n) { return !n.grace && !n.cm; }).sort(function (a, b) { return a.t - b.t; });
@@ -26462,7 +26605,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 626;
+var BUILD_NO = 634;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 251;
 function r3(x) { return Math.round(x * 1000) / 1000; }
