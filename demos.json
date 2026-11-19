@@ -144,12 +144,12 @@
   "styleLabel": "ブラック・メタル（エンペラー型：16分のトレモロと冷たい半音階、ブラスト）",
   "form": "black32",
   "formLabel": "ブラック 32小節（リフA16＋リフB16）",
-  "title": "Swing d'Automne (Cm)",
-  "key": "Cm",
+  "title": "Tempo Bleue (Bbm)",
+  "key": "Bbm",
   "tempo": 320,
   "tempoGenerated": 320,
-  "bars": 140,
-  "seed": 20261119,
+  "bars": 236,
+  "seed": 53955,
   "gen": 251,
   "stems": [
    {
@@ -199,19 +199,19 @@
    }
   ],
   "chordsOneChorus": [
-   "C5",
+   "A#5",
+   "B5",
+   "A#5",
    "C#5",
-   "C5",
-   "D#5",
-   "C#5",
-   "C5",
-   "G5",
-   "G#5",
-   "G5",
+   "B5",
+   "A#5",
    "F5",
-   "C5",
    "F#5",
-   "C5"
+   "F5",
+   "D#5",
+   "A#5",
+   "E5",
+   "A#5"
   ],
   "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
@@ -243,7 +243,7 @@
     "jump": 0
    },
    "Guitar 3 (riff double / harmony)": {
-    "tuning": "std",
+    "tuning": "7dropA",
     "fing": 0,
     "span": 0,
     "str": 0,
