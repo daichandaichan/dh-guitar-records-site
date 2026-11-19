@@ -402,7 +402,9 @@
   },
   "audio": "demos/2026-11-19_orchestra_fugue32/2026-11-19_orchestra_fugue32.mp3",
   "cover": "covers/2026-11-19_orchestra_fugue32.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "video": "demos/2026-11-19_orchestra_fugue32/2026-11-19_orchestra_fugue32.mp4",
+  "videoKind": "score"
  },
  {
   "id": "2026-11-18_flamenco_bulerias12",
