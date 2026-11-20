@@ -115,6 +115,77 @@
   "coverKind": "generated"
  },
  {
+  "id": "2026-11-21_indian_in_shakti",
+  "date": "2026-11-21",
+  "style": "indian",
+  "styleShort": "インド古典",
+  "styleLabel": "インド古典（ラーガとターラ：ラヴィ・シャンカール型／シャクティ型）",
+  "form": "in_shakti",
+  "formLabel": "シャクティ型（マクラフリン：変拍子・ギターとヴァイオリンの掛け合い・コナッコル風）",
+  "title": "Samant Kalyan, Fifteen Beats (Shakti)",
+  "key": "D",
+  "tempo": 150,
+  "tempoGenerated": 150,
+  "bars": 271,
+  "seed": 20261205,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Acoustic Guitar",
+    "prog": 25
+   },
+   {
+    "id": "solo",
+    "name": "Violin",
+    "prog": 40
+   },
+   {
+    "id": "sitar",
+    "name": "Sitar",
+    "prog": 104
+   },
+   {
+    "id": "harp",
+    "name": "Tanpura",
+    "prog": 46
+   },
+   {
+    "id": "perc",
+    "name": "Mridangam",
+    "prog": 0
+   },
+   {
+    "id": "drums",
+    "name": "Ghatam",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-21_indian_in_shakti/2026-11-21_indian_in_shakti_midi-set.zip",
+   "midi": "demos/2026-11-21_indian_in_shakti/2026-11-21_indian_in_shakti_all.mid",
+   "info": "demos/2026-11-21_indian_in_shakti/info.md"
+  },
+  "playable": {
+   "Acoustic Guitar": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 1
+   }
+  },
+  "audio": "demos/2026-11-21_indian_in_shakti/2026-11-21_indian_in_shakti.mp3",
+  "scorePages": [
+   "scores/2026-11-21_indian_in_shakti-1.png"
+  ],
+  "cover": "covers/2026-11-21_indian_in_shakti.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-21_mcl_organtrio_rhythm32",
   "date": "2026-11-21",
   "style": "mcl_organtrio",
@@ -124,9 +195,9 @@
   "formLabel": "リズムチェンジ型 32小節",
   "title": "Orgue de Feu (F)",
   "key": "F",
-  "tempo": 300,
-  "tempoGenerated": 300,
-  "bars": 238,
+  "tempo": 320,
+  "tempoGenerated": 320,
+  "bars": 367,
   "seed": 20261201,
   "gen": 251,
   "stems": [
@@ -233,7 +304,7 @@
     "fing": 0,
     "span": 0,
     "str": 0,
-    "jump": 0
+    "jump": 1
    },
    "Solo": {
     "tuning": "std",
@@ -248,77 +319,6 @@
    "scores/2026-11-21_mcl_organtrio_rhythm32-1.png"
   ],
   "cover": "covers/2026-11-21_mcl_organtrio_rhythm32.jpg",
-  "coverKind": "generated"
- },
- {
-  "id": "2026-11-21_indian_in_shakti",
-  "date": "2026-11-21",
-  "style": "indian",
-  "styleShort": "インド古典",
-  "styleLabel": "インド古典（ラーガとターラ：ラヴィ・シャンカール型／シャクティ型）",
-  "form": "in_shakti",
-  "formLabel": "シャクティ型（マクラフリン：変拍子・ギターとヴァイオリンの掛け合い・コナッコル風）",
-  "title": "Samant Kalyan, Fifteen Beats (Shakti)",
-  "key": "D",
-  "tempo": 150,
-  "tempoGenerated": 150,
-  "bars": 271,
-  "seed": 20261205,
-  "gen": 251,
-  "stems": [
-   {
-    "id": "mel",
-    "name": "Acoustic Guitar",
-    "prog": 25
-   },
-   {
-    "id": "solo",
-    "name": "Violin",
-    "prog": 40
-   },
-   {
-    "id": "sitar",
-    "name": "Sitar",
-    "prog": 104
-   },
-   {
-    "id": "harp",
-    "name": "Tanpura",
-    "prog": 46
-   },
-   {
-    "id": "perc",
-    "name": "Mridangam",
-    "prog": 0
-   },
-   {
-    "id": "drums",
-    "name": "Ghatam",
-    "prog": 0
-   }
-  ],
-  "chordsOneChorus": [],
-  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
-  "status": "demo",
-  "files": {
-   "zip": "demos/2026-11-21_indian_in_shakti/2026-11-21_indian_in_shakti_midi-set.zip",
-   "midi": "demos/2026-11-21_indian_in_shakti/2026-11-21_indian_in_shakti_all.mid",
-   "info": "demos/2026-11-21_indian_in_shakti/info.md"
-  },
-  "playable": {
-   "Acoustic Guitar": {
-    "tuning": "std",
-    "fing": 0,
-    "span": 0,
-    "str": 0,
-    "jump": 1
-   }
-  },
-  "audio": "demos/2026-11-21_indian_in_shakti/2026-11-21_indian_in_shakti.mp3",
-  "scorePages": [
-   "scores/2026-11-21_indian_in_shakti-1.png"
-  ],
-  "cover": "covers/2026-11-21_indian_in_shakti.jpg",
   "coverKind": "generated"
  },
  {

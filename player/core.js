@@ -23563,6 +23563,48 @@ function mclViolinApply(song, opt) {
   song.stems.push({ id: "vln", name: "Violin", jp: "ヴァイオリン（ギターの旋律とユニゾン）", prog: 40, ch: 6, notes: out.sort(function (a, b) { return a.t - b.t; }), extra: [] });
   return out.length;
 }
+/* ===== 煽るドラム・だんだん盛り上がる（2026-11-20）=====
+   opt.drumDrive=true：ソロの合唱ごとに、ドラムを煽る形に。合唱の頭にクラッシュ、フレーズの終わり（進むほど短い間隔）にフィル（スネアのロール／タム回し）、合唱の最後は長いロールで次へなだれ込む、
+   4拍目の裏のキックの押し、掛け合い（trade）の交代の直前にもフィル。音量も合唱ごとに上げる。opt.buildUp=true：ドラム以外の全パートの音量を、ソロの頭から最後へ 0.88→1.12 倍に上げる。 */
+function drumDrive(song, opt) {
+  if (!song || !song.stems || !opt || !opt.drumDrive) return 0;
+  var dr = varStem(song, "drums"); if (!dr || !dr.notes.length) return 0;
+  var beats = song.beats || 4, secs = (song.sections || []).filter(function (x) { return x.kind === "solo"; }), n = secs.length; if (!n) return 0;
+  var R = RNG(((Math.abs(Math.round(opt.seed || 1)) * 4691 + 17) % 2147483646) + 1), add = [], tl = song.soloTradeLens || [], cnt = 0;
+  var del = function (a, z) { dr.notes = dr.notes.filter(function (x) { return !(x.t >= a - 1e-6 && x.t < z - 1e-6 && x.p !== 49); }); };
+  var clampV = function (v) { return Math.max(28, Math.min(125, Math.round(v))); };
+  var fill = function (t0, len, pw, big) {
+    del(t0, t0 + len); var steps = Math.round(len * 4), k, kind = R.f() < 0.5 ? "roll" : "toms", toms = [48, 47, 45, 41];
+    for (k = 0; k < steps; k++) {
+      var tt = t0 + k * 0.25, f = k / Math.max(1, steps - 1), v = clampV((big ? 70 : 62) + f * (big ? 52 : 40) + pw * 14 + R.i(8));
+      if (kind === "roll" || k % 4 === 0) add.push({ t: tt, d: 0.2, p: 38, v: v }); else add.push({ t: tt, d: 0.2, p: toms[Math.floor(k / 2) % 4], v: v });
+      if (k % 4 === 0) add.push({ t: tt, d: 0.2, p: 36, v: clampV(v - 8) });
+    }
+    cnt++;
+  };
+  secs.forEach(function (sec, ci) {
+    var pw = n > 1 ? ci / (n - 1) : 0.5, a = sec.at, z = sec.at + sec.beats, bars = Math.round(sec.beats / beats), fv = 0.92 + 0.22 * pw, j;
+    dr.notes.forEach(function (x) { if (x.t >= a - 1e-6 && x.t < z - 1e-6) x.v = clampV((x.v || 80) * fv); });
+    if (!dr.notes.some(function (x) { return x.p === 49 && Math.abs(x.t - a) < 0.1; })) add.push({ t: a, d: 1, p: 49, v: clampV(98 + pw * 22) });
+    for (j = 0; j < bars; j++) {
+      var tb = a + j * beats, last = j === bars - 1, every = pw < 0.3 ? 8 : (pw < 0.7 ? 4 : 2);
+      if (!last && (j + 1) % every === 0 && R.chance(0.35 + pw * 0.6)) fill(tb + beats - 1, 1, pw, false);
+      if (pw >= 0.35 && !last && R.chance(0.6)) add.push({ t: tb + beats - 0.5, d: 0.2, p: 36, v: clampV(88 + pw * 20) });
+    }
+    fill(z - 2, 2, pw, true);
+    var T = tl[ci]; if (T) { var b2; for (b2 = T; b2 < bars; b2 += T) { fill(a + b2 * beats - 1, 1, pw, false); add.push({ t: a + b2 * beats, d: 1, p: 49, v: clampV(104 + pw * 18) }); } }
+  });
+  dr.notes = dr.notes.concat(add).sort(function (x, y) { return x.t - y.t; });
+  if (song.explain && song.explain.push) song.explain.push("【煽るドラム】ソロ " + n + " 合唱で、合唱の頭のクラッシュ・フレーズ終わりのフィル（" + cnt + " か所）・最後のロール・4拍目の裏のキックの押しを入れ、音量も上げていく。");
+  return cnt;
+}
+function buildUp(song, opt) {
+  if (!song || !song.stems || !opt || !opt.buildUp) return 0;
+  var secs = (song.sections || []).filter(function (x) { return x.kind === "solo"; }); if (!secs.length) return 0;
+  var a = secs[0].at, z = secs[secs.length - 1].at + secs[secs.length - 1].beats, n = 0;
+  song.stems.forEach(function (st) { if (st.ch === 9 || !st.notes) return; st.notes.forEach(function (x) { if (x.t < a || x.t >= z) return; var f = 0.88 + 0.24 * (x.t - a) / Math.max(1, z - a); x.v = Math.max(20, Math.min(120, Math.round((x.v || 80) * f))); n++; }); });
+  return n;
+}
 /* ===== マクラフリンの旋律の型の図書館（2026-11-20）=====
    手元のマクラフリンのMIDI（42曲）の旋律（ギター・ヴァイオリン・シンセのリード）から、1小節の型（16分の位置・最初の音からの半音の差・長さ・強さ）を小節の長さごとに取り出したもの。
    ソロの一部の小節を、この型に替える（和音の音階に寄せ、前の音から跳びすぎないように置く）。opt.mclLick=false で止める。opt.mclLickP で割合（既定：マハヴィシュヌ 0.65・フュージョン 0.75・アコースティック 0.3）。 */
@@ -23657,10 +23699,12 @@ function soloVoiceApply(song, opt) {
   var beats = song.beats || 4, tb = Math.max(1, Math.round(opt.soloTradeBars || 4)) * beats, part = varStem(song, pid), n = 0, si = 0, dub = pid === "vln";
   if (!part) { if (kind === "organ") return 0; part = { id: "vln", name: "Violin", jp: "ヴァイオリン", prog: 40, ch: 6, notes: [], extra: [] }; song.stems.push(part); }
   var win = function (x, a, z) { return x.t >= a - 1e-6 && x.t < z - 1e-6; }, fit = function (p, lo, hi) { while (p < lo) p += 12; while (p > hi) p -= 12; return p; };
-  var RG = kind === "organ" ? [43, 91] : [55, 100], GR = [50, 88], plan = [], gOut = [], pOut = [], firstLine = null, firstA0 = null;
+  var RG = kind === "organ" ? [43, 91] : [55, 100], GR = [50, 88], plan = [], gOut = [], pOut = [], firstLine = null, firstA0 = null; var tlens = [], ab0 = absChords(song), minorK = !!(FORMS[(song.opt && song.opt.form) || opt.form] || {}).minor, RL = RNG(((Math.abs(Math.round(opt.seed || 1)) * 8209 + 31) % 2147483646) + 1), lastPv = 66, licks4 = ((typeof MCL_LICKS !== "undefined" && MCL_LICKS["4"]) || []).map(function (k) { return k.split(" ").map(function (e) { var q = e.split(":"); return { q: +q[0], o: +q[1], d: +q[2], v: +q[3] }; }); });
   song.sections.forEach(function (sec) {
     if (sec.kind !== "solo") return;
-    var a0 = sec.at, z0 = sec.at + sec.beats, v = sv[Math.min(si, sv.length - 1)], line = [], seen = {}; si++;
+    var a0 = sec.at, z0 = sec.at + sec.beats, v = sv[Math.min(si, sv.length - 1)], line = [], seen = {}, tcur = tb; si++;
+    if (typeof v === "string" && v.indexOf("trade:") === 0) { tcur = Math.max(1, parseInt(v.slice(6), 10) || 4) * beats; v = "trade"; }
+    tlens.push(v === "trade" ? tcur / beats : 0);
     if (v === "violin" || v === "organ") v = "partner";
     var take = function (st, keepAll) { st.notes = st.notes.filter(function (x) { if (!win(x, a0, z0)) return true; if (!keepAll) return false; var k = Math.round(x.t * 16) + ":" + (((x.p % 12) + 12) % 12); if (!seen[k]) { seen[k] = 1; line.push(x); } return false; }); };
     take(solo, true); take(part, !dub);                                                     /* ソロの区間の旋律（ギター＋オルガンの両方）を集める。ヴァイオリンのユニゾンは外す */
@@ -23670,20 +23714,30 @@ function soloVoiceApply(song, opt) {
       else {
         var nb = Math.round(sec.beats / (4 * beats)), kb, have = {};
         line.forEach(function (x) { have[Math.floor((x.t - a0) / (4 * beats) + 1e-6)] = 1; });
-        for (kb = 0; kb < nb; kb++) if (!have[kb]) firstLine.forEach(function (x) { var tt = x.t - firstA0 + a0; if (tt >= a0 + kb * 4 * beats - 1e-6 && tt < a0 + (kb + 1) * 4 * beats - 1e-6) { var o2 = { t: tt, d: x.d, p: x.p, v: x.v }; if (x.grace) o2.grace = x.grace; line.push(o2); } });
+        for (kb = 0; kb < nb; kb++) if (!have[kb]) {
+          if (licks4.length > 40 && beats === 4 && opt.soloFillLick !== false) {          /* 休みの塊は、マクラフリンの旋律の型を、その小節の和音の音階に寄せて埋める（毎コーラス違う旋律に） */
+            var bz, pvF = null; for (bz = 0; bz < 4; bz++) {
+              var tb0 = a0 + (kb * 4 + bz) * beats, cF = ab0[0], zF; for (zF = 0; zF < ab0.length; zF++) { if (ab0[zF].t <= tb0 + 0.01) cF = ab0[zF]; else break; }
+              var scF = gtScalePcs(cF, minorK), rootF = ((cF.root % 12) + 12) % 12, patF = licks4[Math.floor(RL.f() * licks4.length)], anc = pvF != null ? pvF : lastPv;
+              var snapF = function (pp) { var d2; for (d2 = 0; d2 <= 6; d2++) { if (scF.indexOf((((pp + d2 - rootF) % 12) + 12) % 12) >= 0) return pp + d2; if (scF.indexOf((((pp - d2 - rootF) % 12) + 12) % 12) >= 0) return pp - d2; } return pp; };
+              anc = snapF(Math.max(55, Math.min(80, anc)));
+              patF.forEach(function (e) { var pp2 = snapF(anc + e.o); while (pp2 > 86) pp2 -= 12; while (pp2 < 52) pp2 += 12; if (pvF != null && Math.abs(pp2 - pvF) > 14) pp2 += (pp2 > pvF ? -12 : 12); line.push({ t: tb0 + e.q * 0.25, d: Math.max(0.1, e.d * 0.25 * 0.93), p: pp2, v: Math.max(50, Math.min(118, e.v * 8 + 8)) }); pvF = pp2; });
+            }
+          } else firstLine.forEach(function (x) { var tt = x.t - firstA0 + a0; if (tt >= a0 + kb * 4 * beats - 1e-6 && tt < a0 + (kb + 1) * 4 * beats - 1e-6) { var o2 = { t: tt, d: x.d, p: x.p, v: x.v }; if (x.grace) o2.grace = x.grace; line.push(o2); } });
+        }
         line.sort(function (a, b) { return a.t - b.t; });
       }
       if (firstA0 == null) firstA0 = a0;
     }
     line.forEach(function (x) {
-      var bi = Math.floor((x.t - a0) / tb + 1e-6), toPart = v === "partner" || (v === "trade" && bi % 2 === 1), o = { t: x.t, d: x.d, p: fit(x.p, toPart ? RG[0] : GR[0], toPart ? RG[1] : GR[1]), v: x.v };
+      var bi = Math.floor((x.t - a0) / tcur + 1e-6), toPart = v === "partner" || (v === "trade" && bi % 2 === 1), o = { t: x.t, d: x.d, p: fit(x.p, toPart ? RG[0] : GR[0], toPart ? RG[1] : GR[1]), v: x.v };
       if (x.grace) o.grace = x.grace; if (x.fx) o.fx = x.fx; (toPart ? pOut : gOut).push(o);
     });
   });
   if (!gOut.length && !pOut.length) return 0;
   solo.notes = solo.notes.concat(gOut).sort(function (a, b) { return a.t - b.t; }); part.notes = part.notes.concat(pOut).sort(function (a, b) { return a.t - b.t; });
   if (dub) part.jp = "ヴァイオリン（ユニゾン・ソロ・掛け合い）"; n = pOut.length;
-  song.soloVoices = plan; var nm = kind === "organ" ? "オルガン" : "ヴァイオリン";
+  song.soloVoices = plan; song.soloTradeLens = tlens; var nm = kind === "organ" ? "オルガン" : "ヴァイオリン";
   if (song.explain && song.explain.push) song.explain.push("【ソロの担当】" + plan.map(function (v, i) { return (i + 1) + "コーラス目＝" + (v === "partner" ? nm : v === "trade" ? "ギターと" + nm + "の掛け合い（" + Math.round(tb / beats) + "小節ずつ）" : "ギター"); }).join("、") + "。");
   return n;
 }
@@ -24359,6 +24413,7 @@ function generateP(opt) {                                                       
     if (!soloK) { try { bassLibApply(sgV, opt); } catch (eBL) { if (typeof console !== "undefined" && console.warn) console.warn("bassLib:", eBL && eBL.message); } }      /* ベースの型の図書館 */
     if (!soloK) { try { grooveLibApply(sgV, opt); } catch (eGL) { if (typeof console !== "undefined" && console.warn) console.warn("grooveLib:", eGL && eGL.message); } }      /* ドラムのグルーヴの図書館（実演奏） */
     if (!soloK) { try { personaShape(sgV, opt); } catch (eP0) { if (typeof console !== "undefined" && console.warn) console.warn("persona:", eP0 && eP0.message); } }      /* 曲の個性（密度・間・先取り・フィル） */
+    if (!soloK) { try { buildUp(sgV, opt); drumDrive(sgV, opt); } catch (eDD) { if (typeof console !== "undefined" && console.warn) console.warn("drumDrive:", eDD && eDD.message); } }      /* だんだん盛り上がる・煽るドラム */
     if (soloK && opt.themeFix !== false && !opt.theme && !opt.noThemeFix && SOLO_THEME_FIX[soloK]) {          /* 2026-11-20：ソロ楽器も、1台にまとめる前の旋律（テーマ）の土台を整える（強拍の和音音・半音のぶつかり・句末） */
       try {
         var stS = sgV.stems.filter(function (z0) { return z0.id === "mel"; })[0];
@@ -27970,7 +28025,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 674;
+var BUILD_NO = 675;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 251;
 function r3(x) { return Math.round(x * 1000) / 1000; }
