@@ -22942,7 +22942,7 @@ function fugueArt(base, opt) {
   s.sections = plan.map(function (pl) { return { kind: "head", at: pl.at, beats: pl.len, from: pl.at / 4, tr: 0, pivot: null, bar0: pl.at / 4, inten: pl.inten, tag: "fugue", label: pl.name }; });
   s.order = s.sections.map(function () { return "head"; });
   s.chordText = "[tempo:" + tempo + "] [A] " + chords.map(function (c) { return names[c.root] + (c.q === "min" ? "m" : (c.q === "dim" ? "dim" : "")); }).join(" | ");
-  s.sheet = { notes: lines.S.map(function (n) { return { t: n.t, dn: n.d, p: n.p }; }) };
+  s.sheet = { notes: lines.S.map(function (n) { return { t: n.t, dn: n.d, p: n.p }; }), chords: chords.map(function (c) { return Object.assign({ bar: Math.floor(c.at / 4 + 1e-6) }, c); }), bars: bars, beats: 4, groups: null, ts: [4, 4], tonic: tonicPc, minor: true, flats: true };      /* 2026-11-20：小節数・拍子・調を入れ忘れ、譜面（MusicXML）が空になっていた */
   s.stems.forEach(function (st) { st.notes = (notesOf[st.id] || []).slice().sort(function (a, b) { return a.t - b.t; }); st.extra = []; });
   s.stems = s.stems.filter(function (st) { return st.notes.length > 0; });
   s.explain = { fugue: { subjectTemplate: FUG_TPL.indexOf(tpl) + 1, order: order, sections: plan.map(function (pl) { return pl.name; }) } };
@@ -26605,7 +26605,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 634;
+var BUILD_NO = 635;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 251;
 function r3(x) { return Math.round(x * 1000) / 1000; }
