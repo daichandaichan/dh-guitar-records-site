@@ -21049,7 +21049,7 @@ function generateIndian(opt) {
   tempo = Math.max(30, Math.min(300, Math.round(tempo)));
   var fastK = tempo > 170 ? 170 / tempo : 1, veryFast = tempo > 200, TS = Math.max(1, tempo / 80);   /* 速いテンポでは音を粗くし、アーラープはゆったりを保つ */
   opt.tempo = tempo;
-  var durSec = Math.max(30, Math.min(300, I.dur || 90)), total0 = durSec * tempo / 60, B = tala.beats;
+  var durSec = Math.max(30, Math.min(mode === "shakti" ? 600 : 300, I.dur || 90)), total0 = durSec * tempo / 60, B = tala.beats;
   var sa = 55 + ((((opt.tonic || 0) - 7) % 12) + 12) % 12;      /* 中央のSa：G3〜F#4 */
   var X = {
     sa: sa, lo: sa - 12, hi: sa + 24,
@@ -21481,6 +21481,7 @@ function generateIndian(opt) {
     var dens = mode === "shakti" ? (2.2 + prog * 1.6) : (1 + prog * 2.0);
     dens = Math.max(0.8, Math.min(4, (dens + (spd - 2) * 0.35) * fastK));
     var lastCycle = (c === cyc - 1);
+    var tgtArr = mel;
     var kind = (c === 0) ? "theme" : (c % 4 === 3 || lastCycle) ? "tihai" : (c % 4 === 1) ? "answer" : (c % 4 === 2) ? "tan" : "theme";
     var cn;
     if (c === 0 || !theme || (kind === "theme" && R.chance(0.35))) {
@@ -21500,8 +21501,8 @@ function generateIndian(opt) {
     /* サワール・ジャワーブ：旋律が半分休んで打楽器が答える（ラヴィ型）／ギターとヴァイオリンが交代（シャクティ型） */
     var half = c0 + B / 2;
     if (mode === "shakti") {
-      var blk = Math.floor(c / 2) % 3;
-      if (IC) { var ci = Math.min(IC.n - 1, Math.floor(c / IC.cpc)), rl = IC.roles[ci]; if (rl === "trade") rl = (Math.floor((c - ci * IC.cpc) / IC.tc) % 2 === 0) ? "guitar" : "violin"; blk = rl === "guitar" ? 1 : rl === "violin" ? 2 : 0; }
+      var blk = Math.floor(c / 2) % 3; tgtArr = mel;
+      if (IC) { var ci = Math.min(IC.n - 1, Math.floor(c / IC.cpc)), rl = IC.roles[ci]; if (rl === "trade") rl = (Math.floor((c - ci * IC.cpc) / IC.tc) % 2 === 0) ? "guitar" : "violin"; blk = rl === "guitar" ? 1 : rl === "violin" ? 2 : 0; if (rl === "violin") tgtArr = solo; }
       /* タニ・アーヴァルタナム：後ろの方で 1 サイクル、打楽器だけにする（ギターとヴァイオリンは休んで、ムリダンガムとコナッコルが主役） */
       var tani = (cyc >= 8 && c === cyc - 3 && kind !== "tihai");
       if (tani) cn = [];
@@ -21524,7 +21525,7 @@ function generateIndian(opt) {
         vlPrev = { p: p, t: o.t, d: o.d };
         add(solo, o.t, o.d, o.p, o.v, o);
       };
-      if (kind === "tihai" || blk === 0) {
+      if ((kind === "tihai" && !IC) || blk === 0) {
         cn.forEach(function (n) { add(mel, n.t, n.d, n.p, n.v, n); vln(n, n.p + (R.chance(0.15) ? 12 : 0), n.v - 8, 0.015 + R.f() * 0.03); });   /* ユニゾン（わずかにずれる＝ヘテロフォニー） */
       } else if (blk === 1) {
         cn.forEach(function (n) { add(mel, n.t, n.d, n.p, n.v, n); });
@@ -21536,7 +21537,7 @@ function generateIndian(opt) {
       var keep = (kind === "tan" && R.chance(0.45)) ? cn.filter(function (n) { return n.t < half; }) : cn;
       keep.forEach(function (n) { add(mel, n.t, n.d, n.p, n.v, n); });
     }
-    if (plan) tihaiAdd(c0 + B, plan, mel, mode === "shakti" ? solo : null);
+    if (plan) tihaiAdd(c0 + B, plan, IC ? tgtArr : mel, (mode === "shakti" && !IC) ? solo : null);
     if (mode !== "shakti" && tempo <= 200) {
       tala.taali.forEach(function (tb) {
         if (!R.chance(0.65)) return;
@@ -21558,6 +21559,28 @@ function generateIndian(opt) {
       } else thekaCycle(c0, lv);
     }
   }
+  /* シタール（2026-11-20）：前奏（アーラープ・ジョール・ジャーラー）はシタール、ガットの伴奏もシタール（拍の頭のドローンのかき鳴らし＋チカリ）。ギターはガットから入る。曲が進むほど、かき鳴らし・チカリが増え、音も大きくなる（起承転結の盛り上がり）。opt.indSitar=false で止める */
+  var sitar = [], nSitar = 0;
+  if (mode === "shakti" && opt.indSitar !== false) {
+    var pre0 = mel.filter(function (n) { return n.t < gatAt - 1e-6; }); mel = mel.filter(function (n) { return n.t >= gatAt - 1e-6; });
+    pre0.forEach(function (n) { sitar.push(n); });
+    var vs = [], acc0 = 0; tala.vib.forEach(function (L) { vs.push([acc0, L]); acc0 += L; });
+    var pa5 = (raga.notes.indexOf(7) >= 0) ? 7 : 5;
+    for (c = 0; c < cyc; c++) {
+      if (cyc >= 8 && c === cyc - 3) continue;                                              /* タニ（打楽器だけの周期）は休む */
+      var c0s = gatAt + c * B, pg = c / cyc;
+      vs.forEach(function (vb, k) {
+        var t0 = c0s + vb[0], vol = Math.round(44 + pg * 26 + (k === 0 ? 10 : 0));
+        add(sitar, t0, Math.max(0.5, vb[1] * 0.9), sa - 12, vol); add(sitar, t0 + 0.02, Math.max(0.5, vb[1] * 0.85), sa - 12 + pa5, vol - 6); add(sitar, t0 + 0.045, Math.max(0.5, vb[1] * 0.8), sa, vol - 4);
+        if (pg > 0.2) add(sitar, t0 + vb[1] * 0.5, 0.3, sa + 12, 30 + Math.round(pg * 24));
+        if (pg > 0.5) { var bb; for (bb = 0; bb < vb[1]; bb++) add(sitar, t0 + bb + 0.5, 0.2, (bb % 2 === 0) ? sa + 12 : sa + 12 + pa5, 28 + Math.round(pg * 22)); }
+        if (pg > 0.78) { var b2; for (b2 = 0; b2 < vb[1]; b2++) { add(sitar, t0 + b2 + 0.25, 0.12, sa + 12, 26 + Math.round(pg * 18)); add(sitar, t0 + b2 + 0.75, 0.12, sa + 12 + pa5, 26 + Math.round(pg * 18)); } }
+      });
+    }
+    nSitar = sitar.length;
+  }
+  /* だんだん盛り上がる（2026-11-20）：ガットの中で、音の大きさを 0.82 → 1.10 倍に上げていく（シャクティ型） */
+  if (mode === "shakti") [mel, solo, perc, drums].forEach(function (arr) { arr.forEach(function (n) { if (n.t < gatAt) return; var pr = Math.min(1, (n.t - gatAt) / Math.max(1, cyc * B)); n.v = Math.max(20, Math.min(120, Math.round(n.v * (0.82 + 0.28 * pr)))); }); });
   /* マクラフリンの語法（2026-11-20）：シャクティ型のギター・ヴァイオリンの旋律の一部を、手元のマクラフリンのMIDIから取った1小節の型（MCL_LICKS）に替える。音はラーガの音に寄せる。opt.mclLick=false で止める */
   var nLick = 0;
   if (mode === "shakti" && opt.mclLick !== false && typeof MCL_LICKS !== "undefined" && MCL_LICKS["4"] && MCL_LICKS["4"].length > 40) {
@@ -21615,6 +21638,7 @@ function generateIndian(opt) {
   var melName = mode === "shakti" ? "Acoustic Guitar" : "Sitar";
   stems.push({ id: "mel", name: melName, jp: mode === "shakti" ? "アコースティック・ギター（主旋律）" : "シタール", prog: mode === "shakti" ? 25 : 104, ch: 0, notes: mel, extra: inExtras(mel) });
   if (solo.length) stems.push({ id: "solo", name: "Violin", jp: "ヴァイオリン（掛け合い）", prog: 40, ch: 1, notes: solo, extra: inExtras(solo) });
+  if (sitar.length) stems.push({ id: "sitar", name: "Sitar", jp: "シタール（前奏・伴奏）", prog: 104, ch: 3, notes: sitar.sort(function (x, y) { return x.t - y.t; }), extra: inExtras(sitar) });
   stems.push({ id: "harp", name: "Tanpura", jp: "タンプーラ（ドローン）", prog: 46, ch: 5, notes: tanp, extra: [] });
   stems.push({ id: "perc", name: mode === "shakti" ? "Mridangam" : "Tabla", jp: mode === "shakti" ? "ムリダンガム／タブラ" : "タブラ", prog: 0, ch: 9, notes: perc.filter(function (n) { return n.t < totalBeats; }) });
   if (drums.length) stems.push({ id: "drums", name: "Ghatam", jp: "ガタム／カンジーラ", prog: 0, ch: 9, notes: drums });
@@ -27946,7 +27970,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 672;
+var BUILD_NO = 674;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 251;
 function r3(x) { return Math.round(x * 1000) / 1000; }
