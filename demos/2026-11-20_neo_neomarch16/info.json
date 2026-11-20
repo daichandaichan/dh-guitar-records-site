@@ -1,17 +1,17 @@
 {
-  "id": "2026-11-20_neo_auto32m",
+  "id": "2026-11-20_neo_neomarch16",
   "date": "2026-11-20",
   "style": "neo",
   "styleShort": "ネオクラシカル",
   "styleLabel": "ネオクラシカル（ハーモニック・マイナー）",
-  "form": "auto32m",
-  "formLabel": "AABA 32小節・短調（毎回ちがう）",
-  "title": "Manouche des Lilas (Dm)",
-  "key": "Dm",
-  "tempo": 176,
-  "tempoGenerated": 176,
-  "bars": 270,
-  "seed": 20264142,
+  "form": "neomarch16",
+  "formLabel": "ヘヴィ・ネオクラシカル 16小節（テンポ140・16分の走句・i–♭VI–V と減7、ブリッツクリーク風）",
+  "title": "Café Rapide (Gm)",
+  "key": "Gm",
+  "tempo": 140,
+  "tempoGenerated": 140,
+  "bars": 141,
+  "seed": 20266135,
   "gen": 251,
   "stems": [
     {
@@ -56,52 +56,29 @@
     }
   ],
   "chordsOneChorus": [
-    "C7",
-    "Fmaj7",
-    "Fmaj7",
-    "Fm7",
-    "A#7",
-    "Fmaj7",
-    "A#9",
-    "Em7b5",
-    "A7alt",
-    "Dm6",
-    "C9",
-    "Fmaj7",
-    "Fmaj7",
-    "F7b9",
-    "A#9",
-    "Fmaj7",
-    "A#9",
-    "Em7b5",
-    "A7",
-    "Dm6",
-    "Fmaj7",
-    "F7b9",
-    "E9",
-    "C7",
-    "Fmaj7",
-    "Gm9",
-    "Dm9",
-    "D#13",
-    "Dm6",
-    "Gm7",
-    "C7",
-    "Fmaj7",
-    "Fmaj7",
-    "A#9",
-    "Fmaj7",
-    "A#7",
-    "Em7b5",
-    "D#7",
-    "Dm6"
+    "Gm",
+    "Gm",
+    "D#",
+    "D",
+    "Gm6",
+    "Cm",
+    "D",
+    "Gm6/9",
+    "Gm",
+    "F",
+    "D#",
+    "D",
+    "Cm",
+    "F#dim7",
+    "D7",
+    "Gm"
   ],
   "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
   "status": "demo",
   "files": {
-    "zip": "demos/2026-11-20_neo_auto32m/2026-11-20_neo_auto32m_midi-set.zip",
-    "midi": "demos/2026-11-20_neo_auto32m/2026-11-20_neo_auto32m_all.mid",
-    "info": "demos/2026-11-20_neo_auto32m/info.md"
+    "zip": "demos/2026-11-20_neo_neomarch16/2026-11-20_neo_neomarch16_midi-set.zip",
+    "midi": "demos/2026-11-20_neo_neomarch16/2026-11-20_neo_neomarch16_all.mid",
+    "info": "demos/2026-11-20_neo_neomarch16/info.md"
   },
   "playable": {
     "Melody": {
@@ -116,17 +93,17 @@
       "fing": 0,
       "span": 0,
       "str": 0,
-      "jump": 8
+      "jump": 2
     },
     "Rhythm Gtr (power)": {
-      "tuning": "std",
+      "tuning": "dropD",
       "fing": 0,
       "span": 0,
       "str": 0,
       "jump": 0
     },
     "Guitar 3 (riff double / harmony)": {
-      "tuning": "7B",
+      "tuning": "7dropA",
       "fing": 0,
       "span": 0,
       "str": 0,
@@ -140,5 +117,5 @@
       "jump": 0
     }
   },
-  "audio": "demos/2026-11-20_neo_auto32m/2026-11-20_neo_auto32m.mp3"
+  "audio": "demos/2026-11-20_neo_neomarch16/2026-11-20_neo_neomarch16.mp3"
 }
