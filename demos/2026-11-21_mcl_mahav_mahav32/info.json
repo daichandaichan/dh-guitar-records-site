@@ -1,0 +1,110 @@
+{
+  "id": "2026-11-21_mcl_mahav_mahav32",
+  "date": "2026-11-21",
+  "style": "mcl_mahav",
+  "styleShort": "マクラフリン風マハヴィシュヌ",
+  "styleLabel": "マクラフリン風マハヴィシュヌ（モードのヴァンプ・変拍子・速いユニゾン）",
+  "form": "mahav32",
+  "formLabel": "マハヴィシュヌ型（ドリアンのヴァンプ→♭III・♭VII→♭VI・♭II→V7alt）32小節",
+  "title": "Birds of Fire du Nord (Em)",
+  "key": "Em",
+  "tempo": 176,
+  "tempoGenerated": 176,
+  "bars": 238,
+  "seed": 20261142,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 27
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 27
+    },
+    {
+      "id": "comp",
+      "name": "Rhodes",
+      "prog": 4
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "vln",
+      "name": "Violin",
+      "prog": 40
+    }
+  ],
+  "chordsOneChorus": [
+    "Em7",
+    "Em7",
+    "Em7",
+    "Em7",
+    "Gmaj7",
+    "Gmaj7",
+    "D9",
+    "D9",
+    "Em7",
+    "Em7",
+    "Em7",
+    "Em7",
+    "Cmaj7",
+    "G9",
+    "Cmaj7",
+    "B7alt",
+    "B7alt",
+    "Cmaj7",
+    "Cmaj7",
+    "Fmaj7",
+    "C7b9",
+    "Fmaj7",
+    "Am7",
+    "D7",
+    "G#7",
+    "Gmaj7",
+    "F#7b9",
+    "B7alt",
+    "Em7",
+    "Em7",
+    "Em7",
+    "Em7",
+    "Cmaj7",
+    "Fmaj7",
+    "B7alt",
+    "B7alt"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-21_mcl_mahav_mahav32/2026-11-21_mcl_mahav_mahav32_midi-set.zip",
+    "midi": "demos/2026-11-21_mcl_mahav_mahav32/2026-11-21_mcl_mahav_mahav32_all.mid",
+    "info": "demos/2026-11-21_mcl_mahav_mahav32/info.md"
+  },
+  "playable": {
+    "Melody": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Solo": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 4
+    }
+  },
+  "audio": "demos/2026-11-21_mcl_mahav_mahav32/2026-11-21_mcl_mahav_mahav32.mp3"
+}
