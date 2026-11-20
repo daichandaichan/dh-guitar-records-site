@@ -553,7 +553,11 @@
   "cover": "covers/2026-11-19_orchestra_fugue32.jpg",
   "coverKind": "generated",
   "video": "demos/2026-11-19_orchestra_fugue32/2026-11-19_orchestra_fugue32.mp4",
-  "videoKind": "score"
+  "videoKind": "score",
+  "scorePages": [
+   "scores/2026-11-19_orchestra_fugue32-1.png",
+   "scores/2026-11-19_orchestra_fugue32-2.png"
+  ]
  },
  {
   "id": "2026-11-18_flamenco_bulerias12",
