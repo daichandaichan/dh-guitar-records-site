@@ -7,11 +7,11 @@
   "styleLabel": "マクラフリン風マハヴィシュヌ（モードのヴァンプ・変拍子・速いユニゾン）",
   "form": "mahav32",
   "formLabel": "マハヴィシュヌ型（ドリアンのヴァンプ→♭III・♭VII→♭VI・♭II→V7alt）32小節",
-  "title": "Birds of Fire du Nord (Em)",
+  "title": "Birds of Fire des Lilas (Em)",
   "key": "Em",
   "tempo": 176,
   "tempoGenerated": 176,
-  "bars": 270,
+  "bars": 238,
   "seed": 20261142,
   "gen": 251,
   "stems": [
@@ -97,14 +97,14 @@
     "fing": 0,
     "span": 0,
     "str": 0,
-    "jump": 1
+    "jump": 0
    },
    "Solo": {
     "tuning": "std",
     "fing": 0,
     "span": 0,
     "str": 0,
-    "jump": 3
+    "jump": 4
    }
   },
   "audio": "demos/2026-11-21_mcl_mahav_mahav32/2026-11-21_mcl_mahav_mahav32.mp3",

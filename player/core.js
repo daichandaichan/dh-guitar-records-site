@@ -25389,7 +25389,7 @@ function generateMain(opt) {
       { inten: 0.6 + 0.35 * f2, play: { solo: 1, comp: 1, bass: 1, drums: 1, perc: 1 },
         stop: useArr && i === 0 && opt.solos > 1 && rng.chance(0.45), rt: soloRoles[i] === "twin" ? "twin" : undefined });
   }
-  var tradeOn = useArr && JAZZFAM && opt.useDrums && sty.drums !== "none" && opt.solos > 0 &&
+  var tradeOn = useArr && JAZZFAM && opt.useDrums && sty.drums !== "none" && opt.solos > 0 && opt.drumTrade !== false && !(opt.soloVoices && opt.soloVoices.length) &&
     barsPerChorus % 4 === 0 && barsPerChorus >= 12 && (beats === 4 || beats === 3);
   if (tradeOn) {
     /* 4バース交換：ソリストとドラムが4小節ずつ掛け合う */
