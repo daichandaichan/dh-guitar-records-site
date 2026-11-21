@@ -1,5 +1,128 @@
 [
  {
+  "id": "2026-11-22_contemporary_ct_free",
+  "date": "2026-11-22",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_free",
+  "formLabel": "現代音楽（自由な形式：起承転結・頂点は黄金比）",
+  "title": "Cycle No.5 [12-01234567891011]",
+  "key": "D",
+  "tempo": 66,
+  "tempoGenerated": 66,
+  "bars": 43,
+  "seed": 20261140,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "solo",
+    "name": "Piano",
+    "prog": 0
+   },
+   {
+    "id": "pno2",
+    "name": "Piano II",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-22_contemporary_ct_free/2026-11-22_contemporary_ct_free_midi-set.zip",
+   "midi": "demos/2026-11-22_contemporary_ct_free/2026-11-22_contemporary_ct_free_all.mid",
+   "info": "demos/2026-11-22_contemporary_ct_free/info.md"
+  },
+  "audio": "demos/2026-11-22_contemporary_ct_free/2026-11-22_contemporary_ct_free.mp3",
+  "video": "demos/2026-11-22_contemporary_ct_free/2026-11-22_contemporary_ct_free.mp4",
+  "cover": "covers/2026-11-22_contemporary_ct_free.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-11-22_contemporary_ct_free_orch",
+  "date": "2026-11-22",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_free_orch",
+  "formLabel": "現代音楽（管弦楽の編成：自由な形式・起承転結）",
+  "title": "Studie No.7 [8-013467910]",
+  "key": "D",
+  "tempo": 96,
+  "tempoGenerated": 96,
+  "bars": 77,
+  "seed": 20261141,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "solo",
+    "name": "Piano",
+    "prog": 0
+   },
+   {
+    "id": "mel",
+    "name": "Violin",
+    "prog": 40
+   },
+   {
+    "id": "cello",
+    "name": "Cello",
+    "prog": 42
+   },
+   {
+    "id": "fl",
+    "name": "Flute",
+    "prog": 73
+   },
+   {
+    "id": "cl",
+    "name": "Clarinet",
+    "prog": 71
+   },
+   {
+    "id": "tpt",
+    "name": "Trumpet",
+    "prog": 56
+   },
+   {
+    "id": "horn",
+    "name": "French Horn",
+    "prog": 60
+   },
+   {
+    "id": "trb",
+    "name": "Trombone",
+    "prog": 57
+   },
+   {
+    "id": "tuba",
+    "name": "Tuba",
+    "prog": 58
+   },
+   {
+    "id": "timp",
+    "name": "Timpani",
+    "prog": 47
+   }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-22_contemporary_ct_free_orch/2026-11-22_contemporary_ct_free_orch_midi-set.zip",
+   "midi": "demos/2026-11-22_contemporary_ct_free_orch/2026-11-22_contemporary_ct_free_orch_all.mid",
+   "info": "demos/2026-11-22_contemporary_ct_free_orch/info.md"
+  },
+  "audio": "demos/2026-11-22_contemporary_ct_free_orch/2026-11-22_contemporary_ct_free_orch.mp3",
+  "scorePages": [
+   "scores/2026-11-22_contemporary_ct_free_orch-1.png"
+  ],
+  "video": "demos/2026-11-22_contemporary_ct_free_orch/2026-11-22_contemporary_ct_free_orch.mp4",
+  "cover": "covers/2026-11-22_contemporary_ct_free_orch.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-21_mcl_mahav_mahav32",
   "date": "2026-11-21",
   "style": "mcl_mahav",

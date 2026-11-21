@@ -1,0 +1,77 @@
+{
+  "id": "2026-11-22_contemporary_ct_free_orch",
+  "date": "2026-11-22",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_free_orch",
+  "formLabel": "現代音楽（管弦楽の編成：自由な形式・起承転結）",
+  "title": "Studie No.7 [8-013467910]",
+  "key": "D",
+  "tempo": 96,
+  "tempoGenerated": 96,
+  "bars": 77,
+  "seed": 20261141,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "solo",
+      "name": "Piano",
+      "prog": 0
+    },
+    {
+      "id": "mel",
+      "name": "Violin",
+      "prog": 40
+    },
+    {
+      "id": "cello",
+      "name": "Cello",
+      "prog": 42
+    },
+    {
+      "id": "fl",
+      "name": "Flute",
+      "prog": 73
+    },
+    {
+      "id": "cl",
+      "name": "Clarinet",
+      "prog": 71
+    },
+    {
+      "id": "tpt",
+      "name": "Trumpet",
+      "prog": 56
+    },
+    {
+      "id": "horn",
+      "name": "French Horn",
+      "prog": 60
+    },
+    {
+      "id": "trb",
+      "name": "Trombone",
+      "prog": 57
+    },
+    {
+      "id": "tuba",
+      "name": "Tuba",
+      "prog": 58
+    },
+    {
+      "id": "timp",
+      "name": "Timpani",
+      "prog": 47
+    }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-22_contemporary_ct_free_orch/2026-11-22_contemporary_ct_free_orch_midi-set.zip",
+    "midi": "demos/2026-11-22_contemporary_ct_free_orch/2026-11-22_contemporary_ct_free_orch_all.mid",
+    "info": "demos/2026-11-22_contemporary_ct_free_orch/info.md"
+  },
+  "audio": "demos/2026-11-22_contemporary_ct_free_orch/2026-11-22_contemporary_ct_free_orch.mp3"
+}

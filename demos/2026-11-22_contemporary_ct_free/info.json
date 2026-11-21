@@ -1,0 +1,37 @@
+{
+  "id": "2026-11-22_contemporary_ct_free",
+  "date": "2026-11-22",
+  "style": "contemporary",
+  "styleShort": "現代音楽",
+  "styleLabel": "現代音楽（ピッチクラス・セット／アルゴリズム作曲：確率論・12音列・スペクトル・ミニマルほか）",
+  "form": "ct_free",
+  "formLabel": "現代音楽（自由な形式：起承転結・頂点は黄金比）",
+  "title": "Cycle No.5 [12-01234567891011]",
+  "key": "D",
+  "tempo": 66,
+  "tempoGenerated": 66,
+  "bars": 43,
+  "seed": 20261140,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "solo",
+      "name": "Piano",
+      "prog": 0
+    },
+    {
+      "id": "pno2",
+      "name": "Piano II",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-22_contemporary_ct_free/2026-11-22_contemporary_ct_free_midi-set.zip",
+    "midi": "demos/2026-11-22_contemporary_ct_free/2026-11-22_contemporary_ct_free_all.mid",
+    "info": "demos/2026-11-22_contemporary_ct_free/info.md"
+  },
+  "audio": "demos/2026-11-22_contemporary_ct_free/2026-11-22_contemporary_ct_free.mp3"
+}
