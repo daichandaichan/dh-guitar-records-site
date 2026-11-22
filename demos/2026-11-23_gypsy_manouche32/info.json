@@ -1,0 +1,129 @@
+{
+  "id": "2026-11-23_gypsy_manouche32",
+  "date": "2026-11-23",
+  "style": "gypsy",
+  "styleShort": "ジプシー・スウィング",
+  "styleLabel": "ジプシー・スウィング（マヌーシュ）",
+  "form": "manouche32",
+  "formLabel": "マヌーシュ AABA 32小節",
+  "title": "Nuit Mineur (Am)",
+  "key": "Am",
+  "tempo": 250,
+  "tempoGenerated": 250,
+  "bars": 270,
+  "seed": 20262101,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 25
+    },
+    {
+      "id": "mel2",
+      "name": "Violin (theme, trade)",
+      "prog": 40
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 25
+    },
+    {
+      "id": "comp",
+      "name": "Rhythm Gtr (la pompe)",
+      "prog": 26
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 32
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "vln",
+      "name": "Violin",
+      "prog": 40
+    }
+  ],
+  "chordsOneChorus": [
+    "Am6",
+    "E9",
+    "Am6",
+    "Dm6",
+    "E7b9",
+    "Am6",
+    "Fmaj7",
+    "Bm7b5",
+    "E7",
+    "Am6",
+    "Am6",
+    "Am6",
+    "Dm6/9",
+    "E7b9",
+    "Am6",
+    "Fmaj7",
+    "F#9",
+    "Bm7b5",
+    "E7b9",
+    "Am6",
+    "Cmaj7",
+    "G7b9",
+    "Cmaj7",
+    "F7b9",
+    "A#maj7",
+    "A#maj7",
+    "Cm7",
+    "B9",
+    "Cmaj7",
+    "Bm7b5",
+    "E7b9",
+    "Am6",
+    "E9",
+    "Am6",
+    "Dm6/9",
+    "Bm7",
+    "E7",
+    "Am6",
+    "Fmaj7",
+    "F#7b9",
+    "Bm7b5",
+    "E7alt",
+    "Am6"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-23_gypsy_manouche32/2026-11-23_gypsy_manouche32_midi-set.zip",
+    "midi": "demos/2026-11-23_gypsy_manouche32/2026-11-23_gypsy_manouche32_all.mid",
+    "info": "demos/2026-11-23_gypsy_manouche32/info.md"
+  },
+  "playable": {
+    "Melody": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Solo": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Rhythm Gtr (la pompe)": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    }
+  },
+  "audio": "demos/2026-11-23_gypsy_manouche32/2026-11-23_gypsy_manouche32.mp3"
+}

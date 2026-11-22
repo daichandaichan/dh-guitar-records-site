@@ -23720,12 +23720,89 @@ function yamDynApply(song, opt) {
 /* ===== 山下和仁の型を、ギターのソロ以外（フラメンコ・タンゴのクラシックギター）にも（2026-11-22）
    yamPatStem：任意の1本（stem）の、旋律的な小節（ラスゲアード＝3音以上が同時、を含む小節は残す）を、同じコードの質・単位の長さの山下和仁の型に替える。cfg＝{ unit：1単位の拍数, P：置換の確率, skipStroke：ラスゲアードの小節を残す }
    yamDynStem：強弱の流れ（YAM_DYN）を、その stem にかける（amp＝効き）。 */
+/* ===== セラニート「Inspiración flamenca」（Alain Faucher 採譜）の型（2026-11-22）：ユーザーが渡した譜面（タランタ Presagio／ソレア Inspiración／グアヒーラ Paseando por la Habana／グラナイーナ Sueño en la Alhambra／アレグリアス Fantasía gaditana／ファンダンギーリョ Aires de Almería）を読んで拾った形。譜面そのものは複製せず、型の特徴だけを手で書き起こした。
+   ① 6連（p-i-m-a-m-i：親指の低音→i・m・a で和音の上を山形に往復）を1拍ずつ、低音は1拍目と3拍目で根音→5度 ② 6連と8分の交代 ③ 5連（m-i-p-i-m：両端が高い）を低音の上に ④ 低音を保って、16分の音階を上がって下がる走句（短調＝自然短音階、ドミナント＝フリジア・ドミナント、長調）⑤ 低音と高音を交互に置く8分（ファンダンギーリョの流れ）。
+   形式は YAM_PATS と同じ「根音からの低音の度数@0:位置（16分）,長さ,低音からの半音,フラグ;…」。位置は小数（6連は 0.667 刻み、5連は 0.8 刻み）。 */
+/* ===== 追加の型（2026-11-22）：サンルーカル Vol.2（Taranta del Pozo Viejo／Mi Farruca／Guajira Merchelera／Farolillos Caracoles）とアミーゴ（Ventanas al Alma〔ミネーラ〕／Sierra del Agua〔ロンデーニャ〕／De blanco y oro〔タンギーリョ〕／Vivencias imaginadas〔サパテアード〕）の抜粋から拾った形を書き起こした（譜面は複製しない）。
+   T1＝タランタの8分3連（p-m-i を1拍に3つ、低音が1拍ごとに動く）／T2＝16分の3連×2（p-m-i-p-m-i）／F1＝ファルーカの16分の「回り音」（3つの音階音が1拍ごとに1段ずつ上がる）／G2＝グアヒーラの16分12個の下行走句（低音は保つ）／
+   C1＝カラコレス（6/8）：ロール和音→8分2つ→低音→16分の上行／AM1＝タンギーリョ：低音→8分の音階下行→和音の叩き／AM2＝ロンデーニャ：低音を保ち、8分の音階が1段ずつ上がる／AM3＝16分4音の上行が1拍ごとに1段ずつ上がる／AM4＝サパテアードの i-m 交互（2つの高さの往復の16分）。 */
+function serExtra(q, len16) {
+  var t = (q === "min" || q === "dim") ? 3 : 4, f = function (a) { return a.join(","); }, nb = len16 / 4, b, j, pat, arr = {};
+  var sc = q === "maj" ? [12, 14, 16, 17, 19, 21, 23, 24, 26, 28] : (q === "dom" ? [12, 13, 16, 17, 19, 20, 22, 24, 25, 28] : [12, 14, 15, 17, 19, 20, 22, 24, 26, 27]);
+  /* T1：8分3連（1拍に3つ） */
+  pat = []; for (b = 0; b < nb; b++) { var bi = [0, 0, 7, 0][b % 4]; pat.push(f([b * 4, 1.333, bi, 0])); pat.push(f([b * 4 + 1.333, 1.333, 19, 0])); pat.push(f([b * 4 + 2.667, 1.333, 24, 0])); } arr.T1 = "0@0:" + pat.join(";");
+  /* T2：16分の3連×2（p-m-i-p-m-i） */
+  pat = []; for (b = 0; b < nb; b++) { [0, 19, 24, b === 2 ? 7 : 0, 19, 24].forEach(function (iv, k) { pat.push(f([b * 4 + 0.667 * k, 0.667, iv, 0])); }); } arr.T2 = "0@0:" + pat.join(";");
+  /* F1：回り音（4音／拍、1拍ごとに1段上がる） */
+  pat = [f([0, nb * 4, 0, 1])]; for (b = 0; b < nb; b++) { [2, 1, 0, 1].forEach(function (d, k) { pat.push(f([b * 4 + k, 1, sc[b + d], 0])); }); } arr.F1 = "0@0:" + pat.join(";");
+  /* AM3：16分4音の上行（1拍ごとに1段上がる） */
+  pat = [f([0, 2, 0, 1])]; for (b = 0; b < nb; b++) { for (j = 0; j < 4; j++) pat.push(f([b * 4 + j, 1, sc[b + j], 0])); } arr.AM3 = "0@0:" + pat.join(";");
+  /* AM4：i-m 交互（16分で2つの高さを往復） */
+  pat = [f([0, 2, 0, 1])]; for (j = 2; j < len16; j++) pat.push(f([j, 1, [24, 19, 22 - (q === "maj" ? 1 : 0), 19][j % 4], 0])); arr.AM4 = "0@0:" + pat.join(";");
+  /* AM2：低音を保ち、8分の音階が1段ずつ上がる */
+  pat = [f([0, len16, 0, 1])]; for (j = 0; j < len16 / 2 - 1; j++) pat.push(f([2 + 2 * j, 2, sc[j], 0])); arr.AM2 = "0@0:" + pat.join(";");
+  /* AM1：低音→8分の音階下行→和音の叩き（最後の拍） */
+  pat = [f([0, 2, 0, 1])]; for (j = 0; j < len16 / 2 - 2; j++) pat.push(f([2 + 2 * j, 2, [24, 22, 20, 19, 17, 15][j % 6], 0])); [12 + t, 19, 24].forEach(function (iv) { pat.push(f([len16 - 2, 1, iv, 2])); }); arr.AM1 = "0@0:" + pat.join(";");
+  if (len16 === 12) {
+    /* G2：16分12個の下行走句（低音は保つ） */
+    pat = [f([0, 12, 0, 1])]; for (j = 0; j < 12; j++) pat.push(f([j, 1, sc[9 - j < 0 ? 0 : 9 - j] + (j < 2 ? 0 : 0), 0])); arr.G2 = "0@0:" + pat.join(";");
+    /* C1：6/8 のカラコレス（ロール和音→8分2つ→低音→16分の上行） */
+    pat = []; [0, 12 + t, 19].forEach(function (iv) { pat.push(f([0, 3, iv, 16])); }); pat.push(f([3, 1.5, 24, 0])); pat.push(f([4.5, 1.5, 19, 0])); pat.push(f([6, 3, 7, 1])); pat.push(f([9, 1, 19, 0])); pat.push(f([10, 1, 12 + t + 12, 0])); pat.push(f([11, 1, 24, 0])); arr.C1 = "0@0:" + pat.join(";");
+  }
+  return arr;
+}
+function serPatsBuild() {
+  var out = {}, quals = ["min", "maj", "dom", "dim"];
+  quals.forEach(function (q) {
+    var t = (q === "min" || q === "dim") ? 3 : 4, runUp, runDn;
+    if (q === "dom") { runUp = [12, 13, 16, 17, 19, 20, 22, 24]; runDn = [22, 20, 19, 17]; }
+    else if (q === "maj") { runUp = [12, 14, 16, 17, 19, 21, 23, 24]; runDn = [23, 21, 19, 17]; }
+    else { runUp = [12, 14, 15, 17, 19, 20, 22, 24]; runDn = [22, 20, 19, 17]; }
+    var alt = q === "maj" ? [0, 19, 7, 23, 0, 24, 7, 23] : (q === "dom" ? [0, 19, 7, 22, 0, 24, 7, 22] : [0, 19, 7, 22, 0, 24, 7, 22]);
+    var f = function (a) { return a.join(","); };
+    [12, 16].forEach(function (len16) {
+      var nb = len16 / 4, arr = [], b, k, pat;
+      /* ① 6連（p-i-m-a-m-i）を毎拍 */
+      pat = []; for (b = 0; b < nb; b++) { var bi = (b === 2 ? 7 : 0); pat.push(f([b * 4, 0.667, bi, 0])); [19, 24, 24 + t, 24, 19].forEach(function (iv, j) { pat.push(f([b * 4 + 0.667 * (j + 1), 0.667, iv, 0])); }); } arr.push("0@0:" + pat.join(";"));
+      /* ② 6連（1・3拍目）と8分（2・4拍目）の交代 */
+      pat = []; for (b = 0; b < nb; b++) { if (b % 2 === 0) { pat.push(f([b * 4, 0.667, b === 2 ? 7 : 0, 0])); [19, 24, 24 + t, 24, 19].forEach(function (iv, j) { pat.push(f([b * 4 + 0.667 * (j + 1), 0.667, iv, 0])); }); } else { pat.push(f([b * 4, 2, 24 + t, 0])); pat.push(f([b * 4 + 2, 2, 24, 0])); } } arr.push("0@0:" + pat.join(";"));
+      /* ③ 5連を低音の上に（低音は2拍ごと） */
+      pat = []; for (b = 0; b < nb; b++) { if (b % 2 === 0) pat.push(f([b * 4, Math.min(8, (nb - b) * 4), b === 2 ? 7 : 0, 1])); [24 + t, 24, 19, 24, 24 + t].forEach(function (iv, j) { pat.push(f([b * 4 + 0.8 * j, 0.8, iv, 0])); }); } arr.push("0@0:" + pat.join(";"));
+      /* ⑤ 低音と高音の交互の8分 */
+      pat = []; for (k = 0; k < len16 / 2; k++) pat.push(f([k * 2, 2, alt[k % alt.length], k % 2 === 0 ? 1 : 0])); arr.push("0@0:" + pat.join(";"));
+      /* ④ 音階の走句（4拍の形のみ） */
+      if (len16 === 16) { pat = [f([0, 4, 0, 1])]; runUp.forEach(function (iv, j) { pat.push(f([4 + j, 1, iv, 0])); }); runDn.forEach(function (iv, j) { pat.push(f([12 + j, 1, iv, 0])); }); arr.push("0@0:" + pat.join(";")); }
+      var ex = serExtra(q, len16); Object.keys(ex).forEach(function (k) { if (k !== "C1" && k !== "AM1" && k !== "AM4") arr.push(ex[k]); });
+      out[q + "_" + len16] = arr;
+    });
+  });
+  return out;
+}
+var SER_PATS = serPatsBuild();
+/* ===== ブレリア・ソレアの型（2026-11-22）：ユーザーが渡した譜面のうち、ビセンテ・アミーゴ「Morao (Bulerías)」「Reino de Silia (Soleá por bulería)」、マノロ・サンルーカル「Viva Jerez (Bulerías)」から拾った形を、3拍の小節（16分12個）の型に書き起こした（譜面は複製しない）。
+   BU1＝3-3-3-3 のオスティナート（サンルーカル：低音の8分＋「16分休み＋16分2つ」を4つ。ブレリアの3＋3＋3＋3 のアクセント）／BU2＝親指の前打ち→16分の上行4音→3拍分の長い音（タイ）→16分の下行4音（アミーゴ Morao のファルセータ：アクセントは12・3・6・8・10拍）／
+   BU3＝ ami の転がし和音（ロール）→ 親指の8分の音階の下行（アミーゴ Reino de Silia のソレア）。形式は SER_PATS と同じ（16分単位、小数可）。♩220までのテンポで使える。 */
+function serBuBuild() {
+  var out = {}, quals = ["min", "maj", "dom", "dim"], f = function (a) { return a.join(","); };
+  quals.forEach(function (q) {
+    var t = (q === "min" || q === "dim") ? 3 : 4, up = q === "min" || q === "dim" ? [12, 14, 15, 17] : (q === "dom" ? [12, 13, 16, 17] : [12, 14, 16, 17]), dn = q === "min" || q === "dim" ? [17, 15, 14, 12] : (q === "dom" ? [17, 16, 13, 12] : [17, 16, 14, 12]);
+    var step = q === "maj" ? [24, 23, 21, 19, 17] : (q === "dom" ? [24, 22, 20, 19, 17] : [24, 22, 20, 19, 17]), arr = [], g, pat;
+    pat = []; for (g = 0; g < 4; g++) { pat.push(f([3 * g, 2, g % 2 === 0 ? 0 : 7, 1])); pat.push(f([3 * g + 1, 1, 12 + t, 0])); pat.push(f([3 * g + 2, 1, 19, 0])); } arr.push("0@0:" + pat.join(";"));
+    pat = []; for (g = 0; g < 4; g++) { pat.push(f([3 * g, 1.5, g % 2 === 0 ? 0 : 7, 1])); pat.push(f([3 * g + 1, 1, 24, 0])); pat.push(f([3 * g + 2, 1, 12 + t, 0])); } arr.push("0@0:" + pat.join(";"));
+    pat = [f([0, 1, 0, 1])]; up.forEach(function (iv, j) { pat.push(f([1 + j, 1, iv, 0])); }); pat.push(f([5, 3, 19, 8])); dn.forEach(function (iv, j) { pat.push(f([8 + j, 1, iv, 0])); }); arr.push("0@0:" + pat.join(";"));
+    pat = []; [0, 7, 12, 12 + t, 19].forEach(function (iv) { pat.push(f([0, 3, iv, 16])); }); step.forEach(function (iv, j) { pat.push(f([3 + 2 * j, j === 4 ? 1 : 2, iv, 0])); }); arr.push("0@0:" + pat.join(";"));
+    var ex2 = serExtra(q, 12); ["C1", "AM1", "AM3", "AM4"].forEach(function (k) { arr.push(ex2[k]); });
+    out[q + "_12"] = arr;
+  });
+  return out;
+}
+var SER_BU = serBuBuild();
 function yamPatStem(song, opt, st, cfg) {
   if (!song || !st || !st.notes || st.notes.length < 12) return 0;
-  var L = cfg.unit, len16 = Math.round(L * 4), P = cfg.P, sd = Math.abs(Math.round(opt.seed || 1)) || 1, R = RNG(((sd * 3187 + 83) % 2147483646) + 1), ab = absChords(song), n = 0;
+  var L = cfg.unit, len16 = Math.round(L * 4), P = cfg.P, sd = Math.abs(Math.round(opt.seed || 1)) || 1, R = RNG(((sd * (cfg.salt || 3187) + 83) % 2147483646) + 1), ab = absChords(song), n = 0, PT = cfg.pats || YAM_PATS;
   var qOf = function (c) { var q = String(c.q || ""); return isDom(q) ? "dom" : /dim/.test(q) ? "dim" : (/^(m(?!aj)|min)/.test(q) ? "min" : "maj"); };
   var cAt = function (t) { var c0 = ab[0], z; for (z = 0; z < ab.length; z++) { if (ab[z].t <= t + 1e-6) c0 = ab[z]; else break; } return c0; };
-  var cache = {}, get = function (q) { var k = q + "_" + len16; if (cache[k]) return cache[k]; cache[k] = (YAM_PATS[k] || []).map(function (e) { var a = e.split(":"), h = a[0].split("@"); return { deg: +h[0], w: +(h[1] || 0), n: a[1].split(";").map(function (z) { var b = z.split(","); return { q: +b[0], d: +b[1], iv: +b[2], f: +(b[3] || 0) }; }) }; }); return cache[k]; };
+  var cache = {}, get = function (q) { var k = q + "_" + len16; if (cache[k]) return cache[k]; cache[k] = (PT[k] || []).map(function (e) { var a = e.split(":"), h = a[0].split("@"); return { deg: +h[0], w: +(h[1] || 0), n: a[1].split(";").map(function (z) { var b = z.split(","); return { q: +b[0], d: +b[1], iv: +b[2], f: +(b[3] || 0) }; }) }; }); return cache[k]; };
   var byBar = {}; st.notes.forEach(function (x) { var bi = Math.floor(x.t / L + 1e-6); (byBar[bi] = byBar[bi] || []).push(x); });
   var out = [], drop = {}, nBars = Math.ceil((song.totalBeats || 0) / L), bi, lastP = null, lastPat = null;
   var hasStroke = function (a) { var s2 = a.slice().sort(function (x, y) { return x.t - y.t; }), i, j; for (i = 0; i < s2.length; i++) { j = i; while (j + 1 < s2.length && s2[j + 1].t - s2[i].t < 0.12) j++; if (j - i >= 2) return true; i = j; } return false; };
@@ -23733,7 +23810,7 @@ function yamPatStem(song, opt, st, cfg) {
     var orig = byBar[bi]; if (!orig || orig.length < 3 || !R.chance(P)) continue;
     if (cfg.skipStroke && hasStroke(orig)) continue;
     var t0 = bi * L, c0 = cAt(t0 + 0.01), c1 = cAt(t0 + L - 0.01); if (c0 !== c1) continue;
-    var pool = get(qOf(c0)); if (pool.length < 8) continue;
+    var pool = get(qOf(c0)); if (pool.length < (cfg.minPool || 8)) continue;
     var root = ((c0.root % 12) + 12) % 12, low0 = Math.min.apply(null, orig.map(function (x) { return x.p; })), pat = null, tr, bestD = 99, bestLow = 0;
     for (tr = 0; tr < 24; tr++) {
       var cand = pool[Math.floor(R.f() * pool.length)]; if (cand === lastPat) continue;
@@ -23775,6 +23852,10 @@ function yamOtherApply(song, opt, kind) {
     var st = song.stems[0], lam = /^(granaina|rondena|malaguena|minera|taranta|tientos|seguiriya|sole12)/.test(f), unit = /^(bulerias|sole12|alegrias|cantinas|fandangos|guajira|seguiriya|zapateado)/.test(f) ? 3 : 4;
     var P = opt.yamPFl != null ? opt.yamPFl : (lam ? (unit === 4 ? 0.55 : 0.28) : 0.08);
     m = yamPatStem(song, opt, st, { unit: unit, P: P, skipStroke: true }); n += m; song.yamFl = m;
+    var tSer = (song.opt && song.opt.tempo) || 100, SERW = /^granaina/.test(f) ? 0.5 : /^(taranta|minera)/.test(f) ? 0.45 : /^guajira/.test(f) ? 0.2 : /^sole12/.test(f) ? 0.15 : /^alegrias/.test(f) ? 0.15 : /^fandangos/.test(f) ? 0.15 : /^(malaguena|rondena)/.test(f) ? 0.15 : /^tientos/.test(f) ? 0.12 : /^farruca/.test(f) ? 0.4 : /^(rumba|tanguillo|zapateado)/.test(f) ? 0.15 : 0;
+    var BUW = /^bulerias/.test(f) ? 0.22 : /^(sole12|soleamod12|solealetra12|soleaporbuleria12)/.test(f) ? 0.18 : /^(alegrias|cantinas)/.test(f) ? 0.18 : 0;
+    if (opt.serBu !== false && unit === 3 && tSer <= 220 && (BUW || opt.serBuP != null)) { m = yamPatStem(song, opt, st, { unit: unit, P: opt.serBuP != null ? opt.serBuP : BUW, skipStroke: true, pats: SER_BU, minPool: 3, salt: 6007 }); n += m; song.serBu = m; }
+    if (opt.serPat !== false && tSer <= 130 && (SERW || opt.serP != null)) { m = yamPatStem(song, opt, st, { unit: unit, P: opt.serP != null ? opt.serP : SERW, skipStroke: true, pats: SER_PATS, minPool: 3, salt: 5413 }); n += m; song.serFl = m; }
     yamDynStem(song, opt, st, opt.yamDynFl != null ? opt.yamDynFl : 0.45, unit === 3 ? 12 : 4);
   } else if (kind === "tango") {
     var g = varStem(song, "gsl"); if (g) { m = yamPatStem(song, opt, g, { unit: 4, P: opt.yamPTg != null ? opt.yamPTg : 0.5, skipStroke: false }); n += m; song.yamTg = m; yamDynStem(song, opt, g, 0.8, 4); }
@@ -25746,7 +25827,7 @@ function generateP(opt) {                                                       
         if (stS && stS.notes && stS.notes.length) { var fmS = FORMS[opt.form] || {}; sgV._themeFix = themeFoundationFix(stS.notes, absChords(sgV), ((opt.tonic || 0) % 12 + 12) % 12, !!fmS.minor, opt); }
       } catch (eT4) {}
     }
-    if (soloK) { try { sgV._soloBase = soloBaseOf(soloK, opt.form); soloMerge(sgV, soloK); soloHuman(sgV, soloK, opt); if (soloK === "cgsolo" && opt.yamPat !== false) { try { yamPatApply(sgV, opt); yamDynApply(sgV, opt); } catch (eYM) { if (typeof console !== "undefined" && console.warn) console.warn("yamPat:", eYM && eYM.message); } } if (soloK === "flsolo" && (opt.tangosPM || (opt.tangosPM !== false && /^(tangos|rumba|bulerias|sole12|alegrias|taranta|minera|cantinas|fandangos|zapateado|tientos|seguiriya|rondena|granaina|guajira12|malaguena)/.test(String(opt.form || ""))))) { try { tangosPMApply(sgV, opt); yamOtherApply(sgV, opt, "flsolo"); } catch (eTP) { if (typeof console !== "undefined" && console.warn) console.warn("tangosPM:", eTP && eTP.message); } } sgV.opt.style = soloK; if (sgV.optIn) sgV.optIn.style = soloK; sgV.sty = STYLES[soloK]; } catch (eS) { if (typeof console !== "undefined" && console.warn) console.warn("solo:", eS && eS.message); } }
+    if (soloK) { try { sgV._soloBase = soloBaseOf(soloK, opt.form); soloMerge(sgV, soloK); soloHuman(sgV, soloK, opt); if (soloK === "cgsolo" && opt.yamPat !== false) { try { yamPatApply(sgV, opt); yamDynApply(sgV, opt); } catch (eYM) { if (typeof console !== "undefined" && console.warn) console.warn("yamPat:", eYM && eYM.message); } } if (soloK === "flsolo" && (opt.tangosPM || (opt.tangosPM !== false && /^(tangos|rumba|bulerias|sole12|alegrias|taranta|minera|cantinas|fandangos|zapateado|tientos|seguiriya|rondena|granaina|guajira12|malaguena)/.test(String(opt.form || ""))))) { try { tangosPMApply(sgV, opt); yamOtherApply(sgV, opt, "flsolo"); } catch (eTP) { if (typeof console !== "undefined" && console.warn) console.warn("tangosPM:", eTP && eTP.message); } } if (soloK === "flsolo" && /^(farruca|tanguillo)/.test(String(opt.form || ""))) { try { yamOtherApply(sgV, opt, "flsolo"); } catch (eFa) { if (typeof console !== "undefined" && console.warn) console.warn("yamOther:", eFa && eFa.message); } } sgV.opt.style = soloK; if (sgV.optIn) sgV.optIn.style = soloK; sgV.sty = STYLES[soloK]; } catch (eS) { if (typeof console !== "undefined" && console.warn) console.warn("solo:", eS && eS.message); } }
     if (!soloK && opt.style === "gypsy") { try { gypsyCompReach(sgV); } catch (eG) {} }      /* リズムギターを押さえられる和音に */
     if (opt.playFix !== false) { try { guitarStemPlayable(sgV, opt); } catch (eP) {} }
     if (opt.themeFix !== false && !opt.theme && !opt.noThemeFix && !soloK && (THEME_FIX[opt.style] || /^(rk_|fu_|mcl_)/.test(opt.style))) {          /* 変化の在庫（強拍へ寄せる・別の和音の音へ・反復進行）が、あとから半音のぶつかりを作るので、もう一度、土台を整える */
