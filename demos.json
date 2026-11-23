@@ -1,5 +1,98 @@
 [
  {
+  "id": "2026-11-24_gs_chrono_valse-mineur",
+  "date": "2026-11-24",
+  "style": "gs_chrono",
+  "styleShort": "時の旅のRPG風（ゲーム音楽）",
+  "styleLabel": "時の旅のRPG風（クロノ系：ケルト・民族の笛と弦、ピアノ、ナイロンギター、短調が多い）",
+  "form": "gm_field",
+  "formLabel": "フィールド（3拍子・転調つき）",
+  "title": "Valse Mineur (Dm)",
+  "key": "Dm → Em",
+  "tempo": 88,
+  "tempoGenerated": 88,
+  "bars": 77,
+  "seed": 20261867,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Flute line (theme)",
+    "prog": 73
+   },
+   {
+    "id": "comp",
+    "name": "Strings / piano",
+    "prog": 48
+   },
+   {
+    "id": "bass",
+    "name": "Pizzicato bass",
+    "prog": 43
+   },
+   {
+    "id": "drums",
+    "name": "Cymbal",
+    "prog": 0
+   },
+   {
+    "id": "horn",
+    "name": "Horn (counter)",
+    "prog": 60
+   },
+   {
+    "id": "harp",
+    "name": "Harp",
+    "prog": 46
+   }
+  ],
+  "chordsOneChorus": [
+   "Dm",
+   "Gm",
+   "C",
+   "F",
+   "Bb",
+   "Edim",
+   "Dm",
+   "Am",
+   "Dm",
+   "Gm",
+   "C",
+   "F",
+   "Bb",
+   "Edim",
+   "Gm",
+   "Dm",
+   "Gm",
+   "C",
+   "F",
+   "Bb",
+   "Edim",
+   "Am",
+   "Dm",
+   "Am",
+   "Dm",
+   "C",
+   "Bb",
+   "Am",
+   "Dm",
+   "Gm",
+   "Gm",
+   "Dm"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "midi": "demos/2026-11-24_gs_chrono_valse-mineur/2026-11-24_gs_chrono_valse-mineur_all.mid",
+   "info": "demos/2026-11-24_gs_chrono_valse-mineur/info.md"
+  },
+  "audio": "demos/2026-11-24_gs_chrono_valse-mineur/2026-11-24_gs_chrono_valse-mineur.mp3",
+  "video": "demos/2026-11-24_gs_chrono_valse-mineur/2026-11-24_gs_chrono_valse-mineur.mp4",
+  "videoKind": "voicelead",
+  "cover": "covers/2026-11-24_gs_chrono_valse-mineur.jpg",
+  "coverKind": "generated"
+ },
+ {
   "id": "2026-11-24_cgsolo_chaconne16",
   "date": "2026-11-24",
   "style": "cgsolo",
