@@ -1,0 +1,59 @@
+{
+  "id": "2026-11-24_flsolo_granaina16",
+  "date": "2026-11-24",
+  "style": "flsolo",
+  "styleShort": "フラメンコギター・ソロ",
+  "styleLabel": "フラメンコギター・ソロ（1本のギターだけで弾く）",
+  "form": "granaina16",
+  "formLabel": "グラナイーナ 16小節（サス和音の平行移動）",
+  "title": "Granaína de la Luna (E)",
+  "key": "E",
+  "tempo": 84,
+  "tempoGenerated": 84,
+  "bars": 77,
+  "seed": 20261124,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Flamenco Guitar",
+      "prog": 24
+    }
+  ],
+  "chordsOneChorus": [
+    "B7b9",
+    "B(b9,11)",
+    "Csus2",
+    "Dsus2",
+    "Emaj7(#11)",
+    "Dsus2",
+    "Cmaj7(#11)",
+    "B(b9,11)",
+    "Bsus4(b9)",
+    "B(b9)",
+    "Am9(11)",
+    "Gmaj7(#11)",
+    "Fmaj7(#11)",
+    "Emaj7(#11)",
+    "Cmaj7(#11)",
+    "B(b9,11)"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-24_flsolo_granaina16/2026-11-24_flsolo_granaina16_midi-set.zip",
+    "midi": "demos/2026-11-24_flsolo_granaina16/2026-11-24_flsolo_granaina16_all.mid",
+    "info": "demos/2026-11-24_flsolo_granaina16/info.md"
+  },
+  "tab": true,
+  "playable": {
+    "Flamenco Guitar": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 17
+    }
+  },
+  "audio": "demos/2026-11-24_flsolo_granaina16/2026-11-24_flsolo_granaina16.mp3"
+}

@@ -1,5 +1,138 @@
 [
  {
+  "id": "2026-11-24_cgsolo_chaconne16",
+  "date": "2026-11-24",
+  "style": "cgsolo",
+  "styleShort": "クラシックギター・ソロ",
+  "styleLabel": "クラシックギター・ソロ（1本のギターだけで弾く）",
+  "form": "chaconne16",
+  "formLabel": "シャコンヌ 16小節（下降する低音）",
+  "title": "Chaconne d'Automne (Dm)",
+  "key": "Dm",
+  "tempo": 62,
+  "tempoGenerated": 62,
+  "bars": 90,
+  "seed": 20261123,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Classical Guitar",
+    "prog": 24
+   }
+  ],
+  "chordsOneChorus": [
+   "Dm",
+   "C",
+   "A#",
+   "A7",
+   "Dm",
+   "C",
+   "A#",
+   "A7",
+   "Dm",
+   "C",
+   "A#",
+   "D#7",
+   "Dm7",
+   "C",
+   "A#",
+   "A7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-24_cgsolo_chaconne16/2026-11-24_cgsolo_chaconne16_midi-set.zip",
+   "midi": "demos/2026-11-24_cgsolo_chaconne16/2026-11-24_cgsolo_chaconne16_all.mid",
+   "info": "demos/2026-11-24_cgsolo_chaconne16/info.md"
+  },
+  "tab": true,
+  "playable": {
+   "Classical Guitar": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 0
+   }
+  },
+  "audio": "demos/2026-11-24_cgsolo_chaconne16/2026-11-24_cgsolo_chaconne16.mp3",
+  "scorePages": [
+   "scores/2026-11-24_cgsolo_chaconne16-1.png"
+  ],
+  "cover": "covers/2026-11-24_cgsolo_chaconne16.jpg",
+  "coverKind": "generated",
+  "video": "demos/2026-11-24_cgsolo_chaconne16/2026-11-24_cgsolo_chaconne16.mp4",
+  "videoKind": "tab"
+ },
+ {
+  "id": "2026-11-24_flsolo_granaina16",
+  "date": "2026-11-24",
+  "style": "flsolo",
+  "styleShort": "フラメンコギター・ソロ",
+  "styleLabel": "フラメンコギター・ソロ（1本のギターだけで弾く）",
+  "form": "granaina16",
+  "formLabel": "グラナイーナ 16小節（サス和音の平行移動）",
+  "title": "Granaína de la Luna (E)",
+  "key": "E",
+  "tempo": 84,
+  "tempoGenerated": 84,
+  "bars": 77,
+  "seed": 20261124,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Flamenco Guitar",
+    "prog": 24
+   }
+  ],
+  "chordsOneChorus": [
+   "B7b9",
+   "B(b9,11)",
+   "Csus2",
+   "Dsus2",
+   "Emaj7(#11)",
+   "Dsus2",
+   "Cmaj7(#11)",
+   "B(b9,11)",
+   "Bsus4(b9)",
+   "B(b9)",
+   "Am9(11)",
+   "Gmaj7(#11)",
+   "Fmaj7(#11)",
+   "Emaj7(#11)",
+   "Cmaj7(#11)",
+   "B(b9,11)"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-24_flsolo_granaina16/2026-11-24_flsolo_granaina16_midi-set.zip",
+   "midi": "demos/2026-11-24_flsolo_granaina16/2026-11-24_flsolo_granaina16_all.mid",
+   "info": "demos/2026-11-24_flsolo_granaina16/info.md"
+  },
+  "tab": true,
+  "playable": {
+   "Flamenco Guitar": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 17
+   }
+  },
+  "audio": "demos/2026-11-24_flsolo_granaina16/2026-11-24_flsolo_granaina16.mp3",
+  "scorePages": [
+   "scores/2026-11-24_flsolo_granaina16-1.png",
+   "scores/2026-11-24_flsolo_granaina16-2.png"
+  ],
+  "cover": "covers/2026-11-24_flsolo_granaina16.jpg",
+  "coverKind": "generated",
+  "video": "demos/2026-11-24_flsolo_granaina16/2026-11-24_flsolo_granaina16.mp4",
+  "videoKind": "tab"
+ },
+ {
   "id": "2026-11-23_gypsy_manouche32",
   "date": "2026-11-23",
   "style": "gypsy",

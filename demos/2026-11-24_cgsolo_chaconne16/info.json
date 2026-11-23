@@ -1,0 +1,59 @@
+{
+  "id": "2026-11-24_cgsolo_chaconne16",
+  "date": "2026-11-24",
+  "style": "cgsolo",
+  "styleShort": "クラシックギター・ソロ",
+  "styleLabel": "クラシックギター・ソロ（1本のギターだけで弾く）",
+  "form": "chaconne16",
+  "formLabel": "シャコンヌ 16小節（下降する低音）",
+  "title": "Chaconne d'Automne (Dm)",
+  "key": "Dm",
+  "tempo": 62,
+  "tempoGenerated": 62,
+  "bars": 90,
+  "seed": 20261123,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Classical Guitar",
+      "prog": 24
+    }
+  ],
+  "chordsOneChorus": [
+    "Dm",
+    "C",
+    "A#",
+    "A7",
+    "Dm",
+    "C",
+    "A#",
+    "A7",
+    "Dm",
+    "C",
+    "A#",
+    "D#7",
+    "Dm7",
+    "C",
+    "A#",
+    "A7"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-24_cgsolo_chaconne16/2026-11-24_cgsolo_chaconne16_midi-set.zip",
+    "midi": "demos/2026-11-24_cgsolo_chaconne16/2026-11-24_cgsolo_chaconne16_all.mid",
+    "info": "demos/2026-11-24_cgsolo_chaconne16/info.md"
+  },
+  "tab": true,
+  "playable": {
+    "Classical Guitar": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    }
+  },
+  "audio": "demos/2026-11-24_cgsolo_chaconne16/2026-11-24_cgsolo_chaconne16.mp3"
+}
