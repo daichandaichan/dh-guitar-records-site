@@ -26067,11 +26067,97 @@ function flamPersonality(opt) {
   if (opt.introBars == null) { opt.introBars = r.wpick([[1, 2], [2, 4], [3, 1]]); got.push("前奏" + opt.introBars); }
   opt.personaNote = got.join("／");
 }
+/* ===== ベースの対峙（2026-11-24）：ユーザー「ベースがおとなしいのでギターと対峙するような演奏に」。opt.bassCounter:true（実験ロック・フュージョン系で使う）。
+   ソロ・締めの合図のセクションで、ベースを、ギターの動きに応える旋律的な演奏に置き換える（テーマ部は従来のユニゾンのまま）：
+   ギターの音が詰まっている小節＝リズムを合わせる（根音・オクターヴの16分の刻みで、ギターの頭にアクセントを合わせる）／ギターが休み・長い音の小節＝応答（和音の音階で走る8分・16分のフレーズ）／
+   小節の終わりは次の和音の根音へ半音で近づく。ソロが進むほど音数と強さが増える。ベースの音域は MIDI 28〜57。opt.bassCounterP で密度を変える（既定 1）。 */
+function bassCounterApply(song, opt) {
+  if (!song || !song.stems || !opt.bassCounter) return 0;
+  var bs = null, i, k; song.stems.forEach(function (x) { if (x.id === "bass") bs = x; }); if (!bs) return 0;
+  var ab = absChords(song), R = RNG((((opt.seed || 1) * 8219) + 97) % 2147483647), P = opt.bassCounterP != null ? opt.bassCounterP : 1;
+  var ts0 = (song.form && song.form.ts) ? song.form.ts[0] : 4, secs = (song.sections || []).filter(function (x) { return x.kind === "solo" || x.kind === "shout"; }), nSec = secs.length, added = 0;
+  var chordAtT = function (t) { var c = ab[0]; for (var z = 0; z < ab.length; z++) { if (ab[z].t <= t + 1e-6) c = ab[z]; else break; } return c; };
+  var gstems = song.stems.filter(function (x) { return x.id === "solo" || x.id === "mel"; });
+  var scaleOf = function (c) { var Q = QUAL[c.q] || QUAL.min, sc = (Q.sc || [0, 2, 3, 5, 7, 8, 10]).map(function (x) { return (c.root + x) % 12; }); return sc; };
+  var nearest = function (pc, ref) { var best = 28, bd = 99, o; for (o = 28; o <= 57; o++) if (o % 12 === pc && Math.abs(o - ref) < bd) { bd = Math.abs(o - ref); best = o; } return best; };
+  secs.forEach(function (S, si) {
+    var inten = nSec > 1 ? si / (nSec - 1) : 0.5, dens = (0.55 + 0.45 * inten) * P, vb = 84 + Math.round(26 * inten), end = S.at + S.beats;
+    bs.notes = bs.notes.filter(function (x) { return !(x.t >= S.at - 1e-6 && x.t < end - 1e-6); });
+    var gn = []; gstems.forEach(function (g) { g.notes.forEach(function (x) { if (x.t >= S.at - 1e-6 && x.t < end - 1e-6) gn.push(x); }); });
+    var ref = 40, bar, nb = Math.floor(S.beats / ts0 + 1e-6);
+    for (bar = 0; bar < nb; bar++) {
+      var t0 = S.at + bar * ts0, t1 = t0 + ts0, c = chordAtT(t0), cn = chordAtT(t1 + 0.01), sc = scaleOf(c), root = ((c.root % 12) + 12) % 12, fifth = (root + 7) % 12;
+      var on = gn.filter(function (x) { return x.t >= t0 - 1e-6 && x.t < t1 - 1e-6; }), act = on.length, rest = ts0 * 4 - Math.min(ts0 * 4, on.map(function (x) { return Math.round((x.t - t0) * 4); }).filter(function (v, j, a) { return a.indexOf(v) === j; }).length);
+      var onset = {}; on.forEach(function (x) { onset[Math.round((x.t - t0) * 4)] = 1; });
+      var mode = act >= ts0 * 2.2 ? "lock" : (rest > ts0 * 2.2 ? "answer" : (R.chance(0.5) ? "lock" : "answer"));
+      if (bar % 4 === 3 && R.chance(0.6)) mode = "fill";
+      var out = [], push = function (st, du, p, v) { if (p < 28) p += 12; if (p > 57) p -= 12; out.push({ t: t0 + st / 4, d: Math.max(0.12, du / 4 * 0.92), p: p, v: Math.max(40, Math.min(124, Math.round(v))) }); ref = p; };
+      var steps = ts0 * 4, st;
+      if (mode === "lock") {                                   /* ギターに合わせて刻む：頭を合わせ、間は根音・オクターヴ・5度 */
+        for (st = 0; st < steps; st++) {
+          var hit = onset[st], strong = st % 4 === 0;
+          if (hit && R.chance(0.85 * Math.min(1, dens + 0.2))) { push(st, 1, nearest(root, st % 8 === 0 ? 36 : 48), vb + (strong ? 10 : 0)); }
+          else if (!hit && R.chance(0.28 * dens)) { push(st, 1, R.pick([nearest(root, 36), nearest(root, 48), nearest(fifth, 43)]), vb - 14); }
+        }
+      } else if (mode === "answer") {                          /* ギターが休む所で、和音の音階を走る */
+        var idx = R.i(sc.length), dir = R.chance(0.5) ? 1 : -1, cur = nearest(sc[idx], ref);
+        for (st = 0; st < steps; st++) {
+          if (onset[st] && R.chance(0.7)) continue;            /* ギターの音の頭は空ける（応答） */
+          if (!R.chance(0.78 * dens)) continue;
+          if (R.chance(0.2)) dir = -dir;
+          idx = (idx + dir + sc.length * 4) % sc.length; var pitch = nearest(sc[idx], cur + (dir > 0 ? 2 : -2)); cur = pitch;
+          push(st, R.chance(0.7) ? 1 : 2, pitch, vb - 4 + R.i(10));
+        }
+      } else {                                                  /* 区切りのフィル：16分の速い走句とオクターヴの跳び */
+        var idx2 = R.i(sc.length), cur2 = nearest(sc[idx2], 40), dir2 = R.chance(0.5) ? 1 : -1;
+        for (st = Math.max(0, steps - 10); st < steps; st++) { idx2 = (idx2 + dir2 + sc.length * 4) % sc.length; cur2 = nearest(sc[idx2], cur2 + dir2 * 2); push(st, 1, cur2, vb + 6 + (st - (steps - 10))); }
+        push(0, 3, nearest(root, 36), vb + 10);
+      }
+      /* 小節の終わり：次の和音の根音へ半音で近づく */
+      if (cn && cn !== c && R.chance(0.7 * dens)) { var rn = ((cn.root % 12) + 12) % 12; push(steps - 1, 1, nearest((rn + (R.chance(0.5) ? 11 : 1)) % 12, ref), vb); }
+      if (bar === 0 && !out.some(function (x) { return x.t <= t0 + 0.01; })) push(0, 2, nearest(root, 36), vb + 12);
+      out.forEach(function (x) { bs.notes.push(x); added++; });
+    }
+  });
+  bs.notes.sort(function (x, y) { return x.t - y.t || x.p - y.p; });
+  song.bassCounter = added; return added;
+}
+/* ===== モンクの全音音階（2026-11-24）：ユーザー「モンクの特徴的な、ドミナント7thコード上でホールトーンスケールを、随所、曲の転換時にたまに入れてほしい」。
+   ピアノ・ソロ（pianosolo）で語法が monk のとき、曲の転換（セクションの変わり目、コーラスの A→B・B→A の入り）の直前の小節が、ドミナント7thの和音なら、
+   その小節の右手（MIDI 62 以上）の音を、その和音の根音からの全音音階（0・2・4・6・8・10）の短い走句（8分、上行か下行、だんだん強く、最後を伸ばす）に置き換える。
+   割合 opt.monkWholeP（既定 0.55）、opt.monkWhole:false で止める。song.monkWhole に置き換えた数と位置を入れる。 */
+function monkWholeApply(song, opt) {
+  if (!song || !song.stems || !song.chords || opt.monkWhole === false || opt.style !== "pianosolo" || opt.voice !== "monk") return 0;
+  var st = song.stems[0]; if (!st || !st.notes) return 0;
+  var R = RNG((((opt.seed || 1) * 6151) + 71) % 2147483647), P = opt.monkWholeP != null ? opt.monkWholeP : 0.55, ab = absChords(song), form = song.form || FORMS[opt.form] || {}, bpc = (form.ts ? form.ts[0] : 4) * (form.bars || 32);
+  var T = [], i, k;
+  (song.sections || []).forEach(function (x, j) { if (j > 0 && x.kind !== "tag") T.push(x.at); });
+  (song.sections || []).forEach(function (x) { if (x.kind === "head" || x.kind === "solo") for (k = 1; k <= 3; k++) if (k !== 2) T.push(x.at + k * bpc / 4); else T.push(x.at + k * bpc / 4); });
+  T = T.filter(function (t, j) { return T.indexOf(t) === j && t > 4; }).sort(function (a, b) { return a - b; });
+  var done = [], n = 0;
+  T.forEach(function (t0) {
+    var c = null; for (i = 0; i < ab.length; i++) if (ab[i].t < t0 - 0.01 && ab[i].t + 0.001 >= t0 - 4.5) c = ab[i];
+    var cc = null; for (i = 0; i < ab.length; i++) if (ab[i].t <= t0 - 0.5 + 1e-6) cc = ab[i]; c = cc || c;
+    if (!c || !isDom(c.q) || !R.chance(P)) return;
+    var a0 = Math.max(0, t0 - 2), a1 = t0;                                   /* 転換の直前の2拍に入れる */
+    var inR = st.notes.filter(function (x) { return x.t >= a0 - 1e-6 && x.t < a1 - 1e-6 && x.p >= 62; });
+    var med = inR.length ? inR.map(function (x) { return x.p; }).sort(function (a, b) { return a - b; })[Math.floor(inR.length / 2)] : 72;
+    st.notes = st.notes.filter(function (x) { return !(x.t >= a0 - 1e-6 && x.t < a1 - 1e-6 && x.p >= 62); });
+    var root = ((c.root % 12) + 12) % 12, ws = [0, 2, 4, 6, 8, 10], up = R.chance(0.6), start = med - 4, cnt = 4, p0 = null, bestd = 99, o;
+    for (o = 48; o <= 96; o++) if (((o - root) % 12 + 12) % 12 === 0 && Math.abs(o - start) < bestd) { bestd = Math.abs(o - start); p0 = o; }
+    p0 = Math.max(60, Math.min(78, p0 || 66));
+    var pitches = []; for (k = 0; k < cnt; k++) pitches.push(up ? p0 + ws[k % 6] + 12 * Math.floor(k / 6) : p0 + 12 - ws[k % 6]);
+    for (k = 0; k < cnt; k++) st.notes.push({ t: a0 + k * 0.5, d: k === cnt - 1 ? 0.9 : 0.42, p: Math.max(60, Math.min(92, pitches[k])), v: 70 + k * 6 });
+    done.push({ at: a0, chord: c.root + ":" + c.q }); n++;
+  });
+  st.notes.sort(function (x, y) { return x.t - y.t || x.p - y.p; });
+  song.monkWhole = done; return n;
+}
 function generate(opt) {
   var top = !PERSONA && VAR_DEPTH === 0;
   if (top) flamPersonality(opt);
   if (top) personaInit(opt);
-  try { return generateP(opt); } finally { if (top) PERSONA = null; }
+  try { var sg = generateP(opt); if (top) { try { bassCounterApply(sg, opt); } catch (eBC) { if (typeof console !== "undefined" && console.warn) console.warn("bassCounter:", eBC && eBC.message); } try { monkWholeApply(sg, opt); } catch (eMW) { if (typeof console !== "undefined" && console.warn) console.warn("monkWhole:", eMW && eMW.message); } } return sg; } finally { if (top) PERSONA = null; }
 }
 function generateCore(opt) {
   /* 旋律の音域の既定（2026-11-15） */ if (opt && (opt.melLo == null || !isFinite(opt.melLo))) opt.melLo = 55; if (opt && (opt.melHi == null || !isFinite(opt.melHi))) opt.melHi = 84;                                                              /* dq／ff は game の場面を分けた曲種：中身は game で作り、出力の style だけ元に戻す */

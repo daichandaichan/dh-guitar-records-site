@@ -1,5 +1,126 @@
 [
  {
+  "id": "2026-11-25_pg_elp_rk_elp1",
+  "date": "2026-11-25",
+  "style": "pg_elp",
+  "styleShort": "プログレ：ELP型",
+  "styleLabel": "プログレ：ELP型（エマーソン・レイク＆パーマー／鍵盤のオスティナートとシンセ）",
+  "form": "rk_elp1",
+  "formLabel": "プログレ(鍵盤)：i のオスティナート → ♭VII ♭VI ♭VII → i → iv(ELP型) 16小節",
+  "title": "Valse d'Automne (Dm)",
+  "key": "Dm",
+  "tempo": 124,
+  "tempoGenerated": 124,
+  "bars": 93,
+  "seed": 20261125,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 29
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 29
+   },
+   {
+    "id": "comp",
+    "name": "Synth (riff/pad)",
+    "prog": 90
+   },
+   {
+    "id": "gtr2",
+    "name": "Guitar 2 (rhythm riff)",
+    "prog": 30
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   },
+   {
+    "id": "gtr3",
+    "name": "Guitar 3 (harmony)",
+    "prog": 30
+   },
+   {
+    "id": "gtr4",
+    "name": "Guitar 4 (riff double / harmony)",
+    "prog": 30
+   }
+  ],
+  "chordsOneChorus": [
+   "Dm",
+   "Dm",
+   "Dm",
+   "Dm",
+   "C",
+   "C",
+   "A#",
+   "A#",
+   "C",
+   "C",
+   "Dm7",
+   "Dm",
+   "Dm",
+   "Dm",
+   "Gm",
+   "Gm"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-25_pg_elp_rk_elp1/2026-11-25_pg_elp_rk_elp1_midi-set.zip",
+   "midi": "demos/2026-11-25_pg_elp_rk_elp1/2026-11-25_pg_elp_rk_elp1_all.mid",
+   "info": "demos/2026-11-25_pg_elp_rk_elp1/info.md"
+  },
+  "playable": {
+   "Melody": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 0
+   },
+   "Solo": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 1
+   },
+   "Guitar 4 (riff double / harmony)": {
+    "tuning": "7B",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 0
+   },
+   "Guitar 3 (harmony)": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 0
+   },
+   "Guitar 2 (rhythm riff)": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 0
+   }
+  },
+  "audio": "demos/2026-11-25_pg_elp_rk_elp1/2026-11-25_pg_elp_rk_elp1.mp3"
+ },
+ {
   "id": "2026-11-24_gs_chrono_valse-mineur",
   "date": "2026-11-24",
   "style": "gs_chrono",
