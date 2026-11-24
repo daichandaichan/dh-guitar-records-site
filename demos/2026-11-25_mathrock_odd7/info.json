@@ -1,0 +1,92 @@
+{
+  "id": "2026-11-25_mathrock_odd7",
+  "date": "2026-11-25",
+  "style": "mathrock",
+  "styleShort": "実験ロック",
+  "styleLabel": "実験ロック（ギター・ベース・ドラムの3点／変拍子とループ）",
+  "form": "odd7",
+  "formLabel": "変拍子 7拍子 16小節（フリジアン）",
+  "title": "Café Mineur (Em)",
+  "key": "Em",
+  "tempo": 170,
+  "tempoGenerated": 170,
+  "bars": 122,
+  "seed": 20261251,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 30
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 30
+    },
+    {
+      "id": "comp",
+      "name": "Rhythm Gtr (riff)",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [
+    "Em9",
+    "Fmaj7",
+    "Em9",
+    "Fmaj7",
+    "Em9",
+    "D7(#11)",
+    "Em7",
+    "Em7",
+    "Em9",
+    "Fmaj7",
+    "Am11",
+    "Fmaj7",
+    "Em9",
+    "D7(#11)",
+    "B7b9",
+    "Em9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-25_mathrock_odd7/2026-11-25_mathrock_odd7_midi-set.zip",
+    "midi": "demos/2026-11-25_mathrock_odd7/2026-11-25_mathrock_odd7_all.mid",
+    "info": "demos/2026-11-25_mathrock_odd7/info.md"
+  },
+  "playable": {
+    "Melody": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Solo": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Rhythm Gtr (riff)": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    }
+  },
+  "audio": "demos/2026-11-25_mathrock_odd7/2026-11-25_mathrock_odd7.mp3"
+}
