@@ -1,5 +1,83 @@
 [
  {
+  "id": "2026-11-26_andean_an_huayno",
+  "date": "2026-11-26",
+  "style": "andean",
+  "styleShort": "アンデス",
+  "styleLabel": "アンデス（フォルクローレ：ワイノのリズム、ケーナとサンポーニャのペンタトニック、チャランゴとボンボ）",
+  "form": "an_huayno",
+  "formLabel": "ワイノ（短調）16小節（i → ♭VII → ♭VI → V・哀愁のペンタ）",
+  "title": "Altiplano Pasa (Am)",
+  "key": "Am",
+  "tempo": 112,
+  "tempoGenerated": 112,
+  "bars": 109,
+  "seed": 20261126,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 75
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 75
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 24
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Am",
+   "Am",
+   "G",
+   "Am6/9",
+   "Am",
+   "Am",
+   "F",
+   "E",
+   "Am",
+   "Am",
+   "G",
+   "Am",
+   "F",
+   "G",
+   "E",
+   "Am"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-26_andean_an_huayno/2026-11-26_andean_an_huayno_midi-set.zip",
+   "midi": "demos/2026-11-26_andean_an_huayno/2026-11-26_andean_an_huayno_all.mid",
+   "info": "demos/2026-11-26_andean_an_huayno/info.md",
+   "song": "demos/2026-11-26_andean_an_huayno/song.json"
+  },
+  "playable": {
+   "Piano": {
+    "tuning": "std",
+    "fing": 0,
+    "span": 0,
+    "str": 0,
+    "jump": 5
+   }
+  }
+ },
+ {
   "id": "2026-11-25_pg_elp_rk_elp1",
   "date": "2026-11-25",
   "style": "pg_elp",

@@ -24431,8 +24431,10 @@ function mclLickApply(song, opt) {
    メタル系・派手な歪みは AmpliTube_5_mel（YNGWIE red）と TONEX の JCM（リフ・伴奏は JCM、曲によっては旋律・ソロも JCM。ユーザー指定）。それ以外の曲種は、保存した AmpliTube の音色（presets\AmpliTube_5_t_*）から選ぶ。
    ジャズ系（jazzAmpKey が TONEX の音色を選ぶ曲種）は、そちらが先。ampToneFor(style, role) → { preset, lp, why } */
 var AMP_TONE_MAP = {
-  mel: "AmpliTube_5_mel", hard: "AmpliTube_5_t_hard", plexi: "TONEX_d_jcm", grunge: "AmpliTube_5_t_grunge", blues: "AmpliTube_5_t_blues",
-  punk: "AmpliTube_5_t_punk", country: "AmpliTube_5_t_country", clean: "TONEX_c_mayer", fusion: "AmpliTube_5_t_fusion"
+  /* 2026-11-24 ユーザー「ロック、メタルはとりあえず歪みは ToneX の JCM をデフォルトに」：メタル系（mel）・ハード・グランジ・パンクも JCM。以前の既定＝mel: AmpliTube_5_mel（YNGWIE red）／hard: AmpliTube_5_t_hard／grunge: AmpliTube_5_t_grunge／punk: AmpliTube_5_t_punk。ブルース・カントリー・クリーン・フュージョンは従来どおり */
+  /* 2026-11-24 ユーザー「ブルース・カントリー・クリーン・フュージョンは、既定は ToneX の Mayer、合えば Eric Johnson のモデルも」：blues・country も TONEX_c_mayer（以前＝AmpliTube_5_t_blues「Texas Rhythm」／t_country「Paisley Crunch」）。fusion は、旋律・ソロ＝AmpliTube_5_t_fusion（プリセット「Cliffs Of Eric」＝Eric Johnson 系）、伴奏＝Mayer。clean は元から Mayer */
+  mel: "TONEX_d_jcm", hard: "TONEX_d_jcm", plexi: "TONEX_d_jcm", grunge: "TONEX_d_jcm", blues: "TONEX_c_mayer",
+  punk: "TONEX_d_jcm", country: "TONEX_c_mayer", clean: "TONEX_c_mayer", fusion: "TONEX_c_mayer", fusionEJ: "AmpliTube_5_t_fusion"      /* フュージョンは一旦 Mayer（2026-11-24）。Eric Johnson 系『Cliffs Of Eric』＝fusionEJ（AmpliTube_5_t_fusion）は、map で明示して使う */
 };
 var AMP_TONE_STYLE = {
   mel: ["thrash", "death", "melodeath", "black", "djent", "neo", "mathrock", "bk_burzum", "bk_mayhem", "rk_xjapan", "rk_heavy", "rk_power", "rk_maiden", "pg_dt", "pg_kc", "arena", "rk_la", "rk_zappa", "rk_sabbath", "gs_castlevania"],
