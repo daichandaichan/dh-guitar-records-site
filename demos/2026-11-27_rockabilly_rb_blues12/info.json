@@ -1,0 +1,126 @@
+{
+  "id": "2026-11-27_rockabilly_rb_blues12",
+  "date": "2026-11-27",
+  "style": "rockabilly",
+  "styleShort": "ロック：ロカビリー／ロックンロール",
+  "styleLabel": "ロック：ロカビリー／ロックンロール（チャック・ベリー／バディ・ホリー型：シャッフルの12小節・ドゥーワップ／ギター2本）",
+  "form": "rb_blues12",
+  "formLabel": "ロカビリー：12小節ブルース(I7 4小節 → IV7 2 → I7 2 → V7 IV7 → I7 V7)",
+  "title": "Swing Sans Fin (C)",
+  "key": "C",
+  "tempo": 167,
+  "tempoGenerated": 167,
+  "bars": 62,
+  "seed": 20261127,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "Melody",
+      "prog": 26
+    },
+    {
+      "id": "solo",
+      "name": "Solo",
+      "prog": 26
+    },
+    {
+      "id": "comp",
+      "name": "Chord Gtr",
+      "prog": 26
+    },
+    {
+      "id": "gtr2",
+      "name": "Guitar 2 (rhythm riff)",
+      "prog": 30
+    },
+    {
+      "id": "bass",
+      "name": "Bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    },
+    {
+      "id": "gtr3",
+      "name": "Guitar 3 (harmony)",
+      "prog": 30
+    },
+    {
+      "id": "gtr4",
+      "name": "Guitar 4 (riff double / harmony)",
+      "prog": 30
+    }
+  ],
+  "chordsOneChorus": [
+    "F#13",
+    "C9",
+    "C7b9",
+    "C13",
+    "Cm7",
+    "F7",
+    "F9",
+    "C9",
+    "C9",
+    "Dm7",
+    "G7b9",
+    "F9",
+    "C9",
+    "G13"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-27_rockabilly_rb_blues12/2026-11-27_rockabilly_rb_blues12_midi-set.zip",
+    "midi": "demos/2026-11-27_rockabilly_rb_blues12/2026-11-27_rockabilly_rb_blues12_all.mid",
+    "info": "demos/2026-11-27_rockabilly_rb_blues12/info.md"
+  },
+  "playable": {
+    "Melody": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Solo": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Chord Gtr": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Guitar 4 (riff double / harmony)": {
+      "tuning": "7B",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Guitar 3 (harmony)": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    },
+    "Guitar 2 (rhythm riff)": {
+      "tuning": "std",
+      "fing": 0,
+      "span": 0,
+      "str": 0,
+      "jump": 0
+    }
+  },
+  "audio": "demos/2026-11-27_rockabilly_rb_blues12/2026-11-27_rockabilly_rb_blues12.mp3"
+}

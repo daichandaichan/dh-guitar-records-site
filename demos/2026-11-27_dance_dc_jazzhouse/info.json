@@ -1,0 +1,52 @@
+{
+  "id": "2026-11-27_dance_dc_jazzhouse",
+  "date": "2026-11-27",
+  "style": "dance",
+  "styleShort": "ダンス",
+  "styleLabel": "ダンス（DJ風：ハウス・トランス／歌メロつき）",
+  "form": "dc_jazzhouse",
+  "formLabel": "ディープ・ジャズハウス 122BPM（短調ドリア：i m9 → iv m9 → ♭VII13 → ♭III maj9 ほか・エレピ＋指弾きベース）",
+  "title": "Jazz DJ Mix 7min (Ambient → Lo-Fi → Jazz House)",
+  "key": "Gm",
+  "tempo": 122,
+  "tempoGenerated": 122,
+  "bars": 129,
+  "seed": 20261271,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "E.Piano lead",
+      "prog": 4
+    },
+    {
+      "id": "comp",
+      "name": "E.Piano chords",
+      "prog": 4
+    },
+    {
+      "id": "dub",
+      "name": "Dub throws",
+      "prog": 4
+    },
+    {
+      "id": "bass",
+      "name": "Finger bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-27_dance_dc_jazzhouse/2026-11-27_dance_dc_jazzhouse_midi-set.zip",
+    "midi": "demos/2026-11-27_dance_dc_jazzhouse/2026-11-27_dance_dc_jazzhouse_all.mid",
+    "info": "demos/2026-11-27_dance_dc_jazzhouse/info.md"
+  },
+  "audio": "demos/2026-11-27_dance_dc_jazzhouse/2026-11-27_dance_dc_jazzhouse.mp3"
+}
