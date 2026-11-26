@@ -1970,6 +1970,20 @@ var FORMS = {
       return A.concat(A, B);
     })()
   },
+  cleo32: {
+    tempo: 240, label: "クレオパトラの夢風 32小節（短調のAABA・iiø-V7alt で主和音へ・サビは下属調から）", bars: 32, minor: true, ts: [4, 4],
+    sec: "AABA",
+    ch: (function () {
+      /* 速いハード・バップの短調の形：A＝i が続き、iiø-V7alt で主和音へ戻る／iv-♭VII7 の寄り道。B（サビ）＝iv から ♭III・♭VI の長7へ下り、iiø-V7alt で戻る */
+      var A1 = [T(0, "m69"), T(0, "m69"), T(2, "m7b5", 2), T(7, "dom7alt", 2), T(0, "m69"),
+                T(5, "m9"), T(10, "dom9"), T(2, "m7b5", 2), T(7, "dom7alt", 2), T(0, "m69", 2), T(7, "dom7alt", 2)];
+      var A2 = [T(0, "m69"), T(0, "m69"), T(2, "m7b5", 2), T(7, "dom7alt", 2), T(0, "m69"),
+                T(5, "m9"), T(10, "dom9"), T(2, "m7b5", 2), T(7, "dom7alt", 2), T(0, "m69")];
+      var B = [T(5, "m9"), T(10, "dom9"), T(3, "maj7"), T(8, "maj7"),
+               T(2, "m7b5"), T(7, "dom7alt"), T(0, "m69"), T(2, "m7b5", 2), T(7, "dom7alt", 2)];
+      return A1.concat(A2, B, A2);
+    })()
+  },
   rtfvamp16: {
     tempo: 168, label: "モーダル・ヴァンプ 16小節（sus と4度）", bars: 16, minor: true, ts: [4, 4],
     sec: "AA",
@@ -2534,7 +2548,7 @@ var STYLES = {
   bebop: {
     label: "ビバップ（速め・8分主体）", swing: 0.615, tempo: 232,
     comp: "piano", bass: "walk4", drums: "swing", mel: "bebop",
-    forms: ["monksnc12", "monkblues12", "bopblues12", "rhythm32", "cycle32", "coltrane16", "giant16", "countdown16", "hardbop32", "standard32", "mcycle32", "sym16", "mblues12", "mstd32", "giant16m", "countdown16m", "auto32", "auto16", "auto32m"],
+    forms: ["monksnc12", "monkblues12", "bopblues12", "cleo32", "rhythm32", "cycle32", "coltrane16", "giant16", "countdown16", "hardbop32", "standard32", "mcycle32", "sym16", "mblues12", "mstd32", "giant16m", "countdown16m", "auto32", "auto16", "auto32m"],
     voice: "christian", lead: 65, compProg: 0, feel: 8
   },
   ballad: {
@@ -13824,6 +13838,12 @@ var TURN_TABLES = {
   elegy: [[0, "min"], [0, "min"], [10, "maj"], [10, "maj"], [8, "maj"], [8, "maj"], [5, "min"], [5, "min"], [0, "min"], [3, "maj"], [8, "maj"], [1, "maj"], [5, "min"], [7, "dom7"], [7, "dom7b9"], [7, "dom7"]],
   storm: [[0, "min"], [1, "maj"], [0, "min"], [1, "maj"], [8, "maj"], [10, "maj"], [0, "min"], [11, "dim7"], [5, "min"], [1, "maj"], [7, "dom7"], [11, "dim7"], [7, "dom7b9"], [7, "dom7b9"], [11, "dim7"], [7, "dom7"]]
 };
+/* 逆循環（ii-V-I-VI）のヴァンプ：短調は iiø-V7alt-i-VI7alt、長調は ii7-V7-Imaj7-VI7(b9)。1小節に1つ */
+function vampChords(N, beats, tonic, minor) {
+  var C = minor ? [[2, "m7b5"], [7, "dom7alt"], [0, "m69"], [9, "dom7alt"]] : [[2, "m7"], [7, "dom7"], [0, "maj7"], [9, "dom7b9"]], out = [], b;
+  for (b = 0; b < N; b++) { var e = C[b % 4]; out.push({ root: (tonic + e[0]) % 12, q: e[1], at: b * beats, b: beats, bar: b, deg: e[0] }); }
+  return out;
+}
 function turnChords(N, beats, tonic, storyId) {
   var T = TURN_TABLES[storyId] || TURN_TABLES.hero, out = [], b;
   for (b = 0; b < N; b++) {
@@ -27823,7 +27843,16 @@ function generateMain(opt) {
   /* 承：テーマ */
   push("head", barsPerChorus, 0, { inten: useArr ? 0.35 : 0.45, play: { mel: 1, comp: 1, bass: 1, drums: 1, perc: 1 } });
   /* 転：ソロで押し上げる */
-  for (i = 0; i < opt.solos; i++) {
+  /* 合唱の順番の指定（2026-11-27）：opt.chorusPlan = ["solo","solo","solo","bass","trade:8","trade:4"]。
+     solo＝ソロ、bass＝ベース・ソロ（ピアノは薄く、ドラムはシンバル中心）、trade:N＝ドラムとのNバース交換。山場（シャウト）は作らない */
+  var CPL = (useArr && opt.chorusPlan && opt.chorusPlan.length) ? opt.chorusPlan : null;
+  if (CPL) CPL.forEach(function (e, ci) {
+    var fC = CPL.length > 1 ? ci / (CPL.length - 1) : 0.5, sC = String(e), plC = { solo: 1, comp: 1, bass: 1, drums: 1, perc: 1 };
+    if (sC.indexOf("trade") === 0) { push("trade", barsPerChorus, 0, { inten: 0.85 + 0.1 * fC, play: plC, tag: "trade" }); plan[plan.length - 1].tb = sC.split(":")[1] || "4"; }
+    else if (sC === "bass") push("solo", barsPerChorus, 0, { inten: 0.42, play: plC, tag: "bass" });
+    else push("solo", barsPerChorus, 0, { inten: 0.6 + 0.35 * fC, play: plC });
+  });
+  for (i = 0; i < (CPL ? 0 : opt.solos); i++) {
     var f2 = opt.solos > 1 ? i / (opt.solos - 1) : 0.5;
     if (soloRoles[i] === "riff") {                                       /* リフだけのコーラス：リードは休み、リフと、そのハモリ */
       push("head", barsPerChorus, 0, { inten: 0.6 + 0.35 * f2, play: { comp: 1, bass: 1, drums: 1, perc: 1 }, rt: "riffbreak" });
@@ -27833,19 +27862,22 @@ function generateMain(opt) {
       { inten: 0.6 + 0.35 * f2, play: { solo: 1, comp: 1, bass: 1, drums: 1, perc: 1 },
         stop: useArr && i === 0 && opt.solos > 1 && rng.chance(0.45), rt: soloRoles[i] === "twin" ? "twin" : undefined });
   }
-  var tradeOn = useArr && JAZZFAM && opt.useDrums && sty.drums !== "none" && opt.solos > 0 && opt.drumTrade !== false && !(opt.soloVoices && opt.soloVoices.length) &&
+  var tradeOn = useArr && JAZZFAM && opt.useDrums && sty.drums !== "none" && opt.solos > 0 && opt.drumTrade !== false && !CPL && !(opt.soloVoices && opt.soloVoices.length) &&
     barsPerChorus % 4 === 0 && barsPerChorus >= 12 && (beats === 4 || beats === 3);
   if (tradeOn) {
     /* 4バース交換：ソリストとドラムが4小節ずつ掛け合う */
     push("trade", barsPerChorus, 0, { inten: 0.85, play: { solo: 1, comp: 1, bass: 1, drums: 1, perc: 1 }, tag: "trade" });
   }
-  if (useArr && opt.solos > 0 && rng.chance(emoShout == null ? 0.7 : emoShout)) {
+  if (useArr && opt.solos > 0 && !CPL && rng.chance(emoShout == null ? 0.7 : emoShout)) {
     /* 転の頂点：全員で当てるシャウト・コーラス（テーマを1オクターヴ上で強く） */
     push("shout", barsPerChorus, 0, { inten: 1.0, play: { mel: 1, comp: 1, bass: 1, drums: 1, perc: 1 }, tag: "shout" });
   }
   /* 結：テーマに戻る */
   if (opt.outhead) push("head", barsPerChorus, 0, { inten: 0.55, play: { mel: 1, comp: 1, bass: 1, drums: 1, perc: 1 } });
-  if (tagEnd) {
+  if (CPL && opt.vampOut) {
+    /* 逆循環のヴァンプ（iiø-V7-i-VI7 を1小節ずつ）を回しながら、だんだん小さくして消える */
+    push("outro", Math.max(4, Math.round((opt.vampBars || 16) / 4) * 4), 0, { inten: 0.6, play: { solo: 1, comp: 1, bass: 1, drums: 1, perc: 1 }, tag: "vamp" });
+  } else if (tagEnd) {
     /* タグ：最後の ii-V を3回。2回は主和音へ行かずに戻り、3回目で着地して伸ばす */
     push("tag", 2, tagFrom, { inten: 0.5, play: { mel: 1, comp: 1, bass: 1, drums: 1, perc: 1 }, tag: "tag" });
     push("tag", 2, tagFrom, { inten: 0.45, play: { mel: 1, comp: 1, bass: 1, drums: 1, perc: 1 }, tag: "tag" });
@@ -28022,7 +28054,9 @@ function generateMain(opt) {
 
   var off = 0, sections = [];
   for (i = 0; i < plan.length; i++) {
-    var P = plan[i], part = (P.tag === "turn")
+    var P = plan[i], part = (P.tag === "vamp")
+      ? { chs: vampChords(P.bars, beats, opt.tonic, !!form.minor), form: (function () { var f3 = {}, k3; for (k3 in form) f3[k3] = form[k3]; f3.bars = P.bars; f3.sec = "A"; return f3; })() }
+      : (P.tag === "turn")
       ? { chs: turnChords(P.bars, beats, opt.tonic, opt.storyId), form: (function () { var f3 = {}, k3; for (k3 in form) f3[k3] = form[k3]; f3.bars = P.bars; f3.sec = "A"; return f3; })() }
       : ((P.bars === barsPerChorus && P.from === 0) ? { chs: chs, form: form } : sliceForm(P.from, P.bars));
     if (P.transpose) {
@@ -28044,7 +28078,7 @@ function generateMain(opt) {
     }
     secParts.push(part);
     var secBeats = P.bars * beats;
-    sections.push({ kind: P.kind, at: off, beats: secBeats, from: P.from || 0, orch: P.orch, tr: P.transpose || 0, pivot: P.pivot || null, bar0: Math.round(off / beats), inten: Math.round(P.inten * 100) / 100, tag: (P.tag === "turn" || P.tag === "voice") ? P.tag : undefined, rt: P.rt });
+    sections.push({ kind: P.kind, at: off, beats: secBeats, from: P.from || 0, orch: P.orch, tr: P.transpose || 0, pivot: P.pivot || null, bar0: Math.round(off / beats), inten: Math.round(P.inten * 100) / 100, tag: (P.tag === "turn" || P.tag === "voice" || P.tag === "bass" || P.tag === "vamp") ? P.tag : undefined, rt: P.rt, tb: P.tb });
     var mine = [], hn = null, sn = null;
 
     if (P.play.mel) {
@@ -28432,7 +28466,7 @@ function generateMain(opt) {
   }
   /* ②4バース交換 */
   sections.filter(function (x) { return x.kind === "trade"; }).forEach(function (tr) {
-    var nb = tr.beats / beats, blk, TB = tradeBlocks(nb, opt);
+    var nb = tr.beats / beats, blk, TB = tradeBlocks(nb, tr.tb ? { tradeBars: String(tr.tb), tempo: opt.tempo } : opt);
     if (TB) { TB.forEach(function (bk) { if (!bk.drums) return;                     /* 長さを選んだバース交換（8・2・1・だんだん短く） */
       var a = tr.at + bk.at * beats, len = Math.min(bk.len * beats, tr.at + tr.beats - a), prevSolo = solo.filter(function (n) { return n.t >= a - len && n.t < a; });
       dropWin(solo, a, a + len); dropWin(comp, a, a + len); dropWin(bass, a, a + len); dropWin(drums, a, a + len); dropWin(perc, a, a + len);
@@ -28447,6 +28481,32 @@ function generateMain(opt) {
       silentWins.push({ a: a, b: a + len - 0.02, keep: ["drums"] });
       for (k = 0; k < ans.length; k++) drums.push(ans[k]);
     }
+  });
+  /* ④ベース・ソロ（opt.chorusPlan の "bass"）：その合唱のソロの旋律を、ベースの音域へ移して単音に。ピアノの伴奏は薄く、ドラムはシンバルとハイハットだけ */
+  sections.filter(function (x) { return x.tag === "bass"; }).forEach(function (bs) {
+    var a = bs.at, z = bs.at + bs.beats, inW = function (n) { return n.t >= a - 1e-6 && n.t < z - 1e-6; };
+    var line = solo.filter(inW).sort(function (p, q) { return p.t - q.t || q.p - p.p; }), keep = [], lastT = -9, ps = [];
+    line.forEach(function (n) { if (n.t - lastT < 0.3) return; keep.push(n); lastT = n.t; ps.push(n.p); });
+    dropWin(solo, a, z); dropWin(bass, a, z);
+    ps.sort(function (p, q) { return p - q; });
+    var med = ps.length ? ps[Math.floor(ps.length / 2)] : 62, sh = 12 * Math.round((48 - med) / 12);
+    keep.forEach(function (n, q) {
+      var p = n.p + sh; while (p < 31) p += 12; while (p > 67) p -= 12;
+      var nx = keep[q + 1], dMax = nx ? Math.max(0.2, nx.t - n.t - 0.03) : 2;
+      bass.push({ t: n.t, d: Math.min(dMax, Math.max(0.25, n.d * 1.15), 2), p: p, v: Math.max(64, Math.min(118, n.v + 10)) });
+    });
+    bass.sort(function (p, q) { return p.t - q.t; });
+    comp.forEach(function (n) { if (inW(n)) n.v = Math.max(26, Math.round(n.v * 0.55)); });
+    for (k = drums.length - 1; k >= 0; k--) { var dn = drums[k]; if (!inW(dn)) continue;
+      if ([42, 44, 46, 51, 53, 59].indexOf(dn.p) < 0) drums.splice(k, 1); else dn.v = Math.max(24, Math.round(dn.v * 0.62)); }
+    for (k = perc.length - 1; k >= 0; k--) if (inW(perc[k])) perc.splice(k, 1);
+  });
+  /* ⑤逆循環のヴァンプ：区間の頭から終わりへ、強さを 100% → 12% に下げていく（フェードアウト） */
+  sections.filter(function (x) { return x.tag === "vamp"; }).forEach(function (vs) {
+    var a = vs.at, z = vs.at + vs.beats;
+    [mel, solo, comp, bass, drums, perc].forEach(function (arr) { arr.forEach(function (n) {
+      if (n.t < a - 1e-6) return; var f = Math.max(0, Math.min(1, (n.t - a) / Math.max(1, z - a)));
+      n.v = Math.max(10, Math.round(n.v * (1 - 0.88 * Math.pow(f, 0.9)))); if (n.t + n.d > z) n.d = Math.max(0.1, z - n.t); }); });
   });
   /* ③対旋律：最後のテーマ（2回目以降のテーマ）で2本目の声 */
   if (useArr && JAZZFAM && secsH.length >= 2) {
@@ -30279,7 +30339,7 @@ function buildMusicXML(song, withMelody) {
 /* ---------- 曲の保存と読み込み ----------
    生成した曲そのもの（全パートの音符・和音・構成・解説）を小さくまとめる。
    音符を保存するので、アプリの版が上がっても同じ曲を再生・書き出しできる。 */
-var BUILD_NO = 680;
+var BUILD_NO = 681;
 /* 作曲の仕組みの版：生成結果が変わる改修をしたときだけ上げる（再現コードはこの番号で判定） */
 var GEN_NO = 251;
 function r3(x) { return Math.round(x * 1000) / 1000; }

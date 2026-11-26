@@ -190,6 +190,65 @@
   "videoKind": "score"
  },
  {
+  "id": "2026-11-27_dance_dc_brokenbeat",
+  "date": "2026-11-27",
+  "style": "dance",
+  "styleShort": "ダンス",
+  "styleLabel": "ダンス（DJ風：ハウス・トランス／歌メロつき）",
+  "form": "dc_brokenbeat",
+  "formLabel": "ブロークン・ビーツ 124BPM（崩した 4 つ打ち・エレピ・ジャズの和音）",
+  "title": "Jazz DJ Mix II 7min (Acid Jazz → Bossa House → Broken Beats)",
+  "key": "Em",
+  "tempo": 124,
+  "tempoGenerated": 124,
+  "bars": 129,
+  "seed": 20261284,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "E.Piano lead",
+    "prog": 4
+   },
+   {
+    "id": "comp",
+    "name": "E.Piano chords",
+    "prog": 4
+   },
+   {
+    "id": "dub",
+    "name": "Dub throws",
+    "prog": 4
+   },
+   {
+    "id": "bass",
+    "name": "Finger bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-27_dance_dc_brokenbeat/2026-11-27_dance_dc_brokenbeat_midi-set.zip",
+   "midi": "demos/2026-11-27_dance_dc_brokenbeat/2026-11-27_dance_dc_brokenbeat_all.mid",
+   "info": "demos/2026-11-27_dance_dc_brokenbeat/info.md"
+  },
+  "audio": "demos/2026-11-27_dance_dc_brokenbeat/2026-11-27_dance_dc_brokenbeat.mp3",
+  "scorePages": [
+   "scores/2026-11-27_dance_dc_brokenbeat-1.png"
+  ],
+  "cover": "covers/2026-11-27_dance_dc_brokenbeat.jpg",
+  "coverKind": "generated",
+  "video": "demos/2026-11-27_dance_dc_brokenbeat/2026-11-27_dance_dc_brokenbeat.mp4",
+  "videoKind": "score"
+ },
+ {
   "id": "2026-11-26_andean_an_huayno",
   "date": "2026-11-26",
   "style": "andean",
