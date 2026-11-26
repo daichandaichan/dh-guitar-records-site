@@ -626,7 +626,7 @@
     }
 
     window.__demoFilter = (k) => { current = k; stop(); renderFilter(); render(); };
-    fetch("demos.json").then(r => r.ok ? r.json() : []).catch(() => []).then(list => { demos = list; renderFilter(); render(); window.__catalogCount && window.__catalogCount(list); });
+    fetch("demos.json").then(r => r.ok ? r.json() : []).catch(() => []).then(list => { const nowT = Date.now(); list = list.filter(d => !d.hidden && !(d.showFrom && nowT < Date.parse(d.showFrom))); /* showFrom（公開日時）より前の曲・hidden の曲は出さない（2026-11-27） */ demos = list; renderFilter(); render(); window.__catalogCount && window.__catalogCount(list); });
   })();
 
   // ------------------------------------------------------------

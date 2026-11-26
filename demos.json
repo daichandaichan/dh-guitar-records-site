@@ -128,7 +128,9 @@
    "scores/2026-11-27_rockabilly_rb_blues12-1.png"
   ],
   "cover": "covers/2026-11-27_rockabilly_rb_blues12.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "showFrom": "2026-11-29T00:00:00+09:00",
+  "note_showFrom": "ユーザー依頼（2026-11-27）：29日0時公開分。それまで非表示"
  },
  {
   "id": "2026-11-27_dance_dc_jazzhouse",
