@@ -1,0 +1,47 @@
+{
+  "id": "2026-11-28_dance_dc_nujazz",
+  "date": "2026-11-28",
+  "style": "dance",
+  "styleShort": "ダンス",
+  "styleLabel": "ダンス（DJ風：ハウス・トランス／歌メロつき）",
+  "form": "dc_nujazz",
+  "formLabel": "ニュー・ジャズ 96BPM（ハーフタイムの生ドラム・伸ばすエレピ・転がるベース・深い空間）",
+  "title": "Blue Hours (Nu Jazz)",
+  "key": "Cm",
+  "tempo": 96,
+  "tempoGenerated": 96,
+  "bars": 105,
+  "seed": 20261301,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "E.Piano lead",
+      "prog": 4
+    },
+    {
+      "id": "comp",
+      "name": "E.Piano chords",
+      "prog": 4
+    },
+    {
+      "id": "bass",
+      "name": "Finger bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-28_dance_dc_nujazz/2026-11-28_dance_dc_nujazz_midi-set.zip",
+    "midi": "demos/2026-11-28_dance_dc_nujazz/2026-11-28_dance_dc_nujazz_all.mid",
+    "info": "demos/2026-11-28_dance_dc_nujazz/info.md"
+  },
+  "audio": "demos/2026-11-28_dance_dc_nujazz/2026-11-28_dance_dc_nujazz.mp3"
+}
