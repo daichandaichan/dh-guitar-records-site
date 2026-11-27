@@ -134,7 +134,7 @@
  },
  {
   "id": "2026-11-28_newage_na_minor16",
-  "date": "2026-11-28",
+  "date": "2026-11-30",
   "style": "newage",
   "styleShort": "ニューエイジ",
   "styleLabel": "ニューエイジ（アンビエント：ゆったりしたアルペジオと7thの響き、静かに広がる）",
@@ -206,7 +206,8 @@
    "scores/2026-11-28_newage_na_minor16-1.png"
   ],
   "cover": "covers/2026-11-28_newage_na_minor16.jpg",
-  "coverKind": "generated"
+  "coverKind": "generated",
+  "showFrom": "2026-11-30T00:00:00+09:00"
  },
  {
   "id": "2026-11-28_dance_dc_jazzfunk",
