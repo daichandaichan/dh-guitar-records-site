@@ -1,0 +1,52 @@
+{
+  "id": "2026-11-28_dance_dc_jazzfunk",
+  "date": "2026-11-28",
+  "style": "dance",
+  "styleShort": "ダンス",
+  "styleLabel": "ダンス（DJ風：ハウス・トランス／歌メロつき）",
+  "form": "dc_jazzfunk",
+  "formLabel": "ジャズ・ファンク／レア・グルーヴ 102BPM（16 分のファンク・ベース、エレピの短い刻み）",
+  "title": "Jazz DJ Mix 7min (Jazz Funk → Club Jazz → Liquid DnB)",
+  "key": "Cm",
+  "tempo": 102,
+  "tempoGenerated": 102,
+  "bars": 129,
+  "seed": 20261291,
+  "gen": 251,
+  "stems": [
+    {
+      "id": "mel",
+      "name": "E.Piano lead",
+      "prog": 4
+    },
+    {
+      "id": "comp",
+      "name": "E.Piano chords",
+      "prog": 4
+    },
+    {
+      "id": "dub",
+      "name": "Dub throws",
+      "prog": 4
+    },
+    {
+      "id": "bass",
+      "name": "Finger bass",
+      "prog": 33
+    },
+    {
+      "id": "drums",
+      "name": "Drums",
+      "prog": 0
+    }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+    "zip": "demos/2026-11-28_dance_dc_jazzfunk/2026-11-28_dance_dc_jazzfunk_midi-set.zip",
+    "midi": "demos/2026-11-28_dance_dc_jazzfunk/2026-11-28_dance_dc_jazzfunk_all.mid",
+    "info": "demos/2026-11-28_dance_dc_jazzfunk/info.md"
+  },
+  "audio": "demos/2026-11-28_dance_dc_jazzfunk/2026-11-28_dance_dc_jazzfunk.mp3"
+}

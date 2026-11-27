@@ -133,6 +133,141 @@
   "note_showFrom": "ユーザー依頼（2026-11-27）：29日0時公開分。それまで非表示"
  },
  {
+  "id": "2026-11-28_newage_na_minor16",
+  "date": "2026-11-28",
+  "style": "newage",
+  "styleShort": "ニューエイジ",
+  "styleLabel": "ニューエイジ（アンビエント：ゆったりしたアルペジオと7thの響き、静かに広がる）",
+  "form": "na_minor16",
+  "formLabel": "ニューエイジ 16小節（短調：Ⅰm7→♭ⅥM7→♭ⅦM7→♭ⅢM7 の浮遊感）",
+  "title": "Blues de Paris (Gm)",
+  "key": "Gm",
+  "tempo": 40,
+  "tempoGenerated": 40,
+  "bars": 61,
+  "seed": 20261128,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "Melody",
+    "prog": 88
+   },
+   {
+    "id": "solo",
+    "name": "Solo",
+    "prog": 88
+   },
+   {
+    "id": "comp",
+    "name": "Piano",
+    "prog": 88
+   },
+   {
+    "id": "bass",
+    "name": "Bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [
+   "Gm7",
+   "Gm9",
+   "D#maj7",
+   "D#6/9",
+   "Fmaj7",
+   "Fmaj7",
+   "A#maj7",
+   "A#maj7",
+   "Gm7",
+   "Cm9",
+   "D#maj7",
+   "C9",
+   "F6/9",
+   "F9",
+   "A#6/9",
+   "D#6/9",
+   "G#13",
+   "Gm9"
+  ],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-28_newage_na_minor16/2026-11-28_newage_na_minor16_midi-set.zip",
+   "midi": "demos/2026-11-28_newage_na_minor16/2026-11-28_newage_na_minor16_all.mid",
+   "info": "demos/2026-11-28_newage_na_minor16/info.md"
+  },
+  "audio": "demos/2026-11-28_newage_na_minor16/2026-11-28_newage_na_minor16.mp3",
+  "scorePages": [
+   "scores/2026-11-28_newage_na_minor16-1.png"
+  ],
+  "cover": "covers/2026-11-28_newage_na_minor16.jpg",
+  "coverKind": "generated"
+ },
+ {
+  "id": "2026-11-28_dance_dc_jazzfunk",
+  "date": "2026-11-28",
+  "style": "dance",
+  "styleShort": "ダンス",
+  "styleLabel": "ダンス（DJ風：ハウス・トランス／歌メロつき）",
+  "form": "dc_jazzfunk",
+  "formLabel": "ジャズ・ファンク／レア・グルーヴ 102BPM（16 分のファンク・ベース、エレピの短い刻み）",
+  "title": "Jazz DJ Mix 7min (Jazz Funk → Club Jazz → Liquid DnB)",
+  "key": "Cm",
+  "tempo": 102,
+  "tempoGenerated": 102,
+  "bars": 129,
+  "seed": 20261291,
+  "gen": 251,
+  "stems": [
+   {
+    "id": "mel",
+    "name": "E.Piano lead",
+    "prog": 4
+   },
+   {
+    "id": "comp",
+    "name": "E.Piano chords",
+    "prog": 4
+   },
+   {
+    "id": "dub",
+    "name": "Dub throws",
+    "prog": 4
+   },
+   {
+    "id": "bass",
+    "name": "Finger bass",
+    "prog": 33
+   },
+   {
+    "id": "drums",
+    "name": "Drums",
+    "prog": 0
+   }
+  ],
+  "chordsOneChorus": [],
+  "rights": "© 2026 D・H Guitar Records. Algorithmic demo generated with Hot Club Generator (own software, GEN 251). MIDI draft — to be arranged in Cubase.",
+  "status": "demo",
+  "files": {
+   "zip": "demos/2026-11-28_dance_dc_jazzfunk/2026-11-28_dance_dc_jazzfunk_midi-set.zip",
+   "midi": "demos/2026-11-28_dance_dc_jazzfunk/2026-11-28_dance_dc_jazzfunk_all.mid",
+   "info": "demos/2026-11-28_dance_dc_jazzfunk/info.md"
+  },
+  "audio": "demos/2026-11-28_dance_dc_jazzfunk/2026-11-28_dance_dc_jazzfunk.mp3",
+  "scorePages": [
+   "scores/2026-11-28_dance_dc_jazzfunk-1.png"
+  ],
+  "cover": "covers/2026-11-28_dance_dc_jazzfunk.jpg",
+  "coverKind": "generated",
+  "video": "demos/2026-11-28_dance_dc_jazzfunk/2026-11-28_dance_dc_jazzfunk.mp4",
+  "videoKind": "score"
+ },
+ {
   "id": "2026-11-27_dance_dc_jazzhouse",
   "date": "2026-11-27",
   "style": "dance",
